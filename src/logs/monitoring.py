@@ -47,6 +47,8 @@ Date:
     June 14, 2025
 """
 
+# pylint: disable=logging-format-interpolation
+
 import os
 import sys
 import logging
@@ -185,6 +187,7 @@ class DeviceMonitor:
         """
         Log all collected system stats.
         """
+        # pylint: disable=logging-format-interpolation
         self.logger.info(MonitoringLogMsg.MONITORING_STARTED.value)
         self.logger.info(MonitoringLogMsg.CPU_USAGE.value.format(self.get_cpu_info()))
         self.logger.info(

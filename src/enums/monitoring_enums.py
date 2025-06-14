@@ -48,20 +48,8 @@ class MonitoringLogMsg(Enum):
     including CPU, memory, and disk usage tracking, as well as error conditions.
     """
 
-    MODULE_NOT_FOUND = "Module not found: %s"
-    """Message template for when a required module is not found."""
-
-    IMPORT_ERROR = "Import error: %s"
-    """Message template for import-related errors."""
-
-    UNEXPECTED_SETUP_ERROR = "Unexpected setup error: %s"
-    """Message template for unexpected errors during monitoring setup."""
-
     CPU_USAGE = "CPU Usage: {}%"
     """Message template for reporting current CPU usage percentage."""
-
-    CPU_THRESHOLD_EXCEEDED = "[ALERT] CPU usage exceeded threshold: {}% > {}%"
-    """Alert message when CPU usage exceeds configured threshold."""
 
     CPU_USAGE_ERROR = "Failed to get CPU usage: {}"
     """Error message when CPU usage cannot be retrieved."""
@@ -69,20 +57,29 @@ class MonitoringLogMsg(Enum):
     MEMORY_USAGE = "Memory Usage: {}%"
     """Message template for reporting current memory usage percentage."""
 
-    MEMORY_THRESHOLD_EXCEEDED = "[ALERT] Memory usage exceeded threshold: {}% > {}%"
-    """Alert message when memory usage exceeds configured threshold."""
-
     MEMORY_USAGE_ERROR = "Failed to get memory usage: {}"
     """Error message when memory usage cannot be retrieved."""
 
     DISK_USAGE = "Disk Usage: {}%"
     """Message template for reporting current disk usage percentage."""
 
-    DISK_THRESHOLD_EXCEEDED = "[ALERT] Disk usage exceeded threshold: {}% > {}%"
-    """Alert message when disk usage exceeds configured threshold."""
-
     DISK_USAGE_ERROR = "Failed to get disk usage: {}"
     """Error message when disk usage cannot be retrieved."""
+
+    BATTERY_USAGE = ""
+    """ """
+    BATTERY_WARNING = "Battery info not available."
+    """ """
+
+    BATTERY_ERROR = "Failed to retrieve battery info: {}"
+    """ """
+
+    SYSTEM_TEMPERATURE = " "
+    """ """
+    SYSTEM_TEMPERATURE_WARNING = "vcgencmd not found. {}"
+    """"""
+    SYSTEM_TEMPERATURE_ERROR = "Failed to retrieve system temperature: {}"
+    """ """
 
     MONITORING_STARTED = "System resource monitoring started."
     """Message indicating that system resource monitoring has begun."""
