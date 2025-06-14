@@ -1,0 +1,4 @@
+2025-06-13 10:59:45,334 - DEBUG - This is a debug message - detailed technical information.
+2025-06-13 10:59:45,335 - INFO - This is an info message - general application flow.
+2025-06-13 10:59:45,335 - WARNING - This is a warning message - something unexpected happened.
+2025-06-13 10:59:45,335 - ERROR - This is an error message - something failed.

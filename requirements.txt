@@ -1,0 +1,5 @@
+pylint
+python-dotenv
+pydantic
+psutil
+pynvml
