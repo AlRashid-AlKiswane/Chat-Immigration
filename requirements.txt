@@ -6,3 +6,7 @@ pynvml
 langchain_community
 langchain
 pydantic
+fastapi
+uvicorn
+python-multipart
+SQLite3-0611
