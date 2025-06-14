@@ -50,19 +50,20 @@ class MonitoringLogMsg(Enum):
 
     # Memory Monitoring
     MEMORY_USAGE = (
-        "Memory: {used}MB/{total}MB ({percent:.1f}%)"  # Matches get_memory_info()
+        "Memory: Total: {0}MB/Avalibal: {1}MB | Used: {2:.1f}"
+        "| Precentage Use: ({3:.1f}%)"  # Matches get_memory_info()
     )
     MEMORY_ERROR = "Memory monitoring failed: {}"
 
     # Disk Monitoring
     DISK_USAGE = (
-        "Disk: {used}GB/{total}GB ({percent:.1f}% used)"  # Matches get_disk_info()
+        "Disk: Total: {}GB/ Used: {}GB | Free ({:.1f})"  # Matches get_disk_info()
     )
     DISK_ERROR = "Disk monitoring failed: {}"
 
     # Battery Monitoring
     BATTERY_STATUS = (
-        "Battery: {percent:.1f}% | Charging: {plugged_in}"  # Matches get_battery_info()
+        "Battery: {:.1f}% | Charging: {}"  # Matches get_battery_info()
     )
     BATTERY_WARNING = "Battery monitoring not available on this system"
     BATTERY_ERROR = "Battery monitoring failed: {}"

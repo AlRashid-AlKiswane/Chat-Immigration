@@ -8,7 +8,10 @@ This script monitors and logs critical system resources including:
 - Battery status
 - System temperature (if available)
 
-It uses the `psutil` and `shutil` libraries to gather metrics and logs all outputs using a structured logger. The logger captures `info`, `warning`, and `error` messages based on the severity of the readings or errors encountered during execution.
+It uses the `psutil` and `shutil` libraries to gather 
+    metrics and logs all outputs using a structured logger.
+The logger captures `info`, `warning`, and `error` messages 
+    based on the severity of the readings or errors encountered during execution.
 
 Functions:
     - setup_logger: Configures and returns a logger instance.
@@ -16,7 +19,6 @@ Functions:
     - get_memory_usage: Returns memory usage statistics.
     - get_disk_usage: Returns disk usage statistics.
     - get_battery_status: Returns battery status, if available.
-    - get_temperature: Attempts to read system temperature from available sensors.
     - monitor_system_resources: Gathers all resource metrics and logs them.
 
 Example:
@@ -53,7 +55,6 @@ import os
 import sys
 import logging
 import shutil
-import subprocess
 from typing import Optional, Dict, Any
 import psutil
 
@@ -163,45 +164,51 @@ class DeviceMonitor:
             self.logger.error(MonitoringLogMsg.BATTERY_ERROR.value.format(e))
             return None
 
-    def get_system_temperature_linux(self) -> Optional[float]:
-        """
-        Retrieve system temperature on Linux (e.g., Raspberry Pi).
-
-        Returns:
-            float: System temperature in Celsius.
-        """
-        try:
-            result = subprocess.run(
-                ["vcgencmd", "measure_temp"], capture_output=True, text=True, check=True
-            )
-            temp_str = result.stdout.strip().split("=")[1].replace("'C", "")
-            return float(temp_str)
-        except FileNotFoundError:
-            self.logger.warning(MonitoringLogMsg.TEMPERATURE_WARNING.value)
-            return None
-        except subprocess.SubprocessError as e:
-            self.logger.error(MonitoringLogMsg.TEMPERATURE_ERROR.value.format(e))
-            return None
-
     def monitor(self) -> None:
         """
         Log all collected system stats.
         """
         # pylint: disable=logging-format-interpolation
         self.logger.info(MonitoringLogMsg.MONITORING_START.value)
-        self.logger.info(MonitoringLogMsg.CPU_USAGE.value.format(self.get_cpu_info()))
-        self.logger.info(
-            MonitoringLogMsg.MEMORY_USAGE.value.format(self.get_memory_info())
-        )
-        self.logger.info(MonitoringLogMsg.DISK_USAGE.value.format(self.get_disk_info()))
-        self.logger.info(
-            MonitoringLogMsg.BATTERY_STATUS.value.format(self.get_battery_info())
-        )
-        self.logger.info(
-            MonitoringLogMsg.TEMPERATURE_READING.value.format(
-                self.get_system_temperature_linux()
+
+        cpu_info = self.get_cpu_info()
+        if cpu_info:
+            self.logger.info(
+                MonitoringLogMsg.CPU_USAGE.value.format(
+                    cpu_info["cpu_usage"],
+                    cpu_info["cpu_temp"] if cpu_info["cpu_temp"] is not None else 0.0
+                )
             )
-        )
+
+        memory_info = self.get_memory_info()
+        if memory_info:
+            self.logger.info(
+                MonitoringLogMsg.MEMORY_USAGE.value.format(
+                    memory_info["total"],
+                    memory_info["available"],
+                    memory_info["used"],
+                    memory_info["percent"]
+                )
+            )
+
+        disk_info = self.get_disk_info()
+        if disk_info:
+            self.logger.info(
+                MonitoringLogMsg.DISK_USAGE.value.format(
+                    disk_info["total"],
+                    disk_info["used"],
+                    disk_info["free"]
+                )
+            )
+
+        battery_info = self.get_battery_info()
+        if battery_info:
+            self.logger.info(
+                MonitoringLogMsg.BATTERY_STATUS.value.format(
+                    battery_info["percent"],
+                    battery_info["plugged_in"]
+                )
+            )
 
 
 if __name__ == "__main__":
