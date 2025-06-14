@@ -8,7 +8,7 @@ This module provides a Settings class that loads configuration from:
 """
 
 import sys
-from typing import Literal
+from typing import List, Literal
 from pydantic import Field, ValidationError
 from pydantic_settings import BaseSettings
 
@@ -42,6 +42,8 @@ class Settings(BaseSettings):
         "INFO", env="LOG_LEVEL")
     log_file: str = Field("app.log", env="LOG_FILE")
 
+    FILE_TYPES: List[str] = Field(..., env="FILE_TYPES")
+    
     # pylint: disable=too-few-public-methods
     class Config:
         """
