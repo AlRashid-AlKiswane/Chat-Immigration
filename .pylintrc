@@ -1,0 +1,17 @@
+[MASTER]
+# Specify a configuration file.
+# Python code to be analyzed.
+ignore=.venv
+
+[MESSAGES CONTROL]
+# Disable specific pylint warnings:
+disable=redefined-outer-name,
+        logging-fstring-interpolation
+
+[FORMAT]
+# Maximum number of characters on a single line.
+max-line-length=100
+
+[LOGGING]
+# Enforce use of % formatting in logging functions
+logging-format-style=old
