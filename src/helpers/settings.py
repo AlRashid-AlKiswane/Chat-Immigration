@@ -44,9 +44,8 @@ class Settings(BaseSettings):
 
     FILE_TYPES: List[str] = Field(..., env="FILE_TYPES")
     DOC_LOCATION_SAVE: str = Field(..., env="DOC_LOCATION_SAVE")
-    SPLLITER: str = Field(..., env="SPLLITER")
     CHUNKS_SIZE: int = Field(..., env="CHUNKS_SIZE")
-    CHUNKS_OVERLAB: int = Field(..., env="CHUNKS_OVERLAB")
+    CHUNKS_OVERLAP: int = Field(..., env="CHUNKS_OVERLAB")
     # pylint: disable=too-few-public-methods
     class Config:
         """
