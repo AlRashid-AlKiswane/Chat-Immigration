@@ -43,6 +43,9 @@ class DocToChunksMsg(Enum):
     UNSUPPORTED_TYPE = "Unsupported file type: {}"
     """Debug message for skipped file types."""
 
+    UNEXPECTED_LISTING_ERROR = "Unexpected error listing files: {}"
+    """Critical error when an unknown exception occurs during file listing."""
+
     # --- Document Loading Messages ---
     PDF_LOAD_SUCCESS = "Loaded PDF file: {}"
     """Debug message for successful PDF loading."""
