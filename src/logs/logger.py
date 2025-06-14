@@ -40,11 +40,11 @@ app_settings: Settings = get_settings()
 
 # Define log colors
 COLORS = {
-    'INFO': '\033[94m',     # Blue
-    'DEBUG': '\033[92m',    # Green
-    'WARNING': '\033[93m',  # Yellow
-    'ERROR': '\033[91m',    # Red
-    'END': '\033[0m',       # Reset color
+    "INFO": "\033[94m",  # Blue
+    "DEBUG": "\033[92m",  # Green
+    "WARNING": "\033[93m",  # Yellow
+    "ERROR": "\033[91m",  # Red
+    "END": "\033[0m",  # Reset color
 }
 
 
@@ -60,17 +60,19 @@ class ColoredFormatter(logging.Formatter):
         return message
 
 
-def setup_logging(log_dir=f'{MAIN_DIR}/logs',
-                  log_file=app_settings.log_file,
-                  console_level=app_settings.log_level):
+def setup_logging(
+    log_dir=f"{MAIN_DIR}/logs",
+    log_file=app_settings.log_file,
+    console_level=app_settings.log_level,
+):
     """
     Set up logging configuration with colored console output and file logging.
-    
+
     Args:
         log_dir (str): Directory to store log files. Defaults to 'logs'.
         log_file (str): Name of the log file. Defaults to 'application.log'.
         console_level (int): Minimum log level for console output. Defaults to DEBUG.
-        
+
     Returns:
         logging.Logger: Configured logger instance.
     """
@@ -79,7 +81,7 @@ def setup_logging(log_dir=f'{MAIN_DIR}/logs',
     log_path = Path(log_dir) / log_file
 
     # Create logger
-    logger__ = logging.getLogger('app_logger')
+    logger__ = logging.getLogger("app_logger")
     logger__.setLevel(logging.DEBUG)  # Capture all levels at logger level
 
     # Prevent duplicate handlers
@@ -87,12 +89,8 @@ def setup_logging(log_dir=f'{MAIN_DIR}/logs',
         return logger__
 
     # Create formatters
-    console_format = ColoredFormatter(
-        '%(asctime)s - %(levelname)s - %(message)s'
-    )
-    file_format = logging.Formatter(
-        '%(asctime)s - %(levelname)s - %(message)s'
-    )
+    console_format = ColoredFormatter("%(asctime)s - %(levelname)s - %(message)s")
+    file_format = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
     # Console handler (colored output)
     console_handler = logging.StreamHandler(sys.stdout)
@@ -100,9 +98,7 @@ def setup_logging(log_dir=f'{MAIN_DIR}/logs',
     console_handler.setFormatter(console_format)
 
     # File handler (all levels)
-    file_handler = RotatingFileHandler(
-        log_path, maxBytes=1024*1024, backupCount=5
-    )
+    file_handler = RotatingFileHandler(log_path, maxBytes=1024 * 1024, backupCount=5)
     file_handler.setLevel(logging.DEBUG)  # All levels to file
     file_handler.setFormatter(file_format)
 
@@ -126,5 +122,5 @@ def log_examples():
     logger.error("This is an error message - something failed.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     log_examples()

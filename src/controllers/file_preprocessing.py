@@ -28,6 +28,9 @@ except (ImportError, OSError) as e:
 from src.logs.logger import setup_logging
 from src.helpers import get_settings, Settings
 
+from src.enums import FilePreprocessingMsg
+
+
 # Initialize application settings and logger
 app_settings: Settings = get_settings()
 logger = setup_logging()
@@ -54,14 +57,19 @@ def generate_unique_filename(original_filename: str) -> str:
         ValueError: If the input filename is invalid
     """
     try:
+        # pylint: disable=logging-format-interpolation
         # Validate input
         if not original_filename or not isinstance(original_filename, str):
-            logger.error("Invalid filename provided: %s", original_filename)
+            logger.error(
+                FilePreprocessingMsg.INVALID_INPUT.value.format(original_filename)
+            )
             raise ValueError("Filename must be a non-empty string")
 
         # Check file type against allowed types
         if not any(original_filename.endswith(ext) for ext in app_settings.FILE_TYPES):
-            logger.warning("File type not in allowed types: %s", original_filename)
+            logger.warning(
+                FilePreprocessingMsg.UNSUPPORTED_TYPE.value.format(original_filename)
+            )
 
         # Extract components
         path_obj = Path(original_filename)
@@ -71,18 +79,22 @@ def generate_unique_filename(original_filename: str) -> str:
 
         # Handle missing extension
         if not extension:
-            logger.warning("Missing file extension in: %s, using default", original_filename)
+            logger.warning(
+                FilePreprocessingMsg.MISSING_EXTENSION.value.format(original_filename)
+            )
             extension = ".dat"  # Default fallback extension
 
         # Handle empty name
         if not name:
-            logger.warning("Empty filename provided, using default")
+            logger.warning(FilePreprocessingMsg.EMPTY_NAME.value)
             name = "file"
 
         # Sanitize the name (replace special chars with underscore)
         cleaned_name = re.sub(r"[^\w]", "_", name).strip("_")
         if cleaned_name != name:
-            logger.debug("Sanitized filename from %s to %s", name, cleaned_name)
+            logger.debug(
+                FilePreprocessingMsg.NAME_SANITIZED.value.format(name, cleaned_name)
+            )
 
         # Generate unique suffix (timestamp + short UUID)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -91,21 +103,26 @@ def generate_unique_filename(original_filename: str) -> str:
 
         # Construct new filename
         new_filename = f"{cleaned_name}_{unique_suffix}{extension}"
-        logger.debug("Generated new filename: %s from original: %s",
-                    new_filename, original_filename)
+        logger.debug(
+            FilePreprocessingMsg.FILENAME_GENERATED.value.format(
+                new_filename, original_filename
+            )
+        )
 
         return new_filename
 
     except ValueError as ve:
-        logger.error("Validation error in filename generation: %s", ve)
+        logger.error(FilePreprocessingMsg.VALIDATION_ERROR.value.format(ve))
         raise
     # pylint: disable=broad-exception-caught
     except Exception as e:
-        logger.error("Unexpected error generating filename: %s", e)
+        logger.error(FilePreprocessingMsg.GENERATION_ERROR.value.format(e))
         # Fallback filename generation
-        fallback_name = (f"file_{datetime.now().strftime('%Y%m%d_%H%M%S')}_"
-                        f"{uuid.uuid4().hex[:8]}.dat")
-        logger.warning("Using fallback filename: %s", fallback_name)
+        fallback_name = (
+            f"file_{datetime.now().strftime('%Y%m%d_%H%M%S')}_"
+            f"{uuid.uuid4().hex[:8]}.dat"
+        )
+        logger.warning(FilePreprocessingMsg.FALLBACK_USED.value.format(fallback_name))
         return fallback_name
 
 
@@ -117,7 +134,7 @@ if __name__ == "__main__":
         "",
         None,
         "noextension",
-        "valid_name.pdf"
+        "valid_name.pdf",
     ]
 
     for name in test_filenames:
