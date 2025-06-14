@@ -19,3 +19,24 @@
 2025-06-14 20:16:48,969 - INFO - Battery Info: {'percent': 93.68670545141133, 'plugged_in': True}
 2025-06-14 20:16:48,969 - WARNING - vcgencmd not found.
 2025-06-14 20:16:48,969 - INFO - System Temp (Linux): None°C
+2025-06-14 20:43:08,303 - INFO - Starting system monitoring...
+2025-06-14 20:43:09,327 - INFO - Retrieved CPU info.
+2025-06-14 20:43:09,327 - INFO - CPU Info: {'cpu_usage': 9.0, 'cpu_temp': 44.0}
+2025-06-14 20:43:09,327 - INFO - Memory Info: {'total': 7628, 'available': 1153, 'used': 5525, 'percent': 84.9}
+2025-06-14 20:43:09,328 - INFO - Disk Info: {'total': 468, 'used': 138, 'free': 305}
+2025-06-14 20:43:09,328 - INFO - Battery Info: {'percent': 99.31049342814049, 'plugged_in': True}
+2025-06-14 20:43:09,329 - WARNING - vcgencmd not found.
+2025-06-14 20:43:09,330 - INFO - System Temp (Linux): None°C
+2025-06-14 22:50:43,627 - DEBUG - Sanitized filename from my file to my_file
+2025-06-14 22:50:43,627 - DEBUG - Generated new filename: my_file_20250614_225043_1f34d2e0.txt from original: my file.txt
+2025-06-14 22:50:43,628 - WARNING - File type not in allowed types: invalid@name.jpg
+2025-06-14 22:50:43,628 - DEBUG - Sanitized filename from invalid@name to invalid_name
+2025-06-14 22:50:43,628 - DEBUG - Generated new filename: invalid_name_20250614_225043_0465d9df.jpg from original: invalid@name.jpg
+2025-06-14 22:50:43,628 - ERROR - Invalid filename provided: 
+2025-06-14 22:50:43,628 - ERROR - Validation error in filename generation: Filename must be a non-empty string
+2025-06-14 22:50:43,628 - ERROR - Invalid filename provided: None
+2025-06-14 22:50:43,628 - ERROR - Validation error in filename generation: Filename must be a non-empty string
+2025-06-14 22:50:43,628 - WARNING - File type not in allowed types: noextension
+2025-06-14 22:50:43,628 - WARNING - Missing file extension in: noextension, using default
+2025-06-14 22:50:43,628 - DEBUG - Generated new filename: noextension_20250614_225043_2b37efec.dat from original: noextension
+2025-06-14 22:50:43,628 - DEBUG - Generated new filename: valid_name_20250614_225043_c69e00df.pdf from original: valid_name.pdf
