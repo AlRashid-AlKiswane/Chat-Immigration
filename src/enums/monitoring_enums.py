@@ -66,6 +66,11 @@ class MonitoringLogMsg(Enum):
     CPU_USAGE_ERROR = "Failed to get CPU usage: {}"
     """Error message when CPU usage cannot be retrieved."""
 
+    BATTERY_WARNNING = "Battery info not available."
+    """ """
+    BATTERY_ERROR = "Failed to retrieve battery info: {}"
+    """ """
+
     MEMORY_USAGE = "Memory Usage: {}%"
     """Message template for reporting current memory usage percentage."""
 
