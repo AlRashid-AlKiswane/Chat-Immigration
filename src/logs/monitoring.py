@@ -21,13 +21,13 @@ Functions:
 
 Example:
     To run the monitoring script:
-    
+
     ```bash
     python main_monitor.py
     ```
 
     You can import functions from this module into another script:
-    
+
     ```python
     from main_monitor import monitor_system_resources
     monitor_system_resources()
@@ -65,6 +65,7 @@ except (ImportError, OSError) as e:
 
 # pylint: disable= wrong-import-position
 from src.logs.logger import setup_logging
+from src.enums import MonitoringLogMsg
 
 logger = setup_logging()
 
@@ -94,11 +95,15 @@ class DeviceMonitor:
         try:
             cpu_usage = psutil.cpu_percent(interval=1)
             temps = psutil.sensors_temperatures()
-            cpu_temp = temps.get("coretemp", [None])[0].current if temps.get("coretemp") else None
+            cpu_temp = (
+                temps.get("coretemp", [None])[0].current
+                if temps.get("coretemp")
+                else None
+            )
             self.logger.info("Retrieved CPU info.")
             return {"cpu_usage": cpu_usage, "cpu_temp": cpu_temp}
         except (psutil.Error, RuntimeError, AttributeError) as e:
-            self.logger.error("Failed to retrieve CPU info: %s", e)
+            self.logger.error(MonitoringLogMsg.CPU_USAGE_ERROR.value.format(e))
             return None
 
     def get_memory_info(self) -> Optional[Dict[str, Any]]:
@@ -111,13 +116,13 @@ class DeviceMonitor:
         try:
             mem = psutil.virtual_memory()
             return {
-                "total": mem.total // (1024 ** 2),
-                "available": mem.available // (1024 ** 2),
-                "used": mem.used // (1024 ** 2),
-                "percent": mem.percent
+                "total": mem.total // (1024**2),
+                "available": mem.available // (1024**2),
+                "used": mem.used // (1024**2),
+                "percent": mem.percent,
             }
         except psutil.Error as e:
-            self.logger.error("Failed to retrieve memory info: %s", e)
+            self.logger.error(MonitoringLogMsg.MEMORY_ERROR.value.format(e))
             return None
 
     def get_disk_info(self) -> Optional[Dict[str, Any]]:
@@ -130,12 +135,12 @@ class DeviceMonitor:
         try:
             total, used, free = shutil.disk_usage("/")
             return {
-                "total": total // (1024 ** 3),
-                "used": used // (1024 ** 3),
-                "free": free // (1024 ** 3)
+                "total": total // (1024**3),
+                "used": used // (1024**3),
+                "free": free // (1024**3),
             }
         except OSError as e:
-            self.logger.error("Failed to retrieve disk info: %s", e)
+            self.logger.error(MonitoringLogMsg.DISK_USAGE_ERROR.value.format(e))
             return None
 
     def get_battery_info(self) -> Optional[Dict[str, Any]]:
@@ -149,14 +154,11 @@ class DeviceMonitor:
         try:
             battery = psutil.sensors_battery()
             if battery:
-                return {
-                    "percent": battery.percent,
-                    "plugged_in": battery.power_plugged
-                }
-            self.logger.warning("Battery info not available.")
+                return {"percent": battery.percent, "plugged_in": battery.power_plugged}
+            self.logger.warning(MonitoringLogMsg.BATTERY_WARNING.value)
             return None
         except (psutil.Error, RuntimeError) as e:
-            self.logger.error("Failed to retrieve battery info: %s", e)
+            self.logger.error(MonitoringLogMsg.BATTERY_ERROR.value.format(e))
             return None
 
     def get_system_temperature_linux(self) -> Optional[float]:
@@ -168,30 +170,31 @@ class DeviceMonitor:
         """
         try:
             result = subprocess.run(
-                ["vcgencmd", "measure_temp"],
-                capture_output=True,
-                text=True,
-                check=True
+                ["vcgencmd", "measure_temp"], capture_output=True, text=True, check=True
             )
             temp_str = result.stdout.strip().split("=")[1].replace("'C", "")
             return float(temp_str)
         except FileNotFoundError:
-            self.logger.warning("vcgencmd not found.")
+            self.logger.warning(MonitoringLogMsg.SYSTEM_TEMPERATURE_WARNING.value)
             return None
         except subprocess.SubprocessError as e:
-            self.logger.error("Failed to retrieve system temperature: %s", e)
+            self.logger.error(MonitoringLogMsg.SYSTEM_TEMPERATURE_ERROR.value.format(e))
             return None
 
     def monitor(self) -> None:
         """
         Log all collected system stats.
         """
-        self.logger.info("Starting system monitoring...")
-        self.logger.info("CPU Info: %s", self.get_cpu_info())
-        self.logger.info("Memory Info: %s", self.get_memory_info())
+        self.logger.info(MonitoringLogMsg.MONITORING_STARTED.value)
+        self.logger.info(MonitoringLogMsg.CPU_USAGE.value.format(self.get_cpu_info()))
+        self.logger.info(
+            MonitoringLogMsg.MEMORY_USAGE.value.format(self.get_memory_info())
+        )
         self.logger.info("Disk Info: %s", self.get_disk_info())
         self.logger.info("Battery Info: %s", self.get_battery_info())
-        self.logger.info("System Temp (Linux): %s°C", self.get_system_temperature_linux())
+        self.logger.info(
+            "System Temp (Linux): %s°C", self.get_system_temperature_linux()
+        )
 
 
 if __name__ == "__main__":
