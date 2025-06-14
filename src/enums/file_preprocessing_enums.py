@@ -1,4 +1,32 @@
-""" """
+"""
+File Preprocessing Log Messages
+
+This module defines standardized log messages for file preprocessing operations
+using an Enum class. These messages ensure consistent logging across all file
+handling components of the application.
+
+The messages are categorized by operation type and include format placeholders
+for dynamic values. Each message has an associated docstring explaining its
+purpose and usage context.
+
+Categories:
+    - Input Validation: Messages for invalid file inputs
+    - File Type Handling: Messages for unsupported file types
+    - Extension Handling: Messages related to file extensions
+    - Name Handling: Messages for filename processing
+    - Sanitization: Messages for filename cleaning operations
+    - Generation: Messages for new filename creation
+    - Error Handling: Messages for error conditions
+    - System: Messages for filesystem-related issues
+
+
+Design Principles:
+    1. Consistent formatting with clear placeholder positions
+    2. Self-documenting message purposes
+    3. Categorized by operation type
+    4. Ready for internationalization (i18n)
+    5. Type-safe through Enum implementation
+"""
 
 from enum import Enum
 
