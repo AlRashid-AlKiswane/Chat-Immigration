@@ -2,3 +2,20 @@
 2025-06-13 10:59:45,335 - INFO - This is an info message - general application flow.
 2025-06-13 10:59:45,335 - WARNING - This is a warning message - something unexpected happened.
 2025-06-13 10:59:45,335 - ERROR - This is an error message - something failed.
+2025-06-14 20:12:31,606 - INFO - Starting system monitoring...
+2025-06-14 20:15:23,920 - INFO - Starting system monitoring...
+2025-06-14 20:15:24,940 - INFO - Retrieved CPU info.
+2025-06-14 20:15:24,941 - INFO - CPU Info: {'cpu_usage': 8.4, 'cpu_temp': 27.8}
+2025-06-14 20:15:24,941 - INFO - Memory Info: {'total': 7628, 'available': 1851, 'used': 4816, 'percent': 75.7}
+2025-06-14 20:15:24,942 - INFO - Disk Info: {'total': 468, 'used': 138, 'free': 305}
+2025-06-14 20:15:25,008 - INFO - Battery Info: {'percent': 93.10493428140487, 'plugged_in': True}
+2025-06-14 20:15:25,035 - WARNING - vcgencmd not found.
+2025-06-14 20:15:25,035 - INFO - System Temp (Linux): None°C
+2025-06-14 20:16:47,958 - INFO - Starting system monitoring...
+2025-06-14 20:16:48,968 - INFO - Retrieved CPU info.
+2025-06-14 20:16:48,968 - INFO - CPU Info: {'cpu_usage': 13.5, 'cpu_temp': 92.0}
+2025-06-14 20:16:48,968 - INFO - Memory Info: {'total': 7628, 'available': 1851, 'used': 4840, 'percent': 75.7}
+2025-06-14 20:16:48,968 - INFO - Disk Info: {'total': 468, 'used': 138, 'free': 305}
+2025-06-14 20:16:48,969 - INFO - Battery Info: {'percent': 93.68670545141133, 'plugged_in': True}
+2025-06-14 20:16:48,969 - WARNING - vcgencmd not found.
+2025-06-14 20:16:48,969 - INFO - System Temp (Linux): None°C

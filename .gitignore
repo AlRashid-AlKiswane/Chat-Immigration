@@ -4,3 +4,5 @@
 ImiChatbot/
 
 *.db
+
+__pycache__

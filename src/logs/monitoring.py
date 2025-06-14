@@ -94,10 +94,10 @@ class DeviceMonitor:
         try:
             cpu_usage = psutil.cpu_percent(interval=1)
             temps = psutil.sensors_temperatures()
-            cpu_temp = temps.get("coretemp", [{}])[0].get("current") if temps else None
+            cpu_temp = temps.get("coretemp", [None])[0].current if temps.get("coretemp") else None
             self.logger.info("Retrieved CPU info.")
             return {"cpu_usage": cpu_usage, "cpu_temp": cpu_temp}
-        except (psutil.Error, RuntimeError) as e:
+        except (psutil.Error, RuntimeError, AttributeError) as e:
             self.logger.error("Failed to retrieve CPU info: %s", e)
             return None
 
