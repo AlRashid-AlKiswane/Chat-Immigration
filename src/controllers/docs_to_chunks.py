@@ -131,8 +131,3 @@ def load_and_chunk(file_path: Optional[str] = None) -> Dict[str, Any]:
         logger.error("Failed to construct output dictionary: %s", e)
         return {}
 
-
-
-if __name__ == "__main__":
-    data = load_and_chunk("/home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf")
-    print(data)
