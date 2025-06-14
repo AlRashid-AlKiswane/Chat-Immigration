@@ -62,7 +62,7 @@ def load_and_chunk(file_path: Optional[str] = None) -> Dict[str, Any]:
             files_to_process = [
                 os.path.join(app_settings.DOC_LOCATION_SAVE, f)
                 for f in os.listdir(app_settings.DOC_LOCATION_SAVE)
-                if Path(f).suffix.lower().lstrip(".") in app_settings.FILE_ALLOWED_TYPES
+                if Path(f).suffix.lower().lstrip(".") in app_settings.FILE_TYPES
             ]
         except OSError as e:
             logger.error("Failed to list files in directory: %s", e)
