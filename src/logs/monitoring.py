@@ -142,7 +142,7 @@ class DeviceMonitor:
                 "free": free // (1024**3),
             }
         except OSError as e:
-            self.logger.error(MonitoringLogMsg.DISK_USAGE_ERROR.value.format(e))
+            self.logger.error(MonitoringLogMsg.DISK_ERROR.value.format(e))
             return None
 
     def get_battery_info(self) -> Optional[Dict[str, Any]]:
@@ -177,10 +177,10 @@ class DeviceMonitor:
             temp_str = result.stdout.strip().split("=")[1].replace("'C", "")
             return float(temp_str)
         except FileNotFoundError:
-            self.logger.warning(MonitoringLogMsg.SYSTEM_TEMPERATURE_WARNING.value)
+            self.logger.warning(MonitoringLogMsg.TEMPERATURE_WARNING.value)
             return None
         except subprocess.SubprocessError as e:
-            self.logger.error(MonitoringLogMsg.SYSTEM_TEMPERATURE_ERROR.value.format(e))
+            self.logger.error(MonitoringLogMsg.TEMPERATURE_ERROR.value.format(e))
             return None
 
     def monitor(self) -> None:
@@ -188,15 +188,19 @@ class DeviceMonitor:
         Log all collected system stats.
         """
         # pylint: disable=logging-format-interpolation
-        self.logger.info(MonitoringLogMsg.MONITORING_STARTED.value)
+        self.logger.info(MonitoringLogMsg.MONITORING_START.value)
         self.logger.info(MonitoringLogMsg.CPU_USAGE.value.format(self.get_cpu_info()))
         self.logger.info(
             MonitoringLogMsg.MEMORY_USAGE.value.format(self.get_memory_info())
         )
-        self.logger.info("Disk Info: %s", self.get_disk_info())
-        self.logger.info("Battery Info: %s", self.get_battery_info())
+        self.logger.info(MonitoringLogMsg.DISK_USAGE.value.format(self.get_disk_info()))
         self.logger.info(
-            "System Temp (Linux): %s°C", self.get_system_temperature_linux()
+            MonitoringLogMsg.BATTERY_STATUS.value.format(self.get_battery_info())
+        )
+        self.logger.info(
+            MonitoringLogMsg.TEMPERATURE_READING.value.format(
+                self.get_system_temperature_linux()
+            )
         )
 
 

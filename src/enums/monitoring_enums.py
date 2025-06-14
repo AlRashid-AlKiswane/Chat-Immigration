@@ -42,50 +42,38 @@ from enum import Enum
 
 
 class MonitoringLogMsg(Enum):
-    """Enumeration of monitoring log messages for system resource tracking.
+    """Standardized monitoring messages with format placeholders for system metrics."""
 
-    This class provides standardized log messages for various monitoring scenarios,
-    including CPU, memory, and disk usage tracking, as well as error conditions.
-    """
+    # CPU Monitoring
+    CPU_USAGE = "CPU Usage: {:.1f}% | Temp: {:.1f}°C"  # Matches get_cpu_info() return
+    CPU_USAGE_ERROR = "CPU monitoring failed: {}"
 
-    CPU_USAGE = "CPU Usage: {}%"
-    """Message template for reporting current CPU usage percentage."""
+    # Memory Monitoring
+    MEMORY_USAGE = (
+        "Memory: {used}MB/{total}MB ({percent:.1f}%)"  # Matches get_memory_info()
+    )
+    MEMORY_ERROR = "Memory monitoring failed: {}"
 
-    CPU_USAGE_ERROR = "Failed to get CPU usage: {}"
-    """Error message when CPU usage cannot be retrieved."""
+    # Disk Monitoring
+    DISK_USAGE = (
+        "Disk: {used}GB/{total}GB ({percent:.1f}% used)"  # Matches get_disk_info()
+    )
+    DISK_ERROR = "Disk monitoring failed: {}"
 
-    MEMORY_USAGE = "Memory Usage: {}%"
-    """Message template for reporting current memory usage percentage."""
+    # Battery Monitoring
+    BATTERY_STATUS = (
+        "Battery: {percent:.1f}% | Charging: {plugged_in}"  # Matches get_battery_info()
+    )
+    BATTERY_WARNING = "Battery monitoring not available on this system"
+    BATTERY_ERROR = "Battery monitoring failed: {}"
 
-    MEMORY_USAGE_ERROR = "Failed to get memory usage: {}"
-    """Error message when memory usage cannot be retrieved."""
+    # Temperature Monitoring
+    TEMPERATURE_READING = (
+        "System Temperature: {:.1f}°C"  # Matches get_system_temperature_linux()
+    )
+    TEMPERATURE_WARNING = "Temperature monitoring not available"
+    TEMPERATURE_ERROR = "Temperature monitoring failed: {}"
 
-    DISK_USAGE = "Disk Usage: {}%"
-    """Message template for reporting current disk usage percentage."""
-
-    DISK_USAGE_ERROR = "Failed to get disk usage: {}"
-    """Error message when disk usage cannot be retrieved."""
-
-    BATTERY_USAGE = ""
-    """ """
-    BATTERY_WARNING = "Battery info not available."
-    """ """
-
-    BATTERY_ERROR = "Failed to retrieve battery info: {}"
-    """ """
-
-    SYSTEM_TEMPERATURE = " "
-    """ """
-    SYSTEM_TEMPERATURE_WARNING = "vcgencmd not found. {}"
-    """"""
-    SYSTEM_TEMPERATURE_ERROR = "Failed to retrieve system temperature: {}"
-    """ """
-
-    MONITORING_STARTED = "System resource monitoring started."
-    """Message indicating that system resource monitoring has begun."""
-
-    GPU_MONITOR_PLACEHOLDER = "GPU monitoring is not yet implemented."
-    """Placeholder message indicating GPU monitoring is not available."""
-
-    MEMORY_ERROR = "Failed to get memory usage: %s"
-    DISK_ERROR = "Failed to get disk usage: %s"
+    # System
+    MONITORING_START = "Starting system monitoring"
+    MONITORING_COMPLETE = "Monitoring cycle completed"
