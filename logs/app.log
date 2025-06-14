@@ -40,3 +40,156 @@
 2025-06-14 22:50:43,628 - WARNING - Missing file extension in: noextension, using default
 2025-06-14 22:50:43,628 - DEBUG - Generated new filename: noextension_20250614_225043_2b37efec.dat from original: noextension
 2025-06-14 22:50:43,628 - DEBUG - Generated new filename: valid_name_20250614_225043_c69e00df.pdf from original: valid_name.pdf
+2025-06-14 23:05:54,472 - DEBUG - Sanitized filename from my file to my_file
+2025-06-14 23:05:54,472 - DEBUG - Generated new filename: my_file_20250614_230554_0b03973f.txt from original: my file.txt
+2025-06-14 23:05:54,472 - WARNING - File type not in allowed types: invalid@name.jpg
+2025-06-14 23:05:54,472 - DEBUG - Sanitized filename from invalid@name to invalid_name
+2025-06-14 23:05:54,473 - DEBUG - Generated new filename: invalid_name_20250614_230554_bcbcf07c.jpg from original: invalid@name.jpg
+2025-06-14 23:05:54,473 - ERROR - Invalid filename provided: 
+2025-06-14 23:05:54,473 - ERROR - Validation error in filename generation: Filename must be a non-empty string
+2025-06-14 23:05:54,473 - ERROR - Invalid filename provided: None
+2025-06-14 23:05:54,473 - ERROR - Validation error in filename generation: Filename must be a non-empty string
+2025-06-14 23:05:54,473 - WARNING - File type not in allowed types: noextension
+2025-06-14 23:05:54,473 - WARNING - Missing file extension in: noextension, using default
+2025-06-14 23:05:54,473 - DEBUG - Generated new filename: noextension_20250614_230554_852eccf2.dat from original: noextension
+2025-06-14 23:05:54,473 - DEBUG - Generated new filename: valid_name_20250614_230554_58ab8ecd.pdf from original: valid_name.pdf
+2025-06-14 23:28:31,874 - INFO - Starting system monitoring
+2025-06-14 23:28:32,900 - INFO - Retrieved CPU info.
+2025-06-14 23:29:43,129 - INFO - Starting system monitoring
+2025-06-14 23:29:44,141 - INFO - Retrieved CPU info.
+2025-06-14 23:30:51,388 - INFO - Starting system monitoring
+2025-06-14 23:30:52,399 - INFO - Retrieved CPU info.
+2025-06-14 23:33:13,730 - INFO - Starting system monitoring
+2025-06-14 23:33:14,744 - INFO - Retrieved CPU info.
+2025-06-14 23:33:14,744 - INFO - CPU Usage: 12.6% | Temp: 69.0°C
+2025-06-14 23:34:03,802 - INFO - Starting system monitoring
+2025-06-14 23:34:04,822 - INFO - Retrieved CPU info.
+2025-06-14 23:34:04,822 - INFO - CPU Usage: 6.8% | Temp: 48.0°C
+2025-06-14 23:34:37,116 - INFO - Starting system monitoring
+2025-06-14 23:34:38,147 - INFO - Retrieved CPU info.
+2025-06-14 23:34:38,147 - INFO - CPU Usage: 7.1% | Temp: 47.0°C
+2025-06-14 23:35:03,982 - INFO - Starting system monitoring
+2025-06-14 23:35:05,009 - INFO - Retrieved CPU info.
+2025-06-14 23:35:05,010 - INFO - CPU Usage: 6.9% | Temp: 48.0°C
+2025-06-14 23:37:03,810 - INFO - Starting system monitoring
+2025-06-14 23:37:03,811 - INFO - Starting system monitoring
+2025-06-14 23:37:04,827 - INFO - Retrieved CPU info.
+2025-06-14 23:37:04,827 - INFO - CPU Usage: 11.6% | Temp: 69.0°C
+2025-06-14 23:37:04,827 - INFO - Memory: 7628MB/1730MB (4932.0%)
+2025-06-14 23:37:04,827 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:37:04,827 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:37:04,830 - WARNING - Temperature monitoring not available
+2025-06-14 23:37:17,767 - INFO - Starting system monitoring
+2025-06-14 23:37:18,782 - INFO - Retrieved CPU info.
+2025-06-14 23:37:18,782 - INFO - CPU Usage: 12.6% | Temp: 64.0°C
+2025-06-14 23:37:18,783 - INFO - Memory: 7628MB/1728MB (4942.0%)
+2025-06-14 23:37:18,783 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:37:18,849 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:37:18,849 - WARNING - Temperature monitoring not available
+2025-06-14 23:38:28,431 - INFO - Starting system monitoring
+2025-06-14 23:38:29,443 - INFO - Retrieved CPU info.
+2025-06-14 23:38:29,443 - INFO - CPU Usage: 12.1% | Temp: 54.0°C
+2025-06-14 23:38:29,443 - INFO - Memory: 7628MB/1685MB (4.0%)
+2025-06-14 23:38:29,443 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:38:29,509 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:38:29,510 - WARNING - Temperature monitoring not available
+2025-06-14 23:38:43,806 - INFO - Starting system monitoring
+2025-06-14 23:38:44,828 - INFO - Retrieved CPU info.
+2025-06-14 23:38:44,829 - INFO - CPU Usage: 8.1% | Temp: 49.0°C
+2025-06-14 23:38:44,829 - INFO - Memory: 7628MB/1668MB (5.0%)
+2025-06-14 23:38:44,829 - INFO - Disk: 468GB/1GB (305.0% used)
+2025-06-14 23:38:44,895 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:38:44,897 - WARNING - Temperature monitoring not available
+2025-06-14 23:39:30,422 - INFO - Starting system monitoring
+2025-06-14 23:39:31,434 - INFO - Retrieved CPU info.
+2025-06-14 23:39:31,434 - INFO - CPU Usage: 11.4% | Temp: 69.0°C
+2025-06-14 23:39:31,434 - INFO - Memory: 7628MB/1693MB (4.0%)
+2025-06-14 23:39:31,434 - INFO - Disk: 468GB/0GB (305.0% used)
+2025-06-14 23:39:31,500 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:39:31,501 - WARNING - Temperature monitoring not available
+2025-06-14 23:40:09,755 - INFO - Starting system monitoring
+2025-06-14 23:40:10,767 - INFO - Retrieved CPU info.
+2025-06-14 23:40:10,768 - INFO - CPU Usage: 20.3% | Temp: 89.0°C
+2025-06-14 23:40:10,768 - INFO - Memory: 7MB/1MB (4.0%)
+2025-06-14 23:40:10,768 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:40:10,768 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:40:10,768 - WARNING - Temperature monitoring not available
+2025-06-14 23:40:45,542 - INFO - Starting system monitoring
+2025-06-14 23:40:46,555 - INFO - Retrieved CPU info.
+2025-06-14 23:40:46,555 - INFO - CPU Usage: 16.9% | Temp: 75.0°C
+2025-06-14 23:40:46,555 - INFO - Memory: 7628MB/1639MB (5037.0%)
+2025-06-14 23:40:46,555 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:40:46,621 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:40:46,621 - WARNING - Temperature monitoring not available
+2025-06-14 23:41:04,116 - INFO - Starting system monitoring
+2025-06-14 23:41:05,132 - INFO - Retrieved CPU info.
+2025-06-14 23:41:05,132 - INFO - CPU Usage: 20.2% | Temp: 70.0°C
+2025-06-14 23:41:05,132 - INFO - Memory: 7628MB/1652MB (5033.0%)
+2025-06-14 23:41:05,132 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:41:05,133 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:41:05,133 - WARNING - Temperature monitoring not available
+2025-06-14 23:44:26,008 - INFO - Starting system monitoring
+2025-06-14 23:44:27,018 - INFO - Retrieved CPU info.
+2025-06-14 23:44:27,018 - INFO - CPU Usage: 11.5% | Temp: 92.0°C
+2025-06-14 23:44:27,018 - INFO - Memory: 7628MB/1693MB (4986.0%)
+2025-06-14 23:44:27,018 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:44:27,083 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:45:50,670 - INFO - Starting system monitoring
+2025-06-14 23:45:51,690 - INFO - Retrieved CPU info.
+2025-06-14 23:45:51,690 - INFO - CPU Usage: 7.9% | Temp: 47.0°C
+2025-06-14 23:46:10,706 - INFO - Starting system monitoring
+2025-06-14 23:46:11,728 - INFO - Retrieved CPU info.
+2025-06-14 23:46:11,728 - INFO - CPU Usage: 6.0% | Temp: 46.0°C
+2025-06-14 23:46:11,728 - INFO - Memory: 7628MB/1649MB (5025.000%)
+2025-06-14 23:46:11,728 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:46:11,795 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:46:24,401 - INFO - Starting system monitoring
+2025-06-14 23:46:25,427 - INFO - Retrieved CPU info.
+2025-06-14 23:46:25,427 - INFO - CPU Usage: 7.2% | Temp: 47.0°C
+2025-06-14 23:46:25,428 - INFO - Memory: 7628MB/1684MB (5002.0%)
+2025-06-14 23:46:25,428 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:46:25,428 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:46:59,491 - INFO - Starting system monitoring
+2025-06-14 23:47:00,503 - INFO - Retrieved CPU info.
+2025-06-14 23:47:00,503 - INFO - CPU Usage: 11.6% | Temp: 83.0°C
+2025-06-14 23:47:00,503 - INFO - Memory: 7628MB/1668MB (5003.0%)
+2025-06-14 23:47:00,503 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:47:00,503 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:47:08,676 - INFO - Starting system monitoring
+2025-06-14 23:47:09,690 - INFO - Retrieved CPU info.
+2025-06-14 23:47:09,690 - INFO - CPU Usage: 11.5% | Temp: 87.0°C
+2025-06-14 23:47:09,690 - INFO - Memory: 7628MB/1658MB (5017.0%)
+2025-06-14 23:47:09,691 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:47:09,756 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:48:23,799 - INFO - Starting system monitoring
+2025-06-14 23:48:24,812 - INFO - Retrieved CPU info.
+2025-06-14 23:48:24,812 - INFO - CPU Usage: 12.0% | Temp: 81.0°C
+2025-06-14 23:48:24,812 - INFO - Memory: 7628MB/1627MB (78.7%)
+2025-06-14 23:48:24,813 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:48:24,878 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:50:35,085 - INFO - Starting system monitoring
+2025-06-14 23:50:36,098 - INFO - Retrieved CPU info.
+2025-06-14 23:50:36,098 - INFO - CPU Usage: 11.7% | Temp: 80.0°C
+2025-06-14 23:50:36,098 - INFO - Memory: Total: 7628MB/Avalibal: 1658MB | Used: 5027.0| Precentage Use: (78.3%)
+2025-06-14 23:50:36,099 - INFO - Disk: 468GB/138GB (305.0% used)
+2025-06-14 23:50:36,164 - INFO - Battery: 100.0% | Charging: True
+2025-06-14 23:52:11,673 - INFO - Starting system monitoring
+2025-06-14 23:52:12,687 - INFO - Retrieved CPU info.
+2025-06-14 23:52:12,687 - INFO - CPU Usage: 12.2% | Temp: 79.0°C
+2025-06-14 23:52:12,688 - INFO - Memory: Total: 7628MB/Avalibal: 1635MB | Used: 5031.0| Precentage Use: (78.6%)
+2025-06-14 23:52:12,688 - INFO - Disk: Total: 468GB/ Used: 138GB | Free (305.0)
+2025-06-14 23:52:12,753 - INFO - Battery: 100.0% | Charging: True
+2025-06-15 00:43:21,404 - ERROR - Unexpected error processing file /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf: 'Settings' object has no attribute 'FILE_TYPE'
+2025-06-15 00:43:21,404 - WARNING - No chunks were generated from the documents.
+2025-06-15 00:44:52,099 - ERROR - Unexpected error processing file /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf: 'Settings' object has no attribute 'FILE_TYPE'
+2025-06-15 00:44:52,099 - WARNING - No chunks were generated from the documents.
+2025-06-15 00:45:29,577 - DEBUG - Unsupported file type: pdf
+2025-06-15 00:45:29,577 - WARNING - No chunks were generated from the documents.
+2025-06-15 00:46:57,601 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 00:46:57,606 - ERROR - Unexpected error processing file /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf: pymupdf package not found, please install it with `pip install pymupdf`
+2025-06-15 00:46:57,606 - WARNING - No chunks were generated from the documents.
+2025-06-15 00:51:40,099 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 00:51:40,206 - ERROR - Unexpected error processing file /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf: 'Settings' object has no attribute 'SPLITTER'
+2025-06-15 00:51:40,206 - WARNING - No chunks were generated from the documents.
+2025-06-15 00:53:36,783 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 00:53:36,902 - INFO - Processed 9 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
