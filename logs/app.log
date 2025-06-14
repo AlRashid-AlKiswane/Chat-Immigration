@@ -197,3 +197,80 @@
                           /home/alrashid/Desktop/                          Immigration-ChatBot/assets/docs/Plastics_machinery.pdf: File path 
                           /home/alrashid/Desktop/                          Immigration-ChatBot/assets/docs/Plastics_machinery.pdf is not a valid file or url
 2025-06-15 00:59:09,998 - WARNING - No chunks were generated from the documents.
+2025-06-15 01:19:51,385 - WARNING - File type not in allowed types: alrashid.png
+2025-06-15 01:19:51,387 - DEBUG - Generated new filename: alrashid_20250615_011951_32b421a2.png from original: alrashid.png
+2025-06-15 01:19:51,387 - ERROR - Unexpected error during file upload: 'Settings' object has no attribute 'FILE_TYPE'
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Immigration-ChatBot/src/routes/route_upload_docs.py", line 67, in upload_file
+    if file_extension not in app_settings.FILE_TYPE:
+                             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/Immigration-ChatBot/ImiChatbot/lib/python3.11/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'FILE_TYPE'
+2025-06-15 01:20:30,322 - WARNING - File type not in allowed types: alrashid.png
+2025-06-15 01:20:30,322 - DEBUG - Generated new filename: alrashid_20250615_012030_7659e101.png from original: alrashid.png
+2025-06-15 01:20:30,322 - ERROR - Unexpected error during file upload: 'Settings' object has no attribute 'FILE_TYPE'
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Immigration-ChatBot/src/routes/route_upload_docs.py", line 67, in upload_file
+    if file_extension not in app_settings.FILE_TYPES:
+                             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/Immigration-ChatBot/ImiChatbot/lib/python3.11/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'FILE_TYPE'
+2025-06-15 01:20:49,669 - WARNING - File type not in allowed types: alrashid.png
+2025-06-15 01:20:49,670 - DEBUG - Generated new filename: alrashid_20250615_012049_43a2e80a.png from original: alrashid.png
+2025-06-15 01:20:49,670 - WARNING - Attempted upload with disallowed file type: png
+2025-06-15 01:21:13,266 - DEBUG - Sanitized filename from Flame-Resistant-Clothing to Flame_Resistant_Clothing
+2025-06-15 01:21:13,266 - DEBUG - Generated new filename: Flame_Resistant_Clothing_20250615_012113_96e5bf0d.pdf from original: Flame-Resistant-Clothing.pdf
+2025-06-15 01:21:13,268 - INFO - File 'Flame_Resistant_Clothing_20250615_012113_96e5bf0d.pdf' saved at '/home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012113_96e5bf0d.pdf'
+2025-06-15 01:23:51,998 - DEBUG - Sanitized filename from Flame-Resistant-Clothing to Flame_Resistant_Clothing
+2025-06-15 01:23:52,000 - DEBUG - Generated new filename: Flame_Resistant_Clothing_20250615_012352_02b34a6a.pdf from original: Flame-Resistant-Clothing.pdf
+2025-06-15 01:23:52,000 - INFO - File 'Flame_Resistant_Clothing_20250615_012352_02b34a6a.pdf' saved at '/home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012352_02b34a6a.pdf'
+2025-06-15 01:23:52,000 - DEBUG - Sanitized filename from Flame-Resistant-Clothing-FRC-Requirements-Revision-3-2019-09-25-Final (1) to Flame_Resistant_Clothing_FRC_Requirements_Revision_3_2019_09_25_Final__1
+2025-06-15 01:23:52,000 - DEBUG - Generated new filename: Flame_Resistant_Clothing_FRC_Requirements_Revision_3_2019_09_25_Final__1_20250615_012352_73342c66.pdf from original: Flame-Resistant-Clothing-FRC-Requirements-Revision-3-2019-09-25-Final (1).pdf
+2025-06-15 01:23:52,002 - INFO - File 'Flame_Resistant_Clothing_FRC_Requirements_Revision_3_2019_09_25_Final__1_20250615_012352_73342c66.pdf' saved at '/home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_FRC_Requirements_Revision_3_2019_09_25_Final__1_20250615_012352_73342c66.pdf'
+2025-06-15 01:23:52,002 - DEBUG - Sanitized filename from whs-pub-ppe005 to whs_pub_ppe005
+2025-06-15 01:23:52,002 - DEBUG - Generated new filename: whs_pub_ppe005_20250615_012352_3dea7a14.pdf from original: whs-pub-ppe005.pdf
+2025-06-15 01:23:52,003 - INFO - File 'whs_pub_ppe005_20250615_012352_3dea7a14.pdf' saved at '/home/alrashid/Desktop/Immigration-ChatBot/assets/docs/whs_pub_ppe005_20250615_012352_3dea7a14.pdf'
+2025-06-15 01:23:52,003 - DEBUG - Sanitized filename from Full-year-results-FY-2024 to Full_year_results_FY_2024
+2025-06-15 01:23:52,003 - DEBUG - Generated new filename: Full_year_results_FY_2024_20250615_012352_a3d6d496.pdf from original: Full-year-results-FY-2024.pdf
+2025-06-15 01:23:52,006 - INFO - File 'Full_year_results_FY_2024_20250615_012352_a3d6d496.pdf' saved at '/home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Full_year_results_FY_2024_20250615_012352_a3d6d496.pdf'
+2025-06-15 01:55:13,598 - ERROR - Database connection error: unable to open database file
+2025-06-15 01:55:36,138 - ERROR - Database connection error: unable to open database file
+2025-06-15 01:57:06,332 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot
+2025-06-15 01:57:06,332 - ERROR - Database connection failed: unable to open database file
+2025-06-15 01:57:06,332 - ERROR - Database operation failed: unable to open database file
+2025-06-15 01:58:44,559 - ERROR - Filed to connect to the database: unable to open database file
+2025-06-15 01:59:49,997 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 01:59:50,006 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 02:06:19,133 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 02:06:19,137 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 02:06:19,137 - INFO - Database initialized successfully
+2025-06-15 02:08:33,567 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 02:08:33,568 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 02:08:33,568 - INFO - Database initialized successfully
+2025-06-15 02:08:33,572 - INFO - Table 'chunks' created successfully.
+2025-06-15 02:08:33,573 - INFO - Table 'query_responses' created successfully.
+2025-06-15 02:08:33,573 - ERROR - Error creating 'user_info' table: near ")": syntax error
+2025-06-15 02:08:53,181 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 02:08:53,183 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 02:08:53,183 - INFO - Database initialized successfully
+2025-06-15 02:08:53,183 - INFO - Table 'chunks' created successfully.
+2025-06-15 02:08:53,183 - INFO - Table 'query_responses' created successfully.
+2025-06-15 02:08:53,183 - ERROR - Error creating 'user_info' table: near ")": syntax error
+2025-06-15 02:09:58,774 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 02:09:58,775 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 02:09:58,775 - INFO - Database initialized successfully
+2025-06-15 02:09:58,775 - INFO - Table 'chunks' created successfully.
+2025-06-15 02:09:58,775 - INFO - Table 'query_responses' created successfully.
+2025-06-15 02:09:58,779 - INFO - Table 'user_info' created successfully.
+2025-06-15 02:20:56,507 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 02:20:56,510 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 02:20:56,513 - INFO - Inserted new user: john@example.com
+2025-06-15 02:20:56,514 - INFO - Inserted query-response for user user123
+2025-06-15 02:20:56,515 - INFO - Inserted 2 chunks successfully
+2025-06-15 02:32:41,857 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 02:32:41,858 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 02:32:41,859 - INFO - Fetched 1 rows from table 'user_info'
+2025-06-15 02:32:41,859 - INFO - Fetched 1 rows from table 'user_info'
+2025-06-15 02:32:41,859 - INFO - Fetched 1 rows from table 'user_info'
