@@ -193,3 +193,7 @@
 2025-06-15 00:51:40,206 - WARNING - No chunks were generated from the documents.
 2025-06-15 00:53:36,783 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
 2025-06-15 00:53:36,902 - INFO - Processed 9 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 00:59:09,998 - ERROR - Unexpected error processing file 
+                          /home/alrashid/Desktop/                          Immigration-ChatBot/assets/docs/Plastics_machinery.pdf: File path 
+                          /home/alrashid/Desktop/                          Immigration-ChatBot/assets/docs/Plastics_machinery.pdf is not a valid file or url
+2025-06-15 00:59:09,998 - WARNING - No chunks were generated from the documents.
