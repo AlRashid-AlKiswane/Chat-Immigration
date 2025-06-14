@@ -27,8 +27,11 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # pylint: disable=wrong-import-position
+# pylint: disable=logging-format-interpolation
+
 from src.logs.logger import setup_logging
 from src.helpers import get_settings, Settings
+from src.enums import DocToChunksMsg
 
 # Initialize application settings and logger
 app_settings: Settings = get_settings()
@@ -65,14 +68,14 @@ def load_and_chunk(file_path: Optional[str] = None) -> Dict[str, Any]:
                 if Path(f).suffix.lower().lstrip(".") in app_settings.FILE_TYPES
             ]
         except OSError as e:
-            logger.error("Failed to list files in directory: %s", e)
+            logger.error(DocToChunksMsg.DIRECTORY_ERROR.value.format(e))
             return {}
         except Exception as e:  # pylint: disable=broad-except
-            logger.error("Unexpected error listing files: %s", e)
+            logger.error(DocToChunksMsg.UNEXPECTED_LISTING_ERROR.value.format(e))
             return {}
 
     if not files_to_process:
-        logger.warning("No valid files found to process.")
+        logger.warning(DocToChunksMsg.NO_FILES_WARNING.value)
         return {}
 
     # Process each file
@@ -84,39 +87,41 @@ def load_and_chunk(file_path: Optional[str] = None) -> Dict[str, Any]:
             if extension in app_settings.FILE_TYPES:
                 try:
                     loader = PyMuPDFLoader(file)
-                    logger.debug("Loaded PDF file: %s", file)
+                    logger.debug(DocToChunksMsg.PDF_LOAD_SUCCESS.value.format(file))
                 except RuntimeError as e:
-                    logger.warning("Failed to load PDF with PyMuPDF: %s", e)
+                    logger.warning(DocToChunksMsg.PDF_LOAD_FAILURE.value.format(e))
                     try:
                         loader = TextLoader(file)
-                        logger.debug("Fallback to text loader: %s", file)
+                        logger.debug(
+                            DocToChunksMsg.FALLBACK_TEXT_LOAD.value.format(file)
+                        )
                     # pylint: disable=redefined-outer-name
                     except RuntimeError as e:
-                        logger.error("Failed to load file with TextLoader: %s", e)
+                        logger.error(DocToChunksMsg.TEXT_LOAD_FAILURE.value.format(e))
                         continue
             else:
-                logger.debug("Unsupported file type: %s", extension)
+                logger.debug(DocToChunksMsg.UNSUPPORTED_TYPE.value.format(extension))
                 continue
 
             documents = loader.load()
 
             splitter = RecursiveCharacterTextSplitter(
                 chunk_size=app_settings.CHUNKS_SIZE,
-                chunk_overlap=app_settings.CHUNKS_OVERLAP
+                chunk_overlap=app_settings.CHUNKS_OVERLAP,
             )
 
             chunks = splitter.split_documents(documents)
             all_chunks.extend(chunks)
             total_chunks += len(chunks)
-            logger.info("Processed %d chunks from %s", len(chunks), file)
+            logger.info(DocToChunksMsg.CHUNKING_SUCCESS.value.format(len(chunks), file))
 
         except RuntimeError as e:
-            logger.error("Error processing file %s: %s", file, e)
+            logger.error(DocToChunksMsg.PROCESSING_ERROR.value.format(file, e))
         except Exception as e:  # pylint: disable=broad-except
-            logger.error("Unexpected error processing file %s: %s", file, e)
+            logger.error(DocToChunksMsg.UNEXPECTED_ERROR.value.format(file, e))
 
     if not all_chunks:
-        logger.warning("No chunks were generated from the documents.")
+        logger.warning(DocToChunksMsg.NO_CHUNKS_WARNING.value)
         return {}
 
     try:
@@ -128,6 +133,5 @@ def load_and_chunk(file_path: Optional[str] = None) -> Dict[str, Any]:
         }
         return data
     except (AttributeError, KeyError) as e:
-        logger.error("Failed to construct output dictionary: %s", e)
+        logger.error(DocToChunksMsg.OUTPUT_ERROR.value.format(e))
         return {}
-
