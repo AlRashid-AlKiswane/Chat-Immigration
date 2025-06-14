@@ -29,7 +29,7 @@ Key Features:
     - Clear field descriptions for API documentation
 """
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field
 
 
@@ -56,3 +56,22 @@ class ChunkData(BaseModel):
         ..., description="List of source file paths or names for each chunk"
     )
     authors: List[str] = Field(..., description="List of authors for each chunk")
+
+
+class ChunksRequest(BaseModel):
+    """Request model for document chunking operation.
+
+    Attributes:
+        file_path: Optional path to a specific file to process. If not provided,
+                  all valid files in the configured directory will be processed.
+        do_rest: Flag indicating whether to reset/clear existing chunks before processing.
+                 0 = no reset, 1 = reset existing chunks.
+    """
+
+    file_path: Optional[str] = Field(
+        None,
+        description="Optional specific file path to process. Leave empty to process all files in directory.",
+    )
+    do_rest: int = Field(
+        0, description="Reset flag (0=no reset, 1=reset existing chunks)", ge=0, le=1
+    )
