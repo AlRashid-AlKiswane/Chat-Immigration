@@ -32,6 +32,7 @@ class Settings(BaseSettings):
     db_name: str = Field(..., env="DB_NAME")
     db_user: str = Field(..., env="DB_USER")
     db_password: str = Field(..., env="DB_PASSWORD")
+    SQLITE_DB: str = Field(..., env="SQLITE_DB")
 
     # API Configuration
     api_key: str = Field(..., env="API_KEY")
