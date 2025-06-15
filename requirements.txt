@@ -10,3 +10,6 @@ fastapi
 uvicorn
 python-multipart
 SQLite3-0611
+openai
+sentence-transformers
+
