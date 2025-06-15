@@ -21,8 +21,10 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # pylint: disable=wrong-import-position
+# pylint: disable=logging-format-interpolation
 from src.logs.logger import setup_logging
 from src.helpers import get_settings, Settings
+from src.enums import ClearMsg
 
 # Initialize application settings and logger
 logger = setup_logging()
@@ -43,30 +45,30 @@ def clear_table(conn: sqlite3.Connection, table_name: str) -> None:
         sqlite3.Error: For database-specific errors
     """
     if not isinstance(table_name, str) or not table_name.isidentifier():
-        error_msg = f"Invalid table name: '{table_name}'. Must be valid identifier."
+        error_msg = ClearMsg.INVALID_TABLE_NAME.value.format(table_name)
         logger.error(error_msg)
         raise ValueError(error_msg)
 
     cursor = None
     try:
-        logger.debug("Preparing to clear table: %s", table_name)
+        logger.debug(ClearMsg.TABLE_CLEAR_STARTED.value.format(table_name))
         cursor = conn.cursor()
         cursor.execute(f"DELETE FROM {table_name}")
         conn.commit()
-        logger.info("Successfully cleared table '%s'", table_name)
+        logger.info(ClearMsg.TABLE_CLEAR_SUCCESS.value.format(table_name))
 
     except sqlite3.OperationalError as e:
-        error_msg = f"Operational error clearing table '{table_name}': {e}"
+        error_msg = ClearMsg.CLEAR_OPERATION_ERROR.value.format(table_name, e)
         logger.error(error_msg)
         raise RuntimeError(error_msg) from e
 
     except sqlite3.DatabaseError as e:
-        error_msg = f"Database error clearing table '{table_name}': {e}"
+        error_msg = ClearMsg.DB_INTEGRITY_ERROR.value.format(table_name, e)
         logger.error(error_msg)
         raise RuntimeError(error_msg) from e
 
     except Exception as e:  # pylint: disable=broad-except
-        error_msg = f"Unexpected error clearing table '{table_name}': {e}"
+        error_msg = ClearMsg.CLEAR_OPERATION_ERROR.value.format(table_name, e)
         logger.exception(error_msg)
         raise RuntimeError(error_msg) from e
 
@@ -74,7 +76,6 @@ def clear_table(conn: sqlite3.Connection, table_name: str) -> None:
         if cursor:
             try:
                 cursor.close()
-                logger.debug("Cursor closed for table '%s'", table_name)
+                logger.debug(ClearMsg.CURSOR_CLOSED.value.format(table_name))
             except sqlite3.Error as e:
-                logger.warning("Error closing cursor: %s", e)
-
+                logger.warning(ClearMsg.CURSOR_ERROR.value.format(e))
