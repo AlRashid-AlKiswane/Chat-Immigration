@@ -26,6 +26,7 @@ from src.helpers import get_settings, Settings, get_db_conn
 from src.schema import ChunkData, ChunksRequest
 from src.database import clear_table, insert_chunks
 from src.controllers import load_and_chunk
+from src.utils import prepare_chunks_for_insertion
 
 # Initialize logger and settings
 logger = setup_logging()
@@ -70,7 +71,7 @@ async def docs_to_chunks(
                 content={"status": "error", "message": msg},
                 status_code=404
             )
-
+        data = prepare_chunks_for_insertion(data=data)
         insert_chunks(conn=conn, chunks_data=data)
         logger.info("Inserted %d chunks into database", len(data))
 
