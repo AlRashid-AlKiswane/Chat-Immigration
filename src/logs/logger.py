@@ -17,26 +17,11 @@ import os
 import sys
 
 try:
-    # Setup import path
     MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-    if not os.path.exists(MAIN_DIR):
-        raise FileNotFoundError(f"Project directory not found at: {MAIN_DIR}")
-
-    # Add to Python path only if it's not already there
-    if MAIN_DIR not in sys.path:
-        sys.path.append(MAIN_DIR)
-
-    from src.helpers import get_settings, Settings
-
-except ModuleNotFoundError as e:
-    logging.error("Module not found: %s", e, exc_info=True)
-except ImportError as e:
-    logging.error("Import error: %s", e, exc_info=True)
-except Exception as e:
-    logging.critical("Unexpected setup error: %s", e, exc_info=True)
-    raise
-
-app_settings: Settings = get_settings()
+    sys.path.append(MAIN_DIR)
+except (ImportError, OSError) as e:
+    logging.error("Failed to set up main directory path: %s", e)
+    sys.exit(1)
 
 # Define log colors
 COLORS = {
@@ -62,8 +47,8 @@ class ColoredFormatter(logging.Formatter):
 
 def setup_logging(
     log_dir=f"{MAIN_DIR}/logs",
-    log_file=app_settings.log_file,
-    console_level=app_settings.log_level,
+    log_file="app.log",
+    console_level="DEBUG",
 ):
     """
     Set up logging configuration with colored console output and file logging.
