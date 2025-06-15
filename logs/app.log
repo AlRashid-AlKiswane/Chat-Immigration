@@ -533,3 +533,38 @@ AttributeError: 'Settings' object has no attribute 'FILE_TYPE'
 2025-06-15 19:01:41,448 - INFO - Table 'user_info' created successfully.
 2025-06-15 19:01:41,448 - INFO - Table 'query_responses' created successfully.
 2025-06-15 19:01:41,448 - INFO - Database tables initialized successfully.
+2025-06-15 19:02:32,780 - INFO - Starting up Ramy Chatbot API...
+2025-06-15 19:02:32,780 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 19:02:32,781 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 19:02:32,781 - INFO - Table 'chunks' created successfully.
+2025-06-15 19:02:32,781 - INFO - Table 'user_info' created successfully.
+2025-06-15 19:02:32,781 - INFO - Table 'query_responses' created successfully.
+2025-06-15 19:02:32,782 - INFO - Database tables initialized successfully.
+2025-06-15 19:02:34,940 - INFO - Starting up Ramy Chatbot API...
+2025-06-15 19:02:34,940 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 19:02:34,940 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 19:02:34,941 - INFO - Table 'chunks' created successfully.
+2025-06-15 19:02:34,941 - INFO - Table 'user_info' created successfully.
+2025-06-15 19:02:34,941 - INFO - Table 'query_responses' created successfully.
+2025-06-15 19:02:34,941 - INFO - Database tables initialized successfully.
+2025-06-15 19:02:38,392 - INFO - Starting up Ramy Chatbot API...
+2025-06-15 19:02:38,392 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 19:02:38,393 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 19:02:38,393 - INFO - Table 'chunks' created successfully.
+2025-06-15 19:02:38,393 - INFO - Table 'user_info' created successfully.
+2025-06-15 19:02:38,393 - INFO - Table 'query_responses' created successfully.
+2025-06-15 19:02:38,393 - INFO - Database tables initialized successfully.
+2025-06-15 19:02:40,338 - INFO - Starting up Ramy Chatbot API...
+2025-06-15 19:02:40,338 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 19:02:40,339 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 19:02:40,339 - INFO - Table 'chunks' created successfully.
+2025-06-15 19:02:40,339 - INFO - Table 'user_info' created successfully.
+2025-06-15 19:02:40,339 - INFO - Table 'query_responses' created successfully.
+2025-06-15 19:02:40,339 - INFO - Database tables initialized successfully.
+2025-06-15 19:04:56,526 - INFO - Starting up Ramy Chatbot API...
+2025-06-15 19:04:56,529 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 19:04:56,530 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 19:04:56,530 - INFO - Table 'chunks' created successfully.
+2025-06-15 19:04:56,530 - INFO - Table 'user_info' created successfully.
+2025-06-15 19:04:56,530 - INFO - Table 'query_responses' created successfully.
+2025-06-15 19:04:56,531 - INFO - Database tables initialized successfully.
