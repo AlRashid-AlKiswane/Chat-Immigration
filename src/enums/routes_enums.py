@@ -1,27 +1,22 @@
 """
-File Upload Log Messages
+API Route Log Messages
 
-This module defines standardized log messages for file upload operations
-using an Enum class. These messages ensure consistent logging across all
-file upload components of the API.
-
-The messages are categorized by operation type and include format placeholders
-for dynamic values. Each message has an associated docstring explaining its
-purpose and usage context.
+This module defines standardized log messages for all API routes using Enum classes.
+These messages ensure consistent logging across all application components.
 
 Categories:
-    - File Validation: Messages for file type/extension validation
-    - File Operations: Messages for file saving and handling
-    - Upload Handling: Messages for upload processing
-    - Error Handling: Messages for error conditions
-    - System: Messages for system-level issues
+    - Validation: Input validation messages
+    - Operations: Core operation logging
+    - Status: Progress/state updates
+    - Errors: Error conditions
+    - System: Infrastructure-level issues
 
 Design Principles:
-    1. Consistent formatting with clear placeholder positions
-    2. Self-documenting message purposes
-    3. Categorized by operation type
-    4. Ready for internationalization (i18n)
-    5. Type-safe through Enum implementation
+    1. Placeholders ({}) for dynamic values
+    2. Self-documenting with context in docstrings
+    3. Categorized by operation phase
+    4. Ready for i18n (all strings in one place)
+    5. Type-safe via Enum
 """
 
 from enum import Enum
