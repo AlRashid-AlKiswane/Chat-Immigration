@@ -135,3 +135,4 @@ def load_and_chunk(file_path: Optional[str] = None) -> Dict[str, Any]:
     except (AttributeError, KeyError) as e:
         logger.error(DocToChunksMsg.OUTPUT_ERROR.value.format(e))
         return {}
+
