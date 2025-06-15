@@ -568,3 +568,60 @@ AttributeError: 'Settings' object has no attribute 'FILE_TYPE'
 2025-06-15 19:04:56,530 - INFO - Table 'user_info' created successfully.
 2025-06-15 19:04:56,530 - INFO - Table 'query_responses' created successfully.
 2025-06-15 19:04:56,531 - INFO - Database tables initialized successfully.
+2025-06-15 19:16:41,418 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012113_96e5bf0d.pdf
+2025-06-15 19:16:41,563 - INFO - Processed 49 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012113_96e5bf0d.pdf
+2025-06-15 19:16:41,563 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 19:16:41,589 - INFO - Processed 9 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 19:16:41,589 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Full_year_results_FY_2024_20250615_012352_a3d6d496.pdf
+2025-06-15 19:16:41,650 - INFO - Processed 57 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Full_year_results_FY_2024_20250615_012352_a3d6d496.pdf
+2025-06-15 19:16:41,651 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012352_02b34a6a.pdf
+2025-06-15 19:16:41,669 - INFO - Processed 49 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012352_02b34a6a.pdf
+2025-06-15 19:16:41,669 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_FRC_Requirements_Revision_3_2019_09_25_Final__1_20250615_012352_73342c66.pdf
+2025-06-15 19:16:41,680 - INFO - Processed 17 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_FRC_Requirements_Revision_3_2019_09_25_Final__1_20250615_012352_73342c66.pdf
+2025-06-15 19:16:41,680 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/whs_pub_ppe005_20250615_012352_3dea7a14.pdf
+2025-06-15 19:16:41,694 - INFO - Processed 19 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/whs_pub_ppe005_20250615_012352_3dea7a14.pdf
+2025-06-15 19:17:08,821 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012113_96e5bf0d.pdf
+2025-06-15 19:17:08,923 - INFO - Processed 49 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012113_96e5bf0d.pdf
+2025-06-15 19:17:08,923 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 19:17:08,948 - INFO - Processed 9 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 19:17:08,948 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Full_year_results_FY_2024_20250615_012352_a3d6d496.pdf
+2025-06-15 19:17:08,998 - INFO - Processed 57 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Full_year_results_FY_2024_20250615_012352_a3d6d496.pdf
+2025-06-15 19:17:08,998 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012352_02b34a6a.pdf
+2025-06-15 19:17:09,015 - INFO - Processed 49 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012352_02b34a6a.pdf
+2025-06-15 19:17:09,015 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_FRC_Requirements_Revision_3_2019_09_25_Final__1_20250615_012352_73342c66.pdf
+2025-06-15 19:17:09,024 - INFO - Processed 17 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_FRC_Requirements_Revision_3_2019_09_25_Final__1_20250615_012352_73342c66.pdf
+2025-06-15 19:17:09,024 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/whs_pub_ppe005_20250615_012352_3dea7a14.pdf
+2025-06-15 19:17:09,036 - INFO - Processed 19 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/whs_pub_ppe005_20250615_012352_3dea7a14.pdf
+2025-06-15 19:18:16,275 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 19:18:16,389 - INFO - Processed 9 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 19:29:55,075 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-15 19:29:55,075 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 19:29:55,076 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 19:29:55,076 - INFO - Table 'chunks' created successfully.
+2025-06-15 19:29:55,076 - INFO - Table 'user_info' created successfully.
+2025-06-15 19:29:55,076 - INFO - Table 'query_responses' created successfully.
+2025-06-15 19:29:55,076 - INFO - [Startup] Database tables initialized successfully.
+2025-06-15 19:30:05,214 - INFO - Starting chunking process for: [ALL DOCUMENTS]
+2025-06-15 19:30:05,215 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012113_96e5bf0d.pdf
+2025-06-15 19:30:05,340 - INFO - Processed 49 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012113_96e5bf0d.pdf
+2025-06-15 19:30:05,341 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 19:30:05,363 - INFO - Processed 9 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 19:30:05,364 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Full_year_results_FY_2024_20250615_012352_a3d6d496.pdf
+2025-06-15 19:30:05,423 - INFO - Processed 57 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Full_year_results_FY_2024_20250615_012352_a3d6d496.pdf
+2025-06-15 19:30:05,423 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012352_02b34a6a.pdf
+2025-06-15 19:30:05,442 - INFO - Processed 49 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012352_02b34a6a.pdf
+2025-06-15 19:30:05,442 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_FRC_Requirements_Revision_3_2019_09_25_Final__1_20250615_012352_73342c66.pdf
+2025-06-15 19:30:05,451 - INFO - Processed 17 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_FRC_Requirements_Revision_3_2019_09_25_Final__1_20250615_012352_73342c66.pdf
+2025-06-15 19:30:05,452 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/whs_pub_ppe005_20250615_012352_3dea7a14.pdf
+2025-06-15 19:30:05,465 - INFO - Processed 19 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/whs_pub_ppe005_20250615_012352_3dea7a14.pdf
+2025-06-15 19:30:05,471 - INFO - Inserted 200 chunks successfully
+2025-06-15 19:30:05,471 - INFO - Inserted 200 chunks into database
+2025-06-15 19:31:27,260 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-15 19:31:27,268 - INFO - [Shutdown] Database connection closed.
+2025-06-15 19:31:28,044 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-15 19:31:28,044 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 19:31:28,044 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 19:31:28,045 - INFO - Table 'chunks' created successfully.
+2025-06-15 19:31:28,045 - INFO - Table 'user_info' created successfully.
+2025-06-15 19:31:28,045 - INFO - Table 'query_responses' created successfully.
+2025-06-15 19:31:28,045 - INFO - [Startup] Database tables initialized successfully.
