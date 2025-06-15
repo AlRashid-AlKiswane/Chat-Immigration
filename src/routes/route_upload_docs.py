@@ -30,9 +30,11 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # pylint: disable=wrong-import-position
+# pylint: disable=logging-format-interpolation
 from src.logs.logger import setup_logging
 from src.helpers import get_settings, Settings
 from src.controllers import generate_unique_filename
+from src.enums import FileUploadMsg
 
 # Initialize logger and settings
 logger = setup_logging()
@@ -43,39 +45,43 @@ upload_route = APIRouter()
 UPLOAD_DIR = app_settings.DOC_LOCATION_SAVE
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+
 def _save_uploaded_file(file: UploadFile, upload_dir: str) -> dict:
     """Helper function to save an uploaded file with validation."""
     sanitized_filename = generate_unique_filename(file.filename)
     file_extension = os.path.splitext(sanitized_filename)[1].lower().lstrip(".")
 
     if file_extension not in app_settings.FILE_TYPES:
-        logger.warning("Attempted upload with disallowed file type: %s", file_extension)
+        logger.warning(FileUploadMsg.INVALID_FILE_TYPE.value.format(file_extension))
         raise HTTPException(
             status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
-            detail=f"Unsupported file type: {file_extension}"
+            detail=FileUploadMsg.get_http_detail(
+                FileUploadMsg.INVALID_FILE_TYPE, file_extension
+            ),
         )
 
     file_location = os.path.join(upload_dir, sanitized_filename)
     try:
         with open(file_location, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
-        logger.info("File '%s' saved at '%s'", sanitized_filename, file_location)
+        logger.info(
+            FileUploadMsg.FILE_SAVED.value.format(sanitized_filename, file_location)
+        )
         return {
             "filename": sanitized_filename,
             "saved_to": file_location,
-            "size": os.path.getsize(file_location)
+            "size": os.path.getsize(file_location),
         }
     except OSError as e:
-        logger.error("Failed to save uploaded file: %s", e)
+        logger.error(FileUploadMsg.FILE_SAVE_ERROR.value.format(e))
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to save the uploaded file."
+            detail=FileUploadMsg.get_http_detail(FileUploadMsg.FILE_SAVE_ERROR, str(e)),
         ) from e
 
+
 @upload_route.post("/upload/")
-async def upload_single_file(
-    file: UploadFile = File(...)
-):
+async def upload_single_file(file: UploadFile = File(...)):
     """
     Upload a single file to the server after validating its extension.
 
@@ -88,26 +94,28 @@ async def upload_single_file(
     """
     try:
         file_info = _save_uploaded_file(file, UPLOAD_DIR)
+        logger.info(FileUploadMsg.SINGLE_UPLOAD_SUCCESS.value.format(file.filename))
         return JSONResponse(
             status_code=status.HTTP_200_OK,
             content={
-                "message": "File uploaded successfully.",
-                "file": file_info
-            }
+                "message": FileUploadMsg.SINGLE_UPLOAD_SUCCESS.value.format(
+                    file.filename
+                ),
+                "file": file_info,
+            },
         )
     except HTTPException:
         raise
     except Exception as e:  # pylint: disable=broad-except
-        logger.exception("Unexpected error during file upload: %s", e)
+        logger.exception(FileUploadMsg.UPLOAD_ERROR.value.format(e))
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="An unexpected error occurred during upload."
+            detail=FileUploadMsg.get_http_detail(FileUploadMsg.UPLOAD_ERROR, str(e)),
         ) from e
 
+
 @upload_route.post("/upload/multiple/")
-async def upload_multiple_files(
-    files: List[UploadFile] = File(...)
-):
+async def upload_multiple_files(files: List[UploadFile] = File(...)):
     """
     Upload multiple files to the server after validating their extensions.
 
@@ -118,41 +126,48 @@ async def upload_multiple_files(
     Returns:
         JSONResponse: Response indicating success/failure for each file.
     """
-    results = {
-        "successful": [],
-        "failed": []
-    }
+    results = {"successful": [], "failed": []}
 
     for file in files:
         try:
             file_info = _save_uploaded_file(file, UPLOAD_DIR)
-            results["successful"].append({
-                "original_filename": file.filename,
-                **file_info
-            })
+            results["successful"].append(
+                {"original_filename": file.filename, **file_info}
+            )
         except HTTPException as e:
-            results["failed"].append({
-                "filename": file.filename,
-                "error": e.detail,
-                "status_code": e.status_code
-            })
+            results["failed"].append(
+                {
+                    "filename": file.filename,
+                    "error": e.detail,
+                    "status_code": e.status_code,
+                }
+            )
         except Exception as e:  # pylint: disable=broad-except
-            logger.exception("Unexpected error during file upload: %s", e)
-            results["failed"].append({
-                "filename": file.filename,
-                "error": "Internal server error",
-                "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR
-            })
+            logger.exception(FileUploadMsg.UPLOAD_ERROR.value.format(e))
+            results["failed"].append(
+                {
+                    "filename": file.filename,
+                    "error": "Internal server error",
+                    "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
+                }
+            )
+    logger.info(
+        FileUploadMsg.MULTI_UPLOAD_SUCCESS.value.format(
+            len(results["successful"]), len(results["failed"])
+        )
+    )
 
     return JSONResponse(
         status_code=status.HTTP_207_MULTI_STATUS,
         content={
-            "message": "Batch upload processed",
+            "message": FileUploadMsg.MULTI_UPLOAD_SUCCESS.value.format(
+                len(results["successful"]), len(results["failed"])
+            ),
             "results": results,
             "summary": {
                 "total": len(files),
                 "successful": len(results["successful"]),
-                "failed": len(results["failed"])
-            }
-        }
+                "failed": len(results["failed"]),
+            },
+        },
     )
