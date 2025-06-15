@@ -469,3 +469,17 @@ AttributeError: 'Settings' object has no attribute 'FILE_TYPE'
 2025-06-15 12:25:34,438 - INFO - Table 'user_info' created successfully.
 2025-06-15 12:25:34,438 - INFO - Table 'query_responses' created successfully.
 2025-06-15 12:25:34,438 - INFO - Database tables initialized successfully.
+2025-06-15 12:32:27,833 - INFO - Starting up Ramy Chatbot API...
+2025-06-15 12:32:27,833 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 12:32:27,834 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 12:32:27,834 - INFO - Table 'chunks' created successfully.
+2025-06-15 12:32:27,834 - INFO - Table 'user_info' created successfully.
+2025-06-15 12:32:27,834 - INFO - Table 'query_responses' created successfully.
+2025-06-15 12:32:27,834 - INFO - Database tables initialized successfully.
+2025-06-15 12:32:29,624 - INFO - Starting up Ramy Chatbot API...
+2025-06-15 12:32:29,624 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 12:32:29,625 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 12:32:29,625 - INFO - Table 'chunks' created successfully.
+2025-06-15 12:32:29,625 - INFO - Table 'user_info' created successfully.
+2025-06-15 12:32:29,625 - INFO - Table 'query_responses' created successfully.
+2025-06-15 12:32:29,625 - INFO - Database tables initialized successfully.
