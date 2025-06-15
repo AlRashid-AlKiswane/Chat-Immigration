@@ -47,6 +47,8 @@ class Settings(BaseSettings):
     DOC_LOCATION_SAVE: str = Field(..., env="DOC_LOCATION_SAVE")
     CHUNKS_SIZE: int = Field(..., env="CHUNKS_SIZE")
     CHUNKS_OVERLAP: int = Field(..., env="CHUNKS_OVERLAB")
+
+    EMBEDDING_MODEL: str = Field(..., env="EMBEDDING_MODEL")
     # pylint: disable=too-few-public-methods
     class Config:
         """
