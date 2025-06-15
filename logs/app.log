@@ -483,3 +483,53 @@ AttributeError: 'Settings' object has no attribute 'FILE_TYPE'
 2025-06-15 12:32:29,625 - INFO - Table 'user_info' created successfully.
 2025-06-15 12:32:29,625 - INFO - Table 'query_responses' created successfully.
 2025-06-15 12:32:29,625 - INFO - Database tables initialized successfully.
+2025-06-15 18:59:15,481 - INFO - Starting up Ramy Chatbot API...
+2025-06-15 18:59:15,481 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 18:59:15,483 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 18:59:15,483 - INFO - Table 'chunks' created successfully.
+2025-06-15 18:59:15,483 - INFO - Table 'user_info' created successfully.
+2025-06-15 18:59:15,483 - INFO - Table 'query_responses' created successfully.
+2025-06-15 18:59:15,483 - INFO - Database tables initialized successfully.
+2025-06-15 18:59:48,707 - INFO - Starting up Ramy Chatbot API...
+2025-06-15 18:59:48,708 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 18:59:48,715 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 18:59:48,715 - INFO - Table 'chunks' created successfully.
+2025-06-15 18:59:48,716 - INFO - Table 'user_info' created successfully.
+2025-06-15 18:59:48,716 - INFO - Table 'query_responses' created successfully.
+2025-06-15 18:59:48,716 - INFO - Database tables initialized successfully.
+2025-06-15 18:59:49,398 - INFO - Starting up Ramy Chatbot API...
+2025-06-15 18:59:49,398 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 18:59:49,399 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 18:59:49,399 - INFO - Table 'chunks' created successfully.
+2025-06-15 18:59:49,399 - INFO - Table 'user_info' created successfully.
+2025-06-15 18:59:49,399 - INFO - Table 'query_responses' created successfully.
+2025-06-15 18:59:49,399 - INFO - Database tables initialized successfully.
+2025-06-15 19:00:56,805 - INFO - Starting chunking process for: [ALL DOCUMENTS]
+2025-06-15 19:00:56,806 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012113_96e5bf0d.pdf
+2025-06-15 19:00:56,972 - INFO - Processed 49 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012113_96e5bf0d.pdf
+2025-06-15 19:00:56,973 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 19:00:56,999 - INFO - Processed 9 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Plastics_machinery.pdf
+2025-06-15 19:00:56,999 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Full_year_results_FY_2024_20250615_012352_a3d6d496.pdf
+2025-06-15 19:00:57,064 - INFO - Processed 57 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Full_year_results_FY_2024_20250615_012352_a3d6d496.pdf
+2025-06-15 19:00:57,064 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012352_02b34a6a.pdf
+2025-06-15 19:00:57,083 - INFO - Processed 49 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_20250615_012352_02b34a6a.pdf
+2025-06-15 19:00:57,083 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_FRC_Requirements_Revision_3_2019_09_25_Final__1_20250615_012352_73342c66.pdf
+2025-06-15 19:00:57,096 - INFO - Processed 17 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/Flame_Resistant_Clothing_FRC_Requirements_Revision_3_2019_09_25_Final__1_20250615_012352_73342c66.pdf
+2025-06-15 19:00:57,096 - DEBUG - Loaded PDF file: /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/whs_pub_ppe005_20250615_012352_3dea7a14.pdf
+2025-06-15 19:00:57,113 - INFO - Processed 19 chunks from /home/alrashid/Desktop/Immigration-ChatBot/assets/docs/whs_pub_ppe005_20250615_012352_3dea7a14.pdf
+2025-06-15 19:00:57,113 - ERROR - Error inserting chunks: Incorrect number of bindings supplied. The current statement uses 4, and there are 6 supplied.
+2025-06-15 19:00:57,114 - INFO - Inserted 4 chunks into database
+2025-06-15 19:01:39,458 - INFO - Starting up Ramy Chatbot API...
+2025-06-15 19:01:39,458 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 19:01:39,459 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 19:01:39,459 - INFO - Table 'chunks' created successfully.
+2025-06-15 19:01:39,459 - INFO - Table 'user_info' created successfully.
+2025-06-15 19:01:39,459 - INFO - Table 'query_responses' created successfully.
+2025-06-15 19:01:39,459 - INFO - Database tables initialized successfully.
+2025-06-15 19:01:41,447 - INFO - Starting up Ramy Chatbot API...
+2025-06-15 19:01:41,448 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 19:01:41,448 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 19:01:41,448 - INFO - Table 'chunks' created successfully.
+2025-06-15 19:01:41,448 - INFO - Table 'user_info' created successfully.
+2025-06-15 19:01:41,448 - INFO - Table 'query_responses' created successfully.
+2025-06-15 19:01:41,448 - INFO - Database tables initialized successfully.
