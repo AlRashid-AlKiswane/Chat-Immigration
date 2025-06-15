@@ -25,7 +25,7 @@ from src.database import (
 logger = setup_logging()
 app_settings: Settings = get_settings()
 
-app = FastAPI(title="Ramy Chatbot API", version="1.0.0")
+app = FastAPI(title="Immigration-Chat", version="1.0.0")
 
 @app.on_event("startup")
 async def startup_event():
