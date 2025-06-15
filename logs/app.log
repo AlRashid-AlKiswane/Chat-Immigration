@@ -625,3 +625,14 @@ AttributeError: 'Settings' object has no attribute 'FILE_TYPE'
 2025-06-15 19:31:28,045 - INFO - Table 'user_info' created successfully.
 2025-06-15 19:31:28,045 - INFO - Table 'query_responses' created successfully.
 2025-06-15 19:31:28,045 - INFO - [Startup] Database tables initialized successfully.
+2025-06-15 19:32:55,733 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-15 19:32:55,733 - INFO - [Shutdown] Database connection closed.
+2025-06-15 19:32:56,323 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-15 19:32:56,324 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 19:32:56,324 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 19:32:56,324 - INFO - Table 'chunks' created successfully.
+2025-06-15 19:32:56,324 - INFO - Table 'user_info' created successfully.
+2025-06-15 19:32:56,324 - INFO - Table 'query_responses' created successfully.
+2025-06-15 19:32:56,324 - INFO - [Startup] Database tables initialized successfully.
+2025-06-15 19:32:57,830 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-15 19:32:57,830 - INFO - [Shutdown] Database connection closed.
