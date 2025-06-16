@@ -21,7 +21,7 @@ except (ImportError, OSError) as e:
 # pylint: disable=wrong-import-position
 from src.logs import setup_logging
 from src.helpers import get_settings, Settings
-from .__abc_llm import BaseLLM
+from src.llms.__abc_llm import BaseLLM
 
 # Initialize logger and settings
 logger = setup_logging()
@@ -39,9 +39,9 @@ class DeepSeekLLM(BaseLLM):
     def __init__(self, model_name: Optional[str] = None) -> None:
         """Initialize the DeepSeek LLM with optional custom model name."""
         self.model_name = model_name or app_settings.DEEPSEEK_MODEL
-        self.api_key = app_settings.DEEPSEEK_API_KEY
+        self.api_key = app_settings.DEEPSEEK_APIK
         self.base_url = app_settings.DEEPSEEK_API_BASE or "https://api.deepseek.com"
-        
+
         self.client = OpenAI(
             api_key=self.api_key,
             base_url=self.base_url
@@ -81,7 +81,9 @@ class DeepSeekLLM(BaseLLM):
         try:
             response = self.client.chat.completions.create(
                 model=self.model_name,
-                messages=prompt,
+                messages=[
+                    {"role": "user", "content": prompt}
+                ],                
                 temperature=kwargs.get("temperature", 0.7),
                 max_tokens=kwargs.get("max_tokens", 1024),
                 top_p=kwargs.get("top_p", 1.0),
@@ -128,3 +130,8 @@ class DeepSeekLLM(BaseLLM):
                 "stream": "boolean"
             }
         }
+
+if __name__ == "__main__":
+    model = DeepSeekLLM()
+    response = model.generate_response(prompt="What is RNN in machine learning?")
+    print(response)

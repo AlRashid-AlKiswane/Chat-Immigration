@@ -23,7 +23,7 @@ except (ImportError, OSError) as e:
 # pylint: disable=wrong-import-position
 from src.logs import setup_logging
 from src.helpers import get_settings, Settings
-from .__abc_llm import BaseLLM
+from src.llms.__abc_llm import BaseLLM
 # Initialize logger and settings
 logger = setup_logging()
 app_settings: Settings = get_settings()
@@ -66,10 +66,10 @@ class OpenAILLM(BaseLLM):
             logger.error("Empty prompt provided to OpenAI LLM.")
             raise ValueError("Prompt must not be empty.")
         try:
-
+            messages = [{"role": "user", "content": prompt}]
             response = self.client.chat.completions.create(
                 model=self.model_name,
-                messages=prompt,
+                messages=messages,
                 temperature=kwargs.get("temperature", 0.7),
                 max_tokens=kwargs.get("max_tokens", 256),
                 top_p=kwargs.get("top_p", 1.0),
@@ -109,3 +109,8 @@ class OpenAILLM(BaseLLM):
                 "presence_penalty": "float"
             }
         }
+
+if __name__ == "__main__":
+    model = OpenAILLM()
+    response = model.generate_response(prompt="Hello how are you")
+    print(response)

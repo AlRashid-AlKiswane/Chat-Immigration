@@ -21,7 +21,7 @@ except (ImportError, OSError) as e:
 # pylint: disable=wrong-import-position
 from src.logs import setup_logging
 from src.helpers import get_settings, Settings
-from .__abc_llm import BaseLLM
+from src.llms.__abc_llm import BaseLLM
 
 # Initialize logger and settings
 logger = setup_logging()
@@ -129,3 +129,8 @@ class GeminiLLM(BaseLLM):
                 "top_k": "int"
             }
         }
+
+if __name__ == "__main__":
+    model = GeminiLLM()
+    response = model.generate_response(prompt="What is the AI?")
+    print(response)
