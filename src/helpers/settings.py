@@ -8,9 +8,10 @@ This module provides a Settings class that loads configuration from:
 """
 
 import sys
-from typing import List, Literal
+from typing import List, Literal, Optional
 from pydantic import Field, ValidationError
 from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
     """
@@ -27,18 +28,18 @@ class Settings(BaseSettings):
 
     EMBEDDING_MODEL: str = Field(..., env="EMBEDDING_MODEL")
 
-    OPENAI_APIK: str = Field(..., env="OPENAI_APIK")
-    OPENAI_MODEL: str = Field(..., env="OPENAI_APIK")
-    GEMINI_APIK: str = Field(..., env="GEMINI_APIK")
-    GEMINI_MODEL: str = Field(..., env="GEMINI_MODEL")
+    OPENAI_APIK: Optional[str] = Field(None, env="OPENAI_APIK")
+    OPENAI_MODEL: Optional[str] = Field(None, env="OPENAI_MODEL")
 
-    COHERE_APIK: str = Field(..., env="COHERE_APIK")
-    OHERE_MODEL: str = Field(..., env="OHERE_MODEL")
+    GEMINI_APIK: Optional[str] = Field(None, env="GEMINI_APIK")
+    GEMINI_MODEL: Optional[str] = Field(None, env="GEMINI_MODEL")
 
-    HUGGINGFACE_MODEL: str = Field(..., env="HUGGINGFACE_MODEL")
-    HUGGINGFACE_APIK: str = Field(..., env="HUGGINGFACE_APIK")
+    COHERE_APIK: Optional[str] = Field(None, env="COHERE_APIK")
+    COHERE_MODEL: Optional[str] = Field(None, env="COHERE_MODEL")
 
-    # pylint: disable=too-few-public-methods
+    HUGGINGFACE_MODEL: Optional[str] = Field(None, env="HUGGINGFACE_MODEL")
+    HUGGINGFACE_APIK: Optional[str] = Field(None, env="HUGGINGFACE_APIK")
+
     class Config:
         """
         Pydantic configuration for environment file loading.
@@ -46,6 +47,7 @@ class Settings(BaseSettings):
         env_file = ".env"
         env_file_encoding = "utf-8"
         case_sensitive = False
+
 
 def get_settings() -> Settings:
     """
@@ -67,7 +69,7 @@ settings = get_settings()
 
 
 if __name__ == "__main__":
-    # Example usage
-    print(f"Application: {settings.app_name}")
-    print(f"Environment: {settings.app_env}")
-    print(f"Database: {settings.db_host}:{settings.db_port}")
+    # Example usage for debugging
+    print(f"Doc Save Location: {settings.DOC_LOCATION_SAVE}")
+    print(f"OpenAI Model: {settings.OPENAI_MODEL}")
+    print(f"HuggingFace Model: {settings.HUGGINGFACE_MODEL}")
