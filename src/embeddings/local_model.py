@@ -29,7 +29,7 @@ logger = setup_logging()
 app_settings: Settings = get_settings()
 
 
-class EmbeddingModel:
+class HuggingFaceModel:
     """
     Handles SentenceTransformer-based embeddings.
 
