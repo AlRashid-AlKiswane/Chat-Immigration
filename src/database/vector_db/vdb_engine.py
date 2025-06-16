@@ -46,7 +46,7 @@ def get_chroma_client() -> Optional[Client]:
         logger.info("Initializing ChromaDB client")
         chroma_client = Client(ChromaSettings(
             chroma_db_impl="duckdb+parquet",
-            persist_directory=app_settings.chroma_persist_dir
+            persist_directory=app_settings.CHROMA_PERSIST_DIR
         ))
         logger.debug("ChromaDB client initialized successfully")
         return chroma_client

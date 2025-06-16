@@ -57,8 +57,10 @@ async def lifespan(app: FastAPI):
         init_query_response_table(conn=app.state.conn)
         logger.info("[Startup] Database tables initialized successfully.")
 
-        app.state.embedd_name = app_settings.embedd_model_name
-        app.state.embedding = run_embedding_model(app.state.embedd_name)
+        # Do not initialize embedding model unless already set
+        app.state.embedding = None
+        app.state.embedd_name = None
+
         logger.info("[Startup] Embedding model loaded: %s", app.state.embedd_name)
 
         app.state.vdb_client = get_chroma_client()

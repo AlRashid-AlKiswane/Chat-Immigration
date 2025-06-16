@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     Note:
     - Sensitive credentials are stored as SecretStr
     - Required database paths are validated
-    - All API keys are optional for local development
+    - All APIks are optional for local development
     """
 
     # Database Configuration
@@ -30,7 +30,12 @@ class Settings(BaseSettings):
         env="SQLITE_DB",
         description="SQLite database connection string"
     )
-    
+    CHROMA_PERSIST_DIR: str = Field(
+        ...,
+        env="CHROMA_PERSIST_DIR",
+        description="Chroma Persusu Dir string"
+
+    )
     # Document Processing
     FILE_TYPES: List[str] = Field(
         ["txt", "pdf"],
@@ -65,10 +70,10 @@ class Settings(BaseSettings):
     )
 
     # API Configurations (all optional)
-    OPENAI_API_KEY: Optional[SecretStr] = Field(
+    OPENAI_APIK: Optional[SecretStr] = Field(
         None,
-        env="OPENAI_API_KEY",
-        description="OpenAI API key (keep secret!)"
+        env="OPENAI_APIK",
+        description="OpenAI APIk (keep secret!)"
     )
     OPENAI_MODEL: Optional[str] = Field(
         None,
@@ -77,10 +82,10 @@ class Settings(BaseSettings):
     )
 
     # [Similar SecretStr patterns for other APIs...]
-    GEMINI_API_KEY: Optional[SecretStr] = Field(None, env="GEMINI_API_KEY")
-    COHERE_API_KEY: Optional[SecretStr] = Field(None, env="COHERE_API_KEY")
-    HUGGINGFACE_API_KEY: Optional[SecretStr] = Field(None, env="HUGGINGFACE_API_KEY")
-    DEEPSEEK_API_KEY: Optional[SecretStr] = Field(None, env="DEEPSEEK_API_KEY")
+    GEMINI_APIK: Optional[SecretStr] = Field(None, env="GEMINI_APIK")
+    COHERE_APIK: Optional[SecretStr] = Field(None, env="COHERE_APIK")
+    HUGGINGFACE_APIK: Optional[SecretStr] = Field(None, env="HUGGINGFACE_APIK")
+    DEEPSEEK_APIK: Optional[SecretStr] = Field(None, env="DEEPSEEK_APIK")
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -127,5 +132,5 @@ if __name__ == "__main__":
     print(f"Chunk Size: {settings.CHUNKS_SIZE}")
     
     # Example of accessing a secret (would show as '***********' in logs)
-    if settings.OPENAI_API_KEY:
-        print("OpenAI configured (key hidden)")
+    if settings.OPENAI_APIK:
+        print("OpenAI configured k hidden)")
