@@ -58,3 +58,42 @@ class FileUploadMsg(Enum):
     def get_http_detail(msg_enum, *args) -> str:
         """Helper to create consistent HTTP error details from enum messages."""
         return msg_enum.value.format(*args)
+
+
+class DocsToChunks(Enum):
+    """Standardized messages for document chunking API operations"""
+
+    # --- Initialization ---
+    API_STARTED = "[ROUTE(S)] [DOCSTOCHUNKS] Chunking API initialized"
+    """API ready to process documents. Version: {version} | Endpoint: {endpoint}"""
+
+    # --- Processing ---
+    PROCESS_STARTED = "[ROUTE(S)] [DOCSTOCHUNKS] Starting chunking for: {}"
+    """Document source: {source_type} | Reset flag: {do_reset}"""
+
+    TABLE_CLEARED = "[ROUTE(S)] [DOCSTOCHUNKS] Cleared 'chunks' table"
+    """Table: {table_name} | Rows affected: {row_count}"""
+
+    NO_DOCUMENTS = "[ROUTE(S)] [DOCSTOCHUNKS] No valid documents found"
+    """File path: {file_path} | File exists: {file_exists}"""
+
+    CHUNKS_CREATED = "[ROUTE(S)] [DOCSTOCHUNKS] Created {} chunks"
+    """Avg chunk size: {avg_tokens} tokens | Documents: {doc_count}"""
+
+    # --- Database Operations ---
+    CHUNKS_INSERTED = "[ROUTE(S)] [DOCSTOCHUNKS] Inserted {chunk_count} chunks"
+    """Table: {table_name} | Duration: {duration_ms:.1f}ms"""
+
+    # --- Error Handling ---
+    VALIDATION_ERROR = "[ROUTE(S)] [DOCSTOCHUNKS] {error}"
+    """Field: {field} | Value: {value} | Rule: {validation_rule}"""
+
+    DB_ERROR = "[ROUTE(S)] [DOCSTOCHUNKS] Operation failed: {error}"
+    """Table: {table_name} | Query: {query} | Error code: {error_code}"""
+
+    UNEXPECTED_ERROR = "[ROUTE(S)] [DOCSTOCHUNKS] Unexpected error: {error}"
+    """Trace ID: {trace_id} | Component: {component}"""
+
+    # --- Success ---
+    OPERATION_SUCCESS = "[ROUTE(S)] [DOCSTOCHUNKS] Successfully processed request"
+    """Chunks: {chunk_count} | Documents: {doc_count} | Duration: {total_seconds:.1f}s"""
