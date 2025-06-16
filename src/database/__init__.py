@@ -38,3 +38,9 @@ from .table_db import (
     insert_query_response,
     insert_user,
 )
+
+from .vector_db import (
+    get_chroma_client,
+    insert_documents,
+    search_documents
+)
