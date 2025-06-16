@@ -625,3 +625,97 @@ AttributeError: 'Settings' object has no attribute 'FILE_TYPE'
 2025-06-15 19:31:28,045 - INFO - Table 'user_info' created successfully.
 2025-06-15 19:31:28,045 - INFO - Table 'query_responses' created successfully.
 2025-06-15 19:31:28,045 - INFO - [Startup] Database tables initialized successfully.
+2025-06-15 19:32:55,733 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-15 19:32:55,733 - INFO - [Shutdown] Database connection closed.
+2025-06-15 19:32:56,323 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-15 19:32:56,324 - DEBUG - Verified database directory: /home/alrashid/Desktop/Immigration-ChatBot/database
+2025-06-15 19:32:56,324 - INFO - Successfully connected to database: /home/alrashid/Desktop/Immigration-ChatBot/database/tables.db
+2025-06-15 19:32:56,324 - INFO - Table 'chunks' created successfully.
+2025-06-15 19:32:56,324 - INFO - Table 'user_info' created successfully.
+2025-06-15 19:32:56,324 - INFO - Table 'query_responses' created successfully.
+2025-06-15 19:32:56,324 - INFO - [Startup] Database tables initialized successfully.
+2025-06-15 19:32:57,830 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-15 19:32:57,830 - INFO - [Shutdown] Database connection closed.
+2025-06-15 21:55:52,541 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 21:55:52,568 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 21:55:58,601 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 21:55:58,601 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 21:57:03,423 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 21:57:03,451 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 21:57:05,573 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 21:57:05,573 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:08:26,348 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 22:08:26,377 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 22:08:27,352 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:08:27,352 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:09:55,716 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 22:09:55,748 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 22:10:01,700 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:10:01,700 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:13:21,058 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 22:13:21,086 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 22:13:22,240 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:13:22,240 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:13:56,142 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 22:13:56,167 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 22:14:01,904 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:14:01,904 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:20:12,468 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 22:20:12,492 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 22:20:13,919 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:20:13,919 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:30:03,014 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 22:30:03,045 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 22:30:18,779 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:30:18,779 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-16 07:17:51,303 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-16 07:17:51,332 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-16 07:17:51,977 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-16 07:17:51,977 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-16 07:19:41,807 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-16 07:19:41,825 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-16 07:19:42,417 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-16 07:19:42,417 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-16 06:52:51,831 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-16 06:52:51,855 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-16 06:52:52,574 - INFO - Successfully generated embeddings for 1 texts across 1 batches
+2025-06-16 06:56:23,445 - INFO - Initialized OpenAI LLM with model: gpt-4o-2024-08-06
+2025-06-16 06:56:24,259 - ERROR - OpenAI API call failed: Error code: 400 - {'error': {'message': "Invalid type for 'messages': expected an array of objects, but got a string instead.", 'type': 'invalid_request_error', 'param': 'messages', 'code': 'invalid_type'}}
+2025-06-16 06:59:41,797 - INFO - Initialized OpenAI LLM with model: gpt-4o-2024-08-06
+2025-06-16 06:59:43,131 - INFO - OpenAI response generated successfully.
+2025-06-16 07:02:53,451 - ERROR - Gemini API key is not set correctly.
+2025-06-16 07:03:15,362 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-16 07:03:17,429 - INFO - Gemini response generated.
+2025-06-16 07:09:55,326 - INFO - Initialized Cohere LLM with model: command-r-plus-free
+2025-06-16 07:09:55,326 - ERROR - Cohere API call failed: BaseCohere.chat() got an unexpected keyword argument 'stream'
+2025-06-16 07:11:21,275 - INFO - Initialized Cohere LLM with model: command-r-plus-free
+2025-06-16 07:11:21,495 - ERROR - Cohere API call failed: status_code: 404, body: {'message': "model 'command-r-plus-free' not found, make sure the correct model ID was used and that you have access to the model."}
+2025-06-16 07:13:56,454 - INFO - Initialized Cohere LLM with model: command-r
+2025-06-16 07:13:58,568 - INFO - Cohere response generated successfully.
+2025-06-16 07:27:48,959 - INFO - Initialized DeepSeek LLM with model: DeepSeek-V3
+2025-06-16 07:27:49,529 - ERROR - DeepSeek API call failed: Failed to deserialize the JSON body into the target type: messages: invalid type: string "What is RNN in machine learning?", expected a sequence at line 1 column 46
+2025-06-16 07:28:51,893 - INFO - Initialized DeepSeek LLM with model: DeepSeek-V3
+2025-06-16 07:28:52,319 - ERROR - DeepSeek API call failed: Error code: 400 - {'error': {'message': 'Model Not Exist', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_request_error'}}
+2025-06-16 07:30:22,670 - INFO - Initialized DeepSeek LLM with model: deepseek-chat
+2025-06-16 07:30:23,357 - ERROR - DeepSeek API call failed: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}
+2025-06-16 07:33:54,004 - INFO - Initialized DeepSeek LLM with model: deepseek-chat
+2025-06-16 07:33:55,100 - ERROR - DeepSeek API call failed: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}
+2025-06-16 07:38:47,190 - INFO - Initialized DeepSeek LLM with model: deepseek-chat
+2025-06-16 07:38:48,010 - ERROR - DeepSeek API call failed: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}
+2025-06-16 07:56:41,451 - ERROR - Failed to load Hugging Face model 'meta-llama/Llama-3.2-1B': You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/meta-llama/Llama-3.2-1B.
+401 Client Error. (Request ID: Root=1-684fce39-27a349165d065ee700a1e49b;70f0d770-0310-45b8-8ea3-abddcfb7a257)
+
+Cannot access gated repo for url https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/config.json.
+Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.
+2025-06-16 08:01:02,961 - INFO - Successfully login HuggingFace.
+2025-06-16 08:01:03,127 - ERROR - Failed to load Hugging Face model 'meta-llama/Llama-3.2-1B': We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.
+Checkout your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.
+2025-06-16 08:03:39,275 - ERROR - Failed to load Hugging Face model 'meta-llama/Llama-3.2-1B': We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.
+Checkout your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.
+2025-06-16 08:16:23,078 - INFO - Model loaded to CPU.
+2025-06-16 08:16:23,078 - INFO - Initialized Hugging Face LLM with model: meta-llama/Llama-3.2-1B
+2025-06-16 08:17:15,290 - INFO - Hugging Face response generated successfully.
+2025-06-16 08:19:10,592 - INFO - Model loaded to CPU.
+2025-06-16 08:19:10,593 - INFO - Initialized HuggingFace LLM with model: meta-llama/Llama-3.2-1B
+2025-06-16 08:20:00,403 - INFO - Hugging Face response generated successfully.
