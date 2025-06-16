@@ -8,6 +8,9 @@ Provides flexible functions for fetching data from SQLite database tables.
 import logging
 import os
 import sys
+
+__import__("pysqlite3")
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 import sqlite3
 from typing import List, Dict, Any, Optional
 

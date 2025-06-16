@@ -6,9 +6,11 @@ Handles document loading, text chunking, and database operations with comprehens
 """
 
 import os
-import sqlite3
 import sys
 import logging
+__import__("pysqlite3")
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+import sqlite3
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 
