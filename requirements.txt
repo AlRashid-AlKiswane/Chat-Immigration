@@ -12,4 +12,5 @@ python-multipart
 SQLite3-0611
 openai
 sentence-transformers
-
+google-generativeai
+torch
