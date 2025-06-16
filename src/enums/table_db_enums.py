@@ -40,7 +40,51 @@ class ClearMsg(Enum):
 
 
 class EngineMsg(Enum):
-    pass
+    """Standardized messages for SQLite database connection operations with format placeholders."""
+
+    # --- Configuration Messages ---
+    MISSING_DB_PATH = "Database path not configured in settings"
+    """Critical error when SQLITE_DB setting is missing or empty."""
+
+    INVALID_DB_PATH = "Invalid database path: {}"
+    """Path validation failed. Rules: Must be absolute path with write permissions."""
+
+    # --- Directory Operations ---
+    DIR_CREATE_SUCCESS = "Verified database directory: {}"
+    """Successfully created/verified directory with proper permissions (0o755)."""
+
+    DIR_CREATE_FAILED = "Permission denied creating directory: {}"
+    """OS-level permission error during directory creation."""
+
+    DIR_NOT_WRITABLE = "Database directory not writable: {}"
+    """Directory exists but application lacks write permissions."""
+
+    # --- Connection Lifecycle ---
+    CONNECT_STARTED = "Connecting to database: {}"
+    """Initial connection attempt started to specified path."""
+
+    CONNECT_SUCCESS = "Successfully connected to database: {}"
+    """Connection established with PRAGMA journal_mode=WAL."""
+
+    CONNECT_FAILED = "Database connection failed: {}"
+    """SQLite operational error during connection."""
+
+    # --- WAL Mode ---
+    WAL_ENABLED = "Write-Ahead Logging enabled"
+    """Successfully enabled WAL journal mode for better concurrency."""
+
+    WAL_ERROR = "WAL mode activation failed"
+    """Failed to set journal_mode=WAL (falling back to default mode)."""
+
+    # --- Error Handling ---
+    CONFIG_ERROR = "Configuration error: {}"
+    """Invalid application settings detected."""
+
+    DB_OPERATION_ERROR = "Database operation failed: {}"
+    """SQLite-specific error during any database operation."""
+
+    UNEXPECTED_ERROR = "Unexpected error: {}"
+    """Non-database exception occurred during connection process."""
 
 
 class InsertMsg(Enum):
