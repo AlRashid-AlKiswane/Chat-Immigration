@@ -88,7 +88,35 @@ class EngineMsg(Enum):
 
 
 class InsertMsg(Enum):
-    pass
+    """Standardized messages for database insert operations with format placeholders."""
+
+    # --- Chunk Operations ---
+    CHUNK_INSERT_SUCCESS = "Inserted %d chunks successfully"
+    """Successful insertion of document chunks. Table: chunks | Columns: text,pages,sources,authors"""
+
+    CHUNK_INSERT_ERROR = "Error inserting chunks: %s"
+    """SQLite error during chunk insertion. Failed rows: {failed_rows}"""
+
+    # --- Query Response Operations ---
+    QUERY_RESPONSE_SUCCESS = "Inserted query-response for user %s"
+    """Logged user query and bot response. Table: query_responses"""
+
+    QUERY_RESPONSE_ERROR = "Error inserting query-response: %s"
+    """Failed to log query-response pair. User: {user_id} | Query length: {length}"""
+
+    # --- User Operations ---
+    USER_INSERT_SUCCESS = "Inserted new user: %s"
+    """New user registration. Table: user_info | Columns: name,email,score"""
+
+    USER_DUPLICATE_ERROR = "User with email %s already exists"
+    """Integrity error on user insertion. Existing user ID: {existing_id}"""
+
+    USER_INSERT_ERROR = "Error inserting user: %s"
+    """General user insertion failure. Email attempted: {email}"""
+
+    # --- Batch Operations ---
+    BATCH_PROGRESS = "Batch progress: %d/%d (%.1f%%)"
+    """Batch insertion status update. Current success rate: {success_rate}"""
 
 
 class QueryMsg(Enum):
