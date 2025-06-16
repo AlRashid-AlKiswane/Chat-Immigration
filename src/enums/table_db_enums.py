@@ -91,27 +91,27 @@ class InsertMsg(Enum):
     """Standardized messages for database insert operations with format placeholders."""
 
     # --- Chunk Operations ---
-    CHUNK_INSERT_SUCCESS = "Inserted %d chunks successfully"
+    CHUNK_INSERT_SUCCESS = "Inserted {} chunks successfully"
     """Successful insertion of document chunks. Table: chunks | Columns: text,pages,sources,authors"""
 
-    CHUNK_INSERT_ERROR = "Error inserting chunks: %s"
+    CHUNK_INSERT_ERROR = "Error inserting chunks: {}"
     """SQLite error during chunk insertion. Failed rows: {failed_rows}"""
 
     # --- Query Response Operations ---
-    QUERY_RESPONSE_SUCCESS = "Inserted query-response for user %s"
+    QUERY_RESPONSE_SUCCESS = "Inserted query-response for user {}"
     """Logged user query and bot response. Table: query_responses"""
 
-    QUERY_RESPONSE_ERROR = "Error inserting query-response: %s"
+    QUERY_RESPONSE_ERROR = "Error inserting query-response: {}"
     """Failed to log query-response pair. User: {user_id} | Query length: {length}"""
 
     # --- User Operations ---
-    USER_INSERT_SUCCESS = "Inserted new user: %s"
+    USER_INSERT_SUCCESS = "Inserted new user: {}"
     """New user registration. Table: user_info | Columns: name,email,score"""
 
-    USER_DUPLICATE_ERROR = "User with email %s already exists"
+    USER_DUPLICATE_ERROR = "User with email {} already exists"
     """Integrity error on user insertion. Existing user ID: {existing_id}"""
 
-    USER_INSERT_ERROR = "Error inserting user: %s"
+    USER_INSERT_ERROR = "Error inserting user: {}"
     """General user insertion failure. Email attempted: {email}"""
 
     # --- Batch Operations ---
@@ -123,28 +123,62 @@ class QueryMsg(Enum):
     """Standardized messages for database query operations with format placeholders."""
 
     # --- Query Execution ---
-    FETCH_STARTED = "Executing query on table '%s'"
+    FETCH_STARTED = "Executing query on table '{}'"
     """Query initiated for table. Columns: {columns} | Filters: {where_clause}"""
 
-    FETCH_COMPLETED = "Fetched %d rows from table '%s'"
+    FETCH_COMPLETED = "Fetched {} rows from table '{}'"
     """Query completed successfully. Duration: {duration_ms}ms"""
 
     # --- Error Messages ---
-    DB_ERROR = "Database error in %s: %s"
+    DB_ERROR = "Database error in {}: {}"
     """SQLite error occurred. Operation: {operation} | Error code: {error_code}"""
 
-    INPUT_ERROR = "Invalid input in %s: %s"
+    INPUT_ERROR = "Invalid input in {}: {}"
     """Value error occurred. Parameter: {parameter} | Expected type: {expected_type}"""
 
-    NO_RESULTS = "No results found in %s"
+    NO_RESULTS = "No results found in {}"
     """Empty result set. Table: {table} | Query: {query}"""
 
-    UNEXPECTED_ERROR = "Unexpected error in %s: %s"
+    UNEXPECTED_ERROR = "Unexpected error in {}: {}"
     """Unhandled exception. Type: {error_type} | Trace: {traceback}"""
 
-    COLUMN_FETCH_ERROR = "Error fetching column '%s' from '%s': %s"
+    COLUMN_FETCH_ERROR = "Error fetching column '{}' from '{}': {}"
     """Column access failed. Valid columns: {valid_columns}"""
 
 
 class TablesMsg(Enum):
-    pass
+    """Standardized messages for database initialization operations with format placeholders."""
+
+    # --- Table Creation ---
+    TABLE_CREATE_STARTED = "Starting creation of table '{}'"
+    """Initializing table structure. Columns: {columns}"""
+
+    TABLE_CREATE_SUCCESS = "Table '{}' created successfully"
+    """Table schema: {schema}"""
+
+    TABLE_CREATE_FAILED = "Error creating table '{}': {}"
+    """Error type: {error_type} | SQL: {sql}"""
+
+    # --- Database Setup ---
+    DB_INIT_STARTED = "Database initialization started"
+    """Database path: {db_path} | Tables to create: {tables}"""
+
+    DB_INIT_SUCCESS = "Database initialized successfully"
+    """Tables created: {created_tables} | Duration: {duration_sec:.2f}s"""
+
+    DB_INIT_FAILED = "Database initialization failed: {}"
+    """Failed tables: {failed_tables} | Error: {error_details}"""
+
+    # --- Schema Verification ---
+    TABLE_EXISTS = "Table '{}' already exists"
+    """Existing schema hash: {schema_hash}"""
+
+    SCHEMA_MISMATCH = "Schema mismatch in table '{}'"
+    """Expected: {expected_schema} | Found: {actual_schema}"""
+
+    # --- System Messages ---
+    CONNECTION_ESTABLISHED = "Database connection established"
+    """Connection ID: {conn_id} | Isolation level: {isolation_level}"""
+
+    CONNECTION_CLOSED = "Database connection closed"
+    """Duration open: {duration_min:.1f} minutes"""
