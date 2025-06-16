@@ -1,8 +1,12 @@
+"""
+"""
+
 
 
 from enum import Enum
 
 class EmbeddingLogMessages(Enum):
+    """ """
     # Initialization messages
     INIT_SUCCESS = "OpenAIEmbeddingModel initialized with model: %s"
     MISSING_API_KEY = "OpenAI API key is missing."
@@ -26,3 +30,13 @@ class EmbeddingLogMessages(Enum):
 
 # Example usage in your existing code:
 # logger.info(EmbeddingLogMessages.INIT_SUCCESS.value, self.model_name)
+
+class SentenceEmbeddingLogMessages(Enum):
+    # Initialization messages
+    INIT_SUCCESS = "Embedding model '%s' initialized."
+    INIT_FAILURE = "Failed to load embedding model '%s': %s"
+
+    # Embedding process
+    EMPTY_INPUT = "Empty text provided for embedding."
+    GENERATION_SUCCESS = "Generated embedding for text: '%.30s...'"
+    GENERATION_FAILURE = "Error generating embedding: %s"
