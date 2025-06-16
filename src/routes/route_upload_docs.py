@@ -43,7 +43,6 @@ app_settings: Settings = get_settings()
 upload_route = APIRouter()
 
 UPLOAD_DIR = app_settings.DOC_LOCATION_SAVE
-os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
 def _save_uploaded_file(file: UploadFile, upload_dir: str) -> dict:
