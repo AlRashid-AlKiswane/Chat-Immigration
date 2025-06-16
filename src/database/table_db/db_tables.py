@@ -24,8 +24,10 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # pylint: disable=wrong-import-position
+# pylint: disable=logging-format-interpolation
 from src.logs.logger import setup_logging
 from src.helpers import get_settings, Settings
+from src.enums import TablesMsg
 
 # Initialize application settings and logger
 logger = setup_logging()
@@ -43,7 +45,9 @@ def init_chunks_table(conn: sqlite3.Connection) -> None:
         sqlite3.Error: If table creation fails
     """
     try:
-        conn.execute("""
+        logger.info(TablesMsg.TABLE_CREATE_STARTED.value)
+        conn.execute(
+            """
             CREATE TABLE IF NOT EXISTS chunks (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 text TEXT NOT NULL,
@@ -51,11 +55,12 @@ def init_chunks_table(conn: sqlite3.Connection) -> None:
                 sources TEXT NOT NULL,
                 authors TEXT NOT NULL
             );
-        """)
+        """
+        )
         conn.commit()
-        logger.info("Table 'chunks' created successfully.")
+        logger.info(TablesMsg.TABLE_CREATE_SUCCESS.value.format("chunks"))
     except sqlite3.Error as e:
-        logger.error("Error creating 'chunks' table: %s", e)
+        logger.error(TablesMsg.TABLE_CREATE_FAILED.value.format("chunks", str(e)))
         raise
 
 
@@ -70,7 +75,8 @@ def init_query_response_table(conn: sqlite3.Connection) -> None:
         sqlite3.Error: If table creation fails
     """
     try:
-        conn.execute("""
+        conn.execute(
+            """
             CREATE TABLE IF NOT EXISTS query_responses (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id TEXT NOT NULL,
@@ -78,11 +84,14 @@ def init_query_response_table(conn: sqlite3.Connection) -> None:
                 response TEXT NOT NULL,
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
             );
-        """)
+        """
+        )
         conn.commit()
-        logger.info("Table 'query_responses' created successfully.")
+        logger.info(TablesMsg.TABLE_CREATE_SUCCESS.value.format("query_responses"))
     except sqlite3.Error as e:
-        logger.error("Error creating 'query_responses' table: %s", e)
+        logger.error(
+            TablesMsg.TABLE_CREATE_FAILED.value.format("query_responses", str(e))
+        )
         raise
 
 
@@ -97,7 +106,8 @@ def init_user_info_table(conn: sqlite3.Connection) -> None:
         sqlite3.Error: If table creation fails
     """
     try:
-        conn.execute("""
+        conn.execute(
+            """
             CREATE TABLE IF NOT EXISTS user_info (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
@@ -106,23 +116,27 @@ def init_user_info_table(conn: sqlite3.Connection) -> None:
                 last_login DATETIME,
                 score INTEGER NOT NULL
             );
-        """)
+        """
+        )
         conn.commit()
-        logger.info("Table 'user_info' created successfully.")
+        logger.info(TablesMsg.TABLE_CREATE_SUCCESS.value.format("user_info"))
     except sqlite3.Error as e:
-        logger.error("Error creating 'user_info' table: %s", e)
+        logger.error(TablesMsg.TABLE_CREATE_FAILED.value.format("user_info", str(e)))
         raise
 
 
 if __name__ == "__main__":
     from src.database.table_db.db_engine import get_sqlite_engine
+
     conn = get_sqlite_engine()
     if conn:
-        logger.info("Database initialized successfully")
+        logger.info(TablesMsg.DB_INIT_STARTED.value)
         init_chunks_table(conn=conn)
         init_query_response_table(conn=conn)
         init_user_info_table(conn=conn)
+        logger.info(TablesMsg.DB_INIT_SUCCESS.value)
         conn.close()
+        logger.info(TablesMsg.CONNECTION_CLOSED.value)
     else:
-        logger.error("Failed to initialize database")
+        logger.error(TablesMsg.DB_INIT_FAILED.value)
         sys.exit(1)
