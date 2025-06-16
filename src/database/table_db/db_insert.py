@@ -25,6 +25,7 @@ except (ImportError, OSError) as e:
 # pylint: disable=wrong-import-position
 from src.logs.logger import setup_logging
 from src.helpers import get_settings, Settings
+from src.enums import InsertMsg
 
 # Initialize application settings and logger
 logger = setup_logging()
@@ -55,10 +56,10 @@ def insert_chunks(conn: sqlite3.Connection, chunks_data: List[Dict[str, str]]) -
             chunks_data
         )
         conn.commit()
-        logger.info("Inserted %d chunks successfully", len(chunks_data))
+        logger.info(InsertMsg.CHUNK_INSERT_SUCCESS.value.format(len(chunks_data)))
         return True
     except sqlite3.Error as e:
-        logger.error("Error inserting chunks: %s", e)
+        logger.error(InsertMsg.CHUNK_INSERT_ERROR.value.format(e))
         conn.rollback()
         return False
 
@@ -88,10 +89,10 @@ def insert_query_response(conn: sqlite3.Connection,
             (user_id, query, response)
         )
         conn.commit()
-        logger.info("Inserted query-response for user %s", user_id)
+        logger.info(InsertMsg.QUERY_RESPONSE_SUCCESS.value.format(user_id))
         return True
     except sqlite3.Error as e:
-        logger.error("Error inserting query-response: %s", e)
+        logger.error(InsertMsg.QUERY_RESPONSE_ERROR.value.format(e))
         conn.rollback()
         return False
 
@@ -121,7 +122,7 @@ def insert_user(conn: sqlite3.Connection,
             (name, email, score)
         )
         conn.commit()
-        logger.info("Inserted new user: %s", email)
+        logger.info(InsertMsg.USER_INSERT_SUCCESS.value.format(email))
         return True
     except sqlite3.IntegrityError:
         logger.warning("User with email %s already exists", email)
