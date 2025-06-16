@@ -9,6 +9,7 @@ import logging
 import os
 import sqlite3
 import sys
+from typing import Any
 from fastapi import Request, HTTPException
 from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR
 
@@ -61,3 +62,17 @@ def get_db_conn(request: Request) -> sqlite3.Connection:
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error"
         ) from e
+
+
+def get_embedd(request: Request) -> Any:
+    """Retrieve the embedding model from the app state."""
+    embedding = getattr(request.app.state, "embedding", None)
+    if not embedding:
+        logger.debug("Embedding model not found in application state.")
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Embedding service unavailable."
+        )
+    return embedding
+
+    
