@@ -22,7 +22,7 @@ except (ImportError, OSError) as e:
 # pylint: disable=wrong-import-position
 from src.logs import setup_logging
 from src.helpers import get_settings, Settings
-from .__abc_llm import BaseLLM
+from src.llms.__abc_llm import BaseLLM
 
 # Initialize logger and settings
 logger = setup_logging()
@@ -71,8 +71,8 @@ class CohereLLM(BaseLLM):
                 message=prompt,
                 temperature=kwargs.get("temperature", 0.7),
                 max_tokens=kwargs.get("max_tokens", 256),
-                stream=False
             )
+
             reply = response.text.strip()
             logger.info("Cohere response generated successfully.")
             return reply
@@ -102,3 +102,8 @@ class CohereLLM(BaseLLM):
                 "max_tokens": "int"
             }
         }
+
+if __name__ == "__main__":
+    model = CohereLLM()
+    response = model.generate_response(prompt="What is machine learning?")
+    print(response)

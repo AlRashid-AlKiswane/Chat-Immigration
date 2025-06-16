@@ -8,7 +8,7 @@ This module provides a Settings class that loads configuration from:
 """
 
 import sys
-from typing import List, Literal, Optional
+from typing import List, Optional
 from pydantic import Field, ValidationError
 from pydantic_settings import BaseSettings
 
@@ -39,6 +39,11 @@ class Settings(BaseSettings):
 
     HUGGINGFACE_MODEL: Optional[str] = Field(None, env="HUGGINGFACE_MODEL")
     HUGGINGFACE_APIK: Optional[str] = Field(None, env="HUGGINGFACE_APIK")
+
+    DEEPSEEK_APIK: Optional[str] = Field(None, env="DEEPSEEK_APIK")
+    DEEPSEEK_MODEL: Optional[str] = Field(None, env="DEEPSEEK_MODEL")
+    DEEPSEEK_API_BASE: Optional[str] = Field(None, env="DEEPSEEK_API_BASE")
+
 
     class Config:
         """

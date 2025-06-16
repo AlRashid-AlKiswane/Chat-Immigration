@@ -13,6 +13,7 @@ from typing import Optional, Dict, Any
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from huggingface_hub import login
 
 try:
     MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -24,7 +25,7 @@ except (ImportError, OSError) as e:
 # pylint: disable=wrong-import-position
 from src.logs import setup_logging
 from src.helpers import get_settings, Settings
-from .__abc_llm import BaseLLM
+from src.llms.__abc_llm import BaseLLM
 
 # Initialize logger and settings
 logger = setup_logging()
@@ -41,6 +42,11 @@ class HuggingFaceLLM(BaseLLM):
     def __init__(self, model_name: Optional[str] = None) -> None:
         """Initialize the Hugging Face LLM with optional custom model name."""
         self.model_name = model_name or app_settings.HUGGINGFACE_MODEL
+        try:
+            login(token=app_settings.HUGGINGFACE_APIK)
+            logging.info("Successfully logged into Hugging Face.")
+        except Exception as e:
+            logging.error("Failed to log into Hugging Face: %s", e)
 
         try:
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
@@ -52,9 +58,9 @@ class HuggingFaceLLM(BaseLLM):
             else:
                 logger.info("Model loaded to CPU.")
 
-            logger.info("Initialized Hugging Face LLM with model: %s", self.model_name)
+            logger.info("Initialized HuggingFace LLM with model: %s", self.model_name)
         except Exception as e:
-            logger.error("Failed to load Hugging Face model '%s': %s", self.model_name, e)
+            logger.error("Failed to load HuggingFace model '%s': %s", self.model_name, e)
             raise RuntimeError(f"Failed to load Hugging Face model: {e}") from e
 
     def generate_response(
@@ -97,7 +103,7 @@ class HuggingFaceLLM(BaseLLM):
             # Strip input prompt if model repeats it in output
             reply = response[len(prompt):].strip() if response.startswith(prompt) else response.strip()
 
-            logger.info("Hugging Face response generated successfully.")
+            logger.info("HuggingFace response generated successfully.")
             return reply
 
         except Exception as e:
@@ -126,3 +132,10 @@ class HuggingFaceLLM(BaseLLM):
                 "top_p": "float [0.0 - 1.0]"
             }
         }
+
+if __name__ == "__main__":
+
+    model = HuggingFaceLLM()
+    response = model.generate_response(prompt="What is the RNN in machine learning")
+    print(response)
+
