@@ -636,3 +636,43 @@ AttributeError: 'Settings' object has no attribute 'FILE_TYPE'
 2025-06-15 19:32:56,324 - INFO - [Startup] Database tables initialized successfully.
 2025-06-15 19:32:57,830 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
 2025-06-15 19:32:57,830 - INFO - [Shutdown] Database connection closed.
+2025-06-15 21:55:52,541 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 21:55:52,568 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 21:55:58,601 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 21:55:58,601 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 21:57:03,423 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 21:57:03,451 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 21:57:05,573 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 21:57:05,573 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:08:26,348 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 22:08:26,377 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 22:08:27,352 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:08:27,352 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:09:55,716 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 22:09:55,748 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 22:10:01,700 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:10:01,700 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:13:21,058 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 22:13:21,086 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 22:13:22,240 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:13:22,240 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:13:56,142 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 22:13:56,167 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 22:14:01,904 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:14:01,904 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:20:12,468 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 22:20:12,492 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 22:20:13,919 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:20:13,919 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:30:03,014 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-15 22:30:03,045 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-15 22:30:18,779 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-15 22:30:18,779 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-16 07:17:51,303 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-16 07:17:51,332 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-16 07:17:51,977 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-16 07:17:51,977 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-16 07:19:41,807 - INFO - OpenAIEmbeddingModel initialized with model: text-embedding-3-large
+2025-06-16 07:19:41,825 - DEBUG - Processing batch 0-1 of 1 texts
+2025-06-16 07:19:42,417 - ERROR - OpenAI API error for batch 0-2048: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+2025-06-16 07:19:42,417 - ERROR - Failed to generate embeddings: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
