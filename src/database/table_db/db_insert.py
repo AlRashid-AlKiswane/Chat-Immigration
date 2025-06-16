@@ -23,6 +23,7 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # pylint: disable=wrong-import-position
+# pylint: disable=logging-format-interpolation
 from src.logs.logger import setup_logging
 from src.helpers import get_settings, Settings
 from src.enums import InsertMsg
@@ -30,6 +31,7 @@ from src.enums import InsertMsg
 # Initialize application settings and logger
 logger = setup_logging()
 app_settings: Settings = get_settings()
+
 
 def insert_chunks(conn: sqlite3.Connection, chunks_data: List[Dict[str, str]]) -> bool:
     """
@@ -53,7 +55,7 @@ def insert_chunks(conn: sqlite3.Connection, chunks_data: List[Dict[str, str]]) -
             INSERT INTO chunks (text, pages, sources, authors)
             VALUES (:text, :pages, :sources, :authors)
             """,
-            chunks_data
+            chunks_data,
         )
         conn.commit()
         logger.info(InsertMsg.CHUNK_INSERT_SUCCESS.value.format(len(chunks_data)))
@@ -63,10 +65,10 @@ def insert_chunks(conn: sqlite3.Connection, chunks_data: List[Dict[str, str]]) -
         conn.rollback()
         return False
 
-def insert_query_response(conn: sqlite3.Connection, 
-                        user_id: str, 
-                        query: str, 
-                        response: str) -> bool:
+
+def insert_query_response(
+    conn: sqlite3.Connection, user_id: str, query: str, response: str
+) -> bool:
     """
     Insert a query-response pair into the database.
 
@@ -86,7 +88,7 @@ def insert_query_response(conn: sqlite3.Connection,
             INSERT INTO query_responses (user_id, query, response)
             VALUES (?, ?, ?)
             """,
-            (user_id, query, response)
+            (user_id, query, response),
         )
         conn.commit()
         logger.info(InsertMsg.QUERY_RESPONSE_SUCCESS.value.format(user_id))
@@ -96,10 +98,10 @@ def insert_query_response(conn: sqlite3.Connection,
         conn.rollback()
         return False
 
-def insert_user(conn: sqlite3.Connection, 
-               name: str, 
-               email: str, 
-               score: int = 0) -> bool:
+
+def insert_user(
+    conn: sqlite3.Connection, name: str, email: str, score: int = 0
+) -> bool:
     """
     Insert a new user into the database.
 
@@ -119,21 +121,23 @@ def insert_user(conn: sqlite3.Connection,
             INSERT INTO user_info (name, email, score)
             VALUES (?, ?, ?)
             """,
-            (name, email, score)
+            (name, email, score),
         )
         conn.commit()
         logger.info(InsertMsg.USER_INSERT_SUCCESS.value.format(email))
         return True
     except sqlite3.IntegrityError:
-        logger.warning("User with email %s already exists", email)
+        logger.warning(InsertMsg.USER_DUPLICATE_ERROR.value.format(email))
         return False
     except sqlite3.Error as e:
-        logger.error("Error inserting user: %s", e)
+        logger.error(InsertMsg.USER_INSERT_ERROR.value.format(e))
         conn.rollback()
         return False
 
-def batch_insert_chunks(conn: sqlite3.Connection, 
-                      chunks_data: List[Dict[str, str]]) -> Tuple[int, int]:
+
+def batch_insert_chunks(
+    conn: sqlite3.Connection, chunks_data: List[Dict[str, str]]
+) -> Tuple[int, int]:
     """
     Batch insert chunks with success/failure tracking.
 
@@ -153,7 +157,9 @@ def batch_insert_chunks(conn: sqlite3.Connection,
         else:
             failure += 1
 
+    logger.info(InsertMsg.BATCH_PROGRESS.value.format(success, failure))
     return (success, failure)
+
 
 if __name__ == "__main__":
     # Example usage
@@ -172,7 +178,7 @@ if __name__ == "__main__":
                 conn,
                 "user123",
                 "What are the visa requirements?",
-                "Visa requirements depend on your country of origin..."
+                "Visa requirements depend on your country of origin...",
             )
 
             # Example: Insert chunks
@@ -181,14 +187,14 @@ if __name__ == "__main__":
                     "text": "This is a document chunk about immigration...",
                     "pages": "1,2,3",
                     "sources": "immigration_guide.pdf",
-                    "authors": "Department of State"
+                    "authors": "Department of State",
                 },
                 {
                     "text": "Another important document section...",
                     "pages": "5",
                     "sources": "visa_handbook.pdf",
-                    "authors": "USCIS"
-                }
+                    "authors": "USCIS",
+                },
             ]
             insert_chunks(conn, chunks)
 

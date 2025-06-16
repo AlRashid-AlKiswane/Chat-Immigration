@@ -115,8 +115,8 @@ class InsertMsg(Enum):
     """General user insertion failure. Email attempted: {email}"""
 
     # --- Batch Operations ---
-    BATCH_PROGRESS = "Batch progress: %d/%d (%.1f%%)"
-    """Batch insertion status update. Current success rate: {success_rate}"""
+    BATCH_PROGRESS = "Batch progress: {} successful, {} failed"
+    """Batch insertion status. Success: {success_count} | Failed: {failure_count} | Total: {total}"""
 
 
 class QueryMsg(Enum):
