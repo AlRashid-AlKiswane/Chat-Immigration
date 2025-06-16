@@ -23,15 +23,21 @@ except (ImportError, OSError) as e:
 from src.logs import setup_logging
 from src.helpers import get_settings, Settings
 
-from src.routes import (upload_route,
-                        docs_to_chunks_route
+from src.routes import (
+    upload_route,
+    docs_to_chunks_route,
+    embedding_route
 )
 from src.database import (
     get_sqlite_engine,
     init_chunks_table,
     init_user_info_table,
-    init_query_response_table
+    init_query_response_table,
+    get_chroma_client
 )
+
+from src.utils import run_embedding_model
+
 
 # Initialize logger and settings
 logger = setup_logging()
@@ -50,8 +56,16 @@ async def lifespan(app: FastAPI):
         init_user_info_table(conn=app.state.conn)
         init_query_response_table(conn=app.state.conn)
         logger.info("[Startup] Database tables initialized successfully.")
+
+        app.state.embedd_name = app_settings.embedd_model_name
+        app.state.embedding = run_embedding_model(app.state.embedd_name)
+        logger.info("[Startup] Embedding model loaded: %s", app.state.embedd_name)
+
+        app.state.vdb_client = get_chroma_client()
+        logger.info("[Startup] ChromaDB client initialized.")
+
     except Exception as e:
-        logger.critical("[Startup] Failed to initialize database: %s", e)
+        logger.critical("[Startup] Failed to initialize application: %s", e, exc_info=True)
         raise RuntimeError("Startup initialization failed.") from e
 
     yield
@@ -63,7 +77,7 @@ async def lifespan(app: FastAPI):
             conn.close()
             logger.info("[Shutdown] Database connection closed.")
     except (RuntimeError, IOError) as exc:
-        logger.error("[Shutdown] Error during shutdown cleanup: %s", exc)
+        logger.error("[Shutdown] Error during shutdown cleanup: %s", exc, exc_info=True)
 
 # Create FastAPI app with lifespan
 app = FastAPI(title="Immigration Chatbot", version="1.0.0", lifespan=lifespan)
@@ -71,3 +85,5 @@ app = FastAPI(title="Immigration Chatbot", version="1.0.0", lifespan=lifespan)
 # Include route modules with prefixes
 app.include_router(upload_route, prefix="/upload", tags=["Upload"])
 app.include_router(docs_to_chunks_route, prefix="/chunking", tags=["Document Chunking"])
+app.include_router(embedding_route, prefix="/Embedding", tags=["Chunking Embedding"])
+
