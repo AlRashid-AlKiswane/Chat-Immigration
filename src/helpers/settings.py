@@ -20,35 +20,24 @@ class Settings(BaseSettings):
     Environment variables take precedence over .env file values.
     """
 
-    # Application Configuration
-    app_name: str = Field(..., env="APP_NAME", description="Name of the application")
-    app_env: Literal["development", "production", "staging"] = Field("development", env="APP_ENV")
-    app_secret: str = Field(..., env="APP_SECRET", description="Secret key for the application")
-    app_debug: bool = Field(False, env="APP_DEBUG")
-
-    # Database Configuration
-    db_host: str = Field("localhost", env="DB_HOST")
-    db_port: int = Field(5432, env="DB_PORT")
-    db_name: str = Field(..., env="DB_NAME")
-    db_user: str = Field(..., env="DB_USER")
-    db_password: str = Field(..., env="DB_PASSWORD")
-    SQLITE_DB: str = Field(..., env="SQLITE_DB")
-
-    # API Configuration
-    api_key: str = Field(..., env="API_KEY")
-    api_timeout: int = Field(30, env="API_TIMEOUT")
-
-    # Logging Configuration
-    log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = Field(
-        "INFO", env="LOG_LEVEL")
-    log_file: str = Field("app.log", env="LOG_FILE")
-
     FILE_TYPES: List[str] = Field(..., env="FILE_TYPES")
     DOC_LOCATION_SAVE: str = Field(..., env="DOC_LOCATION_SAVE")
     CHUNKS_SIZE: int = Field(..., env="CHUNKS_SIZE")
     CHUNKS_OVERLAP: int = Field(..., env="CHUNKS_OVERLAB")
 
     EMBEDDING_MODEL: str = Field(..., env="EMBEDDING_MODEL")
+
+    OPENAI_APIK: str = Field(..., env="OPENAI_APIK")
+    OPENAI_MODEL: str = Field(..., env="OPENAI_APIK")
+    GEMINI_APIK: str = Field(..., env="GEMINI_APIK")
+    GEMINI_MODEL: str = Field(..., env="GEMINI_MODEL")
+
+    COHERE_APIK: str = Field(..., env="COHERE_APIK")
+    OHERE_MODEL: str = Field(..., env="OHERE_MODEL")
+
+    HUGGINGFACE_MODEL: str = Field(..., env="HUGGINGFACE_MODEL")
+    HUGGINGFACE_APIK: str = Field(..., env="HUGGINGFACE_APIK")
+
     # pylint: disable=too-few-public-methods
     class Config:
         """
