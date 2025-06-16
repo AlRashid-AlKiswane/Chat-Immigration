@@ -1,8 +1,8 @@
 """
-Database Connection Management Module
+Database Connection and Service Retrieval Module
 
-This module provides functionality for managing SQLite database connections
-in a FastAPI application, including connection retrieval and error handling.
+This module manages connections and shared resources used in a FastAPI application,
+including database connections, embedding models, and vector database clients.
 """
 
 import logging
@@ -12,7 +12,10 @@ import sys
 from typing import Any
 from fastapi import Request, HTTPException
 from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR
+from chromadb import Client
 
+
+# Attempt to set up the main directory path
 try:
     MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
     sys.path.append(MAIN_DIR)
@@ -24,7 +27,7 @@ except (ImportError, OSError) as e:
 from src.logs import setup_logging
 from src.helpers import get_settings, Settings
 
-# Initialize logger and settings
+# Initialize logger and application settings
 logger = setup_logging()
 app_settings: Settings = get_settings()
 
@@ -33,46 +36,82 @@ def get_db_conn(request: Request) -> sqlite3.Connection:
     Retrieve the SQLite database connection from the FastAPI app state.
 
     Args:
-        request: The incoming FastAPI request object.
+        request (Request): The incoming FastAPI request object.
 
     Returns:
-        The active database connection.
+        sqlite3.Connection: Active SQLite connection.
 
     Raises:
-        HTTPException: If the database connection is not available or invalid.
+        HTTPException: If the connection is missing or invalid.
     """
     try:
         conn = getattr(request.app.state, "conn", None)
         if not isinstance(conn, sqlite3.Connection):
-            logger.error("Invalid database connection instance in app state")
+            logger.error("Invalid or missing SQLite connection in app state.")
             raise HTTPException(
                 status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Database service unavailable"
+                detail="Database service unavailable."
             )
+        logger.debug("Successfully retrieved SQLite connection from app state.")
         return conn
-    except AttributeError as e:
-        logger.error("Database connection not found in application state: %s", e)
+    except Exception as e:
+        logger.exception("Failed to retrieve SQLite connection: %s", e)
         raise HTTPException(
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Database service unavailable"
+            detail="Internal server error while accessing the database."
         ) from e
-    except Exception as e:  # pylint: disable=broad-except
-        logger.exception("Unexpected error retrieving database connection")
-        raise HTTPException(
-            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Internal server error"
-        ) from e
-
 
 def get_embedd(request: Request) -> Any:
-    """Retrieve the embedding model from the app state."""
-    embedding = getattr(request.app.state, "embedding", None)
-    if not embedding:
-        logger.debug("Embedding model not found in application state.")
+    """
+    Retrieve the embedding model from the FastAPI app state.
+
+    Args:
+        request (Request): The incoming FastAPI request object.
+
+    Returns:
+        Any: Embedding model instance.
+
+    Raises:
+        HTTPException: If the embedding model is not available.
+    """
+    try:
+        embedding = getattr(request.app.state, "embedding", None)
+        if embedding is None:
+            logger.error("Embedding model not found in app state.")
+            raise HTTPException(
+                status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Embedding service unavailable."
+            )
+        logger.debug("Successfully retrieved embedding model from app state.")
+        return embedding
+    except Exception as e:
+        logger.exception("Failed to retrieve embedding model: %s", e)
         raise HTTPException(
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Embedding service unavailable."
-        )
-    return embedding
+            detail="Internal server error while accessing embedding model."
+        ) from e
 
-    
+def get_vdb_client(request: Request) -> Client:
+    """
+    Retrieve the ChromaDB vector database client from the FastAPI app state.
+
+    Args:
+        request: The incoming FastAPI request object.
+
+    Returns:
+        Client: The ChromaDB client instance.
+
+    Raises:
+        HTTPException: If the ChromaDB client is not available.
+    """
+    vdb_client = getattr(request.app.state, "vdb_client", None)
+    # pylint: disable=isinstance-second-argument-not-valid-type
+    if not isinstance(vdb_client, Client):
+        logger.error("ChromaDB client not found or invalid in application state.")
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Vector database service unavailable."
+        )
+    logger.debug("ChromaDB client retrieved successfully.")
+    return vdb_client
+
