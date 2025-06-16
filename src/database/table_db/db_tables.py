@@ -14,6 +14,9 @@ All database operations include comprehensive error handling and logging.
 import logging
 import os
 import sys
+
+__import__("pysqlite3")
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 import sqlite3
 
 try:

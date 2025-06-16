@@ -10,6 +10,8 @@ The embedding is performed using the OpenAIEmbeddingModel.
 import logging
 import os
 import sys
+__import__("pysqlite3")
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 from sqlite3 import Connection  # Ensure Pylint recognizes it as a valid type
 from fastapi import APIRouter, HTTPException, Request, Depends
 from fastapi.responses import JSONResponse

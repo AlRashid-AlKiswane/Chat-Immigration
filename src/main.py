@@ -86,4 +86,3 @@ app = FastAPI(title="Immigration Chatbot", version="1.0.0", lifespan=lifespan)
 app.include_router(upload_route, prefix="/upload", tags=["Upload"])
 app.include_router(docs_to_chunks_route, prefix="/chunking", tags=["Document Chunking"])
 app.include_router(embedding_route, prefix="/Embedding", tags=["Chunking Embedding"])
-

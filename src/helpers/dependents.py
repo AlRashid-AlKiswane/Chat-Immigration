@@ -7,8 +7,10 @@ including database connections, embedding models, and vector database clients.
 
 import logging
 import os
-import sqlite3
 import sys
+__import__("pysqlite3")
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+import sqlite3
 from typing import Any
 from fastapi import Request, HTTPException
 from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR

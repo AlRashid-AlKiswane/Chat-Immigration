@@ -8,6 +8,9 @@ with comprehensive error handling and automatic directory creation.
 import logging
 import os
 import sys
+
+__import__("pysqlite3")
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 import sqlite3
 from pathlib import Path
 from typing import Optional
