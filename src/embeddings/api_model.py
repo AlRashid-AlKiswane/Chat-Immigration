@@ -13,7 +13,7 @@ from typing import List, Union, Optional
 from openai import OpenAI, OpenAIError
 
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
@@ -28,6 +28,7 @@ logger = setup_logging()
 app_settings: Settings = get_settings()
 
 
+# pylint: disable=too-few-public-methods
 class OpenAIEmbeddingModel:
     """
     A wrapper class for generating text embeddings using OpenAI's API.
@@ -44,7 +45,7 @@ class OpenAIEmbeddingModel:
         max_batch_size (int): Maximum number of texts to process in a single batch
     """
 
-    def __init__(self, api_key: Optional[str] = None, model_name: Optional[str] = None):
+    def __init__(self, api_key: str = app_settings.OPENAI_APIK, model_name: Optional[str] = None):
         """
         Initialize the OpenAI embedding model wrapper.
 
@@ -138,3 +139,8 @@ class OpenAIEmbeddingModel:
         except Exception as e:
             logger.error("Failed to generate embeddings: %s", str(e))
             raise
+
+if __name__ == "__main__":
+    embedd = OpenAIEmbeddingModel(model_name="text-embedding-3-large")
+    embeddings_vectore = embedd.embed_texts(texts="How are u rashid, u can help me")
+    print(embeddings_vectore)

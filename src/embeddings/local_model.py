@@ -10,6 +10,7 @@ import logging
 import os
 import sys
 from typing import List, Union, Optional
+# pylint: disable=import-error
 from sentence_transformers import SentenceTransformer # type: ignore
 
 try:
