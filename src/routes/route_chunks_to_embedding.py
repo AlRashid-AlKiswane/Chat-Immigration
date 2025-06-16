@@ -47,7 +47,6 @@ async def embedding(
     request: Request,
     embedd_name: str,
     conn: Connection = Depends(get_db_conn),
-    embedd: OpenAIEmbeddingModel = Depends(get_embedd),
     vdb_client: Client = Depends(get_vdb_client)
 ):
     """
@@ -60,6 +59,19 @@ async def embedding(
     Returns:
         JSONResponse: HTTP response indicating success or failure with appropriate status.
     """
+    try:
+        model_name = model_input.model_name
+        embedding_model = run_embedding_model(model_name)
+
+        request.app.state.embedd_name = model_name
+        request.app.state.embedding = embedding_model
+
+        logger.info("[Model] Embedding model '%s' loaded successfully.", model_name)
+        return {"message": f"Model '{model_name}' loaded."}
+    except Exception as e:
+        logger.error("[Model] Failed to load model '%s': %s", model_input.model_name, e, exc_info=True)
+        return {"error": str(e)}
+
     try:
         logger.info("Embedding request received with model name: %s", embedd_name)
         request.app.state.embedd_name = embedd_name

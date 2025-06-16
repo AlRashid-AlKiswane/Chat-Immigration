@@ -719,3 +719,490 @@ Checkout your internet connection or see how to run the library in offline mode 
 2025-06-16 08:19:10,592 - INFO - Model loaded to CPU.
 2025-06-16 08:19:10,593 - INFO - Initialized HuggingFace LLM with model: meta-llama/Llama-3.2-1B
 2025-06-16 08:20:00,403 - INFO - Hugging Face response generated successfully.
+2025-06-16 16:49:56,241 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:49:56,242 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:49:56,248 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:49:56,248 - INFO - Starting creation of table '{}'
+2025-06-16 16:49:56,251 - INFO - Table 'chunks' created successfully
+2025-06-16 16:49:56,253 - INFO - Table 'user_info' created successfully
+2025-06-16 16:49:56,254 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:49:56,254 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:49:56,255 - CRITICAL - [Startup] Failed to initialize application: 'Settings' object has no attribute 'embedd_model_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedd_name = app_settings.embedd_model_name
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'embedd_model_name'
+2025-06-16 16:50:01,600 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:50:01,600 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:50:01,601 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:50:01,602 - INFO - Starting creation of table '{}'
+2025-06-16 16:50:01,602 - INFO - Table 'chunks' created successfully
+2025-06-16 16:50:01,602 - INFO - Table 'user_info' created successfully
+2025-06-16 16:50:01,602 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:50:01,602 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:50:01,602 - CRITICAL - [Startup] Failed to initialize application: 'Settings' object has no attribute 'embedd_model_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedd_name = app_settings.embedd_model_name
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'embedd_model_name'
+2025-06-16 16:50:18,007 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:50:18,007 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:50:18,008 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:50:18,008 - INFO - Starting creation of table '{}'
+2025-06-16 16:50:18,008 - INFO - Table 'chunks' created successfully
+2025-06-16 16:50:18,008 - INFO - Table 'user_info' created successfully
+2025-06-16 16:50:18,008 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:50:18,008 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:50:18,009 - CRITICAL - [Startup] Failed to initialize application: 'Settings' object has no attribute 'embedd_model_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedd_name = app_settings.embedd_model_name
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'embedd_model_name'
+2025-06-16 16:51:17,140 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:51:17,140 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:51:17,141 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:51:17,141 - INFO - Starting creation of table '{}'
+2025-06-16 16:51:17,141 - INFO - Table 'chunks' created successfully
+2025-06-16 16:51:17,141 - INFO - Table 'user_info' created successfully
+2025-06-16 16:51:17,142 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:51:17,142 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:51:17,142 - CRITICAL - [Startup] Failed to initialize application: 'Settings' object has no attribute 'embedd_model_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedd_name = app_settings.embedd_model_name
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'embedd_model_name'
+2025-06-16 16:51:22,614 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:51:22,615 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:51:22,615 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:51:22,615 - INFO - Starting creation of table '{}'
+2025-06-16 16:51:22,616 - INFO - Table 'chunks' created successfully
+2025-06-16 16:51:22,616 - INFO - Table 'user_info' created successfully
+2025-06-16 16:51:22,616 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:51:22,616 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:51:22,616 - CRITICAL - [Startup] Failed to initialize application: 'Settings' object has no attribute 'embedd_model_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedd_name = app_settings.embedd_model_name
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'embedd_model_name'
+2025-06-16 16:51:57,853 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:51:57,853 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:51:57,854 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:51:57,854 - INFO - Starting creation of table '{}'
+2025-06-16 16:51:57,854 - INFO - Table 'chunks' created successfully
+2025-06-16 16:51:57,854 - INFO - Table 'user_info' created successfully
+2025-06-16 16:51:57,854 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:51:57,854 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:51:57,854 - CRITICAL - [Startup] Failed to initialize application: 'State' object has no attribute 'embedd_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 673, in __getattr__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'embedd_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedding = run_embedding_model(app.state.embedd_name)
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 676, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'embedd_name'
+2025-06-16 16:52:03,183 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:52:03,183 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:52:03,184 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:52:03,184 - INFO - Starting creation of table '{}'
+2025-06-16 16:52:03,184 - INFO - Table 'chunks' created successfully
+2025-06-16 16:52:03,184 - INFO - Table 'user_info' created successfully
+2025-06-16 16:52:03,184 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:52:03,184 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:52:03,185 - CRITICAL - [Startup] Failed to initialize application: 'State' object has no attribute 'embedd_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 673, in __getattr__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'embedd_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedding = run_embedding_model(app.state.embedd_name)
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 676, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'embedd_name'
+2025-06-16 16:57:36,968 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:57:36,968 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:57:36,968 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:57:36,969 - INFO - Starting creation of table '{}'
+2025-06-16 16:57:36,969 - INFO - Table 'chunks' created successfully
+2025-06-16 16:57:36,969 - INFO - Table 'user_info' created successfully
+2025-06-16 16:57:36,969 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:57:36,969 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:57:36,969 - CRITICAL - [Startup] Failed to initialize application: 'State' object has no attribute 'embedd_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 673, in __getattr__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'embedd_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedding = run_embedding_model(app.state.embedd_name)
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 676, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'embedd_name'
+2025-06-16 16:57:42,365 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:57:42,365 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:57:42,366 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:57:42,366 - INFO - Starting creation of table '{}'
+2025-06-16 16:57:42,366 - INFO - Table 'chunks' created successfully
+2025-06-16 16:57:42,366 - INFO - Table 'user_info' created successfully
+2025-06-16 16:57:42,366 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:57:42,366 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:57:42,366 - CRITICAL - [Startup] Failed to initialize application: 'State' object has no attribute 'embedd_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 673, in __getattr__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'embedd_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedding = run_embedding_model(app.state.embedd_name)
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 676, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'embedd_name'
+2025-06-16 16:57:47,739 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:57:47,739 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:57:47,740 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:57:47,740 - INFO - Starting creation of table '{}'
+2025-06-16 16:57:47,740 - INFO - Table 'chunks' created successfully
+2025-06-16 16:57:47,740 - INFO - Table 'user_info' created successfully
+2025-06-16 16:57:47,741 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:57:47,741 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:57:47,741 - CRITICAL - [Startup] Failed to initialize application: 'State' object has no attribute 'embedd_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 673, in __getattr__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'embedd_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedding = run_embedding_model(app.state.embedd_name)
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 676, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'embedd_name'
+2025-06-16 16:57:53,102 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:57:53,102 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:57:53,102 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:57:53,103 - INFO - Starting creation of table '{}'
+2025-06-16 16:57:53,103 - INFO - Table 'chunks' created successfully
+2025-06-16 16:57:53,103 - INFO - Table 'user_info' created successfully
+2025-06-16 16:57:53,103 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:57:53,103 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:57:53,103 - CRITICAL - [Startup] Failed to initialize application: 'State' object has no attribute 'embedd_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 673, in __getattr__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'embedd_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedding = run_embedding_model(app.state.embedd_name)
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 676, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'embedd_name'
+2025-06-16 16:57:58,412 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:57:58,412 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:57:58,413 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:57:58,413 - INFO - Starting creation of table '{}'
+2025-06-16 16:57:58,413 - INFO - Table 'chunks' created successfully
+2025-06-16 16:57:58,413 - INFO - Table 'user_info' created successfully
+2025-06-16 16:57:58,413 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:57:58,413 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:57:58,413 - CRITICAL - [Startup] Failed to initialize application: 'State' object has no attribute 'embedd_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 673, in __getattr__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'embedd_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedding = run_embedding_model(app.state.embedd_name)
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 676, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'embedd_name'
+2025-06-16 16:58:23,357 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:58:23,357 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:58:23,358 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:58:23,358 - INFO - Starting creation of table '{}'
+2025-06-16 16:58:23,358 - INFO - Table 'chunks' created successfully
+2025-06-16 16:58:23,358 - INFO - Table 'user_info' created successfully
+2025-06-16 16:58:23,358 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:58:23,358 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:58:23,358 - CRITICAL - [Startup] Failed to initialize application: 'State' object has no attribute 'embedd_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 673, in __getattr__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'embedd_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedding = run_embedding_model(app.state.embedd_name)
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 676, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'embedd_name'
+2025-06-16 16:58:28,728 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:58:28,728 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:58:28,729 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:58:28,729 - INFO - Starting creation of table '{}'
+2025-06-16 16:58:28,729 - INFO - Table 'chunks' created successfully
+2025-06-16 16:58:28,729 - INFO - Table 'user_info' created successfully
+2025-06-16 16:58:28,729 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:58:28,729 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:58:28,729 - CRITICAL - [Startup] Failed to initialize application: 'State' object has no attribute 'embedd_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 673, in __getattr__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'embedd_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 60, in lifespan
+    app.state.embedding = run_embedding_model(app.state.embedd_name)
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 676, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'embedd_name'
+2025-06-16 16:58:42,407 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:58:42,408 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:58:42,408 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:58:42,408 - INFO - Starting creation of table '{}'
+2025-06-16 16:58:42,408 - INFO - Table 'chunks' created successfully
+2025-06-16 16:58:42,409 - INFO - Table 'user_info' created successfully
+2025-06-16 16:58:42,409 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:58:42,409 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:58:42,409 - CRITICAL - [Startup] Failed to initialize application: 'State' object has no attribute 'embedd_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 673, in __getattr__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'embedd_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 61, in lifespan
+    logger.info("[Startup] Embedding model loaded: %s", app.state.embedd_name)
+                                                        ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 676, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'embedd_name'
+2025-06-16 16:58:53,570 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:58:53,570 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:58:53,571 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:58:53,571 - INFO - Starting creation of table '{}'
+2025-06-16 16:58:53,571 - INFO - Table 'chunks' created successfully
+2025-06-16 16:58:53,572 - INFO - Table 'user_info' created successfully
+2025-06-16 16:58:53,572 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:58:53,572 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:58:53,572 - CRITICAL - [Startup] Failed to initialize application: 'State' object has no attribute 'embedd_name'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 673, in __getattr__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'embedd_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 61, in lifespan
+    logger.info("[Startup] Embedding model loaded: %s", app.state.embedd_name)
+                                                        ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/starlette/datastructures.py", line 676, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'embedd_name'
+2025-06-16 16:59:27,536 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:59:27,536 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:59:27,537 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:59:27,537 - INFO - Starting creation of table '{}'
+2025-06-16 16:59:27,537 - INFO - Table 'chunks' created successfully
+2025-06-16 16:59:27,537 - INFO - Table 'user_info' created successfully
+2025-06-16 16:59:27,537 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:59:27,537 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:59:27,538 - INFO - [Startup] Embedding model loaded: None
+2025-06-16 16:59:27,538 - INFO - Initializing ChromaDB client
+2025-06-16 16:59:27,538 - ERROR - Unexpected error during ChromaDB initialization: 'Settings' object has no attribute 'chroma_persist_dir'
+2025-06-16 16:59:27,538 - CRITICAL - [Startup] Failed to initialize application: Failed to initialize ChromaDB client: 'Settings' object has no attribute 'chroma_persist_dir'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/database/vector_db/vdb_engine.py", line 49, in get_chroma_client
+    persist_directory=app_settings.chroma_persist_dir
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'chroma_persist_dir'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 65, in lifespan
+  File "/workspaces/Chat-Immigration/src/database/vector_db/vdb_engine.py", line 61, in get_chroma_client
+    raise RuntimeError(f"Failed to initialize ChromaDB client: {e}") from e
+RuntimeError: Failed to initialize ChromaDB client: 'Settings' object has no attribute 'chroma_persist_dir'
+2025-06-16 16:59:32,893 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:59:32,894 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:59:32,894 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:59:32,895 - INFO - Starting creation of table '{}'
+2025-06-16 16:59:32,895 - INFO - Table 'chunks' created successfully
+2025-06-16 16:59:32,895 - INFO - Table 'user_info' created successfully
+2025-06-16 16:59:32,895 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:59:32,895 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:59:32,895 - INFO - [Startup] Embedding model loaded: None
+2025-06-16 16:59:32,895 - INFO - Initializing ChromaDB client
+2025-06-16 16:59:32,895 - ERROR - Unexpected error during ChromaDB initialization: 'Settings' object has no attribute 'chroma_persist_dir'
+2025-06-16 16:59:32,896 - CRITICAL - [Startup] Failed to initialize application: Failed to initialize ChromaDB client: 'Settings' object has no attribute 'chroma_persist_dir'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/database/vector_db/vdb_engine.py", line 49, in get_chroma_client
+    persist_directory=app_settings.chroma_persist_dir
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'chroma_persist_dir'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 66, in lifespan
+    app.state.vdb_client = get_chroma_client()
+                           ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/src/database/vector_db/vdb_engine.py", line 61, in get_chroma_client
+    raise RuntimeError(f"Failed to initialize ChromaDB client: {e}") from e
+RuntimeError: Failed to initialize ChromaDB client: 'Settings' object has no attribute 'chroma_persist_dir'
+2025-06-16 16:59:38,258 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:59:38,258 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:59:38,258 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:59:38,259 - INFO - Starting creation of table '{}'
+2025-06-16 16:59:38,259 - INFO - Table 'chunks' created successfully
+2025-06-16 16:59:38,259 - INFO - Table 'user_info' created successfully
+2025-06-16 16:59:38,259 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:59:38,259 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:59:38,259 - INFO - [Startup] Embedding model loaded: None
+2025-06-16 16:59:38,259 - INFO - Initializing ChromaDB client
+2025-06-16 16:59:38,259 - ERROR - Unexpected error during ChromaDB initialization: 'Settings' object has no attribute 'chroma_persist_dir'
+2025-06-16 16:59:38,259 - CRITICAL - [Startup] Failed to initialize application: Failed to initialize ChromaDB client: 'Settings' object has no attribute 'chroma_persist_dir'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/database/vector_db/vdb_engine.py", line 49, in get_chroma_client
+    persist_directory=app_settings.chroma_persist_dir
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'chroma_persist_dir'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 66, in lifespan
+    app.state.vdb_client = get_chroma_client()
+                           ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/src/database/vector_db/vdb_engine.py", line 61, in get_chroma_client
+    raise RuntimeError(f"Failed to initialize ChromaDB client: {e}") from e
+RuntimeError: Failed to initialize ChromaDB client: 'Settings' object has no attribute 'chroma_persist_dir'
+2025-06-16 16:59:43,643 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 16:59:43,644 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 16:59:43,644 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 16:59:43,644 - INFO - Starting creation of table '{}'
+2025-06-16 16:59:43,644 - INFO - Table 'chunks' created successfully
+2025-06-16 16:59:43,645 - INFO - Table 'user_info' created successfully
+2025-06-16 16:59:43,645 - INFO - Table 'query_responses' created successfully
+2025-06-16 16:59:43,645 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 16:59:43,645 - INFO - [Startup] Embedding model loaded: None
+2025-06-16 16:59:43,645 - INFO - Initializing ChromaDB client
+2025-06-16 16:59:43,645 - ERROR - Unexpected error during ChromaDB initialization: 'Settings' object has no attribute 'chroma_persist_dir'
+2025-06-16 16:59:43,645 - CRITICAL - [Startup] Failed to initialize application: Failed to initialize ChromaDB client: 'Settings' object has no attribute 'chroma_persist_dir'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/database/vector_db/vdb_engine.py", line 49, in get_chroma_client
+    persist_directory=app_settings.chroma_persist_dir
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'chroma_persist_dir'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 66, in lifespan
+    app.state.vdb_client = get_chroma_client()
+                           ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/src/database/vector_db/vdb_engine.py", line 61, in get_chroma_client
+    raise RuntimeError(f"Failed to initialize ChromaDB client: {e}") from e
+RuntimeError: Failed to initialize ChromaDB client: 'Settings' object has no attribute 'chroma_persist_dir'
+2025-06-16 17:00:42,572 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-16 17:00:42,572 - DEBUG - Verified database directory: sqlite:/database
+2025-06-16 17:00:42,573 - INFO - Successfully connected to database: sqlite:/database/data.db
+2025-06-16 17:00:42,573 - INFO - Starting creation of table '{}'
+2025-06-16 17:00:42,573 - INFO - Table 'chunks' created successfully
+2025-06-16 17:00:42,573 - INFO - Table 'user_info' created successfully
+2025-06-16 17:00:42,573 - INFO - Table 'query_responses' created successfully
+2025-06-16 17:00:42,574 - INFO - [Startup] Database tables initialized successfully.
+2025-06-16 17:00:42,574 - INFO - [Startup] Embedding model loaded: None
+2025-06-16 17:00:42,574 - INFO - Initializing ChromaDB client
+2025-06-16 17:00:42,574 - ERROR - Unexpected error during ChromaDB initialization: 'Settings' object has no attribute 'chroma_persist_dir'
+2025-06-16 17:00:42,574 - CRITICAL - [Startup] Failed to initialize application: Failed to initialize ChromaDB client: 'Settings' object has no attribute 'chroma_persist_dir'
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/database/vector_db/vdb_engine.py", line 49, in get_chroma_client
+    persist_directory=app_settings.chroma_persist_dir
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/ImiChatbot/lib/python3.12/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'chroma_persist_dir'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspaces/Chat-Immigration/src/main.py", line 66, in lifespan
+    app.state.vdb_client = get_chroma_client()
+                           ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Chat-Immigration/src/database/vector_db/vdb_engine.py", line 61, in get_chroma_client
+    raise RuntimeError(f"Failed to initialize ChromaDB client: {e}") from e
+RuntimeError: Failed to initialize ChromaDB client: 'Settings' object has no attribute 'chroma_persist_dir'
