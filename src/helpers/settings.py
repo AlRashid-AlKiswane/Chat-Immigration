@@ -8,9 +8,10 @@ This module provides a Settings class that loads configuration from:
 """
 
 import sys
-from typing import List, Literal
+from typing import List, Optional
 from pydantic import Field, ValidationError
 from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
     """
@@ -20,34 +21,30 @@ class Settings(BaseSettings):
     Environment variables take precedence over .env file values.
     """
 
-    # Application Configuration
-    app_name: str = Field(..., env="APP_NAME", description="Name of the application")
-    app_env: Literal["development", "production", "staging"] = Field("development", env="APP_ENV")
-    app_secret: str = Field(..., env="APP_SECRET", description="Secret key for the application")
-    app_debug: bool = Field(False, env="APP_DEBUG")
-
-    # Database Configuration
-    db_host: str = Field("localhost", env="DB_HOST")
-    db_port: int = Field(5432, env="DB_PORT")
-    db_name: str = Field(..., env="DB_NAME")
-    db_user: str = Field(..., env="DB_USER")
-    db_password: str = Field(..., env="DB_PASSWORD")
-    SQLITE_DB: str = Field(..., env="SQLITE_DB")
-
-    # API Configuration
-    api_key: str = Field(..., env="API_KEY")
-    api_timeout: int = Field(30, env="API_TIMEOUT")
-
-    # Logging Configuration
-    log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = Field(
-        "INFO", env="LOG_LEVEL")
-    log_file: str = Field("app.log", env="LOG_FILE")
-
     FILE_TYPES: List[str] = Field(..., env="FILE_TYPES")
     DOC_LOCATION_SAVE: str = Field(..., env="DOC_LOCATION_SAVE")
     CHUNKS_SIZE: int = Field(..., env="CHUNKS_SIZE")
     CHUNKS_OVERLAP: int = Field(..., env="CHUNKS_OVERLAB")
-    # pylint: disable=too-few-public-methods
+
+    EMBEDDING_MODEL: str = Field(..., env="EMBEDDING_MODEL")
+
+    OPENAI_APIK: Optional[str] = Field(None, env="OPENAI_APIK")
+    OPENAI_MODEL: Optional[str] = Field(None, env="OPENAI_MODEL")
+
+    GEMINI_APIK: Optional[str] = Field(None, env="GEMINI_APIK")
+    GEMINI_MODEL: Optional[str] = Field(None, env="GEMINI_MODEL")
+
+    COHERE_APIK: Optional[str] = Field(None, env="COHERE_APIK")
+    COHERE_MODEL: Optional[str] = Field(None, env="COHERE_MODEL")
+
+    HUGGINGFACE_MODEL: Optional[str] = Field(None, env="HUGGINGFACE_MODEL")
+    HUGGINGFACE_APIK: Optional[str] = Field(None, env="HUGGINGFACE_APIK")
+
+    DEEPSEEK_APIK: Optional[str] = Field(None, env="DEEPSEEK_APIK")
+    DEEPSEEK_MODEL: Optional[str] = Field(None, env="DEEPSEEK_MODEL")
+    DEEPSEEK_API_BASE: Optional[str] = Field(None, env="DEEPSEEK_API_BASE")
+
+
     class Config:
         """
         Pydantic configuration for environment file loading.
@@ -55,6 +52,7 @@ class Settings(BaseSettings):
         env_file = ".env"
         env_file_encoding = "utf-8"
         case_sensitive = False
+
 
 def get_settings() -> Settings:
     """
@@ -76,7 +74,7 @@ settings = get_settings()
 
 
 if __name__ == "__main__":
-    # Example usage
-    print(f"Application: {settings.app_name}")
-    print(f"Environment: {settings.app_env}")
-    print(f"Database: {settings.db_host}:{settings.db_port}")
+    # Example usage for debugging
+    print(f"Doc Save Location: {settings.DOC_LOCATION_SAVE}")
+    print(f"OpenAI Model: {settings.OPENAI_MODEL}")
+    print(f"HuggingFace Model: {settings.HUGGINGFACE_MODEL}")
