@@ -10,8 +10,7 @@ import os
 import sys
 import logging
 from typing import Optional
-from chromadb import Client
-from chromadb.config import Settings as ChromaSettings
+from chromadb import PersistentClient
 from chromadb.errors import ChromaError
 
 from src.logs.logger import setup_logging
@@ -30,12 +29,12 @@ logger = setup_logging()
 app_settings: Settings = get_settings()
 
 
-def get_chroma_client() -> Optional[Client]:
+def get_chroma_client() -> Optional[PersistentClient]:
     """
-    Initialize and return a ChromaDB client instance.
+    Initialize and return a ChromaDB PersistentClient instance.
 
     Returns:
-        Optional[Client]: ChromaDB client object if successful, None otherwise.
+        Optional[PersistentClient]: ChromaDB client object if successful, None otherwise.
 
     Raises:
         ChromaError: If there's an error specific to ChromaDB operations.
@@ -43,12 +42,11 @@ def get_chroma_client() -> Optional[Client]:
         RuntimeError: For other unexpected initialization errors.
     """
     try:
-        logger.info("Initializing ChromaDB client")
-        chroma_client = Client(ChromaSettings(
-            chroma_db_impl="duckdb+parquet",
-            persist_directory=app_settings.CHROMA_PERSIST_DIR
-        ))
-        logger.debug("ChromaDB client initialized successfully")
+        logger.info("Initializing ChromaDB PersistentClient")
+        chroma_client = PersistentClient(
+            path=app_settings.CHROMA_PERSIST_DIR
+        )
+        logger.debug("ChromaDB PersistentClient initialized successfully")
         return chroma_client
     except ChromaError as e:
         logger.error("ChromaDB-specific error during initialization: %s", e)

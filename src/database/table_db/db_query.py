@@ -12,7 +12,7 @@ import sys
 __import__("pysqlite3")
 sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 import sqlite3
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple, Union
 
 
 try:
@@ -38,72 +38,48 @@ app_settings: Settings = get_settings()
 def fetch_all_rows(
     conn: sqlite3.Connection,
     table_name: str,
-    columns: List[str] = None,
-    where_clause: str = None,
-    params: tuple = None,
-    order_by: str = None,
-    limit: int = None,
-) -> List[Dict[str, Any]]:
+    rely_data: str = "text",
+    cach: Optional[Tuple[str, str]] = None,  # Tuple[user_id, query]
+    columns: Optional[List[str]] = None,
+) -> Union[List[Dict[str, Any]], Optional[str]]:
     """
-    Fetches all rows from a specified table with flexible query options.
+    Pulls data from a specified table or retrieves a cached response.
 
     Args:
-        conn: Active SQLite database connection
-        table_name: Name of the table to query
-        columns: List of columns to select (None for all columns)
-        where_clause: WHERE clause without the 'WHERE' keyword
-        params: Parameters for the WHERE clause
-        order_by: ORDER BY clause without the keywords
-        limit: Maximum number of rows to return
+        conn (sqlite3.Connection): SQLite connection.
+        table_name (str): Target table name.
+        columns (List[str]): List of column names to select.
+        rely_data (str): Key name for data in return dictionary.
+        cach (Optional[Tuple[str, str]]): If set, retrieves cached response for (user_id, query).
 
     Returns:
-        List of dictionaries where keys are column names and values are row data
-
-    Examples:
-        # Get all columns from 'users'
-        fetch_all_rows(conn, "users")
-
-        # Get specific columns with filtering
-        fetch_all_rows(conn, "users",
-                      ["id", "name", "email"],
-                      "status = ? AND score > ?",
-                      ("active", 50),
-                      "name ASC",
-                      100)
+        - List[Dict[str, Any]] for general table fetch.
+        - str or None for cache mode (cached response).
     """
     try:
         cursor = conn.cursor()
 
-        # Build SELECT clause
-        select_columns = "*" if columns is None else ", ".join(columns)
-        query = f"SELECT {select_columns} FROM {table_name}"
+        # Cache mode
+        if cach:
+            user_id, query = cach
+            cursor.execute(
+                "SELECT response FROM query_responses WHERE user_id = ? AND query = ?",
+                (user_id, query)
+            )
+            row = cursor.fetchone()
+            logger.info(f"[CACHE MODE] Queried cache for user_id={user_id}, query='{query}'. Found: {bool(row)}")
+            return row[0] if row else None
 
-        # Add WHERE clause if provided
-        if where_clause:
-            query += f" WHERE {where_clause}"
+        # General fetch mode
+        else:
+            cursor.execute(f"SELECT {', '.join(columns)} FROM {table_name}")
+            rows = cursor.fetchall()
+            logger.info(f"Pulled {len(rows)} row(s) from table '{table_name}'.")
 
-        # Add ORDER BY if provided
-        if order_by:
-            query += f" ORDER BY {order_by}"
-
-        # Add LIMIT if provided
-        if limit:
-            query += f" LIMIT {limit}"
-
-        # Execute query
-        logger.info(QueryMsg.FETCH_STARTED.value.format(table_name))
-
-        cursor.execute(query, params or ())
-        rows = cursor.fetchall()
-
-        # Get column names
-        if columns is None:
-            columns = [desc[0] for desc in cursor.description]
-
-        logger.info(QueryMsg.FETCH_COMPLETED.value.format(len(rows), table_name))
-
-        # Convert rows to dictionaries
-        return [dict(zip(columns, row)) for row in rows]
+            result = [
+                {"id": row[columns.index("id")], rely_data: row[columns.index(rely_data)]} for row in rows
+            ]
+            return result
 
     except sqlite3.Error as e:
         logger.error(QueryMsg.DB_ERROR.value.format(e))
@@ -117,118 +93,3 @@ def fetch_all_rows(
     except Exception as e:  # pylint: disable=broad-except
         logger.exception(QueryMsg.UNEXPECTED_ERROR.value.format(e))
         return None
-
-
-def fetch_single_row(
-    conn: sqlite3.Connection,
-    table_name: str,
-    columns: List[str] = None,
-    where_clause: str = None,
-    params: tuple = None,
-) -> Optional[Dict[str, Any]]:
-    """
-    Fetches a single row from the specified table.
-
-    Args:
-        conn: Active SQLite database connection
-        table_name: Name of the table to query
-        columns: List of columns to select (None for all columns)
-        where_clause: WHERE clause without the 'WHERE' keyword
-        params: Parameters for the WHERE clause
-
-    Returns:
-        Single row as dictionary or None if not found
-
-    Raises:
-        sqlite3.Error: For database-related errors
-        ValueError: For invalid input parameters
-    """
-    try:
-        result = fetch_all_rows(
-            conn=conn,
-            table_name=table_name,
-            columns=columns,
-            where_clause=where_clause,
-            params=params,
-            limit=1,
-        )
-        return result[0] if result else None
-    except sqlite3.Error as e:
-        logger.error(QueryMsg.DB_ERROR.value.format(e))
-        return None
-    except ValueError as e:
-        logger.error(QueryMsg.INPUT_ERROR.value.format(e))
-        return None
-    except IndexError as e:
-        logger.debug(QueryMsg.NO_RESULTS.value.format(e))
-        return None
-    except Exception as e:  # pylint: disable=broad-except
-        logger.exception(QueryMsg.UNEXPECTED_ERROR.value.format(e))
-        return None
-
-
-def fetch_column_values(
-    conn: sqlite3.Connection, table_name: str, column: str, distinct: bool = True
-) -> List[Any]:
-    """
-    Fetches all values from a single column.
-
-    Args:
-        conn: Active SQLite database connection
-        table_name: Name of the table to query
-        column: Name of the column to fetch
-        distinct: Whether to return only distinct values
-
-    Returns:
-        List of values from the specified column
-    """
-    try:
-        distinct_clause = "DISTINCT" if distinct else ""
-        cursor = conn.cursor()
-        cursor.execute(f"SELECT {distinct_clause} {column} FROM {table_name}")
-        return [row[0] for row in cursor.fetchall()]
-    except sqlite3.Error as e:
-        logger.error(QueryMsg.COLUMN_FETCH_ERROR.value.format(column, table_name, e))
-        return []
-
-
-if __name__ == "__main__":
-    # Example usage
-    from src.database.table_db.db_engine import get_sqlite_engine
-
-    # Initialize database connection
-    db_path = os.path.join(os.path.dirname(__file__), "tables.db")
-    conn = get_sqlite_engine()
-
-    if conn:
-        try:
-            # Example 1: Fetch all users
-            users = fetch_all_rows(conn, "user_info")
-            print("All users:", users)
-
-            # Example 2: Fetch specific columns with filtering
-            active_users = fetch_all_rows(
-                conn,
-                "user_info",
-                columns=["id", "name", "email"],
-                where_clause="score > ?",
-                params=(50,),
-                order_by="name ASC",
-            )
-            print("Active users:", active_users)
-
-            # Example 3: Fetch single row
-            user = fetch_single_row(
-                conn,
-                "user_info",
-                where_clause="email = ?",
-                params=("john@example.com",),
-            )
-            print("Single user:", user)
-
-            # Example 4: Fetch column values
-            emails = fetch_column_values(conn, "user_info", "email")
-            print("All emails:", emails)
-
-        finally:
-            conn.close()

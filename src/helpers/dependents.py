@@ -108,7 +108,7 @@ def get_vdb_client(request: Request) -> Client:
     """
     vdb_client = getattr(request.app.state, "vdb_client", None)
     # pylint: disable=isinstance-second-argument-not-valid-type
-    if not isinstance(vdb_client, Client):
+    if not vdb_client:
         logger.error("ChromaDB client not found or invalid in application state.")
         raise HTTPException(
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,

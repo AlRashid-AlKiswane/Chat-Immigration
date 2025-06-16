@@ -16,3 +16,4 @@ google-generativeai
 torch
 huggingface_hub
 pysqlite3-binary
+pymupdf

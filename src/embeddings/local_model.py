@@ -1,8 +1,8 @@
 """
 Sentence Transformer Embedding Module.
 
-This module provides a wrapper class for generating text embeddings using
-SentenceTransformer models. It handles model initialization, text embedding,
+This module provides a wrapper class for generating texts embeddings using
+SentenceTransformer models. It handles model initialization, texts embedding,
 and includes error handling and logging capabilities.
 """
 
@@ -14,7 +14,7 @@ from typing import List, Union, Optional
 from sentence_transformers import SentenceTransformer # type: ignore
 
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
@@ -35,7 +35,7 @@ class HuggingFaceModel:
 
     This class provides functionality to:
     - Load a pre-trained SentenceTransformer model
-    - Generate embeddings for text inputs
+    - Generate embeddings for texts inputs
     - Handle errors during embedding generation
     - Log embedding operations
 
@@ -54,9 +54,9 @@ class HuggingFaceModel:
             logger.error("Failed to load embedding model '%s': %s", self.model_name, e)
             raise
 
-    def embed(
+    def embed_texts(
         self,
-        text: Union[str, List[str]],
+        texts: Union[str, List[str]],
         convert_to_tensor: bool = True,
         normalize_embeddings: bool = False
     ) -> Optional[Union[List[float], List[List[float]]]]:
@@ -64,7 +64,7 @@ class HuggingFaceModel:
         Generate embeddings for a given string or list of strings.
 
         Args:
-            text: Single string or list of strings to embed.
+            texts: Single string or list of strings to embed.
             convert_to_tensor: Whether to return embeddings as tensors.
             normalize_embeddings: Whether to normalize the embeddings.
 
@@ -72,22 +72,22 @@ class HuggingFaceModel:
             Embeddings as a list or tensor, or None on error.
 
         Raises:
-            ValueError: If input text is empty or invalid.
+            ValueError: If input texts is empty or invalid.
             Exception: For other embedding generation errors.
         """
-        if not text:
-            logger.error("Empty text provided for embedding.")
-            raise ValueError("Input text cannot be empty.")
+        if not texts:
+            logger.error("Empty texts provided for embedding.")
+            raise ValueError("Input texts cannot be empty.")
 
         try:
             embedding = self.model.encode(
-                text,
+                texts,
                 convert_to_tensor=convert_to_tensor,
                 normalize_embeddings=normalize_embeddings
             )
 
-            preview_text = text if isinstance(text, str) else text[0]
-            logger.info("Generated embedding for text: '%.30s...'", preview_text)
+            preview_texts = texts if isinstance(texts, str) else texts[0]
+            logger.info("Generated embedding for texts: '%.30s...'", preview_texts)
             return embedding
         # pylint: disable=broad-exception-caught
         except Exception as e:
@@ -106,3 +106,10 @@ class HuggingFaceModel:
             "max_seq_length": self.model.max_seq_length,
             "embedding_dimension": self.model.get_sentence_embedding_dimension()
         }
+
+if __name__ == "__main__":
+    # Example usage
+    embedd = HuggingFaceModel()
+    sample_text = "This"
+    embedding = embedd.embed_texts(sample_text)
+    print(f"Embedding: {embedding}")

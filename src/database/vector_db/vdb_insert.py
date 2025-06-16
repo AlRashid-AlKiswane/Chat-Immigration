@@ -35,7 +35,7 @@ def insert_documents(
     client: Client,
     collection_name: str,
     ids: List[str],
-    embeddings: List[List[float]],
+    embeddings: List,
     documents: List[str],
     metadatas: Optional[List[dict]] = None
 ) -> bool:
@@ -46,7 +46,7 @@ def insert_documents(
         client: ChromaDB client instance.
         collection_name: Name of the target collection.
         ids: List of unique document identifiers.
-        embeddings: List of embedding vectors corresponding to documents.
+        embeddings: Embedding vectors (tensor or list).
         documents: List of document contents.
         metadatas: Optional list of metadata dictionaries for each document.
 
@@ -58,20 +58,45 @@ def insert_documents(
         TypeError: If input types are incorrect.
         ChromaError: For ChromaDB-specific errors.
     """
-    # Input validation
-    if not all(len(lst) == len(ids) for lst in [documents, embeddings]):
-        error_msg = "All input lists must have the same length"
-        logger.error(error_msg)
-        raise ValueError(error_msg)
-
-    if metadatas is not None and len(metadatas) != len(ids):
-        error_msg = "Metadatas list length must match documents list"
-        logger.error(error_msg)
-        raise ValueError(error_msg)
-
     try:
-        logger.info("Inserting %d documents into collection '%s'", 
-                   len(documents), collection_name)
+        logger.debug("Validating input formats and types")
+
+        # Ensure ids is a list and convert all elements to strings
+        if not isinstance(ids, list):
+            ids = [str(ids)] if isinstance(ids, (str, int, float)) else list(ids)
+        else:
+            ids = [str(i) for i in ids]
+
+        # Convert embeddings if necessary
+        if hasattr(embeddings, "detach") and callable(embeddings.detach):
+            embeddings = embeddings.detach().cpu().tolist()
+        elif hasattr(embeddings, "tolist") and callable(embeddings.tolist):
+            embeddings = embeddings.tolist()
+
+        # Ensure embeddings is a list
+        if not isinstance(embeddings, list):
+            embeddings = [embeddings]
+
+        # Ensure documents is a list
+        if not isinstance(documents, list):
+            documents = [documents]
+
+        # Validate lengths
+        if not all(len(lst) == len(ids) for lst in [documents, embeddings]):
+            error_msg = "All input lists must have the same length"
+            logger.error(error_msg)
+            raise ValueError(error_msg)
+
+        if metadatas is not None:
+            if not isinstance(metadatas, list):
+                metadatas = [metadatas]
+            if len(metadatas) != len(ids):
+                raise ValueError("Metadatas list length must match document count")
+
+        # Ensure embeddings is a list of lists of numbers
+        for i, vec in enumerate(embeddings):
+            if not isinstance(vec, (list, tuple)):
+                embeddings[i] = [vec]
 
         collection = client.get_or_create_collection(name=collection_name)
 
@@ -84,21 +109,18 @@ def insert_documents(
         if metadatas is not None:
             insert_args["metadatas"] = metadatas
 
+        logger.debug("Attempting to insert %d documents into '%s'", len(ids), collection_name)
         collection.add(**insert_args)
 
-        logger.debug("Successfully inserted %d documents", len(documents))
+        logger.info("Successfully inserted %d documents", len(ids))
         return True
 
     except ChromaError as ce:
         logger.error("ChromaDB operation failed: %s", str(ce))
         return False
-    except ValueError as ve:
-        logger.error("Invalid input value: %s", str(ve))
-        raise
-    except TypeError as te:
-        logger.error("Type error during insertion: %s", str(te))
+    except (ValueError, TypeError) as e:
+        logger.error("%s: %s", type(e).__name__, str(e))
         raise
     except Exception as e:  # pylint: disable=broad-except
         logger.error("Unexpected error during document insertion: %s", str(e))
         return False
-

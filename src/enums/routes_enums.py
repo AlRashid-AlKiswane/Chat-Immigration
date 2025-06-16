@@ -81,17 +81,17 @@ class DocsToChunks(Enum):
     """Avg chunk size: {avg_tokens} tokens | Documents: {doc_count}"""
 
     # --- Database Operations ---
-    CHUNKS_INSERTED = "[ROUTE(S)] [DOCSTOCHUNKS] Inserted {chunk_count} chunks"
+    CHUNKS_INSERTED = "[ROUTE(S)] [DOCSTOCHUNKS] Inserted {} chunks"
     """Table: {table_name} | Duration: {duration_ms:.1f}ms"""
 
     # --- Error Handling ---
-    VALIDATION_ERROR = "[ROUTE(S)] [DOCSTOCHUNKS] {error}"
+    VALIDATION_ERROR = "[ROUTE(S)] [DOCSTOCHUNKS] {}"
     """Field: {field} | Value: {value} | Rule: {validation_rule}"""
 
-    DB_ERROR = "[ROUTE(S)] [DOCSTOCHUNKS] Operation failed: {error}"
+    DB_ERROR = "[ROUTE(S)] [DOCSTOCHUNKS] Operation failed: {}"
     """Table: {table_name} | Query: {query} | Error code: {error_code}"""
 
-    UNEXPECTED_ERROR = "[ROUTE(S)] [DOCSTOCHUNKS] Unexpected error: {error}"
+    UNEXPECTED_ERROR = "[ROUTE(S)] [DOCSTOCHUNKS] Unexpected error: {}"
     """Trace ID: {trace_id} | Component: {component}"""
 
     # --- Success ---

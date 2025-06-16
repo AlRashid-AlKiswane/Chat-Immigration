@@ -28,8 +28,6 @@ Typical usage example:
 from .table_db import (
     clear_table,
     fetch_all_rows,
-    fetch_column_values,
-    fetch_single_row,
     get_sqlite_engine,
     init_chunks_table,
     init_query_response_table,

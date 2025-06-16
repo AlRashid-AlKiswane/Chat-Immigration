@@ -32,9 +32,9 @@ except (ImportError, OSError) as e:
 
 # pylint: disable=wrong-import-position
 from src.logs.logger import setup_logging
-from src.helpers import get_settings, get_embedd, get_db_conn, get_vdb_client
-from src.embeddings import OpenAIEmbeddingModel
+from src.helpers import get_db_conn, get_vdb_client
 from src.database import fetch_all_rows, insert_documents
+from src.embeddings import OpenAIEmbeddingModel, HuggingFaceModel
 
 # Initialize logger and settings
 logger = setup_logging()
@@ -60,23 +60,30 @@ async def embedding(
         JSONResponse: HTTP response indicating success or failure with appropriate status.
     """
     try:
-        model_name = model_input.model_name
-        embedding_model = run_embedding_model(model_name)
+        model_name = embedd_name
+        logger.debug("Attempting to initialize embedding model: %s", model_name)
+
+        embedding_model = None
+        if model_name.upper() == "OPENAI":
+            embedding_model = OpenAIEmbeddingModel()
+            logger.info("Successfully initialized OpenAI embedding model")
+
+        elif model_name.upper() == "LOCAL":
+            embedding_model = HuggingFaceModel()
+            logger.info("Successfully initialized local HuggingFace embedding model")
+
+        else:
+            error_msg = f"Invalid model name: {model_name}. Valid options are 'OPENAI' or 'LOCAL'"
+            logger.error(error_msg)
+            raise ValueError(error_msg)
 
         request.app.state.embedd_name = model_name
         request.app.state.embedding = embedding_model
 
         logger.info("[Model] Embedding model '%s' loaded successfully.", model_name)
-        return {"message": f"Model '{model_name}' loaded."}
-    except Exception as e:
-        logger.error("[Model] Failed to load model '%s': %s", model_input.model_name, e, exc_info=True)
-        return {"error": str(e)}
-
-    try:
         logger.info("Embedding request received with model name: %s", embedd_name)
-        request.app.state.embedd_name = embedd_name
 
-        if not embedd:
+        if not embedding_model:
             logger.error("Embedding model not initialized.")
             raise HTTPException(
                 status_code=HTTP_500_INTERNAL_SERVER_ERROR,
@@ -97,10 +104,8 @@ async def embedding(
                 detail="Vector database service unavailable."
             )
 
-        # Fetch chunks
         logger.debug("Fetching chunks from the database.")
         chunks = fetch_all_rows(conn=conn, table_name="chunks", columns=["text", "id"])
-
         if not chunks:
             logger.warning("No chunks found in the database.")
             raise HTTPException(
@@ -110,13 +115,12 @@ async def embedding(
 
         logger.info("%d chunks fetched from the database.", len(chunks))
 
-        # Embed and insert
         success_count = 0
         for chunk in chunks:
-            text, chunk_id = chunk
+            text, chunk_id = chunk["text"], chunk["id"]
             try:
                 logger.debug("Embedding chunk ID %s", chunk_id)
-                embedd_vector = embedd.embed_texts(texts=[text])
+                embedd_vector = embedding_model.embed_texts(texts=[text])
 
                 insert_documents(
                     client=vdb_client,
@@ -129,7 +133,6 @@ async def embedding(
                 logger.debug("Chunk ID %s embedded and inserted successfully.", chunk_id)
                 success_count += 1
 
-            # pylint: disable=broad-exception-caught
             except Exception as embed_err:
                 logger.error("Error embedding chunk ID %s: %s", chunk_id, embed_err)
 
