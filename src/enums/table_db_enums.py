@@ -120,7 +120,30 @@ class InsertMsg(Enum):
 
 
 class QueryMsg(Enum):
-    pass
+    """Standardized messages for database query operations with format placeholders."""
+
+    # --- Query Execution ---
+    FETCH_STARTED = "Executing query on table '%s'"
+    """Query initiated for table. Columns: {columns} | Filters: {where_clause}"""
+
+    FETCH_COMPLETED = "Fetched %d rows from table '%s'"
+    """Query completed successfully. Duration: {duration_ms}ms"""
+
+    # --- Error Messages ---
+    DB_ERROR = "Database error in %s: %s"
+    """SQLite error occurred. Operation: {operation} | Error code: {error_code}"""
+
+    INPUT_ERROR = "Invalid input in %s: %s"
+    """Value error occurred. Parameter: {parameter} | Expected type: {expected_type}"""
+
+    NO_RESULTS = "No results found in %s"
+    """Empty result set. Table: {table} | Query: {query}"""
+
+    UNEXPECTED_ERROR = "Unexpected error in %s: %s"
+    """Unhandled exception. Type: {error_type} | Trace: {traceback}"""
+
+    COLUMN_FETCH_ERROR = "Error fetching column '%s' from '%s': %s"
+    """Column access failed. Valid columns: {valid_columns}"""
 
 
 class TablesMsg(Enum):
