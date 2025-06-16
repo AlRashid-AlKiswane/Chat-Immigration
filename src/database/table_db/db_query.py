@@ -20,12 +20,15 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # pylint: disable=wrong-import-position
+# pylint: disable=logging-format-interpolation
 from src.logs.logger import setup_logging
 from src.helpers import get_settings, Settings
+from src.enums import QueryMsg
 
 # Initialize application settings and logger
 logger = setup_logging()
 app_settings: Settings = get_settings()
+
 
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
@@ -36,7 +39,7 @@ def fetch_all_rows(
     where_clause: str = None,
     params: tuple = None,
     order_by: str = None,
-    limit: int = None
+    limit: int = None,
 ) -> List[Dict[str, Any]]:
     """
     Fetches all rows from a specified table with flexible query options.
@@ -56,9 +59,9 @@ def fetch_all_rows(
     Examples:
         # Get all columns from 'users'
         fetch_all_rows(conn, "users")
-        
+
         # Get specific columns with filtering
-        fetch_all_rows(conn, "users", 
+        fetch_all_rows(conn, "users",
                       ["id", "name", "email"],
                       "status = ? AND score > ?",
                       ("active", 50),
@@ -85,6 +88,8 @@ def fetch_all_rows(
             query += f" LIMIT {limit}"
 
         # Execute query
+        logger.info(QueryMsg.FETCH_STARTED.value.format(table_name))
+
         cursor.execute(query, params or ())
         rows = cursor.fetchall()
 
@@ -92,22 +97,22 @@ def fetch_all_rows(
         if columns is None:
             columns = [desc[0] for desc in cursor.description]
 
-        logger.info("Fetched %d rows from table '%s'", len(rows), table_name)
+        logger.info(QueryMsg.FETCH_COMPLETED.value.format(len(rows), table_name))
 
         # Convert rows to dictionaries
         return [dict(zip(columns, row)) for row in rows]
 
     except sqlite3.Error as e:
-        logger.error("Database error in fetch_single_row: %s", e)
+        logger.error(QueryMsg.DB_ERROR.value.format(e))
         return None
     except ValueError as e:
-        logger.error("Invalid input in fetch_single_row: %s", e)
+        logger.error(QueryMsg.INPUT_ERROR.value.format(e))
         return None
     except IndexError as e:
-        logger.debug("No results found in fetch_single_row: %s", e)
+        logger.debug(QueryMsg.NO_RESULTS.value.format(e))
         return None
     except Exception as e:  # pylint: disable=broad-except
-        logger.exception("Unexpected error in fetch_single_row: %s", e)
+        logger.exception(QueryMsg.UNEXPECTED_ERROR.value.format(e))
         return None
 
 
@@ -116,7 +121,7 @@ def fetch_single_row(
     table_name: str,
     columns: List[str] = None,
     where_clause: str = None,
-    params: tuple = None
+    params: tuple = None,
 ) -> Optional[Dict[str, Any]]:
     """
     Fetches a single row from the specified table.
@@ -142,29 +147,25 @@ def fetch_single_row(
             columns=columns,
             where_clause=where_clause,
             params=params,
-            limit=1
+            limit=1,
         )
         return result[0] if result else None
     except sqlite3.Error as e:
-        logger.error("Database error in fetch_single_row: %s", e)
+        logger.error(QueryMsg.DB_ERROR.value.format(e))
         return None
     except ValueError as e:
-        logger.error("Invalid input in fetch_single_row: %s", e)
+        logger.error(QueryMsg.INPUT_ERROR.value.format(e))
         return None
     except IndexError as e:
-        logger.debug("No results found in fetch_single_row: %s", e)
+        logger.debug(QueryMsg.NO_RESULTS.value.format(e))
         return None
     except Exception as e:  # pylint: disable=broad-except
-        logger.exception("Unexpected error in fetch_single_row: %s", e)
+        logger.exception(QueryMsg.UNEXPECTED_ERROR.value.format(e))
         return None
-
 
 
 def fetch_column_values(
-    conn: sqlite3.Connection,
-    table_name: str,
-    column: str,
-    distinct: bool = True
+    conn: sqlite3.Connection, table_name: str, column: str, distinct: bool = True
 ) -> List[Any]:
     """
     Fetches all values from a single column.
@@ -184,8 +185,7 @@ def fetch_column_values(
         cursor.execute(f"SELECT {distinct_clause} {column} FROM {table_name}")
         return [row[0] for row in cursor.fetchall()]
     except sqlite3.Error as e:
-        logger.error("Error fetching column '%s' from '%s': %s",
-                   column, table_name, e)
+        logger.error(QueryMsg.COLUMN_FETCH_ERROR.value.format(column, table_name, e))
         return []
 
 
@@ -210,7 +210,7 @@ if __name__ == "__main__":
                 columns=["id", "name", "email"],
                 where_clause="score > ?",
                 params=(50,),
-                order_by="name ASC"
+                order_by="name ASC",
             )
             print("Active users:", active_users)
 
@@ -219,7 +219,7 @@ if __name__ == "__main__":
                 conn,
                 "user_info",
                 where_clause="email = ?",
-                params=("john@example.com",)
+                params=("john@example.com",),
             )
             print("Single user:", user)
 
@@ -229,4 +229,3 @@ if __name__ == "__main__":
 
         finally:
             conn.close()
-
