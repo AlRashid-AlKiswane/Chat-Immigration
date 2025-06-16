@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     Uses Pydantic for validation and type conversion.
     Environment variables take precedence over .env file values.
     """
-
+    SQLITE_DB: str = Field(..., env="SQLITE_DB")
     FILE_TYPES: List[str] = Field(..., env="FILE_TYPES")
     DOC_LOCATION_SAVE: str = Field(..., env="DOC_LOCATION_SAVE")
     CHUNKS_SIZE: int = Field(..., env="CHUNKS_SIZE")
