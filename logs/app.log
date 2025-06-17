@@ -9857,3 +9857,88 @@ IndexError: Replacement index 0 out of range for positional args tuple
 2025-06-17 11:38:49,610 - INFO - [Startup] ChromaDB client initialized.
 2025-06-17 11:54:05,801 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
 2025-06-17 11:54:05,803 - INFO - [Shutdown] Database connection closed.
+2025-06-17 16:51:37,411 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 16:51:37,413 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 16:51:37,417 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 16:51:37,417 - INFO - Starting creation of table '{}'
+2025-06-17 16:51:37,417 - INFO - Table 'chunks' created successfully
+2025-06-17 16:51:37,417 - INFO - Table 'user_info' created successfully
+2025-06-17 16:51:37,417 - INFO - Table 'query_responses' created successfully
+2025-06-17 16:51:37,417 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 16:51:37,417 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 16:51:37,417 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 16:51:37,557 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 16:51:37,557 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 16:51:37,557 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 16:52:02,232 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-17 16:52:02,232 - INFO - [Shutdown] Database connection closed.
+2025-06-17 16:52:08,451 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 16:52:08,451 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 16:52:08,452 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 16:52:08,452 - INFO - Starting creation of table '{}'
+2025-06-17 16:52:08,452 - INFO - Table 'chunks' created successfully
+2025-06-17 16:52:08,452 - INFO - Table 'user_info' created successfully
+2025-06-17 16:52:08,452 - INFO - Table 'query_responses' created successfully
+2025-06-17 16:52:08,452 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 16:52:08,452 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 16:52:08,452 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 16:52:08,566 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 16:52:08,566 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 16:52:08,567 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 16:52:14,174 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 16:52:14,174 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 16:52:14,175 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 16:52:14,175 - INFO - Starting creation of table '{}'
+2025-06-17 16:52:14,175 - INFO - Table 'chunks' created successfully
+2025-06-17 16:52:14,175 - INFO - Table 'user_info' created successfully
+2025-06-17 16:52:14,175 - INFO - Table 'query_responses' created successfully
+2025-06-17 16:52:14,175 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 16:52:14,175 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 16:52:14,175 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 16:52:14,263 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 16:52:14,263 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 16:52:14,263 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 16:52:18,656 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 16:52:18,656 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 16:52:18,657 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 16:52:18,657 - INFO - Starting creation of table '{}'
+2025-06-17 16:52:18,657 - INFO - Table 'chunks' created successfully
+2025-06-17 16:52:18,657 - INFO - Table 'user_info' created successfully
+2025-06-17 16:52:18,657 - INFO - Table 'query_responses' created successfully
+2025-06-17 16:52:18,657 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 16:52:18,657 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 16:52:18,657 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 16:52:18,739 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 16:52:18,739 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 16:52:18,739 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 16:52:23,567 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 16:52:23,567 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 16:52:23,568 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 16:52:23,568 - INFO - Starting creation of table '{}'
+2025-06-17 16:52:23,568 - INFO - Table 'chunks' created successfully
+2025-06-17 16:52:23,568 - INFO - Table 'user_info' created successfully
+2025-06-17 16:52:23,568 - INFO - Table 'query_responses' created successfully
+2025-06-17 16:52:23,568 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 16:52:23,568 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 16:52:23,568 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 16:52:23,663 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 16:52:23,664 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 16:52:23,664 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 16:52:26,575 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-17 16:52:26,576 - INFO - [Shutdown] Database connection closed.
+2025-06-17 16:52:31,554 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 16:52:31,555 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 16:52:31,555 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 16:52:31,555 - INFO - Starting creation of table '{}'
+2025-06-17 16:52:31,555 - INFO - Table 'chunks' created successfully
+2025-06-17 16:52:31,555 - INFO - Table 'user_info' created successfully
+2025-06-17 16:52:31,555 - INFO - Table 'query_responses' created successfully
+2025-06-17 16:52:31,555 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 16:52:31,555 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 16:52:31,555 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 16:52:31,646 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 16:52:31,646 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 16:52:31,646 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 16:53:52,225 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 16:54:33,802 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-17 16:54:33,806 - INFO - [Shutdown] Database connection closed.

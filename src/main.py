@@ -26,7 +26,8 @@ from src.helpers import get_settings, Settings
 from src.routes import (
     upload_route,
     docs_to_chunks_route,
-    embedding_route
+    embedding_route,
+    llms_route
 )
 from src.database import (
     get_sqlite_engine,
@@ -35,8 +36,6 @@ from src.database import (
     init_query_response_table,
     get_chroma_client
 )
-
-from src.utils import run_embedding_model
 
 
 # Initialize logger and settings
@@ -66,6 +65,14 @@ async def lifespan(app: FastAPI):
         app.state.vdb_client = get_chroma_client()
         logger.info("[Startup] ChromaDB client initialized.")
 
+        app.state.llm = None
+
+        if app.state.llm:
+            logger.info("")
+        else:
+            logger.debug("Maksure u chooes the procider llm and set the conffigration")
+
+
     except Exception as e:
         logger.critical("[Startup] Failed to initialize application: %s", e, exc_info=True)
         raise RuntimeError("Startup initialization failed.") from e
@@ -87,4 +94,5 @@ app = FastAPI(title="Immigration Chatbot", version="1.0.0", lifespan=lifespan)
 # Include route modules with prefixes
 app.include_router(upload_route, prefix="/upload", tags=["Upload"])
 app.include_router(docs_to_chunks_route, prefix="/chunking", tags=["Document Chunking"])
-app.include_router(embedding_route, prefix="/Embedding", tags=["Chunking Embedding"])
+app.include_router(embedding_route, prefix="/embedding", tags=["Chunking Embedding"])
+app.include_router(llms_route, prefix="/llms", tags=["LLMs Configration"])

@@ -7,20 +7,13 @@ The embedding is performed using the OpenAIEmbeddingModel.
  It ensures proper logging, error handling, and response formatting.
 """
 
+# pylint: disable=wrong-import-position
 import logging
 import os
 import sys
+
 __import__("pysqlite3")
 sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
-from sqlite3 import Connection  # Ensure Pylint recognizes it as a valid type
-from fastapi import APIRouter, HTTPException, Request, Depends
-from fastapi.responses import JSONResponse
-from starlette.status import (
-    HTTP_200_OK,
-    HTTP_404_NOT_FOUND,
-    HTTP_500_INTERNAL_SERVER_ERROR,
-)
-from chromadb import Client
 
 # Set up project base directory
 try:
@@ -30,7 +23,15 @@ except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
     sys.exit(1)
 
-# pylint: disable=wrong-import-position
+from sqlite3 import Connection  # Ensure Pylint recognizes it as a valid type
+from fastapi import APIRouter, HTTPException, Request, Depends
+from fastapi.responses import JSONResponse
+from starlette.status import (
+    HTTP_200_OK,
+    HTTP_404_NOT_FOUND,
+    HTTP_500_INTERNAL_SERVER_ERROR,
+)
+from chromadb import Client
 from src.logs.logger import setup_logging
 from src.helpers import get_db_conn, get_vdb_client
 from src.database import fetch_all_rows, insert_documents
@@ -133,6 +134,7 @@ async def embedding(
                 logger.debug("Chunk ID %s embedded and inserted successfully.", chunk_id)
                 success_count += 1
 
+            # pylint: disable=broad-exception-caught
             except Exception as embed_err:
                 logger.error("Error embedding chunk ID %s: %s", chunk_id, embed_err)
 
