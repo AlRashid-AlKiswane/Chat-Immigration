@@ -9855,3 +9855,5 @@ IndexError: Replacement index 0 out of range for positional args tuple
 2025-06-17 11:38:49,524 - INFO - Initializing ChromaDB PersistentClient
 2025-06-17 11:38:49,610 - DEBUG - ChromaDB PersistentClient initialized successfully
 2025-06-17 11:38:49,610 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 11:54:05,801 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-17 11:54:05,803 - INFO - [Shutdown] Database connection closed.
