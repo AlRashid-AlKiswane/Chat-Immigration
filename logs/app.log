@@ -9942,3 +9942,29 @@ IndexError: Replacement index 0 out of range for positional args tuple
 2025-06-17 16:53:52,225 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
 2025-06-17 16:54:33,802 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
 2025-06-17 16:54:33,806 - INFO - [Shutdown] Database connection closed.
+2025-06-17 17:18:19,310 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:18:19,312 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:18:19,314 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:18:19,314 - INFO - Starting creation of table '{}'
+2025-06-17 17:18:19,314 - INFO - Table 'chunks' created successfully
+2025-06-17 17:18:19,314 - INFO - Table 'user_info' created successfully
+2025-06-17 17:18:19,314 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:18:19,314 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:18:19,314 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:18:19,314 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:18:19,457 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:18:19,457 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:18:19,457 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 17:18:25,498 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:18:25,498 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:18:25,500 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:18:25,500 - INFO - Starting creation of table '{}'
+2025-06-17 17:18:25,500 - INFO - Table 'chunks' created successfully
+2025-06-17 17:18:25,500 - INFO - Table 'user_info' created successfully
+2025-06-17 17:18:25,500 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:18:25,500 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:18:25,500 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:18:25,500 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:18:25,587 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:18:25,587 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:18:25,587 - DEBUG - Maksure u chooes the procider llm and set the conffigration
