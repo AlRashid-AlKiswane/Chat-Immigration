@@ -48,30 +48,31 @@ def clear_table(conn: sqlite3.Connection, table_name: str) -> None:
         sqlite3.Error: For database-specific errors
     """
     if not isinstance(table_name, str) or not table_name.isidentifier():
-        error_msg = ClearMsg.INVALID_TABLE_NAME.value.format(table_name)
+        error_msg = ClearMsg.INVALID_TABLE_NAME % table_name
         logger.error(error_msg)
         raise ValueError(error_msg)
 
+    # pylint: disable=logging-not-lazy
     cursor = None
     try:
-        logger.debug(ClearMsg.TABLE_CLEAR_STARTED.value.format(table_name))
+        logger.debug(ClearMsg.TABLE_CLEAR_STARTED % table_name)
         cursor = conn.cursor()
         cursor.execute(f"DELETE FROM {table_name}")
         conn.commit()
-        logger.info(ClearMsg.TABLE_CLEAR_SUCCESS.value.format(table_name))
+        logger.info(ClearMsg.TABLE_CLEAR_SUCCESS % table_name)
 
     except sqlite3.OperationalError as e:
-        error_msg = ClearMsg.CLEAR_OPERATION_ERROR.value.format(table_name, e)
+        error_msg = ClearMsg.CLEAR_OPERATION_ERROR % (table_name, str(e))
         logger.error(error_msg)
         raise RuntimeError(error_msg) from e
 
     except sqlite3.DatabaseError as e:
-        error_msg = ClearMsg.DB_INTEGRITY_ERROR.value.format(table_name, e)
+        error_msg = ClearMsg.DB_INTEGRITY_ERROR % (table_name, str(e))
         logger.error(error_msg)
         raise RuntimeError(error_msg) from e
 
     except Exception as e:  # pylint: disable=broad-except
-        error_msg = ClearMsg.CLEAR_OPERATION_ERROR.value.format(table_name, e)
+        error_msg = ClearMsg.CLEAR_OPERATION_ERROR % (table_name, str(e))
         logger.exception(error_msg)
         raise RuntimeError(error_msg) from e
 
@@ -79,6 +80,6 @@ def clear_table(conn: sqlite3.Connection, table_name: str) -> None:
         if cursor:
             try:
                 cursor.close()
-                logger.debug(ClearMsg.CURSOR_CLOSED.value.format(table_name))
+                logger.debug(ClearMsg.CURSOR_CLOSED % table_name)
             except sqlite3.Error as e:
-                logger.warning(ClearMsg.CURSOR_ERROR.value.format(e))
+                logger.warning(ClearMsg.CURSOR_ERROR % str(e))
