@@ -97,6 +97,8 @@ class Settings(BaseSettings):
 
     PROVIDER_EMBEDDING_MODEL: str =  Field("LOCAL", env="PROVIDER_EMBEDDING_MODEL")
 
+    HUGGINGFACE_MODEL: str = Field(..., env="HUGGINGFACE_MODEL")
+
 def get_settings() -> Settings:
     """
     Safely initialize application settings with proper error handling.

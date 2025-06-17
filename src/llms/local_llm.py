@@ -1,8 +1,8 @@
 """
-Hugging Face LLM Implementation Module.
+HuggingFace LLM Implementation Module.
 
 This module provides a concrete implementation of the BaseLLM abstract class
-for interacting with locally hosted Hugging Face transformer models.
+for interacting with locally hosted HuggingFace transformer models.
 It handles model loading, prompt processing, and structured error handling.
 """
 
@@ -34,21 +34,21 @@ app_settings: Settings = get_settings()
 
 class HuggingFaceLLM(BaseLLM):
     """
-    Hugging Face LLM client implementing the BaseLLM interface.
+    HuggingFace LLM client implementing the BaseLLM interface.
 
-    Handles text generation using a local Hugging Face transformer model.
+    Handles text generation using a local HuggingFace transformer model.
     """
 
     def __init__(self, model_name: Optional[str] = None) -> None:
-        """Initialize the Hugging Face LLM with optional custom model name."""
+        """Initialize the HuggingFace LLM with optional custom model name."""
         self.model_name = model_name or app_settings.HUGGINGFACE_MODEL
         try:
             login(token=app_settings.HUGGINGFACE_APIK)
-            logging.info("Successfully logged into Hugging Face.")
+            logging.info("Successfully logged into HuggingFace.")
 
         # pylint: disable=broad-exception-caught
         except Exception as e:
-            logging.error("Failed to log into Hugging Face: %s", e)
+            logging.error("Failed to log into HuggingFace: %s", e)
 
         try:
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
@@ -63,7 +63,7 @@ class HuggingFaceLLM(BaseLLM):
             logger.info("Initialized HuggingFace LLM with model: %s", self.model_name)
         except Exception as e:
             logger.error("Failed to load HuggingFace model '%s': %s", self.model_name, e)
-            raise RuntimeError(f"Failed to load Hugging Face model: {e}") from e
+            raise RuntimeError(f"Failed to load HuggingFace model: {e}") from e
 
     def generate_response(
         self,
@@ -71,7 +71,7 @@ class HuggingFaceLLM(BaseLLM):
         **kwargs: Any
     ) -> str:
         """
-        Generate a response from the Hugging Face language model.
+        Generate a response from the HuggingFace language model.
 
         Args:
             prompt: The input text prompt.
@@ -84,7 +84,7 @@ class HuggingFaceLLM(BaseLLM):
             RuntimeError: If generation fails.
         """
         if not prompt:
-            logger.error("Empty prompt provided to Hugging Face LLM.")
+            logger.error("Empty prompt provided to HuggingFace LLM.")
             raise ValueError("Prompt must not be empty.")
 
         try:
@@ -109,12 +109,12 @@ class HuggingFaceLLM(BaseLLM):
             return reply
 
         except Exception as e:
-            logger.error("Hugging Face model generation failed: %s", e)
-            raise RuntimeError(f"Hugging Face generation failed: {e}") from e
+            logger.error("HuggingFace model generation failed: %s", e)
+            raise RuntimeError(f"HuggingFace generation failed: {e}") from e
 
     def get_model_info(self) -> Dict[str, Any]:
         """
-        Return metadata about the Hugging Face model.
+        Return metadata about the HuggingFace model.
 
         Returns:
             Dictionary with model details.
@@ -140,4 +140,3 @@ if __name__ == "__main__":
     model = HuggingFaceLLM()
     response = model.generate_response(prompt="What is the RNN in machine learning")
     print(response)
-

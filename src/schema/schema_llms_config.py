@@ -6,7 +6,7 @@ from typing import Dict, Any, Optional
 
 class ModelInfo(BaseModel):
     """Schema for model metadata information"""
-    model_name: str = Field(..., description="Identifier for the model")
+    model_name: Optional[str] = Field(None, description="Identifier for the model")
     provider: str = Field(..., description="Service or framework providing the model")
 
 class GenerationParameters(BaseModel):
@@ -33,5 +33,3 @@ class GenerationParameters(BaseModel):
         ge=1,
         description="Number of highest probability tokens to consider"
     )
-
-
