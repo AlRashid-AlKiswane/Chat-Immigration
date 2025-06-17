@@ -95,6 +95,7 @@ class Settings(BaseSettings):
         secrets_dir="/run/secrets"  # For Docker secrets
     )
 
+    PROVIDER_EMBEDDING_MODEL: str =  Field("LOCAL", env="PROVIDER_EMBEDDING_MODEL")
 
 def get_settings() -> Settings:
     """

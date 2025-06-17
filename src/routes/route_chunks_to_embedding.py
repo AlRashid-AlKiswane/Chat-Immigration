@@ -33,9 +33,9 @@ from starlette.status import (
 )
 from chromadb import Client
 from src.logs.logger import setup_logging
-from src.helpers import get_db_conn, get_vdb_client
+from src.helpers import get_db_conn, get_vdb_client, get_embedd
 from src.database import fetch_all_rows, insert_documents
-from src.embeddings import OpenAIEmbeddingModel, HuggingFaceModel
+from src.embeddings import BaseEmbeddings
 
 # Initialize logger and settings
 logger = setup_logging()
@@ -45,10 +45,9 @@ embedding_route = APIRouter()
 
 @embedding_route.post("/embedding", response_class=JSONResponse)
 async def embedding(
-    request: Request,
-    embedd_name: str,
     conn: Connection = Depends(get_db_conn),
-    vdb_client: Client = Depends(get_vdb_client)
+    vdb_client: Client = Depends(get_vdb_client),
+    embedding: BaseEmbeddings = Depends(get_embedd)
 ):
     """
     Embeds text chunks from the database using a specified embedding model.
@@ -61,30 +60,7 @@ async def embedding(
         JSONResponse: HTTP response indicating success or failure with appropriate status.
     """
     try:
-        model_name = embedd_name
-        logger.debug("Attempting to initialize embedding model: %s", model_name)
-
-        embedding_model = None
-        if model_name.upper() == "OPENAI":
-            embedding_model = OpenAIEmbeddingModel()
-            logger.info("Successfully initialized OpenAI embedding model")
-
-        elif model_name.upper() == "LOCAL":
-            embedding_model = HuggingFaceModel()
-            logger.info("Successfully initialized local HuggingFace embedding model")
-
-        else:
-            error_msg = f"Invalid model name: {model_name}. Valid options are 'OPENAI' or 'LOCAL'"
-            logger.error(error_msg)
-            raise ValueError(error_msg)
-
-        request.app.state.embedd_name = model_name
-        request.app.state.embedding = embedding_model
-
-        logger.info("[Model] Embedding model '%s' loaded successfully.", model_name)
-        logger.info("Embedding request received with model name: %s", embedd_name)
-
-        if not embedding_model:
+        if not embedding:
             logger.error("Embedding model not initialized.")
             raise HTTPException(
                 status_code=HTTP_500_INTERNAL_SERVER_ERROR,
@@ -121,7 +97,7 @@ async def embedding(
             text, chunk_id = chunk["text"], chunk["id"]
             try:
                 logger.debug("Embedding chunk ID %s", chunk_id)
-                embedd_vector = embedding_model.embed_texts(texts=[text])
+                embedd_vector = embedding.embed_texts(texts=[text])
 
                 insert_documents(
                     client=vdb_client,

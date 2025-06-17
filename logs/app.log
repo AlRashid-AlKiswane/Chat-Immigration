@@ -9968,3 +9968,1724 @@ IndexError: Replacement index 0 out of range for positional args tuple
 2025-06-17 17:18:25,587 - DEBUG - ChromaDB PersistentClient initialized successfully
 2025-06-17 17:18:25,587 - INFO - [Startup] ChromaDB client initialized.
 2025-06-17 17:18:25,587 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 17:19:48,862 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-17 17:19:48,863 - INFO - [Shutdown] Database connection closed.
+2025-06-17 17:19:55,919 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:19:55,919 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:19:55,921 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:19:55,921 - INFO - Starting creation of table '{}'
+2025-06-17 17:19:55,921 - INFO - Table 'chunks' created successfully
+2025-06-17 17:19:55,921 - INFO - Table 'user_info' created successfully
+2025-06-17 17:19:55,921 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:19:55,921 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:19:55,921 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:19:55,921 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:19:56,025 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:19:56,025 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:19:56,025 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 17:20:02,279 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:20:02,279 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:20:02,281 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:20:02,281 - INFO - Starting creation of table '{}'
+2025-06-17 17:20:02,281 - INFO - Table 'chunks' created successfully
+2025-06-17 17:20:02,281 - INFO - Table 'user_info' created successfully
+2025-06-17 17:20:02,281 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:20:02,281 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:20:02,281 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:20:02,281 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:20:02,420 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:20:02,421 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:20:02,421 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 17:20:07,979 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:20:07,979 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:20:07,979 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:20:07,979 - INFO - Starting creation of table '{}'
+2025-06-17 17:20:07,979 - INFO - Table 'chunks' created successfully
+2025-06-17 17:20:07,979 - INFO - Table 'user_info' created successfully
+2025-06-17 17:20:07,979 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:20:07,980 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:20:07,980 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:20:07,980 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:20:08,082 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:20:08,082 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:20:08,082 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 17:20:13,705 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:20:13,705 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:20:13,705 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:20:13,705 - INFO - Starting creation of table '{}'
+2025-06-17 17:20:13,706 - INFO - Table 'chunks' created successfully
+2025-06-17 17:20:13,706 - INFO - Table 'user_info' created successfully
+2025-06-17 17:20:13,706 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:20:13,706 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:20:13,706 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:20:13,706 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:20:13,795 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:20:13,795 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:20:13,795 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 17:22:47,949 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 17:22:50,302 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 17:22:50,823 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 17:22:51,224 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 17:22:51,453 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 17:22:51,632 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 17:22:51,812 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 17:22:52,006 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 17:22:52,204 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 17:22:52,389 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 17:22:53,081 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 17:25:28,756 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-17 17:25:28,759 - INFO - [Shutdown] Database connection closed.
+2025-06-17 17:25:35,604 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:25:35,604 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:25:35,607 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:25:35,607 - INFO - Starting creation of table '{}'
+2025-06-17 17:25:35,607 - INFO - Table 'chunks' created successfully
+2025-06-17 17:25:35,607 - INFO - Table 'user_info' created successfully
+2025-06-17 17:25:35,608 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:25:35,608 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:25:35,608 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:25:35,608 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:25:35,754 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:25:35,754 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:25:35,755 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 17:25:43,786 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-17 17:25:43,786 - INFO - [Shutdown] Database connection closed.
+2025-06-17 17:25:50,454 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:25:50,455 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:25:50,457 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:25:50,457 - INFO - Starting creation of table '{}'
+2025-06-17 17:25:50,457 - INFO - Table 'chunks' created successfully
+2025-06-17 17:25:50,458 - INFO - Table 'user_info' created successfully
+2025-06-17 17:25:50,458 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:25:50,458 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:25:50,458 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:25:50,458 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:25:50,612 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:25:50,612 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:25:50,612 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 17:25:56,781 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:25:56,781 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:25:56,784 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:25:56,784 - INFO - Starting creation of table '{}'
+2025-06-17 17:25:56,784 - INFO - Table 'chunks' created successfully
+2025-06-17 17:25:56,784 - INFO - Table 'user_info' created successfully
+2025-06-17 17:25:56,784 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:25:56,784 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:25:56,784 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:25:56,784 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:25:56,941 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:25:56,941 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:25:56,942 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 17:26:02,761 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-17 17:26:02,761 - INFO - [Shutdown] Database connection closed.
+2025-06-17 17:26:09,356 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:26:09,356 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:26:09,359 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:26:09,359 - INFO - Starting creation of table '{}'
+2025-06-17 17:26:09,359 - INFO - Table 'chunks' created successfully
+2025-06-17 17:26:09,359 - INFO - Table 'user_info' created successfully
+2025-06-17 17:26:09,359 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:26:09,359 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:26:09,359 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:26:09,359 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:26:09,488 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:26:09,489 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:26:09,489 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 17:26:15,263 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:26:15,263 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:26:15,263 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:26:15,263 - INFO - Starting creation of table '{}'
+2025-06-17 17:26:15,263 - INFO - Table 'chunks' created successfully
+2025-06-17 17:26:15,263 - INFO - Table 'user_info' created successfully
+2025-06-17 17:26:15,264 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:26:15,264 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:26:15,264 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:26:15,264 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:26:15,357 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:26:15,357 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:26:15,357 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 17:26:21,250 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:26:21,250 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:26:21,252 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:26:21,253 - INFO - Starting creation of table '{}'
+2025-06-17 17:26:21,253 - INFO - Table 'chunks' created successfully
+2025-06-17 17:26:21,253 - INFO - Table 'user_info' created successfully
+2025-06-17 17:26:21,253 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:26:21,253 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:26:21,253 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:26:21,253 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:26:21,397 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:26:21,397 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:26:21,397 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 17:26:27,300 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 17:26:27,300 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 17:26:27,302 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 17:26:27,302 - INFO - Starting creation of table '{}'
+2025-06-17 17:26:27,302 - INFO - Table 'chunks' created successfully
+2025-06-17 17:26:27,302 - INFO - Table 'user_info' created successfully
+2025-06-17 17:26:27,302 - INFO - Table 'query_responses' created successfully
+2025-06-17 17:26:27,302 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 17:26:27,302 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 17:26:27,302 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 17:26:27,405 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 17:26:27,405 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 17:26:27,405 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 18:28:27,642 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 18:28:27,644 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:28:27,646 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:28:27,646 - INFO - Starting creation of table '{}'
+2025-06-17 18:28:27,646 - INFO - Table 'chunks' created successfully
+2025-06-17 18:28:27,646 - INFO - Table 'user_info' created successfully
+2025-06-17 18:28:27,646 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:28:27,646 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 18:28:27,646 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 18:28:27,646 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:28:27,786 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:28:27,786 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 18:28:27,786 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 18:28:30,898 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-17 18:28:30,899 - INFO - [Shutdown] Database connection closed.
+2025-06-17 18:28:36,200 - INFO - [Startup] Starting up Immigration Chatbot API...
+2025-06-17 18:28:36,200 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:28:36,201 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:28:36,201 - INFO - Starting creation of table '{}'
+2025-06-17 18:28:36,201 - INFO - Table 'chunks' created successfully
+2025-06-17 18:28:36,201 - INFO - Table 'user_info' created successfully
+2025-06-17 18:28:36,201 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:28:36,201 - INFO - [Startup] Database tables initialized successfully.
+2025-06-17 18:28:36,201 - INFO - [Startup] Embedding model loaded: None
+2025-06-17 18:28:36,201 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:28:36,287 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:28:36,287 - INFO - [Startup] ChromaDB client initialized.
+2025-06-17 18:28:36,287 - DEBUG - Maksure u chooes the procider llm and set the conffigration
+2025-06-17 18:30:03,364 - INFO - [Shutdown] Cleaning up Immigration Chatbot API resources...
+2025-06-17 18:30:03,370 - INFO - [Shutdown] Database connection closed.
+2025-06-17 18:30:11,124 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:30:11,125 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:30:11,129 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:30:11,129 - INFO - Starting creation of table '{}'
+2025-06-17 18:30:11,129 - INFO - Table 'chunks' created successfully
+2025-06-17 18:30:11,129 - INFO - Table 'user_info' created successfully
+2025-06-17 18:30:11,129 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:30:11,129 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:30:11,129 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:30:11,129 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:30:11,272 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:30:11,273 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:30:11,273 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:30:23,824 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:30:23,825 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:30:23,826 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:30:23,826 - INFO - Starting creation of table '{}'
+2025-06-17 18:30:23,827 - INFO - Table 'chunks' created successfully
+2025-06-17 18:30:23,827 - INFO - Table 'user_info' created successfully
+2025-06-17 18:30:23,827 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:30:23,827 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:30:23,827 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:30:23,827 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:30:23,966 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:30:23,967 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:30:23,967 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:30:57,278 - INFO - [Shutdown] Immigration Chatbot API is shutting down.
+2025-06-17 18:30:57,279 - INFO - [Shutdown] SQLite database connection closed successfully.
+2025-06-17 18:31:19,897 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:31:19,897 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:31:19,900 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:31:19,900 - INFO - Starting creation of table '{}'
+2025-06-17 18:31:19,900 - INFO - Table 'chunks' created successfully
+2025-06-17 18:31:19,900 - INFO - Table 'user_info' created successfully
+2025-06-17 18:31:19,900 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:31:19,900 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:31:19,900 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:31:19,900 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:31:20,043 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:31:20,044 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:31:20,044 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:31:25,516 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:31:25,516 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:31:25,518 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:31:25,518 - INFO - Starting creation of table '{}'
+2025-06-17 18:31:25,518 - INFO - Table 'chunks' created successfully
+2025-06-17 18:31:25,518 - INFO - Table 'user_info' created successfully
+2025-06-17 18:31:25,518 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:31:25,518 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:31:25,518 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:31:25,518 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:31:25,609 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:31:25,609 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:31:25,609 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:31:30,977 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:31:30,977 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:31:30,977 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:31:30,978 - INFO - Starting creation of table '{}'
+2025-06-17 18:31:30,978 - INFO - Table 'chunks' created successfully
+2025-06-17 18:31:30,978 - INFO - Table 'user_info' created successfully
+2025-06-17 18:31:30,978 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:31:30,978 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:31:30,978 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:31:30,978 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:31:31,067 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:31:31,067 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:31:31,067 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:31:31,469 - INFO - [Shutdown] Immigration Chatbot API is shutting down.
+2025-06-17 18:31:31,470 - INFO - [Shutdown] SQLite database connection closed successfully.
+2025-06-17 18:31:40,800 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:31:40,800 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:31:40,800 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:31:40,801 - INFO - Starting creation of table '{}'
+2025-06-17 18:31:40,801 - INFO - Table 'chunks' created successfully
+2025-06-17 18:31:40,801 - INFO - Table 'user_info' created successfully
+2025-06-17 18:31:40,801 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:31:40,801 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:31:40,801 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:31:40,801 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:31:40,884 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:31:40,884 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:31:40,885 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:31:50,315 - INFO - [Shutdown] Immigration Chatbot API is shutting down.
+2025-06-17 18:31:50,315 - INFO - [Shutdown] SQLite database connection closed successfully.
+2025-06-17 18:32:02,320 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:32:02,321 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:32:02,323 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:32:02,323 - INFO - Starting creation of table '{}'
+2025-06-17 18:32:02,323 - INFO - Table 'chunks' created successfully
+2025-06-17 18:32:02,323 - INFO - Table 'user_info' created successfully
+2025-06-17 18:32:02,323 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:32:02,323 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:32:02,323 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:32:02,323 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:32:02,447 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:32:02,447 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:32:02,447 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:32:08,400 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:32:08,400 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:32:08,400 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:32:08,401 - INFO - Starting creation of table '{}'
+2025-06-17 18:32:08,401 - INFO - Table 'chunks' created successfully
+2025-06-17 18:32:08,401 - INFO - Table 'user_info' created successfully
+2025-06-17 18:32:08,401 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:32:08,401 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:32:08,401 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:32:08,401 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:32:08,510 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:32:08,510 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:32:08,510 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:32:15,603 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:32:15,603 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:32:15,604 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:32:15,604 - INFO - Starting creation of table '{}'
+2025-06-17 18:32:15,604 - INFO - Table 'chunks' created successfully
+2025-06-17 18:32:15,604 - INFO - Table 'user_info' created successfully
+2025-06-17 18:32:15,604 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:32:15,604 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:32:15,605 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:32:15,605 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:32:15,706 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:32:15,707 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:32:15,707 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:32:22,071 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:32:22,071 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:32:22,072 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:32:22,072 - INFO - Starting creation of table '{}'
+2025-06-17 18:32:22,072 - INFO - Table 'chunks' created successfully
+2025-06-17 18:32:22,072 - INFO - Table 'user_info' created successfully
+2025-06-17 18:32:22,072 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:32:22,072 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:32:22,072 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:32:22,072 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:32:22,169 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:32:22,169 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:32:22,169 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:32:30,491 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:32:30,491 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:32:30,493 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:32:30,493 - INFO - Starting creation of table '{}'
+2025-06-17 18:32:30,493 - INFO - Table 'chunks' created successfully
+2025-06-17 18:32:30,493 - INFO - Table 'user_info' created successfully
+2025-06-17 18:32:30,493 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:32:30,494 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:32:30,494 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:32:30,494 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:32:30,617 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:32:30,617 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:32:30,617 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:33:33,559 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 18:35:55,915 - DEBUG - Database connection retrieved successfully
+2025-06-17 18:35:55,916 - ERROR - Unexpected error retrieving vector database client
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Chat-Immigration/src/helpers/service_manager.py", line 180, in get_vdb_client
+    if not validate_service(vdb_client, Client, "Vector Database"):
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/Chat-Immigration/src/helpers/service_manager.py", line 92, in validate_service
+    if not isinstance(service, service_type):
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+2025-06-17 18:38:45,460 - INFO - [Shutdown] Immigration Chatbot API is shutting down.
+2025-06-17 18:38:45,466 - INFO - [Shutdown] SQLite database connection closed successfully.
+2025-06-17 18:38:52,632 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:38:52,632 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:38:52,635 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:38:52,635 - INFO - Starting creation of table '{}'
+2025-06-17 18:38:52,635 - INFO - Table 'chunks' created successfully
+2025-06-17 18:38:52,635 - INFO - Table 'user_info' created successfully
+2025-06-17 18:38:52,635 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:38:52,635 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:38:52,635 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:38:52,635 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:38:52,772 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:38:52,772 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:38:52,772 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:38:58,790 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:38:58,790 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:38:58,791 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:38:58,791 - INFO - Starting creation of table '{}'
+2025-06-17 18:38:58,791 - INFO - Table 'chunks' created successfully
+2025-06-17 18:38:58,791 - INFO - Table 'user_info' created successfully
+2025-06-17 18:38:58,791 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:38:58,791 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:38:58,791 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:38:58,791 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:38:58,888 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:38:58,888 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:38:58,888 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:39:04,625 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:39:04,625 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:39:04,626 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:39:04,626 - INFO - Starting creation of table '{}'
+2025-06-17 18:39:04,626 - INFO - Table 'chunks' created successfully
+2025-06-17 18:39:04,626 - INFO - Table 'user_info' created successfully
+2025-06-17 18:39:04,626 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:39:04,626 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:39:04,626 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:39:04,626 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:39:04,761 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:39:04,761 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:39:04,762 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:39:10,379 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:39:10,379 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:39:10,381 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:39:10,381 - INFO - Starting creation of table '{}'
+2025-06-17 18:39:10,381 - INFO - Table 'chunks' created successfully
+2025-06-17 18:39:10,381 - INFO - Table 'user_info' created successfully
+2025-06-17 18:39:10,381 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:39:10,381 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:39:10,381 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:39:10,381 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:39:10,470 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:39:10,470 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:39:10,470 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:39:12,176 - INFO - [Shutdown] Immigration Chatbot API is shutting down.
+2025-06-17 18:39:12,177 - INFO - [Shutdown] SQLite database connection closed successfully.
+2025-06-17 18:39:20,760 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:39:20,760 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:39:20,762 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:39:20,762 - INFO - Starting creation of table '{}'
+2025-06-17 18:39:20,762 - INFO - Table 'chunks' created successfully
+2025-06-17 18:39:20,762 - INFO - Table 'user_info' created successfully
+2025-06-17 18:39:20,762 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:39:20,762 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:39:20,762 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:39:20,762 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:39:20,906 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:39:20,907 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:39:20,907 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:39:26,942 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:39:26,942 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:39:26,943 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:39:26,943 - INFO - Starting creation of table '{}'
+2025-06-17 18:39:26,944 - INFO - Table 'chunks' created successfully
+2025-06-17 18:39:26,944 - INFO - Table 'user_info' created successfully
+2025-06-17 18:39:26,944 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:39:26,944 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:39:26,944 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:39:26,944 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:39:27,055 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:39:27,055 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:39:27,055 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:39:33,558 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:39:33,558 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:39:33,559 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:39:33,560 - INFO - Starting creation of table '{}'
+2025-06-17 18:39:33,560 - INFO - Table 'chunks' created successfully
+2025-06-17 18:39:33,560 - INFO - Table 'user_info' created successfully
+2025-06-17 18:39:33,560 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:39:33,560 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:39:33,560 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:39:33,560 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:39:33,714 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:39:33,714 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:39:33,714 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:39:44,853 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:39:44,854 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:39:44,855 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:39:44,855 - INFO - Starting creation of table '{}'
+2025-06-17 18:39:44,855 - INFO - Table 'chunks' created successfully
+2025-06-17 18:39:44,855 - INFO - Table 'user_info' created successfully
+2025-06-17 18:39:44,855 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:39:44,855 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:39:44,855 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:39:44,855 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:39:45,012 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:39:45,013 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:39:45,013 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:39:52,822 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:39:52,822 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:39:52,823 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:39:52,823 - INFO - Starting creation of table '{}'
+2025-06-17 18:39:52,823 - INFO - Table 'chunks' created successfully
+2025-06-17 18:39:52,823 - INFO - Table 'user_info' created successfully
+2025-06-17 18:39:52,823 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:39:52,823 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:39:52,823 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:39:52,823 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:39:52,980 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:39:52,980 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:39:52,980 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:39:59,555 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:39:59,556 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:39:59,556 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:39:59,556 - INFO - Starting creation of table '{}'
+2025-06-17 18:39:59,556 - INFO - Table 'chunks' created successfully
+2025-06-17 18:39:59,556 - INFO - Table 'user_info' created successfully
+2025-06-17 18:39:59,557 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:39:59,557 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:39:59,557 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:39:59,557 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:39:59,704 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:39:59,705 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:39:59,705 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:40:06,543 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:40:06,545 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:40:06,549 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:40:06,550 - INFO - Starting creation of table '{}'
+2025-06-17 18:40:06,550 - INFO - Table 'chunks' created successfully
+2025-06-17 18:40:06,550 - INFO - Table 'user_info' created successfully
+2025-06-17 18:40:06,550 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:40:06,550 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:40:06,550 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:40:06,550 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:40:06,917 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:40:06,918 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:40:06,918 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:40:08,225 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 18:40:13,987 - DEBUG - Database connection retrieved successfully
+2025-06-17 18:40:13,987 - DEBUG - Vector database client retrieved successfully
+2025-06-17 18:40:13,987 - ERROR - Embedding model not initialized
+2025-06-17 18:42:16,466 - INFO - [Shutdown] Immigration Chatbot API is shutting down.
+2025-06-17 18:42:16,469 - INFO - [Shutdown] SQLite database connection closed successfully.
+2025-06-17 18:53:44,017 - INFO - [Startup] All route modules registered successfully.
+2025-06-17 18:53:44,019 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:53:44,019 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:53:44,022 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:53:44,022 - INFO - [Startup] SQLite engine initialized.
+2025-06-17 18:53:44,022 - INFO - Starting creation of table '{}'
+2025-06-17 18:53:44,022 - INFO - Table 'chunks' created successfully
+2025-06-17 18:53:44,022 - INFO - Table 'user_info' created successfully
+2025-06-17 18:53:44,022 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:53:44,022 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:53:44,022 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:53:44,022 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:53:44,173 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:53:44,174 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:53:44,174 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:54:23,043 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 18:55:51,896 - INFO - [Shutdown] Immigration Chatbot API is shutting down.
+2025-06-17 18:55:51,899 - INFO - [Shutdown] SQLite database connection closed successfully.
+2025-06-17 18:55:58,858 - INFO - [Startup] All route modules registered successfully.
+2025-06-17 18:55:58,859 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:55:58,859 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:55:58,862 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:55:58,862 - INFO - [Startup] SQLite engine initialized.
+2025-06-17 18:55:58,862 - INFO - Starting creation of table '{}'
+2025-06-17 18:55:58,862 - INFO - Table 'chunks' created successfully
+2025-06-17 18:55:58,862 - INFO - Table 'user_info' created successfully
+2025-06-17 18:55:58,862 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:55:58,862 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:55:58,862 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:55:58,863 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:55:58,981 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:55:58,981 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:55:58,981 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:56:09,638 - INFO - [Startup] All route modules registered successfully.
+2025-06-17 18:56:09,638 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:56:09,639 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:56:09,641 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:56:09,641 - INFO - [Startup] SQLite engine initialized.
+2025-06-17 18:56:09,641 - INFO - Starting creation of table '{}'
+2025-06-17 18:56:09,641 - INFO - Table 'chunks' created successfully
+2025-06-17 18:56:09,641 - INFO - Table 'user_info' created successfully
+2025-06-17 18:56:09,642 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:56:09,642 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:56:09,642 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:56:09,642 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:56:09,779 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:56:09,779 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:56:09,779 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:56:57,222 - INFO - [Shutdown] Immigration Chatbot API is shutting down.
+2025-06-17 18:56:57,224 - INFO - [Shutdown] SQLite database connection closed successfully.
+2025-06-17 18:57:04,650 - INFO - [Startup] All route modules registered successfully.
+2025-06-17 18:57:04,651 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:57:04,652 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:57:04,655 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:57:04,655 - INFO - [Startup] SQLite engine initialized.
+2025-06-17 18:57:04,655 - INFO - Starting creation of table '{}'
+2025-06-17 18:57:04,655 - INFO - Table 'chunks' created successfully
+2025-06-17 18:57:04,655 - INFO - Table 'user_info' created successfully
+2025-06-17 18:57:04,656 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:57:04,656 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:57:04,656 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:57:04,656 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:57:04,797 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:57:04,798 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:57:04,798 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:57:10,817 - INFO - [Shutdown] Immigration Chatbot API is shutting down.
+2025-06-17 18:57:10,818 - INFO - [Shutdown] SQLite database connection closed successfully.
+2025-06-17 18:57:17,701 - INFO - [Startup] All route modules registered successfully.
+2025-06-17 18:57:17,702 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:57:17,702 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:57:17,705 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:57:17,705 - INFO - [Startup] SQLite engine initialized.
+2025-06-17 18:57:17,705 - INFO - Starting creation of table '{}'
+2025-06-17 18:57:17,706 - INFO - Table 'chunks' created successfully
+2025-06-17 18:57:17,706 - INFO - Table 'user_info' created successfully
+2025-06-17 18:57:17,706 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:57:17,706 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:57:17,706 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:57:17,706 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:57:17,834 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:57:17,834 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:57:17,834 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:57:24,147 - INFO - [Startup] All route modules registered successfully.
+2025-06-17 18:57:24,147 - INFO - [Startup] Immigration Chatbot API initialization started.
+2025-06-17 18:57:24,148 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:57:24,152 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:57:24,152 - INFO - [Startup] SQLite engine initialized.
+2025-06-17 18:57:24,152 - INFO - Starting creation of table '{}'
+2025-06-17 18:57:24,152 - INFO - Table 'chunks' created successfully
+2025-06-17 18:57:24,152 - INFO - Table 'user_info' created successfully
+2025-06-17 18:57:24,152 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:57:24,152 - INFO - [Startup] SQLite database tables created successfully.
+2025-06-17 18:57:24,152 - INFO - [Startup] Embedding model placeholder initialized (None).
+2025-06-17 18:57:24,152 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:57:24,298 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:57:24,298 - INFO - [Startup] ChromaDB vector store client initialized successfully.
+2025-06-17 18:57:24,298 - WARNING - [Startup Warning] LLM provider not set. Please configure it via the /llms route.
+2025-06-17 18:58:33,888 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:58:33,894 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:58:33,895 - INFO - Starting creation of table '{}'
+2025-06-17 18:58:33,895 - INFO - Table 'chunks' created successfully
+2025-06-17 18:58:33,895 - INFO - Table 'user_info' created successfully
+2025-06-17 18:58:33,895 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:58:33,895 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:58:34,166 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:58:41,139 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:58:41,144 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:58:41,144 - INFO - Starting creation of table '{}'
+2025-06-17 18:58:41,144 - INFO - Table 'chunks' created successfully
+2025-06-17 18:58:41,144 - INFO - Table 'user_info' created successfully
+2025-06-17 18:58:41,144 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:58:41,144 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:58:41,295 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 18:58:48,184 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 18:58:48,188 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 18:58:48,188 - INFO - Starting creation of table '{}'
+2025-06-17 18:58:48,188 - INFO - Table 'chunks' created successfully
+2025-06-17 18:58:48,188 - INFO - Table 'user_info' created successfully
+2025-06-17 18:58:48,188 - INFO - Table 'query_responses' created successfully
+2025-06-17 18:58:48,188 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 18:58:48,355 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 19:01:05,916 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 19:01:05,921 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 19:01:05,921 - INFO - Starting creation of table '{}'
+2025-06-17 19:01:05,921 - INFO - Table 'chunks' created successfully
+2025-06-17 19:01:05,921 - INFO - Table 'user_info' created successfully
+2025-06-17 19:01:05,921 - INFO - Table 'query_responses' created successfully
+2025-06-17 19:01:05,921 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 19:01:06,072 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 19:01:12,321 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 19:01:12,325 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 19:01:12,325 - INFO - Starting creation of table '{}'
+2025-06-17 19:01:12,325 - INFO - Table 'chunks' created successfully
+2025-06-17 19:01:12,325 - INFO - Table 'user_info' created successfully
+2025-06-17 19:01:12,325 - INFO - Table 'query_responses' created successfully
+2025-06-17 19:01:12,325 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 19:01:12,474 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 19:01:18,290 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 19:01:18,295 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 19:01:18,295 - INFO - Starting creation of table '{}'
+2025-06-17 19:01:18,295 - INFO - Table 'chunks' created successfully
+2025-06-17 19:01:18,295 - INFO - Table 'user_info' created successfully
+2025-06-17 19:01:18,295 - INFO - Table 'query_responses' created successfully
+2025-06-17 19:01:18,295 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 19:01:18,445 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 19:01:46,801 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 19:01:46,805 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 19:01:46,805 - INFO - Starting creation of table '{}'
+2025-06-17 19:01:46,805 - INFO - Table 'chunks' created successfully
+2025-06-17 19:01:46,805 - INFO - Table 'user_info' created successfully
+2025-06-17 19:01:46,805 - INFO - Table 'query_responses' created successfully
+2025-06-17 19:01:46,805 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 19:01:46,962 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 19:01:53,086 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 19:01:53,089 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 19:01:53,089 - INFO - Starting creation of table '{}'
+2025-06-17 19:01:53,089 - INFO - Table 'chunks' created successfully
+2025-06-17 19:01:53,089 - INFO - Table 'user_info' created successfully
+2025-06-17 19:01:53,089 - INFO - Table 'query_responses' created successfully
+2025-06-17 19:01:53,089 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 19:01:53,224 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 19:04:15,892 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 19:04:54,373 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 19:04:54,377 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 19:04:54,377 - INFO - Starting creation of table '{}'
+2025-06-17 19:04:54,377 - INFO - Table 'chunks' created successfully
+2025-06-17 19:04:54,377 - INFO - Table 'user_info' created successfully
+2025-06-17 19:04:54,377 - INFO - Table 'query_responses' created successfully
+2025-06-17 19:04:54,377 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 19:04:54,539 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 19:05:01,687 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 19:05:01,689 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 19:05:01,690 - INFO - Starting creation of table '{}'
+2025-06-17 19:05:01,690 - INFO - Table 'chunks' created successfully
+2025-06-17 19:05:01,690 - INFO - Table 'user_info' created successfully
+2025-06-17 19:05:01,690 - INFO - Table 'query_responses' created successfully
+2025-06-17 19:05:01,690 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 19:05:01,832 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 19:05:08,738 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 19:05:08,741 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 19:05:08,741 - INFO - Starting creation of table '{}'
+2025-06-17 19:05:08,741 - INFO - Table 'chunks' created successfully
+2025-06-17 19:05:08,741 - INFO - Table 'user_info' created successfully
+2025-06-17 19:05:08,742 - INFO - Table 'query_responses' created successfully
+2025-06-17 19:05:08,742 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 19:05:08,881 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 19:05:23,431 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 19:05:23,433 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 19:05:23,433 - INFO - Starting creation of table '{}'
+2025-06-17 19:05:23,434 - INFO - Table 'chunks' created successfully
+2025-06-17 19:05:23,434 - INFO - Table 'user_info' created successfully
+2025-06-17 19:05:23,434 - INFO - Table 'query_responses' created successfully
+2025-06-17 19:05:23,434 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 19:05:23,573 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 19:05:29,447 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 19:05:29,451 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 19:05:29,451 - INFO - Starting creation of table '{}'
+2025-06-17 19:05:29,451 - INFO - Table 'chunks' created successfully
+2025-06-17 19:05:29,451 - INFO - Table 'user_info' created successfully
+2025-06-17 19:05:29,451 - INFO - Table 'query_responses' created successfully
+2025-06-17 19:05:29,451 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 19:05:29,601 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 19:05:35,257 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 19:05:35,261 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 19:05:35,261 - INFO - Starting creation of table '{}'
+2025-06-17 19:05:35,261 - INFO - Table 'chunks' created successfully
+2025-06-17 19:05:35,261 - INFO - Table 'user_info' created successfully
+2025-06-17 19:05:35,261 - INFO - Table 'query_responses' created successfully
+2025-06-17 19:05:35,261 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 19:05:35,401 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 19:06:44,676 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 19:08:06,380 - DEBUG - Database connection retrieved successfully
+2025-06-17 19:08:06,380 - DEBUG - Vector database client retrieved successfully
+2025-06-17 19:08:06,380 - ERROR - Embedding model not initialized
+2025-06-17 19:57:05,033 - INFO - Initializing application settings...
+2025-06-17 19:57:05,034 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 19:59:37,097 - INFO - Initializing application settings...
+2025-06-17 19:59:37,098 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:00:39,577 - INFO - Initializing application settings...
+2025-06-17 20:00:39,578 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:00:44,530 - INFO - Initializing application settings...
+2025-06-17 20:00:44,531 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:01:25,668 - INFO - Initializing application settings...
+2025-06-17 20:01:25,669 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:01:30,700 - INFO - Initializing application settings...
+2025-06-17 20:01:30,700 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:01:51,242 - INFO - Initializing application settings...
+2025-06-17 20:01:51,243 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:01:51,243 - INFO - Logging configuration completed successfully
+2025-06-17 20:01:51,243 - CRITICAL - Failed to register route /upload. Error: list index out of range
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Chat-Immigration/src/main.py", line 274, in <module>
+    tags=[route.tags[0] if hasattr(route, 'tags') else prefix.strip("/")])
+          ~~~~~~~~~~^^^
+IndexError: list index out of range
+2025-06-17 20:01:56,074 - INFO - Initializing application settings...
+2025-06-17 20:01:56,075 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:01:56,075 - INFO - Logging configuration completed successfully
+2025-06-17 20:01:56,076 - CRITICAL - Failed to register route /upload. Error: list index out of range
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Chat-Immigration/src/main.py", line 274, in <module>
+    tags=[route.tags[0] if hasattr(route, 'tags') else prefix.strip("/")])
+          ~~~~~~~~~~^^^
+IndexError: list index out of range
+2025-06-17 20:02:02,057 - INFO - Initializing application settings...
+2025-06-17 20:02:02,058 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:02:02,058 - CRITICAL - Failed to register route /upload. Error: list index out of range
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Chat-Immigration/src/main.py", line 260, in <module>
+    except Exception as route_err:
+                  ^^^^^^^^^^^^^
+IndexError: list index out of range
+2025-06-17 20:02:06,908 - INFO - Initializing application settings...
+2025-06-17 20:02:06,909 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:02:06,909 - CRITICAL - Failed to register route /upload. Error: list index out of range
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Chat-Immigration/src/main.py", line 258, in <module>
+    tags=[route.tags[0] if hasattr(route, 'tags') else prefix.strip("/")])
+          ~~~~~~~~~~^^^
+IndexError: list index out of range
+2025-06-17 20:09:02,654 - INFO - Initializing application settings...
+2025-06-17 20:09:02,654 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:09:02,655 - INFO - Application startup completed successfully
+2025-06-17 20:09:02,655 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:09:02,655 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:09:02,655 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:09:02,657 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:09:02,657 - INFO - SQLite engine initialized successfully
+2025-06-17 20:09:02,657 - DEBUG - Initializing chunks_table...
+2025-06-17 20:09:02,657 - INFO - Starting creation of table '{}'
+2025-06-17 20:09:02,657 - INFO - Table 'chunks' created successfully
+2025-06-17 20:09:02,657 - INFO - Chunks Table created successfully
+2025-06-17 20:09:02,657 - DEBUG - Initializing user_info_table...
+2025-06-17 20:09:02,657 - INFO - Table 'user_info' created successfully
+2025-06-17 20:09:02,657 - INFO - User Info Table created successfully
+2025-06-17 20:09:02,657 - DEBUG - Initializing query_response_table...
+2025-06-17 20:09:02,657 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:09:02,657 - INFO - Query Response Table created successfully
+2025-06-17 20:09:02,657 - DEBUG - Initializing embedding model...
+2025-06-17 20:09:02,657 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:09:03,658 - ERROR - Failed to load embedding model 'LOCAL': sentence-transformers/LOCAL is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+2025-06-17 20:09:03,658 - ERROR - Failed to initialize embedding model. Model: LOCAL, Error: sentence-transformers/LOCAL is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 409, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/requests/models.py", line 1024, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/sentence-transformers/LOCAL/resolve/main/adapter_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/hub.py", line 424, in cached_files
+    hf_hub_download(
+    ~~~~~~~~~~~~~~~^
+        path_or_repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        local_files_only=local_files_only,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1008, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+        # Destination
+    ...<14 lines>...
+        force_download=force_download,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1115, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1643, in _raise_on_head_call_error
+    raise head_call_error
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1531, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url, proxies=proxies, timeout=etag_timeout, headers=headers, token=token
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1448, in get_hf_file_metadata
+    r = _request_wrapper(
+        method="HEAD",
+    ...<5 lines>...
+        timeout=timeout,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 286, in _request_wrapper
+    response = _request_wrapper(
+        method=method,
+    ...<2 lines>...
+        **params,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 310, in _request_wrapper
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 459, in hf_raise_for_status
+    raise _format(RepositoryNotFoundError, message, response) from e
+huggingface_hub.errors.RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-6851a12f-4fa755122547882e099234c4;f4cbdd06-ca44-4b5f-8968-3bfbe4267665)
+
+Repository Not Found for url: https://huggingface.co/sentence-transformers/LOCAL/resolve/main/adapter_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Chat-Immigration/src/main.py", line 117, in lifespan
+    app.state.embedding = HuggingFaceModel(model_name=model_name)
+                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/Chat-Immigration/src/embeddings/local_model.py", line 51, in __init__
+    self.model = SentenceTransformer(self.model_name)
+                 ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/SentenceTransformer.py", line 321, in __init__
+    modules = self._load_auto_model(
+        model_name_or_path,
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/SentenceTransformer.py", line 1606, in _load_auto_model
+    transformer_model = Transformer(
+        model_name_or_path,
+    ...<4 lines>...
+        backend=self.backend,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/models/Transformer.py", line 80, in __init__
+    config, is_peft_model = self._load_config(model_name_or_path, cache_dir, backend, config_args)
+                            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/models/Transformer.py", line 121, in _load_config
+    find_adapter_config_file(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_files_only=config_args.get("local_files_only", False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/peft_utils.py", line 88, in find_adapter_config_file
+    adapter_cached_filename = cached_file(
+        model_id,
+    ...<12 lines>...
+        _raise_exceptions_for_connection_errors=False,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/hub.py", line 266, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/hub.py", line 456, in cached_files
+    raise OSError(
+    ...<4 lines>...
+    ) from e
+OSError: sentence-transformers/LOCAL is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+2025-06-17 20:11:55,243 - INFO - Initializing application settings...
+2025-06-17 20:11:55,243 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:11:55,244 - DEBUG - Registering upload route...
+2025-06-17 20:11:55,245 - INFO - Upload route registered successfully
+2025-06-17 20:11:55,245 - DEBUG - Registering document chunking route...
+2025-06-17 20:11:55,246 - INFO - Document chunking route registered successfully
+2025-06-17 20:11:55,246 - DEBUG - Registering embedding route...
+2025-06-17 20:11:55,246 - INFO - Embedding route registered successfully
+2025-06-17 20:11:55,246 - DEBUG - Registering LLMs configuration route...
+2025-06-17 20:11:55,246 - INFO - LLMs configuration route registered successfully
+2025-06-17 20:11:55,246 - DEBUG - Registering LLM generation route...
+2025-06-17 20:11:55,248 - INFO - LLM generation route registered successfully
+2025-06-17 20:11:55,248 - INFO - Application startup completed successfully
+2025-06-17 20:11:55,248 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:11:55,248 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:11:55,248 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:11:55,251 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:11:55,251 - INFO - SQLite engine initialized successfully
+2025-06-17 20:11:55,251 - DEBUG - Initializing chunks_table...
+2025-06-17 20:11:55,251 - INFO - Starting creation of table '{}'
+2025-06-17 20:11:55,251 - INFO - Table 'chunks' created successfully
+2025-06-17 20:11:55,251 - INFO - Chunks Table created successfully
+2025-06-17 20:11:55,251 - DEBUG - Initializing user_info_table...
+2025-06-17 20:11:55,252 - INFO - Table 'user_info' created successfully
+2025-06-17 20:11:55,252 - INFO - User Info Table created successfully
+2025-06-17 20:11:55,252 - DEBUG - Initializing query_response_table...
+2025-06-17 20:11:55,252 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:11:55,252 - INFO - Query Response Table created successfully
+2025-06-17 20:11:55,252 - DEBUG - Initializing embedding model...
+2025-06-17 20:11:55,252 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:12:01,924 - ERROR - Failed to load embedding model 'LOCAL': sentence-transformers/LOCAL is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+2025-06-17 20:12:01,925 - ERROR - Failed to initialize embedding model. Model: LOCAL, Error: sentence-transformers/LOCAL is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 409, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/requests/models.py", line 1024, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/sentence-transformers/LOCAL/resolve/main/adapter_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/hub.py", line 424, in cached_files
+    hf_hub_download(
+    ~~~~~~~~~~~~~~~^
+        path_or_repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        local_files_only=local_files_only,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1008, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+        # Destination
+    ...<14 lines>...
+        force_download=force_download,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1115, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1643, in _raise_on_head_call_error
+    raise head_call_error
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1531, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url, proxies=proxies, timeout=etag_timeout, headers=headers, token=token
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1448, in get_hf_file_metadata
+    r = _request_wrapper(
+        method="HEAD",
+    ...<5 lines>...
+        timeout=timeout,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 286, in _request_wrapper
+    response = _request_wrapper(
+        method=method,
+    ...<2 lines>...
+        **params,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 310, in _request_wrapper
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 459, in hf_raise_for_status
+    raise _format(RepositoryNotFoundError, message, response) from e
+huggingface_hub.errors.RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-6851a1e1-0fcaceca26d0a59a7dc041e3;bdd0171f-bffb-42fd-98e6-4ce997914f93)
+
+Repository Not Found for url: https://huggingface.co/sentence-transformers/LOCAL/resolve/main/adapter_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Chat-Immigration/src/main.py", line 117, in lifespan
+    app.state.embedding = HuggingFaceModel(model_name=model_name)
+                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/Chat-Immigration/src/embeddings/local_model.py", line 51, in __init__
+    self.model = SentenceTransformer(self.model_name)
+                 ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/SentenceTransformer.py", line 321, in __init__
+    modules = self._load_auto_model(
+        model_name_or_path,
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/SentenceTransformer.py", line 1606, in _load_auto_model
+    transformer_model = Transformer(
+        model_name_or_path,
+    ...<4 lines>...
+        backend=self.backend,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/models/Transformer.py", line 80, in __init__
+    config, is_peft_model = self._load_config(model_name_or_path, cache_dir, backend, config_args)
+                            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/models/Transformer.py", line 121, in _load_config
+    find_adapter_config_file(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_files_only=config_args.get("local_files_only", False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/peft_utils.py", line 88, in find_adapter_config_file
+    adapter_cached_filename = cached_file(
+        model_id,
+    ...<12 lines>...
+        _raise_exceptions_for_connection_errors=False,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/hub.py", line 266, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/hub.py", line 456, in cached_files
+    raise OSError(
+    ...<4 lines>...
+    ) from e
+OSError: sentence-transformers/LOCAL is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+2025-06-17 20:12:05,602 - INFO - Initializing application settings...
+2025-06-17 20:12:05,603 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:12:05,603 - DEBUG - Registering upload route...
+2025-06-17 20:12:05,604 - INFO - Upload route registered successfully
+2025-06-17 20:12:05,604 - DEBUG - Registering document chunking route...
+2025-06-17 20:12:05,605 - INFO - Document chunking route registered successfully
+2025-06-17 20:12:05,605 - DEBUG - Registering embedding route...
+2025-06-17 20:12:05,605 - INFO - Embedding route registered successfully
+2025-06-17 20:12:05,605 - DEBUG - Registering LLMs configuration route...
+2025-06-17 20:12:05,605 - INFO - LLMs configuration route registered successfully
+2025-06-17 20:12:05,606 - DEBUG - Registering LLM generation route...
+2025-06-17 20:12:05,607 - INFO - LLM generation route registered successfully
+2025-06-17 20:12:05,607 - INFO - Application startup completed successfully
+2025-06-17 20:12:05,608 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:12:05,608 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:12:05,608 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:12:05,608 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:12:05,608 - INFO - SQLite engine initialized successfully
+2025-06-17 20:12:05,608 - DEBUG - Initializing chunks_table...
+2025-06-17 20:12:05,608 - INFO - Starting creation of table '{}'
+2025-06-17 20:12:05,608 - INFO - Table 'chunks' created successfully
+2025-06-17 20:12:05,609 - INFO - Chunks Table created successfully
+2025-06-17 20:12:05,609 - DEBUG - Initializing user_info_table...
+2025-06-17 20:12:05,609 - INFO - Table 'user_info' created successfully
+2025-06-17 20:12:05,609 - INFO - User Info Table created successfully
+2025-06-17 20:12:05,609 - DEBUG - Initializing query_response_table...
+2025-06-17 20:12:05,609 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:12:05,609 - INFO - Query Response Table created successfully
+2025-06-17 20:12:05,609 - DEBUG - Initializing embedding model...
+2025-06-17 20:12:05,609 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:12:06,231 - ERROR - Failed to load embedding model 'LOCAL': sentence-transformers/LOCAL is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+2025-06-17 20:12:06,232 - ERROR - Failed to initialize embedding model. Model: LOCAL, Error: sentence-transformers/LOCAL is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 409, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/requests/models.py", line 1024, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/sentence-transformers/LOCAL/resolve/main/adapter_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/hub.py", line 424, in cached_files
+    hf_hub_download(
+    ~~~~~~~~~~~~~~~^
+        path_or_repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        local_files_only=local_files_only,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1008, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+        # Destination
+    ...<14 lines>...
+        force_download=force_download,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1115, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1643, in _raise_on_head_call_error
+    raise head_call_error
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1531, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url, proxies=proxies, timeout=etag_timeout, headers=headers, token=token
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1448, in get_hf_file_metadata
+    r = _request_wrapper(
+        method="HEAD",
+    ...<5 lines>...
+        timeout=timeout,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 286, in _request_wrapper
+    response = _request_wrapper(
+        method=method,
+    ...<2 lines>...
+        **params,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 310, in _request_wrapper
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 459, in hf_raise_for_status
+    raise _format(RepositoryNotFoundError, message, response) from e
+huggingface_hub.errors.RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-6851a1e6-70ae556544ae332f275a3636;c299e230-5467-4f95-b645-5f320f99acaf)
+
+Repository Not Found for url: https://huggingface.co/sentence-transformers/LOCAL/resolve/main/adapter_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Chat-Immigration/src/main.py", line 117, in lifespan
+    app.state.embedding = HuggingFaceModel(model_name=model_name)
+                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/Chat-Immigration/src/embeddings/local_model.py", line 51, in __init__
+    self.model = SentenceTransformer(self.model_name)
+                 ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/SentenceTransformer.py", line 321, in __init__
+    modules = self._load_auto_model(
+        model_name_or_path,
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/SentenceTransformer.py", line 1606, in _load_auto_model
+    transformer_model = Transformer(
+        model_name_or_path,
+    ...<4 lines>...
+        backend=self.backend,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/models/Transformer.py", line 80, in __init__
+    config, is_peft_model = self._load_config(model_name_or_path, cache_dir, backend, config_args)
+                            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/models/Transformer.py", line 121, in _load_config
+    find_adapter_config_file(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_files_only=config_args.get("local_files_only", False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/peft_utils.py", line 88, in find_adapter_config_file
+    adapter_cached_filename = cached_file(
+        model_id,
+    ...<12 lines>...
+        _raise_exceptions_for_connection_errors=False,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/hub.py", line 266, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/hub.py", line 456, in cached_files
+    raise OSError(
+    ...<4 lines>...
+    ) from e
+OSError: sentence-transformers/LOCAL is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+2025-06-17 20:12:09,902 - INFO - Initializing application settings...
+2025-06-17 20:12:09,903 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:12:09,904 - DEBUG - Registering upload route...
+2025-06-17 20:12:09,905 - INFO - Upload route registered successfully
+2025-06-17 20:12:09,905 - DEBUG - Registering document chunking route...
+2025-06-17 20:12:09,906 - INFO - Document chunking route registered successfully
+2025-06-17 20:12:09,906 - DEBUG - Registering embedding route...
+2025-06-17 20:12:09,906 - INFO - Embedding route registered successfully
+2025-06-17 20:12:09,906 - DEBUG - Registering LLMs configuration route...
+2025-06-17 20:12:09,906 - INFO - LLMs configuration route registered successfully
+2025-06-17 20:12:09,906 - DEBUG - Registering LLM generation route...
+2025-06-17 20:12:09,908 - INFO - LLM generation route registered successfully
+2025-06-17 20:12:09,908 - INFO - Application startup completed successfully
+2025-06-17 20:12:09,908 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:12:09,908 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:12:09,909 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:12:09,909 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:12:09,909 - INFO - SQLite engine initialized successfully
+2025-06-17 20:12:09,909 - DEBUG - Initializing chunks_table...
+2025-06-17 20:12:09,909 - INFO - Starting creation of table '{}'
+2025-06-17 20:12:09,909 - INFO - Table 'chunks' created successfully
+2025-06-17 20:12:09,909 - INFO - Chunks Table created successfully
+2025-06-17 20:12:09,909 - DEBUG - Initializing user_info_table...
+2025-06-17 20:12:09,909 - INFO - Table 'user_info' created successfully
+2025-06-17 20:12:09,909 - INFO - User Info Table created successfully
+2025-06-17 20:12:09,910 - DEBUG - Initializing query_response_table...
+2025-06-17 20:12:09,910 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:12:09,910 - INFO - Query Response Table created successfully
+2025-06-17 20:12:09,910 - DEBUG - Initializing embedding model...
+2025-06-17 20:12:09,910 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:12:10,628 - ERROR - Failed to load embedding model 'LOCAL': sentence-transformers/LOCAL is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+2025-06-17 20:12:10,628 - ERROR - Failed to initialize embedding model. Model: LOCAL, Error: sentence-transformers/LOCAL is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 409, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/requests/models.py", line 1024, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/sentence-transformers/LOCAL/resolve/main/adapter_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/hub.py", line 424, in cached_files
+    hf_hub_download(
+    ~~~~~~~~~~~~~~~^
+        path_or_repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        local_files_only=local_files_only,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1008, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+        # Destination
+    ...<14 lines>...
+        force_download=force_download,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1115, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1643, in _raise_on_head_call_error
+    raise head_call_error
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1531, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url, proxies=proxies, timeout=etag_timeout, headers=headers, token=token
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1448, in get_hf_file_metadata
+    r = _request_wrapper(
+        method="HEAD",
+    ...<5 lines>...
+        timeout=timeout,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 286, in _request_wrapper
+    response = _request_wrapper(
+        method=method,
+    ...<2 lines>...
+        **params,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 310, in _request_wrapper
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 459, in hf_raise_for_status
+    raise _format(RepositoryNotFoundError, message, response) from e
+huggingface_hub.errors.RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-6851a1ea-741231cb14110f0c2e9def5b;f77a1cd5-ab08-4e62-b73c-506d931e8cd2)
+
+Repository Not Found for url: https://huggingface.co/sentence-transformers/LOCAL/resolve/main/adapter_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Chat-Immigration/src/main.py", line 117, in lifespan
+    app.state.embedding = HuggingFaceModel(model_name=model_name)
+                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/Chat-Immigration/src/embeddings/local_model.py", line 51, in __init__
+    self.model = SentenceTransformer(self.model_name)
+                 ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/SentenceTransformer.py", line 321, in __init__
+    modules = self._load_auto_model(
+        model_name_or_path,
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/SentenceTransformer.py", line 1606, in _load_auto_model
+    transformer_model = Transformer(
+        model_name_or_path,
+    ...<4 lines>...
+        backend=self.backend,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/models/Transformer.py", line 80, in __init__
+    config, is_peft_model = self._load_config(model_name_or_path, cache_dir, backend, config_args)
+                            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/models/Transformer.py", line 121, in _load_config
+    find_adapter_config_file(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_files_only=config_args.get("local_files_only", False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/peft_utils.py", line 88, in find_adapter_config_file
+    adapter_cached_filename = cached_file(
+        model_id,
+    ...<12 lines>...
+        _raise_exceptions_for_connection_errors=False,
+    )
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/hub.py", line 266, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/transformers/utils/hub.py", line 456, in cached_files
+    raise OSError(
+    ...<4 lines>...
+    ) from e
+OSError: sentence-transformers/LOCAL is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+2025-06-17 20:13:08,751 - INFO - Initializing application settings...
+2025-06-17 20:13:08,752 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:13:08,752 - DEBUG - Registering upload route...
+2025-06-17 20:13:08,753 - INFO - Upload route registered successfully
+2025-06-17 20:13:08,753 - DEBUG - Registering document chunking route...
+2025-06-17 20:13:08,754 - INFO - Document chunking route registered successfully
+2025-06-17 20:13:08,754 - DEBUG - Registering embedding route...
+2025-06-17 20:13:08,754 - INFO - Embedding route registered successfully
+2025-06-17 20:13:08,754 - DEBUG - Registering LLMs configuration route...
+2025-06-17 20:13:08,754 - INFO - LLMs configuration route registered successfully
+2025-06-17 20:13:08,755 - DEBUG - Registering LLM generation route...
+2025-06-17 20:13:08,756 - INFO - LLM generation route registered successfully
+2025-06-17 20:13:08,757 - INFO - Application startup completed successfully
+2025-06-17 20:13:08,757 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:13:08,757 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:13:08,757 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:13:08,758 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:13:08,758 - INFO - SQLite engine initialized successfully
+2025-06-17 20:13:08,758 - DEBUG - Initializing chunks_table...
+2025-06-17 20:13:08,758 - INFO - Starting creation of table '{}'
+2025-06-17 20:13:08,758 - INFO - Table 'chunks' created successfully
+2025-06-17 20:13:08,758 - INFO - Chunks Table created successfully
+2025-06-17 20:13:08,758 - DEBUG - Initializing user_info_table...
+2025-06-17 20:13:08,758 - INFO - Table 'user_info' created successfully
+2025-06-17 20:13:08,758 - INFO - User Info Table created successfully
+2025-06-17 20:13:08,758 - DEBUG - Initializing query_response_table...
+2025-06-17 20:13:08,758 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:13:08,758 - INFO - Query Response Table created successfully
+2025-06-17 20:13:08,758 - DEBUG - Initializing embedding model...
+2025-06-17 20:13:08,759 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:13:08,760 - ERROR - Failed to load embedding model '<fastapi.applications.FastAPI object at 0x7697db39d940>': stat: path should be string, bytes, os.PathLike or integer, not FastAPI
+2025-06-17 20:13:08,760 - ERROR - Failed to initialize embedding model. Model: LOCAL, Error: stat: path should be string, bytes, os.PathLike or integer, not FastAPI
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Chat-Immigration/src/main.py", line 117, in lifespan
+    app.state.embedding = HuggingFaceModel(model_name=app)
+                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/Chat-Immigration/src/embeddings/local_model.py", line 51, in __init__
+    self.model = SentenceTransformer(self.model_name)
+                 ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/SentenceTransformer.py", line 293, in __init__
+    if not os.path.exists(model_name_or_path):
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "<frozen genericpath>", line 19, in exists
+TypeError: stat: path should be string, bytes, os.PathLike or integer, not FastAPI
+2025-06-17 20:13:12,951 - INFO - Initializing application settings...
+2025-06-17 20:13:12,951 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:13:12,952 - DEBUG - Registering upload route...
+2025-06-17 20:13:12,953 - INFO - Upload route registered successfully
+2025-06-17 20:13:12,953 - DEBUG - Registering document chunking route...
+2025-06-17 20:13:12,954 - INFO - Document chunking route registered successfully
+2025-06-17 20:13:12,954 - DEBUG - Registering embedding route...
+2025-06-17 20:13:12,954 - INFO - Embedding route registered successfully
+2025-06-17 20:13:12,954 - DEBUG - Registering LLMs configuration route...
+2025-06-17 20:13:12,955 - INFO - LLMs configuration route registered successfully
+2025-06-17 20:13:12,955 - DEBUG - Registering LLM generation route...
+2025-06-17 20:13:12,956 - INFO - LLM generation route registered successfully
+2025-06-17 20:13:12,956 - INFO - Application startup completed successfully
+2025-06-17 20:13:12,956 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:13:12,957 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:13:12,957 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:13:12,957 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:13:12,957 - INFO - SQLite engine initialized successfully
+2025-06-17 20:13:12,957 - DEBUG - Initializing chunks_table...
+2025-06-17 20:13:12,957 - INFO - Starting creation of table '{}'
+2025-06-17 20:13:12,957 - INFO - Table 'chunks' created successfully
+2025-06-17 20:13:12,957 - INFO - Chunks Table created successfully
+2025-06-17 20:13:12,957 - DEBUG - Initializing user_info_table...
+2025-06-17 20:13:12,957 - INFO - Table 'user_info' created successfully
+2025-06-17 20:13:12,957 - INFO - User Info Table created successfully
+2025-06-17 20:13:12,957 - DEBUG - Initializing query_response_table...
+2025-06-17 20:13:12,957 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:13:12,957 - INFO - Query Response Table created successfully
+2025-06-17 20:13:12,957 - DEBUG - Initializing embedding model...
+2025-06-17 20:13:12,957 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:13:12,959 - ERROR - Failed to load embedding model '<fastapi.applications.FastAPI object at 0x7591d8ce1940>': stat: path should be string, bytes, os.PathLike or integer, not FastAPI
+2025-06-17 20:13:12,959 - ERROR - Failed to initialize embedding model. Model: LOCAL, Error: stat: path should be string, bytes, os.PathLike or integer, not FastAPI
+Traceback (most recent call last):
+  File "/home/alrashid/Desktop/Chat-Immigration/src/main.py", line 117, in lifespan
+    app.state.embedding = HuggingFaceModel(model_name=app_settings.)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/Chat-Immigration/src/embeddings/local_model.py", line 51, in __init__
+    self.model = SentenceTransformer(self.model_name)
+                 ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/alrashid/Desktop/RamiChatBot/ChatBot/lib/python3.13/site-packages/sentence_transformers/SentenceTransformer.py", line 293, in __init__
+    if not os.path.exists(model_name_or_path):
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "<frozen genericpath>", line 19, in exists
+TypeError: stat: path should be string, bytes, os.PathLike or integer, not FastAPI
+2025-06-17 20:13:19,458 - INFO - Initializing application settings...
+2025-06-17 20:13:19,459 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:13:19,460 - DEBUG - Registering upload route...
+2025-06-17 20:13:19,462 - INFO - Upload route registered successfully
+2025-06-17 20:13:19,462 - DEBUG - Registering document chunking route...
+2025-06-17 20:13:19,463 - INFO - Document chunking route registered successfully
+2025-06-17 20:13:19,463 - DEBUG - Registering embedding route...
+2025-06-17 20:13:19,463 - INFO - Embedding route registered successfully
+2025-06-17 20:13:19,463 - DEBUG - Registering LLMs configuration route...
+2025-06-17 20:13:19,464 - INFO - LLMs configuration route registered successfully
+2025-06-17 20:13:19,464 - DEBUG - Registering LLM generation route...
+2025-06-17 20:13:19,465 - INFO - LLM generation route registered successfully
+2025-06-17 20:13:19,465 - INFO - Application startup completed successfully
+2025-06-17 20:13:19,466 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:13:19,466 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:13:19,466 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:13:19,466 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:13:19,466 - INFO - SQLite engine initialized successfully
+2025-06-17 20:13:19,466 - DEBUG - Initializing chunks_table...
+2025-06-17 20:13:19,467 - INFO - Starting creation of table '{}'
+2025-06-17 20:13:19,467 - INFO - Table 'chunks' created successfully
+2025-06-17 20:13:19,467 - INFO - Chunks Table created successfully
+2025-06-17 20:13:19,467 - DEBUG - Initializing user_info_table...
+2025-06-17 20:13:19,467 - INFO - Table 'user_info' created successfully
+2025-06-17 20:13:19,467 - INFO - User Info Table created successfully
+2025-06-17 20:13:19,467 - DEBUG - Initializing query_response_table...
+2025-06-17 20:13:19,467 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:13:19,467 - INFO - Query Response Table created successfully
+2025-06-17 20:13:19,467 - DEBUG - Initializing embedding model...
+2025-06-17 20:13:19,467 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:13:23,139 - INFO - Embedding model 'sentence-transformers/all-MiniLM-L6-v2' initialized.
+2025-06-17 20:13:23,139 - INFO - Embedding model initialized: LOCAL
+2025-06-17 20:13:23,139 - DEBUG - Initializing ChromaDB client...
+2025-06-17 20:13:23,139 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 20:13:23,278 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 20:13:23,278 - INFO - ChromaDB vector store client initialized successfully
+2025-06-17 20:13:23,278 - WARNING - LLM provider not initialized at startup. Please configure it via the /llms route before generating responses.
+2025-06-17 20:13:28,878 - INFO - Initializing application settings...
+2025-06-17 20:13:28,879 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:13:28,880 - DEBUG - Registering upload route...
+2025-06-17 20:13:28,881 - INFO - Upload route registered successfully
+2025-06-17 20:13:28,881 - DEBUG - Registering document chunking route...
+2025-06-17 20:13:28,882 - INFO - Document chunking route registered successfully
+2025-06-17 20:13:28,882 - DEBUG - Registering embedding route...
+2025-06-17 20:13:28,882 - INFO - Embedding route registered successfully
+2025-06-17 20:13:28,882 - DEBUG - Registering LLMs configuration route...
+2025-06-17 20:13:28,883 - INFO - LLMs configuration route registered successfully
+2025-06-17 20:13:28,883 - DEBUG - Registering LLM generation route...
+2025-06-17 20:13:28,884 - INFO - LLM generation route registered successfully
+2025-06-17 20:13:28,884 - INFO - Application startup completed successfully
+2025-06-17 20:13:28,884 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:13:28,884 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:13:28,884 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:13:28,885 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:13:28,885 - INFO - SQLite engine initialized successfully
+2025-06-17 20:13:28,885 - DEBUG - Initializing chunks_table...
+2025-06-17 20:13:28,885 - INFO - Starting creation of table '{}'
+2025-06-17 20:13:28,885 - INFO - Table 'chunks' created successfully
+2025-06-17 20:13:28,885 - INFO - Chunks Table created successfully
+2025-06-17 20:13:28,885 - DEBUG - Initializing user_info_table...
+2025-06-17 20:13:28,885 - INFO - Table 'user_info' created successfully
+2025-06-17 20:13:28,885 - INFO - User Info Table created successfully
+2025-06-17 20:13:28,885 - DEBUG - Initializing query_response_table...
+2025-06-17 20:13:28,885 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:13:28,885 - INFO - Query Response Table created successfully
+2025-06-17 20:13:28,885 - DEBUG - Initializing embedding model...
+2025-06-17 20:13:28,885 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:13:31,432 - INFO - Embedding model 'sentence-transformers/all-MiniLM-L6-v2' initialized.
+2025-06-17 20:13:31,432 - INFO - Embedding model initialized: LOCAL
+2025-06-17 20:13:31,433 - DEBUG - Initializing ChromaDB client...
+2025-06-17 20:13:31,433 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 20:13:31,516 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 20:13:31,516 - INFO - ChromaDB vector store client initialized successfully
+2025-06-17 20:13:31,516 - WARNING - LLM provider not initialized at startup. Please configure it via the /llms route before generating responses.
+2025-06-17 20:13:37,734 - INFO - Starting application shutdown...
+2025-06-17 20:13:37,734 - DEBUG - Closing database connection...
+2025-06-17 20:13:37,734 - INFO - Database connection closed successfully
+2025-06-17 20:13:37,735 - INFO - Application shutdown completed
+2025-06-17 20:13:41,922 - INFO - Initializing application settings...
+2025-06-17 20:13:41,923 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:13:41,923 - DEBUG - Registering upload route...
+2025-06-17 20:13:41,925 - INFO - Upload route registered successfully
+2025-06-17 20:13:41,925 - DEBUG - Registering document chunking route...
+2025-06-17 20:13:41,925 - INFO - Document chunking route registered successfully
+2025-06-17 20:13:41,925 - DEBUG - Registering embedding route...
+2025-06-17 20:13:41,926 - INFO - Embedding route registered successfully
+2025-06-17 20:13:41,926 - DEBUG - Registering LLMs configuration route...
+2025-06-17 20:13:41,926 - INFO - LLMs configuration route registered successfully
+2025-06-17 20:13:41,926 - DEBUG - Registering LLM generation route...
+2025-06-17 20:13:41,927 - INFO - LLM generation route registered successfully
+2025-06-17 20:13:41,927 - INFO - Application startup completed successfully
+2025-06-17 20:13:41,928 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:13:41,928 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:13:41,928 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:13:41,929 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:13:41,929 - INFO - SQLite engine initialized successfully
+2025-06-17 20:13:41,929 - DEBUG - Initializing chunks_table...
+2025-06-17 20:13:41,929 - INFO - Starting creation of table '{}'
+2025-06-17 20:13:41,929 - INFO - Table 'chunks' created successfully
+2025-06-17 20:13:41,929 - INFO - Chunks Table created successfully
+2025-06-17 20:13:41,929 - DEBUG - Initializing user_info_table...
+2025-06-17 20:13:41,929 - INFO - Table 'user_info' created successfully
+2025-06-17 20:13:41,929 - INFO - User Info Table created successfully
+2025-06-17 20:13:41,929 - DEBUG - Initializing query_response_table...
+2025-06-17 20:13:41,929 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:13:41,929 - INFO - Query Response Table created successfully
+2025-06-17 20:13:41,929 - DEBUG - Initializing embedding model...
+2025-06-17 20:13:41,929 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:13:44,446 - INFO - Embedding model 'sentence-transformers/all-MiniLM-L6-v2' initialized.
+2025-06-17 20:13:44,446 - INFO - Embedding model initialized: LOCAL
+2025-06-17 20:13:44,446 - DEBUG - Initializing ChromaDB client...
+2025-06-17 20:13:44,447 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 20:13:44,532 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 20:13:44,532 - INFO - ChromaDB vector store client initialized successfully
+2025-06-17 20:13:44,532 - WARNING - LLM provider not initialized at startup. Please configure it via the /llms route before generating responses.
+2025-06-17 20:13:54,039 - INFO - Initializing application settings...
+2025-06-17 20:13:54,039 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:13:54,042 - DEBUG - Registering upload route...
+2025-06-17 20:13:54,044 - INFO - Upload route registered successfully
+2025-06-17 20:13:54,044 - DEBUG - Registering document chunking route...
+2025-06-17 20:13:54,044 - INFO - Document chunking route registered successfully
+2025-06-17 20:13:54,044 - DEBUG - Registering embedding route...
+2025-06-17 20:13:54,045 - INFO - Embedding route registered successfully
+2025-06-17 20:13:54,045 - DEBUG - Registering LLMs configuration route...
+2025-06-17 20:13:54,045 - INFO - LLMs configuration route registered successfully
+2025-06-17 20:13:54,045 - DEBUG - Registering LLM generation route...
+2025-06-17 20:13:54,046 - INFO - LLM generation route registered successfully
+2025-06-17 20:13:54,046 - INFO - Application startup completed successfully
+2025-06-17 20:13:54,047 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:13:54,047 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:13:54,047 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:13:54,047 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:13:54,047 - INFO - SQLite engine initialized successfully
+2025-06-17 20:13:54,047 - DEBUG - Initializing chunks_table...
+2025-06-17 20:13:54,047 - INFO - Starting creation of table '{}'
+2025-06-17 20:13:54,047 - INFO - Table 'chunks' created successfully
+2025-06-17 20:13:54,047 - INFO - Chunks Table created successfully
+2025-06-17 20:13:54,047 - DEBUG - Initializing user_info_table...
+2025-06-17 20:13:54,048 - INFO - Table 'user_info' created successfully
+2025-06-17 20:13:54,048 - INFO - User Info Table created successfully
+2025-06-17 20:13:54,048 - DEBUG - Initializing query_response_table...
+2025-06-17 20:13:54,048 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:13:54,048 - INFO - Query Response Table created successfully
+2025-06-17 20:13:54,048 - DEBUG - Initializing embedding model...
+2025-06-17 20:13:54,048 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:13:56,724 - INFO - Embedding model 'sentence-transformers/all-MiniLM-L6-v2' initialized.
+2025-06-17 20:13:56,724 - INFO - Embedding model initialized: LOCAL
+2025-06-17 20:13:56,725 - DEBUG - Initializing ChromaDB client...
+2025-06-17 20:13:56,725 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 20:13:56,808 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 20:13:56,809 - INFO - ChromaDB vector store client initialized successfully
+2025-06-17 20:13:56,809 - WARNING - LLM provider not initialized at startup. Please configure it via the /llms route before generating responses.
+2025-06-17 20:17:18,021 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 20:17:24,875 - DEBUG - Database connection retrieved successfully
+2025-06-17 20:17:24,875 - DEBUG - Vector database client retrieved successfully
+2025-06-17 20:17:24,875 - DEBUG - Embedding model retrieved successfully
+2025-06-17 20:17:42,771 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 20:17:44,635 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 20:17:49,227 - DEBUG - Database connection retrieved successfully
+2025-06-17 20:17:49,228 - DEBUG - Vector database client retrieved successfully
+2025-06-17 20:17:49,228 - DEBUG - Embedding model retrieved successfully
+2025-06-17 20:22:10,788 - DEBUG - Database connection retrieved successfully
+2025-06-17 20:22:10,789 - DEBUG - Vector database client retrieved successfully
+2025-06-17 20:22:10,789 - DEBUG - Embedding model retrieved successfully
+2025-06-17 20:22:12,147 - DEBUG - Database connection retrieved successfully
+2025-06-17 20:22:12,147 - DEBUG - Vector database client retrieved successfully
+2025-06-17 20:22:12,147 - DEBUG - Embedding model retrieved successfully
+2025-06-17 20:22:12,715 - DEBUG - Database connection retrieved successfully
+2025-06-17 20:22:12,715 - DEBUG - Vector database client retrieved successfully
+2025-06-17 20:22:12,716 - DEBUG - Embedding model retrieved successfully
+2025-06-17 20:22:13,558 - DEBUG - Database connection retrieved successfully
+2025-06-17 20:22:13,559 - DEBUG - Vector database client retrieved successfully
+2025-06-17 20:22:13,559 - DEBUG - Embedding model retrieved successfully
+2025-06-17 20:22:13,753 - DEBUG - Database connection retrieved successfully
+2025-06-17 20:22:13,753 - DEBUG - Vector database client retrieved successfully
+2025-06-17 20:22:13,753 - DEBUG - Embedding model retrieved successfully
+2025-06-17 20:22:14,336 - DEBUG - Database connection retrieved successfully
+2025-06-17 20:22:14,336 - DEBUG - Vector database client retrieved successfully
+2025-06-17 20:22:14,336 - DEBUG - Embedding model retrieved successfully
+2025-06-17 20:28:31,635 - INFO - Starting application shutdown...
+2025-06-17 20:28:31,637 - DEBUG - Closing database connection...
+2025-06-17 20:28:31,639 - INFO - Database connection closed successfully
+2025-06-17 20:28:31,639 - INFO - Application shutdown completed
+2025-06-17 20:28:38,099 - INFO - Initializing application settings...
+2025-06-17 20:28:38,100 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:28:38,100 - DEBUG - Registering upload route...
+2025-06-17 20:28:38,102 - INFO - Upload route registered successfully
+2025-06-17 20:28:38,102 - DEBUG - Registering document chunking route...
+2025-06-17 20:28:38,102 - INFO - Document chunking route registered successfully
+2025-06-17 20:28:38,102 - DEBUG - Registering embedding route...
+2025-06-17 20:28:38,103 - INFO - Embedding route registered successfully
+2025-06-17 20:28:38,103 - DEBUG - Registering LLMs configuration route...
+2025-06-17 20:28:38,103 - INFO - LLMs configuration route registered successfully
+2025-06-17 20:28:38,103 - DEBUG - Registering LLM generation route...
+2025-06-17 20:28:38,104 - INFO - LLM generation route registered successfully
+2025-06-17 20:28:38,104 - INFO - Application startup completed successfully
+2025-06-17 20:28:38,105 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:28:38,105 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:28:38,105 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:28:38,106 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:28:38,106 - INFO - SQLite engine initialized successfully
+2025-06-17 20:28:38,106 - DEBUG - Initializing chunks_table...
+2025-06-17 20:28:38,107 - INFO - Starting creation of table '{}'
+2025-06-17 20:28:38,107 - INFO - Table 'chunks' created successfully
+2025-06-17 20:28:38,107 - INFO - Chunks Table created successfully
+2025-06-17 20:28:38,107 - DEBUG - Initializing user_info_table...
+2025-06-17 20:28:38,107 - INFO - Table 'user_info' created successfully
+2025-06-17 20:28:38,107 - INFO - User Info Table created successfully
+2025-06-17 20:28:38,107 - DEBUG - Initializing query_response_table...
+2025-06-17 20:28:38,107 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:28:38,107 - INFO - Query Response Table created successfully
+2025-06-17 20:28:38,107 - DEBUG - Initializing embedding model...
+2025-06-17 20:28:38,107 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:28:46,548 - INFO - Embedding model 'sentence-transformers/all-MiniLM-L6-v2' initialized.
+2025-06-17 20:28:46,548 - INFO - Embedding model initialized: LOCAL
+2025-06-17 20:28:46,548 - DEBUG - Initializing ChromaDB client...
+2025-06-17 20:28:46,549 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 20:28:46,692 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 20:28:46,692 - INFO - ChromaDB vector store client initialized successfully
+2025-06-17 20:28:46,693 - WARNING - LLM provider not initialized at startup. Please configure it via the /llms route before generating responses.
+2025-06-17 20:28:52,022 - INFO - Initializing application settings...
+2025-06-17 20:28:52,023 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:28:52,024 - DEBUG - Registering upload route...
+2025-06-17 20:28:52,025 - INFO - Upload route registered successfully
+2025-06-17 20:28:52,025 - DEBUG - Registering document chunking route...
+2025-06-17 20:28:52,026 - INFO - Document chunking route registered successfully
+2025-06-17 20:28:52,026 - DEBUG - Registering embedding route...
+2025-06-17 20:28:52,026 - INFO - Embedding route registered successfully
+2025-06-17 20:28:52,026 - DEBUG - Registering LLMs configuration route...
+2025-06-17 20:28:52,026 - INFO - LLMs configuration route registered successfully
+2025-06-17 20:28:52,026 - DEBUG - Registering LLM generation route...
+2025-06-17 20:28:52,028 - INFO - LLM generation route registered successfully
+2025-06-17 20:28:52,028 - INFO - Application startup completed successfully
+2025-06-17 20:28:52,028 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:28:52,028 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:28:52,028 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:28:52,029 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:28:52,029 - INFO - SQLite engine initialized successfully
+2025-06-17 20:28:52,029 - DEBUG - Initializing chunks_table...
+2025-06-17 20:28:52,029 - INFO - Starting creation of table '{}'
+2025-06-17 20:28:52,029 - INFO - Table 'chunks' created successfully
+2025-06-17 20:28:52,029 - INFO - Chunks Table created successfully
+2025-06-17 20:28:52,029 - DEBUG - Initializing user_info_table...
+2025-06-17 20:28:52,029 - INFO - Table 'user_info' created successfully
+2025-06-17 20:28:52,029 - INFO - User Info Table created successfully
+2025-06-17 20:28:52,029 - DEBUG - Initializing query_response_table...
+2025-06-17 20:28:52,029 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:28:52,030 - INFO - Query Response Table created successfully
+2025-06-17 20:28:52,030 - DEBUG - Initializing embedding model...
+2025-06-17 20:28:52,030 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:28:55,284 - INFO - Embedding model 'sentence-transformers/all-MiniLM-L6-v2' initialized.
+2025-06-17 20:28:55,284 - INFO - Embedding model initialized: LOCAL
+2025-06-17 20:28:55,284 - DEBUG - Initializing ChromaDB client...
+2025-06-17 20:28:55,284 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 20:28:55,376 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 20:28:55,377 - INFO - ChromaDB vector store client initialized successfully
+2025-06-17 20:28:55,377 - WARNING - LLM provider not initialized at startup. Please configure it via the /llms route before generating responses.
+2025-06-17 20:28:59,761 - INFO - Initializing application settings...
+2025-06-17 20:28:59,762 - DEBUG - Application settings loaded successfully: {'SQLITE_DB': '/home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db', 'CHROMA_PERSIST_DIR': '/home/alrashid/Desktop/Chat-Immigration/database/chroma', 'FILE_TYPES': ['txt', 'pdf'], 'DOC_LOCATION_SAVE': PosixPath('/home/alrashid/Desktop/Immigration-ChatBot/assets/docs'), 'CHUNKS_SIZE': 500, 'CHUNKS_OVERLAP': 30, 'EMBEDDING_MODEL': 'sentence-transformers/all-MiniLM-L6-v2', 'OPENAI_APIK': SecretStr('**********'), 'OPENAI_MODEL': 'gpt-4o-2024-08-06', 'GEMINI_APIK': SecretStr('**********'), 'COHERE_APIK': SecretStr(''), 'HUGGINGFACE_APIK': SecretStr(''), 'DEEPSEEK_APIK': None, 'PROVIDER_EMBEDDING_MODEL': 'LOCAL'}
+2025-06-17 20:28:59,762 - DEBUG - Registering upload route...
+2025-06-17 20:28:59,764 - INFO - Upload route registered successfully
+2025-06-17 20:28:59,764 - DEBUG - Registering document chunking route...
+2025-06-17 20:28:59,765 - INFO - Document chunking route registered successfully
+2025-06-17 20:28:59,765 - DEBUG - Registering embedding route...
+2025-06-17 20:28:59,765 - INFO - Embedding route registered successfully
+2025-06-17 20:28:59,765 - DEBUG - Registering LLMs configuration route...
+2025-06-17 20:28:59,765 - INFO - LLMs configuration route registered successfully
+2025-06-17 20:28:59,765 - DEBUG - Registering LLM generation route...
+2025-06-17 20:28:59,766 - INFO - LLM generation route registered successfully
+2025-06-17 20:28:59,767 - INFO - Application startup completed successfully
+2025-06-17 20:28:59,767 - INFO - Starting Immigration Chatbot API initialization...
+2025-06-17 20:28:59,767 - DEBUG - Initializing SQLite engine...
+2025-06-17 20:28:59,767 - DEBUG - Verified database directory: /home/alrashid/Desktop/Chat-Immigration/database/sqlite
+2025-06-17 20:28:59,767 - INFO - Successfully connected to database: /home/alrashid/Desktop/Chat-Immigration/database/sqlite/data.db
+2025-06-17 20:28:59,768 - INFO - SQLite engine initialized successfully
+2025-06-17 20:28:59,768 - DEBUG - Initializing chunks_table...
+2025-06-17 20:28:59,768 - INFO - Starting creation of table '{}'
+2025-06-17 20:28:59,768 - INFO - Table 'chunks' created successfully
+2025-06-17 20:28:59,768 - INFO - Chunks Table created successfully
+2025-06-17 20:28:59,768 - DEBUG - Initializing user_info_table...
+2025-06-17 20:28:59,768 - INFO - Table 'user_info' created successfully
+2025-06-17 20:28:59,768 - INFO - User Info Table created successfully
+2025-06-17 20:28:59,768 - DEBUG - Initializing query_response_table...
+2025-06-17 20:28:59,768 - INFO - Table 'query_responses' created successfully
+2025-06-17 20:28:59,768 - INFO - Query Response Table created successfully
+2025-06-17 20:28:59,768 - DEBUG - Initializing embedding model...
+2025-06-17 20:28:59,768 - INFO - Using local HuggingFace embedding model
+2025-06-17 20:29:02,915 - INFO - Embedding model 'sentence-transformers/all-MiniLM-L6-v2' initialized.
+2025-06-17 20:29:02,915 - INFO - Embedding model initialized: LOCAL
+2025-06-17 20:29:02,915 - DEBUG - Initializing ChromaDB client...
+2025-06-17 20:29:02,915 - INFO - Initializing ChromaDB PersistentClient
+2025-06-17 20:29:03,002 - DEBUG - ChromaDB PersistentClient initialized successfully
+2025-06-17 20:29:03,003 - INFO - ChromaDB vector store client initialized successfully
+2025-06-17 20:29:03,003 - WARNING - LLM provider not initialized at startup. Please configure it via the /llms route before generating responses.
+2025-06-17 20:29:03,006 - INFO - Gemini LLM initialized with model: gemini-1.5-flash
+2025-06-17 20:29:18,132 - DEBUG - Database connection retrieved successfully
+2025-06-17 20:29:18,132 - DEBUG - Vector database client retrieved successfully
+2025-06-17 20:29:18,133 - DEBUG - Embedding model retrieved successfully

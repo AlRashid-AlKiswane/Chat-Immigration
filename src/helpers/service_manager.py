@@ -61,7 +61,6 @@ from starlette.status import (
     HTTP_500_INTERNAL_SERVER_ERROR,
     HTTP_503_SERVICE_UNAVAILABLE
 )
-from chromadb import Client
 from chromadb.api import ClientAPI
 
 # Local application imports
@@ -73,31 +72,6 @@ from src.llms import BaseLLM
 # Initialize logger and application settings
 logger = setup_logging()
 app_settings: Settings = get_settings()
-
-def validate_service(service: Any, service_type: type, service_name: str) -> bool:
-    """
-    Validate that a service exists and is of the correct type.
-    
-    Args:
-        service: The service instance to validate
-        service_type: The expected type of the service
-        service_name: Human-readable name of the service for logging
-        
-    Returns:
-        bool: True if valid, False otherwise
-    """
-    if service is None:
-        logger.error("%s service is None", service_name)
-        return False
-    if not isinstance(service, service_type):
-        logger.error(
-            "%s service is of type %s, expected %s",
-            service_name,
-            type(service).__name__,
-            service_type.__name__
-        )
-        return False
-    return True
 
 def get_db_conn(request: Request) -> sqlite3.Connection:
     """
@@ -114,7 +88,7 @@ def get_db_conn(request: Request) -> sqlite3.Connection:
     """
     try:
         conn = getattr(request.app.state, "conn", None)
-        if not validate_service(conn, sqlite3.Connection, "Database"):
+        if not conn:
             raise HTTPException(
                 status_code=HTTP_503_SERVICE_UNAVAILABLE,
                 detail="Database service unavailable."
@@ -177,7 +151,7 @@ def get_vdb_client(request: Request) -> ClientAPI:
     """
     try:
         vdb_client = getattr(request.app.state, "vdb_client", None)
-        if not validate_service(vdb_client, Client, "Vector Database"):
+        if not vdb_client:
             raise HTTPException(
                 status_code=HTTP_503_SERVICE_UNAVAILABLE,
                 detail="Vector database service unavailable."
@@ -209,7 +183,7 @@ def get_llm(request: Request) -> BaseLLM:
     """
     try:
         llm = getattr(request.app.state, "llm", None)
-        if not validate_service(llm, BaseLLM, "Language Model"):
+        if not llm:
             raise HTTPException(
                 status_code=HTTP_503_SERVICE_UNAVAILABLE,
                 detail="Language model service unavailable. Please configure an LLM first."

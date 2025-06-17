@@ -6,7 +6,8 @@ ignore=.venv
 [MESSAGES CONTROL]
 # Disable specific pylint warnings:
 disable=redefined-outer-name,
-        logging-fstring-interpolation
+        logging-fstring-interpolation,
+        broad-exception-caught
 
 [FORMAT]
 # Maximum number of characters on a single line.

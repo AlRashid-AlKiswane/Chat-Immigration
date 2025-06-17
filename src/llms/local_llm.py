@@ -45,6 +45,8 @@ class HuggingFaceLLM(BaseLLM):
         try:
             login(token=app_settings.HUGGINGFACE_APIK)
             logging.info("Successfully logged into Hugging Face.")
+
+        # pylint: disable=broad-exception-caught
         except Exception as e:
             logging.error("Failed to log into Hugging Face: %s", e)
 

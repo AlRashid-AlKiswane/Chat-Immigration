@@ -1,95 +1,150 @@
 """
 Database Fetch Operations Module
 
-Provides flexible functions for fetching data from SQLite database tables.
+Provides robust functions for fetching data from SQLite database tables with:
+- Flexible querying capabilities
+- Comprehensive error handling
+- Caching functionality
+- Detailed logging
 """
 
-# Initialize logger
+# Standard library imports
 import logging
 import os
 import sys
-
-__import__("pysqlite3")
-sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
-import sqlite3
 from typing import List, Dict, Any, Optional, Tuple, Union
 
+# Third-party imports
+import sqlite3
 
-try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
-    sys.path.append(MAIN_DIR)
-except (ImportError, OSError) as e:
-    logging.error("Failed to set up main directory path: %s", e)
-    sys.exit(1)
-
-# pylint: disable=wrong-import-position
-# pylint: disable=logging-format-interpolation
+# Local application imports
 from src.logs.logger import setup_logging
 from src.helpers import get_settings, Settings
 from src.enums import QueryMsg
+
+# Special SQLite configuration
+__import__("pysqlite3")
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+
+# Set up project base directory
+try:
+    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+    sys.path.append(MAIN_DIR)
+    logging.debug("Main directory path configured: %s", MAIN_DIR)
+except (ImportError, OSError) as e:
+    logging.critical("Failed to set up main directory path: %s", e, exc_info=True)
+    sys.exit(1)
 
 # Initialize application settings and logger
 logger = setup_logging()
 app_settings: Settings = get_settings()
 
-
-# pylint: disable=too-many-arguments
-# pylint: disable=too-many-positional-arguments
 def fetch_all_rows(
     conn: sqlite3.Connection,
     table_name: str,
-    rely_data: str = "text",
-    cach: Optional[Tuple[str, str]] = None,  # Tuple[user_id, query]
     columns: Optional[List[str]] = None,
+    rely_data: str = "text",
+    cache_key: Optional[Tuple[str, str]] = None,
+    where_clause: Optional[str] = None,
+    limit: Optional[int] = None
 ) -> Union[List[Dict[str, Any]], Optional[str]]:
     """
-    Pulls data from a specified table or retrieves a cached response.
+    Fetches data from a database table with optional caching and filtering.
 
     Args:
-        conn (sqlite3.Connection): SQLite connection.
-        table_name (str): Target table name.
-        columns (List[str]): List of column names to select.
-        rely_data (str): Key name for data in return dictionary.
-        cach (Optional[Tuple[str, str]]): If set, retrieves cached response for (user_id, query).
+        conn: Active SQLite database connection
+        table_name: Name of the table to query
+        columns: List of columns to select (None for all)
+        rely_data: Key name for the data in returned dictionary
+        cache_key: Tuple of (user_id, query) for cache lookup
+        where_clause: Optional WHERE clause for filtering
+        limit: Maximum number of rows to return
 
     Returns:
-        - List[Dict[str, Any]] for general table fetch.
-        - str or None for cache mode (cached response).
+        - List of dictionaries for general queries
+        - Single string response for cache lookups
+        - None on error or no results
+
+    Raises:
+        ValueError: For invalid input parameters
+        sqlite3.Error: For database-specific errors
     """
     try:
+        # Validate inputs
+        if not table_name or not isinstance(table_name, str):
+            raise ValueError("Invalid table name")
+        
+        if columns is None:
+            columns = ["*"]
+        elif not isinstance(columns, list):
+            raise ValueError("Columns must be a list")
+
         cursor = conn.cursor()
 
-        # Cache mode
-        if cach:
-            user_id, query = cach
-            cursor.execute(
-                "SELECT response FROM query_responses WHERE user_id = ? AND query = ?",
-                (user_id, query)
-            )
-            row = cursor.fetchone()
-            logger.info(f"[CACHE MODE] Queried cache for user_id={user_id}, query='{query}'. Found: {bool(row)}")
-            return row[0] if row else None
+        # Cache lookup mode
+        if cache_key:
+            user_id, query = cache_key
+            try:
+                cursor.execute(
+                    "SELECT response FROM query_responses WHERE user_id = ? AND query = ?",
+                    (user_id, query))
+                row = cursor.fetchone()
+                logger.info(
+                    "Cache lookup - user_id: %s, query: %.20s... %s",
+                    user_id,
+                    query,
+                    "Found" if row else "Not found"
+                )
+                return row[0] if row else None
+            except sqlite3.Error as e:
+                logger.error("Cache lookup failed: %s", e)
+                return None
 
-        # General fetch mode
-        else:
-            cursor.execute(f"SELECT {', '.join(columns)} FROM {table_name}")
-            rows = cursor.fetchall()
-            logger.info(f"Pulled {len(rows)} row(s) from table '{table_name}'.")
+        # General query mode
+        query = f"SELECT {', '.join(columns)} FROM {table_name}"
+        params = []
 
-            result = [
-                {"id": row[columns.index("id")], rely_data: row[columns.index(rely_data)]} for row in rows
-            ]
-            return result
+        if where_clause:
+            query += f" WHERE {where_clause}"
+        
+        if limit:
+            query += f" LIMIT {limit}"
 
-    except sqlite3.Error as e:
-        logger.error(QueryMsg.DB_ERROR.value.format(e))
-        return None
+        logger.debug("Executing query: %s", query)
+        cursor.execute(query, params)
+        rows = cursor.fetchall()
+
+        if not rows:
+            logger.debug("No results found for table: %s", table_name)
+            return []
+
+        # Format results
+        if columns == ["*"]:
+            columns = [desc[0] for desc in cursor.description]
+
+        result = []
+        for row in rows:
+            row_dict = {}
+            for idx, col in enumerate(columns):
+                try:
+                    if col == rely_data:
+                        row_dict[rely_data] = row[idx]
+                    else:
+                        row_dict[col] = row[idx]
+                except IndexError:
+                    logger.warning("Column index out of range: %s", col)
+                    continue
+            result.append(row_dict)
+
+        logger.info("Fetched %d rows from table %s", len(result), table_name)
+        return result
+
     except ValueError as e:
-        logger.error(QueryMsg.INPUT_ERROR.value.format(e))
-        return None
-    except IndexError as e:
-        logger.debug(QueryMsg.NO_RESULTS.value.format(e))
-        return None
-    except Exception as e:  # pylint: disable=broad-except
-        logger.exception(QueryMsg.UNEXPECTED_ERROR.value.format(e))
-        return None
+        logger.error("Input validation error: %s", e)
+        raise
+    except sqlite3.Error as e:
+        logger.error("Database error: %s", e)
+        raise
+    except Exception as e:
+        logger.exception("Unexpected error during fetch: %s", e)
+        raise
