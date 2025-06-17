@@ -11,3 +11,4 @@ from .google_llm import GeminiLLM
 from .cohere_llm import CohereLLM
 from .deepseek_llm import DeepSeekLLM
 from .local_llm import HuggingFaceLLM
+from .abc_llm import BaseLLM

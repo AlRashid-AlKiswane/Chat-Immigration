@@ -10,7 +10,7 @@ with required methods for generating responses and providing model metadata.
 """
 
 from abc import ABC, abstractmethod
-from typing import Optional, List, Dict, Any
+from typing import Dict, Any
 
 
 # pylint: disable=unnecessary-pass

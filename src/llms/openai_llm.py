@@ -23,7 +23,7 @@ except (ImportError, OSError) as e:
 # pylint: disable=wrong-import-position
 from src.logs import setup_logging
 from src.helpers import get_settings, Settings
-from src.llms.__abc_llm import BaseLLM
+from src.llms import BaseLLM
 # Initialize logger and settings
 logger = setup_logging()
 app_settings: Settings = get_settings()
