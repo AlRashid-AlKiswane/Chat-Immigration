@@ -8,6 +8,7 @@ This module provides a Settings class that loads configuration from:
 """
 
 import sys
+import logging
 import os
 from pathlib import Path
 from typing import List, Optional
