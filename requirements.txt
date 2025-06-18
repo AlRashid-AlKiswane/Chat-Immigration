@@ -17,3 +17,5 @@ torch
 huggingface_hub
 pysqlite3-binary
 pymupdf
+chromadb
+cohere

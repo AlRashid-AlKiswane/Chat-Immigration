@@ -8,11 +8,18 @@ This module provides a Settings class that loads configuration from:
 """
 
 import sys
+import os
 from pathlib import Path
 from typing import List, Optional
 from pydantic import Field, SecretStr, ValidationError
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+try:
+    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    sys.path.append(MAIN_DIR)
+except (ImportError, OSError) as e:
+    logging.error("Failed to set up main directory path: %s", e)
+    sys.exit(1)
 
 class Settings(BaseSettings):
     """
@@ -88,7 +95,7 @@ class Settings(BaseSettings):
     DEEPSEEK_APIK: Optional[SecretStr] = Field(None, env="DEEPSEEK_APIK")
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=str(MAIN_DIR)+"/.env",
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore",
@@ -98,6 +105,8 @@ class Settings(BaseSettings):
     PROVIDER_EMBEDDING_MODEL: str =  Field("LOCAL", env="PROVIDER_EMBEDDING_MODEL")
 
     HUGGINGFACE_MODEL: str = Field(..., env="HUGGINGFACE_MODEL")
+
+
 
 def get_settings() -> Settings:
     """
