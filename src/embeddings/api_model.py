@@ -22,6 +22,7 @@ except (ImportError, OSError) as e:
 # pylint: disable=wrong-import-position
 from src.logs import setup_logging
 from src.helpers import get_settings, Settings
+from src.enums import OPenAPIEmbeddingMsg
 
 # Initialize application settings and logger
 logger = setup_logging()
@@ -29,6 +30,7 @@ app_settings: Settings = get_settings()
 
 
 # pylint: disable=too-few-public-methods
+# pylint: disable=logging-not-lazy
 class OpenAIEmbeddingModel:
     """
     A wrapper class for generating text embeddings using OpenAI's API.
@@ -62,14 +64,14 @@ class OpenAIEmbeddingModel:
         self.max_batch_size = 2048  # OpenAI's maximum batch size for embeddings
 
         if not self.api_key:
-            logger.error("OpenAI API key is missing.")
-            raise ValueError("OpenAI API key must be provided.")
+            logger.error(OPenAPIEmbeddingMsg.INVALID_API_KEY.value)
+            raise ValueError(OPenAPIEmbeddingMsg.INVALID_API_KEY.value)
 
         if not self.model_name:
-            logger.error("OpenAI embedding model name is missing.")
-            raise ValueError("OpenAI embedding model name must be provided.")
+            logger.error(OPenAPIEmbeddingMsg.INVALID_MODEL_NAME.value)
+            raise ValueError(OPenAPIEmbeddingMsg.INVALID_MODEL_NAME.value)
 
-        logger.info("OpenAIEmbeddingModel initialized with model: %s", self.model_name)
+        logger.info(OPenAPIEmbeddingMsg.MODEL_INIT_COMPLETE.value % (self.model_name, self.max_batch_size))
 
     def embed_texts(
         self,
@@ -92,8 +94,8 @@ class OpenAIEmbeddingModel:
             Exception: For other unexpected errors.
         """
         if not texts:
-            logger.error("No texts provided for embedding.")
-            raise ValueError("Input texts cannot be empty.")
+            logger.error(OPenAPIEmbeddingMsg.EMPTY_INPUT.value)
+            raise ValueError(OPenAPIEmbeddingMsg.EMPTY_INPUT.value)
 
         if isinstance(texts, str):
             texts = [texts]
@@ -106,8 +108,8 @@ class OpenAIEmbeddingModel:
             # Process texts in batches
             for i in range(0, len(texts), batch_size):
                 batch = texts[i:i + batch_size]
-                logger.debug("Processing batch %d-%d of %d texts",
-                           i, min(i + batch_size, len(texts)), len(texts))
+                logger.debug(OPenAPIEmbeddingMsg.BATCH_START.value %
+                           (i, min(i + batch_size, len(texts)), len(texts)))
 
                 try:
                     response = client.embeddings.create(
@@ -118,26 +120,26 @@ class OpenAIEmbeddingModel:
                     embeddings.extend(batch_embeddings)
                 except OpenAIError as oe:
                     logger.error(
-                        "OpenAI API error for batch %d-%d: %s",
-                        i, i + batch_size, str(oe)
+                        OPenAPIEmbeddingMsg.OPENAI_BATCH_ERROR.value %
+                        (i, i + batch_size, str(oe))
                     )
                     raise
                 except Exception as e:
                     logger.error(
-                        "Unexpected error processing batch %d-%d: %s",
-                        i, i + batch_size, str(e)
+                       OPenAPIEmbeddingMsg.UNEXPECTED_ERROR.value %
+                        (i, i + batch_size, str(e))
                     )
                     raise
 
             logger.info(
-                "Successfully generated embeddings for %d texts across %d batches",
-                len(texts),
-                (len(texts) // batch_size) + 1
+                OPenAPIEmbeddingMsg.GENERATION_SUCCESS.value %
+                (len(texts),
+                (len(texts) // batch_size) + 1)
             )
             return embeddings
 
         except Exception as e:
-            logger.error("Failed to generate embeddings: %s", str(e))
+            logger.error(OPenAPIEmbeddingMsg.GENERATION_FAILED.value % str(e))
             raise
 
 if __name__ == "__main__":
