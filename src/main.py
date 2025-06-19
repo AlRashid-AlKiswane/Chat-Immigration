@@ -32,7 +32,8 @@ from src.routes import (
     docs_to_chunks_route,
     embedding_route,
     llms_route,
-    llm_generation_route
+    llm_generation_route,
+    web_crawling_route
 )
 from src.database import (
     get_sqlite_engine,
@@ -203,7 +204,6 @@ def read_root():
         return {
             "status": "healthy",
             "version": app.version,
-            "debug_mode": app_settings.DEBUG
         }
     except Exception as root_err:
         logger.error(
@@ -243,79 +243,34 @@ def get_status():
 
 
 
-try:
-    logger.debug("Registering upload route...")
-    app.include_router(upload_route, prefix="/upload", tags=["File Upload"])
-    logger.info("Upload route registered successfully")
-except Exception as upload_err:
-    logger.critical(
-        "Failed to register upload route. "
-        f"Error: {str(upload_err)}",
-        exc_info=True
-    )
-    raise HTTPException(
-        status_code=500,
-        detail="Upload route registration failed"
-    ) from upload_err
+# Route registration with error handling
+route_registrations = [
+    (upload_route, "/upload", "File Upload"),
+    (docs_to_chunks_route, "/chunking", "Document Chunking"),
+    (embedding_route, "/embedding", "Embedding"),
+    (llms_route, "/llms", "LLM Configuration"),
+    (llm_generation_route, "/Generate", "LLM Generation"),
+    (web_crawling_route, "/crawling", "Web Crawling")
+]
 
-try:
-    logger.debug("Registering document chunking route...")
-    app.include_router(docs_to_chunks_route, prefix="/chunking", tags=["Document Chunking"])
-    logger.info("Document chunking route registered successfully")
-except Exception as chunking_err:
-    logger.critical(
-        "Failed to register document chunking route. "
-        f"Error: {str(chunking_err)}",
-        exc_info=True
-    )
-    raise HTTPException(
-        status_code=500,
-        detail="Document chunking route registration failed"
-    ) from chunking_err
+for route, prefix, tag in route_registrations:
+    try:
+        logger.debug(f"Registering {tag.lower()} route...")
+        app.include_router(
+            route,
+            prefix=prefix,
+            tags=[tag]
+        )
+        logger.info(f"{tag} route registered successfully")
+    except Exception as e:
+        logger.critical(
+            f"Failed to register {tag.lower()} route. "
+            f"Error: {str(e)}",
+            exc_info=True
+        )
+        raise HTTPException(
+            status_code=500,
+            detail=f"{tag} route registration failed"
+        ) from e
 
-try:
-    logger.debug("Registering embedding route...")
-    app.include_router(embedding_route, prefix="/embedding", tags=["Embedding"])
-    logger.info("Embedding route registered successfully")
-except Exception as embedding_err:
-    logger.critical(
-        "Failed to register embedding route. "
-        f"Error: {str(embedding_err)}",
-        exc_info=True
-    )
-    raise HTTPException(
-        status_code=500,
-        detail="Embedding route registration failed"
-    ) from embedding_err
-
-try:
-    logger.debug("Registering LLMs configuration route...")
-    app.include_router(llms_route, prefix="/llms", tags=["LLM Configuration"])
-    logger.info("LLMs configuration route registered successfully")
-except Exception as llms_err:
-    logger.critical(
-        "Failed to register LLMs configuration route. "
-        f"Error: {str(llms_err)}",
-        exc_info=True
-    )
-    raise HTTPException(
-        status_code=500,
-        detail="LLMs configuration route registration failed"
-    ) from llms_err
-
-try:
-    logger.debug("Registering LLM generation route...")
-    app.include_router(llm_generation_route, prefix="/Generate", tags=["LLM Generation"])
-    logger.info("LLM generation route registered successfully")
-except Exception as generation_err:
-    logger.critical(
-        "Failed to register LLM generation route. "
-        f"Error: {str(generation_err)}",
-        exc_info=True
-    )
-    raise HTTPException(
-        status_code=500,
-        detail="LLM generation route registration failed"
-    ) from generation_err
-
-logger.info("Application startup completed successfully")
+logger.info("All routes registered successfully")
