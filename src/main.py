@@ -256,7 +256,7 @@ route_registrations = [
     (web_crawling_route, "/crawling", "Web Crawling"),
     (monitoring_route, "/monitoring", "System Monitoring"),
     (logs_router, "/logs", "System Logs Massages"),
-    (live_rag_route, "live_rag", "Live RAG to with Test Query")
+    (live_rag_route, "/live_rag", "Live RAG to with Test Query")
 ]
 
 for route, prefix, tag in route_registrations:
