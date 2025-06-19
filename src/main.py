@@ -35,7 +35,8 @@ from src.routes import (
     llm_generation_route,
     web_crawling_route,
     monitoring_route,
-    logs_router
+    logs_router,
+    live_rag_route
 )
 from src.database import (
     get_sqlite_engine,
@@ -254,7 +255,8 @@ route_registrations = [
     (llm_generation_route, "/Generate", "LLM Generation"),
     (web_crawling_route, "/crawling", "Web Crawling"),
     (monitoring_route, "/monitoring", "System Monitoring"),
-    (logs_router, "/logs", "System Logs Massages")
+    (logs_router, "/logs", "System Logs Massages"),
+    (live_rag_route, "live_rag", "Live RAG to with Test Query")
 ]
 
 for route, prefix, tag in route_registrations:
