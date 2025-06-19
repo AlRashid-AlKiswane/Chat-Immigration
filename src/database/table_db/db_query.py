@@ -90,14 +90,14 @@ def fetch_all_rows(
                     (user_id, query))
                 row = cursor.fetchone()
                 logger.info(
-                    "Cache lookup - user_id: %s, query: %.20s... %s",
-                    user_id,
+                    QueryMsg.CACHE_LOOKUP.value %
+                    (user_id,
                     query,
                     "Found" if row else "Not found"
-                )
+                ))
                 return row[0] if row else None
             except sqlite3.Error as e:
-                logger.error("Cache lookup failed: %s", e)
+                logger.error(QueryMsg.CACHE_FAILURE.value % str(e))
                 return None
 
         # General query mode
@@ -110,12 +110,12 @@ def fetch_all_rows(
         if limit:
             query += f" LIMIT {limit}"
 
-        logger.debug("Executing query: %s", query)
+        logger.debug( QueryMsg.QUERY_EXECUTED.value % query)
         cursor.execute(query, params)
         rows = cursor.fetchall()
 
         if not rows:
-            logger.debug("No results found for table: %s", table_name)
+            logger.debug(QueryMsg.NO_RESULTS.value % table_name)
             return []
 
         # Format results
@@ -132,19 +132,19 @@ def fetch_all_rows(
                     else:
                         row_dict[col] = row[idx]
                 except IndexError:
-                    logger.warning("Column index out of range: %s", col)
+                    logger.warning(QueryMsg.COLUMN_WARNING.value % col)
                     continue
             result.append(row_dict)
 
-        logger.info("Fetched %d rows from table %s", len(result), table_name)
+        logger.info(QueryMsg.ROWS_FETCHED.value % (len(result), table_name))
         return result
 
     except ValueError as e:
-        logger.error("Input validation error: %s", e)
+        logger.error(QueryMsg.INPUT_VALIDATION_ERROR.value % str(e))
         raise
     except sqlite3.Error as e:
-        logger.error("Database error: %s", e)
+        logger.error(QueryMsg.DATABASE_ERROR.value % str(e))
         raise
     except Exception as e:
-        logger.exception("Unexpected error during fetch: %s", e)
+        logger.exception(QueryMsg.UNEXPECTED_ERROR.value % str(e))
         raise

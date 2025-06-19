@@ -84,30 +84,47 @@ class InsertMsg(Enum):
 
 
 class QueryMsg(Enum):
-    """Standardized messages for database query operations with format placeholders."""
-
-    # --- Query Execution ---
-    FETCH_STARTED = "Executing query on table '{}'"
-    """Query initiated for table. Columns: {columns} | Filters: {where_clause}"""
-
-    FETCH_COMPLETED = "Fetched {} rows from table '{}'"
-    """Query completed successfully. Duration: {duration_ms}ms"""
-
-    # --- Error Messages ---
-    DB_ERROR = "Database error in {}: {}"
-    """SQLite error occurred. Operation: {operation} | Error code: {error_code}"""
-
-    INPUT_ERROR = "Invalid input in {}: {}"
-    """Value error occurred. Parameter: {parameter} | Expected type: {expected_type}"""
-
-    NO_RESULTS = "No results found in {}"
-    """Empty result set. Table: {table} | Query: {query}"""
-
-    UNEXPECTED_ERROR = "Unexpected error in {}: {}"
-    """Unhandled exception. Type: {error_type} | Trace: {traceback}"""
-
-    COLUMN_FETCH_ERROR = "Error fetching column '{}' from '{}': {}"
-    """Column access failed. Valid columns: {valid_columns}"""
+    """
+    Enum containing all database operation messages.
+    Messages use %-formatting for direct logging compatibility.
+    """
+    
+    # Connection and setup
+    PATH_CONFIG_SUCCESS = "Main directory path configured: %s"
+    """Logged when system path is successfully configured. %s = path"""
+    
+    PATH_CONFIG_FAILURE = "Failed to set up main directory path: %s"
+    """Critical error when path setup fails. %s = error details"""
+    
+    # Query execution
+    QUERY_EXECUTED = "Executing query: %s"
+    """Debug message showing raw SQL query. %s = query text"""
+    
+    NO_RESULTS = "No results found for table: %s"
+    """Debug message when query returns empty. %s = table name"""
+    
+    ROWS_FETCHED = "Fetched %d rows from table %s"
+    """Info message after successful fetch. %d = row count, %s = table name"""
+    
+    # Cache operations
+    CACHE_LOOKUP = "Cache lookup - user_id: %s, query: %.20s... %s"
+    """Info message for cache checks. %s = user_id, %.20s = query, %s = status"""
+    
+    CACHE_FAILURE = "Cache lookup failed: %s"
+    """Error message when cache check fails. %s = error details"""
+    
+    # Error handling
+    INPUT_VALIDATION_ERROR = "Input validation error: %s"
+    """Error message for invalid parameters. %s = error details"""
+    
+    DATABASE_ERROR = "Database error: %s"
+    """Error message for SQLite operations. %s = error details"""
+    
+    UNEXPECTED_ERROR = "Unexpected error during fetch: %s"
+    """Critical error for unhandled exceptions. %s = error details"""
+    
+    COLUMN_WARNING = "Column index out of range: %s"
+    """Warning message for column access issues. %s = column name"""
 
 
 class TablesMsg(Enum):
