@@ -49,9 +49,9 @@ logger = setup_logging()
 
 live_rag_route = APIRouter()
 
-@live_rag_route.get("/live_rag", response_class=JSONResponse)
+@live_rag_route.post("/live_rag", response_class=JSONResponse)
 async def live_rag(
-    prompt: str,
+    query: str,
     rag_config: RAGConfig = Depends(),
     vdb_client: Client = Depends(get_vdb_client),
     embedding: BaseEmbeddings = Depends(get_embedd),
@@ -60,7 +60,7 @@ async def live_rag(
     """Execute a live RAG pipeline for question answering.
     
     Args:
-        prompt: The user's question or query
+        query: The user's question or query
         rag_config: Configuration for the RAG pipeline
         vdb_client: Vector database client instance
         embedding: Embeddings model for text vectorization
@@ -77,20 +77,20 @@ async def live_rag(
             400 for invalid requests
             500 for processing failures
     """
-    logger.info(f"Starting RAG processing for query: '{prompt}'")
+    logger.info(f"Starting RAG processing for query: '{query}'")
 
     # Validate input
-    if not prompt.strip():
-        logger.warning("Empty prompt received")
+    if not query.strip():
+        logger.warning("Empty query received")
         raise HTTPException(
             status_code=HTTP_400_BAD_REQUEST,
-            detail="Prompt cannot be empty"
+            detail="query cannot be empty"
         )
 
     try:
         # Generate embeddings and retrieve documents
         logger.debug("Generating embeddings for query")
-        query_embedding = embedding.embed_texts(texts=[prompt])[0]
+        query_embedding = embedding.embed_texts(texts=[query])[0]
 
         logger.debug(f"Searching documents with threshold {rag_config.score_threshold}")
         retrieved_docs = search_documents(
@@ -124,7 +124,7 @@ async def live_rag(
         # Generate response
         logger.debug("Generating response with LLM")
         answer = llm.generate(
-            prompt=prompt,
+            query=query,
             context=context,
             temperature=rag_config.temperature,
             max_tokens=rag_config.max_tokens
