@@ -33,7 +33,9 @@ from src.routes import (
     embedding_route,
     llms_route,
     llm_generation_route,
-    web_crawling_route
+    web_crawling_route,
+    monitoring_route,
+    logs_router
 )
 from src.database import (
     get_sqlite_engine,
@@ -250,7 +252,9 @@ route_registrations = [
     (embedding_route, "/embedding", "Embedding"),
     (llms_route, "/llms", "LLM Configuration"),
     (llm_generation_route, "/Generate", "LLM Generation"),
-    (web_crawling_route, "/crawling", "Web Crawling")
+    (web_crawling_route, "/crawling", "Web Crawling"),
+    (monitoring_route, "/monitoring", "System Monitoring"),
+    (logs_router, "/logs", "System Logs Massages")
 ]
 
 for route, prefix, tag in route_registrations:
@@ -268,9 +272,5 @@ for route, prefix, tag in route_registrations:
             f"Error: {str(e)}",
             exc_info=True
         )
-        raise HTTPException(
-            status_code=500,
-            detail=f"{tag} route registration failed"
-        ) from e
 
 logger.info("All routes registered successfully")
