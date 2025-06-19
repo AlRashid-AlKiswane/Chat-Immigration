@@ -23,6 +23,7 @@ except (ImportError, OSError) as e:
 # pylint: disable=wrong-import-position
 from src.logs import setup_logging
 from src.helpers import get_settings, Settings
+from src.enums import HuggingFaceMsg
 
 # Initialize application settings and logger
 logger = setup_logging()
@@ -49,9 +50,9 @@ class HuggingFaceModel:
         self.model_name = model_name or app_settings.EMBEDDING_MODEL
         try:
             self.model = SentenceTransformer(self.model_name)
-            logger.info("Embedding model '%s' initialized.", self.model_name)
+            logger.info(HuggingFaceMsg.MODEL_INIT_SUCCESS.value % (self.model_name))
         except Exception as e:
-            logger.error("Failed to load embedding model '%s': %s", self.model_name, e)
+            logger.error(HuggingFaceMsg.MODEL_INIT_FAILED.value % (self.model_name, str(e)))
             raise
 
     def embed_texts(
@@ -76,8 +77,8 @@ class HuggingFaceModel:
             Exception: For other embedding generation errors.
         """
         if not texts:
-            logger.error("Empty texts provided for embedding.")
-            raise ValueError("Input texts cannot be empty.")
+            logger.error(HuggingFaceMsg.EMPTY_INPUT_ERROR.value)
+            raise ValueError(HuggingFaceMsg.EMPTY_INPUT_ERROR.value)
 
         try:
             embedding = self.model.encode(
@@ -87,11 +88,11 @@ class HuggingFaceModel:
             )
 
             preview_texts = texts if isinstance(texts, str) else texts[0]
-            logger.info("Generated embedding for texts: '%.30s...'", preview_texts)
+            logger.info(HuggingFaceMsg.EMBEDDING_SUCCESS.value % preview_texts)
             return embedding
         # pylint: disable=broad-exception-caught
         except Exception as e:
-            logger.error("Error generating embedding: %s", e)
+            logger.error(HuggingFaceMsg.EMBEDDING_FAILURE.value % str(e))
             return None
 
     def get_model_info(self) -> dict:
@@ -101,6 +102,7 @@ class HuggingFaceModel:
         Returns:
             Dictionary containing model information.
         """
+        logger.info(HuggingFaceMsg.MODEL_INFO_RETRIEVED.value)
         return {
             "model_name": self.model_name,
             "max_seq_length": self.model.max_seq_length,

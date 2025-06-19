@@ -70,17 +70,29 @@ class OPenAPIEmbeddingMsg(Enum):
     GENERATION_FAILED = "Failed to generate embeddings: %s"
     """Logged when embedding generation fails"""
 
-    def __str__(self):
-        return self.value
 
 
 
-class LocalEmbeddingMsg(Enum):
-    # Initialization messages
-    INIT_SUCCESS = "Embedding model '%s' initialized."
-    INIT_FAILURE = "Failed to load embedding model '%s': %s"
+class HuggingFaceMsg(Enum):
+    """Enum containing message templates for HuggingFaceModel."""
+    # Initialization Messages
+    MODEL_INIT_SUCCESS = "[Embedding] [local_model] Embedding model '%s' initialized."
+    """Logged when model successfully initializes. %s = model name"""
+    
+    MODEL_INIT_FAILED = "[Embedding] [local_model] Failed to load embedding model '%s': %s"
+    """Logged when model fails to initialize. %s = model name, error"""
 
-    # Embedding process
-    EMPTY_INPUT = "Empty text provided for embedding."
-    GENERATION_SUCCESS = "Generated embedding for text: '%.30s...'"
-    GENERATION_FAILURE = "Error generating embedding: %s"
+    # Input Validation
+    EMPTY_INPUT_ERROR = "[Embedding] [local_model] Input texts cannot be empty."
+    """Error raised when empty input is provided for embedding"""
+
+    # Embedding Process
+    EMBEDDING_SUCCESS = "[Embedding] [local_model] Generated embedding for text: '%.30s...'"
+    """Logged after successfully generating embedding. %.30s = text sample"""
+    
+    EMBEDDING_FAILURE = "[Embedding] [local_model] Error generating embedding: %s"
+    """Logged when embedding generation fails. %s = error details"""
+
+    # Model Information
+    MODEL_INFO_RETRIEVED = "[Embedding] [local_model] Retrieved model information for '%s'"
+    """Logged when fetching model metadata. %s = model info"""
