@@ -43,7 +43,6 @@ from src.helpers import get_vdb_client, get_embedd
 from src.database import search_documents
 from src.schema import RAGConfig
 from src.embeddings import BaseEmbeddings
-from src.llms import BaseLLM
 
 logger = setup_logging()
 
@@ -55,28 +54,9 @@ async def live_rag(
     rag_config: RAGConfig = Depends(),
     vdb_client: Client = Depends(get_vdb_client),
     embedding: BaseEmbeddings = Depends(get_embedd),
-    llm: BaseLLM = Depends(),
 ) -> JSONResponse:
-    """Execute a live RAG pipeline for question answering.
-    
-    Args:
-        query: The user's question or query
-        rag_config: Configuration for the RAG pipeline
-        vdb_client: Vector database client instance
-        embedding: Embeddings model for text vectorization
-        llm: Language model for response generation
-        
-    Returns:
-        JSONResponse: Contains:
-            - answer: The generated response
-            - sources: List of document sources used
-            - metadata: Additional processing info
-            
-    Raises:
-        HTTPException: 
-            400 for invalid requests
-            500 for processing failures
-    """
+    """Execute a live RAG pipeline for question answering."""
+
     logger.info(f"Starting RAG processing for query: '{query}'")
 
     # Validate input
@@ -92,6 +72,10 @@ async def live_rag(
         logger.debug("Generating embeddings for query")
         query_embedding = embedding.embed_texts(texts=[query])[0]
 
+        # Proper check for embedding validity
+        if query_embedding is None or len(query_embedding) == 0:
+            raise ValueError("Invalid embedding generated - empty or None")
+
         logger.debug(f"Searching documents with threshold {rag_config.score_threshold}")
         retrieved_docs = search_documents(
             client=vdb_client,
@@ -101,6 +85,12 @@ async def live_rag(
             n_results=rag_config.n_results,
             include_metadata=rag_config.include_metadata
         )
+
+        # Handle case where search_documents returns None
+        if retrieved_docs is None:
+            logger.warning("Document search returned None")
+            retrieved_docs = []
+
         logger.info(f"Retrieved {len(retrieved_docs)} relevant documents")
 
         if not retrieved_docs:
@@ -118,26 +108,16 @@ async def live_rag(
             )
 
         # Prepare context for LLM
-        context = "\n\n".join([doc['text'] for doc in retrieved_docs])
+        context = "\n\n".join([doc['text'] for doc in retrieved_docs if 'text' in doc])
         sources = [doc.get('source', 'unknown') for doc in retrieved_docs]
-
-        # Generate response
-        logger.debug("Generating response with LLM")
-        answer = llm.generate(
-            query=query,
-            context=context,
-            temperature=rag_config.temperature,
-            max_tokens=rag_config.max_tokens
-        )
 
         # Prepare response
         response_data = {
-            "answer": answer,
+            "answer": context,
             "sources": sources,
             "metadata": {
                 "documents_retrieved": len(retrieved_docs),
                 "embedding_model": embedding.model_name,
-                "llm_model": llm.model_name,
                 "generation_parameters": {
                     "temperature": rag_config.temperature,
                     "max_tokens": rag_config.max_tokens

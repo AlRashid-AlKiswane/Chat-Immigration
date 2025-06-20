@@ -56,9 +56,14 @@ def search_documents(
         ChromaError: For ChromaDB-specific errors.
     """
     # Input validation
-    if not query_embedding:
-        logger.error("Empty query embedding provided")
+    if query_embedding is None:
+        logger.error("Query embedding is None")
+        raise ValueError("Query embedding cannot be None")
+
+    if hasattr(query_embedding, "__len__") and len(query_embedding) == 0:
+        logger.error("Query embedding is empty")
         raise ValueError("Query embedding cannot be empty")
+
 
     if not 0 <= score_threshold <= 1:
         logger.error("Invalid score threshold: %f", score_threshold)

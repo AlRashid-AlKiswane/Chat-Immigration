@@ -24,7 +24,7 @@ class CrawlRequest(BaseModel):
         >>> invalid_request = CrawlRequest(url="not-a-url", max_pages=0)
             # Will raise ValidationError
     """
-    url: HttpUrl = Field(
+    url: str = Field(
         ...,
         description="The starting URL for the web crawl. Must include http:// or https://"
     )
