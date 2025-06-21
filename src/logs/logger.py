@@ -7,7 +7,7 @@ This module provides a centralized logging system with four log levels:
 - WARNING (yellow)
 - ERROR (red)
 
-Logs are saved to 'application.log' in the logs directory.
+Logs are saved to 'app.log' in the logs directory.
 """
 
 import logging
@@ -20,92 +20,81 @@ try:
     MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
-    logging.error("Failed to set up main directory path: %s", e)
+    print(f"Failed to set up main directory path: {e}")
     sys.exit(1)
 
 # Define log colors
 COLORS = {
-    "INFO": "\033[94m",  # Blue
-    "DEBUG": "\033[92m",  # Green
-    "WARNING": "\033[93m",  # Yellow
-    "ERROR": "\033[91m",  # Red
-    "END": "\033[0m",  # Reset color
+    "INFO": "\033[94m",    # Blue
+    "DEBUG": "\033[92m",   # Green
+    "WARNING": "\033[93m", # Yellow
+    "ERROR": "\033[91m",   # Red
+    "END": "\033[0m",      # Reset color
 }
-
 
 class ColoredFormatter(logging.Formatter):
     """Custom formatter to add colors to log messages."""
-
     def format(self, record):
-        """Format the log record with appropriate color."""
-        levelname = record.levelname
         message = super().format(record)
-        if levelname in COLORS:
-            message = f"{COLORS[levelname]}{message}{COLORS['END']}"
-        return message
+        return f"{COLORS.get(record.levelname, '')}{message}{COLORS['END']}"
 
+# Global flag to avoid reinitializing
+_logger_initialized = False
 
 def setup_logging(
     log_dir=f"{MAIN_DIR}/logs",
     log_file="app.log",
-    console_level="DEBUG",
+    console_level=logging.DEBUG,
 ):
     """
     Set up logging configuration with colored console output and file logging.
 
     Args:
-        log_dir (str): Directory to store log files. Defaults to 'logs'.
-        log_file (str): Name of the log file. Defaults to 'application.log'.
-        console_level (int): Minimum log level for console output. Defaults to DEBUG.
+        log_dir (str): Directory to store log files.
+        log_file (str): Name of the log file.
+        console_level (int): Console log level (e.g., logging.DEBUG).
 
     Returns:
         logging.Logger: Configured logger instance.
     """
-    # Create logs directory if it doesn't exist
+    global _logger_initialized
+
+    logger__ = logging.getLogger("app_logger")
+    logger__.setLevel(logging.DEBUG)
+
+    if _logger_initialized:
+        return logger__
+
+    # Ensure log directory exists
     Path(log_dir).mkdir(parents=True, exist_ok=True)
     log_path = Path(log_dir) / log_file
 
-    # Create logger
-    logger__ = logging.getLogger("app_logger")
-    logger__.setLevel(logging.DEBUG)  # Capture all levels at logger level
-
-    # Prevent duplicate handlers
-    if logger__.handlers:
-        return logger__
-
-    # Create formatters
-    console_format = ColoredFormatter("%(asctime)s - %(levelname)s - %(message)s")
-    file_format = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-
     # Console handler (colored output)
-    console_handler = logging.StreamHandler(sys.stdout)
-    console_handler.setLevel(console_level)  # Now configurable
-    console_handler.setFormatter(console_format)
+    if not any(isinstance(h, logging.StreamHandler) for h in logger__.handlers):
+        console_handler = logging.StreamHandler(sys.stdout)
+        console_handler.setLevel(console_level)
+        console_handler.setFormatter(ColoredFormatter("%(asctime)s - %(levelname)s - %(message)s"))
+        logger__.addHandler(console_handler)
 
-    # File handler (all levels)
-    file_handler = RotatingFileHandler(log_path, maxBytes=1024 * 1024, backupCount=5)
-    file_handler.setLevel(logging.DEBUG)  # All levels to file
-    file_handler.setFormatter(file_format)
+    # File handler (rotating)
+    if not any(isinstance(h, RotatingFileHandler) for h in logger__.handlers):
+        file_handler = RotatingFileHandler(log_path, maxBytes=1_048_576, backupCount=5)
+        file_handler.setLevel(logging.DEBUG)
+        file_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+        logger__.addHandler(file_handler)
 
-    # Add handlers
-    logger__.addHandler(console_handler)
-    logger__.addHandler(file_handler)
-
+    _logger_initialized = True
     return logger__
 
+# Initialize the logger once at module import
+logger = setup_logging()
 
-# Initialize the logger when module is imported
-logger = setup_logging(console_level=logging.DEBUG)  # Now shows DEBUG messages
-
-
-# Example usage functions
+# Example usage
 def log_examples():
-    """Demonstrate different log levels with sample messages."""
     logger.debug("This is a debug message - detailed technical information.")
     logger.info("This is an info message - general application flow.")
     logger.warning("This is a warning message - something unexpected happened.")
     logger.error("This is an error message - something failed.")
-
 
 if __name__ == "__main__":
     log_examples()

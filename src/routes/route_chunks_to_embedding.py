@@ -97,21 +97,21 @@ async def embedding(
             text, chunk_id = chunk["text"], chunk["id"]
             try:
                 logger.debug("Embedding chunk ID %s", chunk_id)
-                embedd_vector = embedding.embed_texts(texts=[text])
+                embedding_vector = embedding.embed_texts([text])[0]
 
                 insert_documents(
                     client=vdb_client,
-                    collection_name="Chunks",
-                    ids=chunk_id,
-                    embeddings=embedd_vector,
-                    documents=text,
+                    collection_name="chunks",
+                    ids=[chunk_id],
+                    embeddings=[embedding_vector],
+                    documents=[text],
                     metadatas=None
                 )
-                logger.debug("Chunk ID %s embedded and inserted successfully.", chunk_id)
+
+                logger.debug("Chunk ID %s embedded and inserted.", chunk_id)
                 success_count += 1
 
-            # pylint: disable=broad-exception-caught
-            except Exception as embed_err:
+            except Exception as embed_err:  # broad exception handling is fine here
                 logger.error("Error embedding chunk ID %s: %s", chunk_id, embed_err)
 
         logger.info("Successfully embedded %d out of %d chunks.", success_count, len(chunks))

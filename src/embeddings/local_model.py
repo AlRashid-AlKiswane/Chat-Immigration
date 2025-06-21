@@ -89,7 +89,7 @@ class HuggingFaceModel:
 
             preview_texts = texts if isinstance(texts, str) else texts[0]
             logger.info(HuggingFaceMsg.EMBEDDING_SUCCESS.value % preview_texts)
-            return embedding
+            return embedding.tolist()
         # pylint: disable=broad-exception-caught
         except Exception as e:
             logger.error(HuggingFaceMsg.EMBEDDING_FAILURE.value % str(e))

@@ -76,12 +76,10 @@ async def live_rag(
         if query_embedding is None or len(query_embedding) == 0:
             raise ValueError("Invalid embedding generated - empty or None")
 
-        logger.debug(f"Searching documents with threshold {rag_config.score_threshold}")
         retrieved_docs = search_documents(
             client=vdb_client,
-            collection_name="Chunks",
+            collection_name="chunks",
             query_embedding=query_embedding,
-            score_threshold=rag_config.score_threshold,
             n_results=rag_config.n_results,
             include_metadata=rag_config.include_metadata
         )
@@ -107,22 +105,11 @@ async def live_rag(
                 status_code=HTTP_200_OK
             )
 
-        # Prepare context for LLM
-        context = "\n\n".join([doc['text'] for doc in retrieved_docs if 'text' in doc])
-        sources = [doc.get('source', 'unknown') for doc in retrieved_docs]
-
         # Prepare response
         response_data = {
-            "answer": context,
-            "sources": sources,
-            "metadata": {
-                "documents_retrieved": len(retrieved_docs),
-                "embedding_model": embedding.model_name,
-                "generation_parameters": {
-                    "temperature": rag_config.temperature,
-                    "max_tokens": rag_config.max_tokens
-                }
-            }
+            "answer": retrieved_docs["docs"],
+            "sources": retrieved_docs["scores"],
+            "metadata": retrieved_docs["metas"]
         }
 
         logger.info("Successfully generated RAG response")

@@ -89,6 +89,3 @@ class DocToChunksMsg(Enum):
         """Returns the raw message string with placeholders"""
         return self.value
 
-    def format(self, *args):
-        """Formats the message with the given arguments"""
-        return self.value % args
