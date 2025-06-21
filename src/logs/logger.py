@@ -39,6 +39,7 @@ class ColoredFormatter(logging.Formatter):
         return f"{COLORS.get(record.levelname, '')}{message}{COLORS['END']}"
 
 # Global flag to avoid reinitializing
+# pylint: disable=invalid-name
 _logger_initialized = False
 
 def setup_logging(
@@ -57,6 +58,7 @@ def setup_logging(
     Returns:
         logging.Logger: Configured logger instance.
     """
+    # pylint: disable=global-statement
     global _logger_initialized
 
     logger__ = logging.getLogger("app_logger")
@@ -91,6 +93,9 @@ logger = setup_logging()
 
 # Example usage
 def log_examples():
+    """
+    Example
+    """
     logger.debug("This is a debug message - detailed technical information.")
     logger.info("This is an info message - general application flow.")
     logger.warning("This is a warning message - something unexpected happened.")
