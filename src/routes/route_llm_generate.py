@@ -101,7 +101,7 @@ async def generation(
                 conn=conn,
                 table_name="query_response",
                 columns=["user_id", "response", "query"],
-                cache_key=True,
+                cache_key=[user_id, prompt],
                 where_clause=f"user_id = '{user_id}' AND query = '{prompt}'"
             )
 

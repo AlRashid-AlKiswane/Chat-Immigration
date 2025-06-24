@@ -44,7 +44,11 @@ class GeminiLLM(BaseLLM):
                         Defaults to the value in app_settings.
         """
         self.model_name = model_name or app_settings.GEMINI_MODEL
-        self.api_key = app_settings.GEMINI_APIK
+        self.api_key = (
+            app_settings.GEMINI_APIK.get_secret_value()
+            if app_settings.GEMINI_APIK
+            else None
+        )
 
         if not self.api_key:
             logger.error("Gemini API key is not set correctly.")
