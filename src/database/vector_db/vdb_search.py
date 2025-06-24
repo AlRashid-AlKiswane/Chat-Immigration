@@ -1,4 +1,6 @@
-# src/chroma/search.py
+"""
+
+"""
 from typing import Any, Dict, List, Optional, Tuple
 from chromadb import Client
 from chromadb.errors import ChromaError
@@ -25,7 +27,9 @@ def search_documents(
         query_result = collection.query(
             query_embeddings=[query_embedding],
             n_results=n_results,
-            include=["documents", "distances", "metadatas"] if include_metadata else ["documents", "distances"]
+            include=[
+                "documents", "distances", "metadatas"] 
+                if include_metadata else ["documents", "distances"]
         )
 
         docs = query_result["documents"][0]
@@ -35,6 +39,7 @@ def search_documents(
         return {
             "docs": docs,
             "scores": scores,
+            "distances": query_result["distances"][0],
             "metas": metas
         }
 

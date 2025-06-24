@@ -97,6 +97,7 @@ async def live_rag(
                 content={
                     "answer": "I couldn't find relevant information to answer your question.",
                     "sources": [],
+                    "distances": [],
                     "metadata": {
                         "documents_retrieved": 0,
                         "warning": "No relevant documents found"
@@ -109,6 +110,7 @@ async def live_rag(
         response_data = {
             "answer": retrieved_docs["docs"],
             "sources": retrieved_docs["scores"],
+            "distances": retrieved_docs["distances"],
             "metadata": retrieved_docs["metas"]
         }
 
