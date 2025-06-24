@@ -68,10 +68,10 @@ def load_and_chunk(file_path: Optional[str] = None) -> Dict[str, Any]:
                 if Path(f).suffix.lower().lstrip(".") in app_settings.FILE_TYPES
             ]
         except OSError as e:
-            logger.error(DocToChunksMsg.DIRECTORY_ERROR.value.format(e))
+            logger.error(DocToChunksMsg.DIRECTORY_ERROR.value, e)
             return {}
         except Exception as e:  # pylint: disable=broad-except
-            logger.error(DocToChunksMsg.UNEXPECTED_LISTING_ERROR.value.format(e))
+            logger.error(DocToChunksMsg.UNEXPECTED_LISTING_ERROR.value, e)
             return {}
 
     if not files_to_process:
@@ -87,20 +87,17 @@ def load_and_chunk(file_path: Optional[str] = None) -> Dict[str, Any]:
             if extension in app_settings.FILE_TYPES:
                 try:
                     loader = PyMuPDFLoader(file)
-                    logger.debug(DocToChunksMsg.PDF_LOAD_SUCCESS.value.format(file))
+                    logger.debug(DocToChunksMsg.PDF_LOAD_SUCCESS.value, file)
                 except RuntimeError as e:
-                    logger.warning(DocToChunksMsg.PDF_LOAD_FAILURE.value.format(e))
+                    logger.warning(DocToChunksMsg.PDF_LOAD_FAILURE.value, e)
                     try:
                         loader = TextLoader(file)
-                        logger.debug(
-                            DocToChunksMsg.FALLBACK_TEXT_LOAD.value.format(file)
-                        )
-                    # pylint: disable=redefined-outer-name
+                        logger.debug(DocToChunksMsg.FALLBACK_TEXT_LOAD.value, file)
                     except RuntimeError as e:
-                        logger.error(DocToChunksMsg.TEXT_LOAD_FAILURE.value.format(e))
+                        logger.error(DocToChunksMsg.TEXT_LOAD_FAILURE.value, e)
                         continue
             else:
-                logger.debug(DocToChunksMsg.UNSUPPORTED_TYPE.value.format(extension))
+                logger.debug(DocToChunksMsg.UNSUPPORTED_TYPE.value, extension)
                 continue
 
             documents = loader.load()
@@ -113,12 +110,12 @@ def load_and_chunk(file_path: Optional[str] = None) -> Dict[str, Any]:
             chunks = splitter.split_documents(documents)
             all_chunks.extend(chunks)
             total_chunks += len(chunks)
-            logger.info(DocToChunksMsg.CHUNKING_SUCCESS.value.format(len(chunks), file))
+            logger.info(DocToChunksMsg.CHUNKING_SUCCESS.value, len(chunks), file)
 
         except RuntimeError as e:
-            logger.error(DocToChunksMsg.PROCESSING_ERROR.value.format(file, e))
+            logger.error(DocToChunksMsg.PROCESSING_ERROR.value, file, e)
         except Exception as e:  # pylint: disable=broad-except
-            logger.error(DocToChunksMsg.UNEXPECTED_ERROR.value.format(file, e))
+            logger.error(DocToChunksMsg.UNEXPECTED_ERROR.value, file, e)
 
     if not all_chunks:
         logger.warning(DocToChunksMsg.NO_CHUNKS_WARNING.value)
@@ -133,6 +130,5 @@ def load_and_chunk(file_path: Optional[str] = None) -> Dict[str, Any]:
         }
         return data
     except (AttributeError, KeyError) as e:
-        logger.error(DocToChunksMsg.OUTPUT_ERROR.value.format(e))
+        logger.error(DocToChunksMsg.OUTPUT_ERROR.value, e)
         return {}
-

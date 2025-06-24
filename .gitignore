@@ -6,3 +6,6 @@ ImiChatbot/
 *.db
 
 __pycache__
+
+#
+chroma

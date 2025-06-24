@@ -43,64 +43,52 @@ from src.helpers import get_vdb_client, get_embedd
 from src.database import search_documents
 from src.schema import RAGConfig
 from src.embeddings import BaseEmbeddings
-from src.llms import BaseLLM
 
 logger = setup_logging()
 
 live_rag_route = APIRouter()
 
-@live_rag_route.get("/live_rag", response_class=JSONResponse)
+@live_rag_route.post("/live_rag", response_class=JSONResponse)
 async def live_rag(
-    prompt: str,
+    query: str,
     rag_config: RAGConfig = Depends(),
     vdb_client: Client = Depends(get_vdb_client),
     embedding: BaseEmbeddings = Depends(get_embedd),
-    llm: BaseLLM = Depends(),
 ) -> JSONResponse:
-    """Execute a live RAG pipeline for question answering.
-    
-    Args:
-        prompt: The user's question or query
-        rag_config: Configuration for the RAG pipeline
-        vdb_client: Vector database client instance
-        embedding: Embeddings model for text vectorization
-        llm: Language model for response generation
-        
-    Returns:
-        JSONResponse: Contains:
-            - answer: The generated response
-            - sources: List of document sources used
-            - metadata: Additional processing info
-            
-    Raises:
-        HTTPException: 
-            400 for invalid requests
-            500 for processing failures
-    """
-    logger.info(f"Starting RAG processing for query: '{prompt}'")
+    """Execute a live RAG pipeline for question answering."""
+
+    logger.info(f"Starting RAG processing for query: '{query}'")
 
     # Validate input
-    if not prompt.strip():
-        logger.warning("Empty prompt received")
+    if not query.strip():
+        logger.warning("Empty query received")
         raise HTTPException(
             status_code=HTTP_400_BAD_REQUEST,
-            detail="Prompt cannot be empty"
+            detail="query cannot be empty"
         )
 
     try:
         # Generate embeddings and retrieve documents
         logger.debug("Generating embeddings for query")
-        query_embedding = embedding.embed_texts(texts=[prompt])[0]
+        query_embedding = embedding.embed_texts(texts=[query])[0]
 
-        logger.debug(f"Searching documents with threshold {rag_config.score_threshold}")
+        # Proper check for embedding validity
+        if query_embedding is None or len(query_embedding) == 0:
+            raise ValueError("Invalid embedding generated - empty or None")
+
         retrieved_docs = search_documents(
             client=vdb_client,
-            collection_name="Chunks",
+            collection_name="chunks",
             query_embedding=query_embedding,
-            score_threshold=rag_config.score_threshold,
             n_results=rag_config.n_results,
             include_metadata=rag_config.include_metadata
         )
+
+        # Handle case where search_documents returns None
+        if retrieved_docs is None:
+            logger.warning("Document search returned None")
+            retrieved_docs = []
+
         logger.info(f"Retrieved {len(retrieved_docs)} relevant documents")
 
         if not retrieved_docs:
@@ -117,32 +105,11 @@ async def live_rag(
                 status_code=HTTP_200_OK
             )
 
-        # Prepare context for LLM
-        context = "\n\n".join([doc['text'] for doc in retrieved_docs])
-        sources = [doc.get('source', 'unknown') for doc in retrieved_docs]
-
-        # Generate response
-        logger.debug("Generating response with LLM")
-        answer = llm.generate(
-            prompt=prompt,
-            context=context,
-            temperature=rag_config.temperature,
-            max_tokens=rag_config.max_tokens
-        )
-
         # Prepare response
         response_data = {
-            "answer": answer,
-            "sources": sources,
-            "metadata": {
-                "documents_retrieved": len(retrieved_docs),
-                "embedding_model": embedding.model_name,
-                "llm_model": llm.model_name,
-                "generation_parameters": {
-                    "temperature": rag_config.temperature,
-                    "max_tokens": rag_config.max_tokens
-                }
-            }
+            "answer": retrieved_docs["docs"],
+            "sources": retrieved_docs["scores"],
+            "metadata": retrieved_docs["metas"]
         }
 
         logger.info("Successfully generated RAG response")

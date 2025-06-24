@@ -19,10 +19,6 @@ class RAGConfig(BaseModel):
         rerank_model: Model to use for reranking (if enabled)
         top_k_rerank: Number of results to rerank (if enabled)
     """
-    score_threshold: float = Field(
-        default=0.7,
-        description="Minimum similarity score threshold (0.0 to 1.0)"
-    )
     n_results: int = Field(
         default=5,
         description="Number of documents to retrieve (must be positive)"

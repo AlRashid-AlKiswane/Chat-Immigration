@@ -308,7 +308,7 @@ if __name__ == "__main__":
         logger.info("Starting website crawler")
         base_url = "https://en.wikipedia.org/wiki/Machine_learning"
 
-        crawler = WebsiteCrawler(start_url=base_url, max_pages=5)
+        crawler = WebsiteCrawler(start_url=base_url, max_pages=50)
         all_pages = crawler.crawl()
 
         if all_pages:
