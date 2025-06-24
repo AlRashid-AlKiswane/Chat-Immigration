@@ -1,10 +1,12 @@
 """
 LLM Configuration Router Module
 
-This module provides FastAPI routes for configuring and managing different Large Language Model (LLM) providers.
-It supports configuration for OpenAI, Cohere, DeepSeek, Gemini, and HuggingFace/local models.
+This module provides FastAPI routes for configuring and 
+    managing different Large Language llm (LLM) providers.
+It supports configuration for OpenAI, Cohere, DeepSeek, Gemini, and HuggingFace/local llms.
 
-The router handles model initialization, provider validation, and error handling for LLM configuration requests.
+The router handles llm initialization, provider validation,
+ and error handling for LLM configuration requests.
 """
 
 # pylint: disable=wrong-import-position
@@ -48,14 +50,14 @@ setup_logging()
 @llms_route.post("/llms/configure", response_class=JSONResponse)
 async def configure_llm(
     request: Request,
-    model_info: ModelInfo
+    llm_info: ModelInfo
 ) -> JSONResponse:
     """
-    Configure the LLM provider and model to be used by the application.
+    Configure the LLM provider and llm to be used by the application.
     
     Args:
         request: FastAPI Request object for application state access
-        model_info: Contains provider and model_name for the LLM configuration
+        llm_info: Contains provider and llm_name for the LLM configuration
         
     Returns:
         JSONResponse: Configuration success message or error details
@@ -67,29 +69,29 @@ async def configure_llm(
         >>> POST /llms/configure
         >>> {
         >>>     "provider": "openai",
-        >>>     "model_name": "gpt-4"
+        >>>     "llm_name": "gpt-4"
         >>> }
     """
     try:
-        logging.debug("Received LLM configuration request: %s", model_info.dict())
+        logging.debug("Received LLM configuration request: %s", llm_info.dict())
 
-        provider = model_info.provider.lower()
-        model_name = model_info.model_name
+        provider = llm_info.provider.lower()
+        llm_name = llm_info.model_name
 
-        logging.info("Attempting to configure %s model: %s", provider, model_name)
+        logging.info("Attempting to configure %s llm: %s", provider, llm_name)
 
         # Initialize the appropriate LLM based on provider
-        model: Any = None
+        llm: Any = None
         if provider == "openai":
-            model = OpenAILLM(model_name=model_name)
+            llm = OpenAILLM(model_name=llm_name)
         elif provider == "cohere":
-            model = CohereLLM(model_name=model_name)
+            llm = CohereLLM(model_name=llm_name)
         elif provider == "deepseek":
-            model = DeepSeekLLM(model_name=model_name)
+            llm = DeepSeekLLM(model_name=llm_name)
         elif provider == "gemini":
-            model = GeminiLLM(model_name=model_name)
+            llm = GeminiLLM(model_name=llm_name)
         elif provider in ["huggingface", "local"]:
-            model = HuggingFaceLLM(model_name=model_name)
+            llm = HuggingFaceLLM(model_name=llm_name)
         else:
             error_msg = f"Unsupported provider: {provider}"
             logging.warning(error_msg)
@@ -98,24 +100,23 @@ async def configure_llm(
                 detail=error_msg
             )
 
-        # Verify model initialization was successful
-        if not model:
-            error_msg = f"Failed to initialize model {model_name} from provider {provider}"
+        # Verify llm initialization was successful
+        if not llm:
+            error_msg = f"Failed to initialize llm {llm_name} from provider {provider}"
             logging.error(error_msg)
             raise HTTPException(
                 status_code=HTTP_500_INTERNAL_SERVER_ERROR,
                 detail=error_msg
             )
 
-        # Store the model in the application state
-        request.app.state.model = model
-        logging.info("Successfully configured %s model: %s", provider, model_name)
+        # Store the llm in the application state
+        request.app.state.llm = llm
+        logging.info("Successfully configured %s llm: %s", provider, llm_name)
 
         response_data = {
             "message": "LLM configured successfully",
-            "model_info": model.get_model_info(),
             "provider": provider,
-            "model_name": model_name
+            "llm_name": llm_name
         }
 
         logging.debug("Configuration response data: %s", response_data)

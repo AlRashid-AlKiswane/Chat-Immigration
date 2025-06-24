@@ -27,6 +27,7 @@ except (ImportError, OSError) as e:
     logging.critical("Failed to set up main directory path: %s", e, exc_info=True)
     sys.exit(1)
 
+# pylint: disable=wrong-import-position
 # Third-party imports
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import JSONResponse
@@ -127,7 +128,6 @@ async def generation(
                 client=vdb_client,
                 collection_name="Chunks",
                 query_embedding=query_embedding,
-                score_threshold=rag_config.score_threshold,
                 n_results=rag_config.n_results,
                 include_metadata=rag_config.include_metadata
             )
