@@ -105,12 +105,12 @@ async def generation(
                 where_clause=f"user_id = '{user_id}' AND query = '{prompt}'"
             )
 
-            if cache_result and prompt == cache_result[0]["query"]:
+            if cache_result:
                 logger.debug("Returning cached response")
                 return JSONResponse(
                     status_code=HTTP_200_OK,
                     content={
-                        "response": cache_result[0]["response"],
+                        "response": cache_result,
                         "source": "cache",
                         "user_id": user_id
                     }
@@ -126,7 +126,7 @@ async def generation(
 
             retrieved_docs = search_documents(
                 client=vdb_client,
-                collection_name="Chunks",
+                collection_name="chunks",
                 query_embedding=query_embedding,
                 n_results=rag_config.n_results,
                 include_metadata=rag_config.include_metadata

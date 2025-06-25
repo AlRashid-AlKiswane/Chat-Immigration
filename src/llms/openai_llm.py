@@ -38,7 +38,9 @@ class OpenAILLM(BaseLLM):
     def __init__(self, model_name: Optional[str] = None) -> None:
         """Initialize the OpenAI LLM with optinal custom model name."""
         self.model_name = model_name or app_settings.OPENAI_MODEL
-        self.api_key = app_settings.OPENAI_APIK
+        self.api_key = (app_settings.OPENAI_APIK.get_secret_value()
+                        if app_settings.OPENAI_APIK
+                        else None)
         self.client = openai.OpenAI(api_key=self.api_key)
 
         logger.info("Initialized OpenAI LLM with model: %s", self.model_name)

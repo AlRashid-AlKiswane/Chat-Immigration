@@ -8,10 +8,25 @@ Provides robust functions for fetching data from SQLite database tables with:
 - Detailed logging
 """
 
+# pylint: disable=wrong-import-position
 # Standard library imports
 import logging
 import os
 import sys
+
+# Special SQLite configuration
+__import__("pysqlite3")
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+
+# Set up project base directory
+try:
+    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+    sys.path.append(MAIN_DIR)
+    logging.debug("Main directory path configured: %s", MAIN_DIR)
+except (ImportError, OSError) as e:
+    logging.critical("Failed to set up main directory path: %s", e, exc_info=True)
+    sys.exit(1)
+
 from typing import List, Dict, Any, Optional, Tuple, Union
 
 # Third-party imports
@@ -39,6 +54,7 @@ except (ImportError, OSError) as e:
 logger = setup_logging()
 app_settings: Settings = get_settings()
 
+# pylint: disable=logging-not-lazy
 def fetch_all_rows(
     conn: sqlite3.Connection,
     table_name: str,
@@ -73,7 +89,7 @@ def fetch_all_rows(
         # Validate inputs
         if not table_name or not isinstance(table_name, str):
             raise ValueError("Invalid table name")
-        
+
         if columns is None:
             columns = ["*"]
         elif not isinstance(columns, list):
@@ -106,7 +122,7 @@ def fetch_all_rows(
 
         if where_clause:
             query += f" WHERE {where_clause}"
-        
+
         if limit:
             query += f" LIMIT {limit}"
 
@@ -148,3 +164,21 @@ def fetch_all_rows(
     except Exception as e:
         logger.exception(QueryMsg.UNEXPECTED_ERROR.value % str(e))
         raise
+
+if __name__ == "__main__":
+    from src.database import get_sqlite_engine
+
+    conn: sqlite3.Connection = get_sqlite_engine()
+
+    cache_result = fetch_all_rows(
+        conn=conn,
+        table_name="query_responses",
+        columns=["user_id", "response", "query"],
+        cache_key=("alrashid", "what is machine learning"),
+        where_clause="user_id = 'alrashid' AND query = 'what is machine learning'"
+    )
+    if cache_result:
+        print("Cache result found:", cache_result)
+    else:
+        print("No cache result found.")
+
