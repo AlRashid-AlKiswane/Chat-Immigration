@@ -19,3 +19,5 @@ pysqlite3-binary
 pymupdf
 chromadb
 cohere
+pandas
+html5lib

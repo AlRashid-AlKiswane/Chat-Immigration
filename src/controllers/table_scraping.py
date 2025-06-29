@@ -160,7 +160,7 @@ class TableScraper:
 
 if __name__ == "__main__":
     try:
-        target_url = "https://www.canadavisa.com/express-entry-comprehensive-ranking-system.html"
+        target_url = "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html"
         scraper = TableScraper(start_url=target_url, max_pages=1 ,folder_name="tables")
         total = scraper.crawl_and_scrape_tables()
         logger.info(f"Scraping finished. Total tables saved: {total}")
