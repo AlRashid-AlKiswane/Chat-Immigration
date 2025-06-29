@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Canada Express Entry | AI Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fefefe;
+      color: #212121;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #d32f2f;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background-color: #fff;
+      border: 2px solid #d32f2f;
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .card a {
+      color: #d32f2f;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>Canada Express Entry AI Panel</header>
+
+  <main>
+    <div class="grid">
+      <div class="card"><a href="chunking.html">🔗 Chunking</a></div>
+      <div class="card"><a href="crawling.html">🌐 Web Crawling</a></div>
+      <div class="card"><a href="embedding.html">🧠 Embedding</a></div>
+      <div class="card"><a href="history_manjament.html">📜 History Management</a></div>
+      <div class="card"><a href="live_rag.html">🛰️ Live RAG</a></div>
+      <div class="card"><a href="llm_generate.html">🤖 LLM Generation</a></div>
+      <div class="card"><a href="llms_config.html">⚙️ LLM Config</a></div>
+      <div class="card"><a href="logs_monitoring.html">📈 Logs Monitoring</a></div>
+      <div class="card"><a href="upload.html">📂 File Upload</a></div>
+    </div>
+  </main>
+
+  <div class="footer">
+    &copy; 2025 Canada Express Entry Chatbot Admin • Powered by FastAPI
+  </div>
+</body>
+</html>

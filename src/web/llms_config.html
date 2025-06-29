@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LLM Configuration | Canada Immigration</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #d32f2f;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    main {
+      max-width: 650px;
+      margin: 3rem auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.6rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #b71c1c;
+    }
+
+    .result-box {
+      margin-top: 1.5rem;
+      background: #fdf3f3;
+      padding: 1rem;
+      border-left: 4px solid #d32f2f;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+    }
+
+    .success {
+      background: #e8f5e9;
+      border-left: 4px solid #2e7d32;
+      color: #2e7d32;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #999;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>🇨🇦 LLM Configuration - Canada Express Entry</h1>
+  </header>
+
+  <main>
+    <form id="llmForm">
+      <label for="provider">LLM Provider</label>
+      <select id="provider" required>
+        <option value="">Select Provider</option>
+        <option value="openai">OpenAI</option>
+        <option value="cohere">Cohere</option>
+        <option value="deepseek">DeepSeek</option>
+        <option value="gemini">Gemini</option>
+        <option value="huggingface">HuggingFace</option>
+        <option value="local">Local (HF)</option>
+      </select>
+
+      <label for="modelName">Model Name</label>
+      <input type="text" id="modelName" placeholder="e.g., gpt-4, command-r, llama3-chat"/>
+
+      <button type="submit">Configure LLM</button>
+    </form>
+
+    <div id="llmResult" class="result-box" style="display: none;"></div>
+  </main>
+
+  <footer>
+    &copy; 2025 Canada Express Entry Admin Panel
+  </footer>
+
+  <script>
+    document.getElementById("llmForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const provider = document.getElementById("provider").value.trim();
+      const modelName = document.getElementById("modelName").value.trim();
+      const resultBox = document.getElementById("llmResult");
+
+      if (!provider || !modelName) {
+        resultBox.style.display = "block";
+        resultBox.classList.remove("success");
+        resultBox.textContent = "❗ Please select a provider and enter model name.";
+        return;
+      }
+
+      try {
+        const response = await fetch("/llms/configure", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            provider: provider,
+            model_name: modelName
+          })
+        });
+
+        const data = await response.json();
+        resultBox.style.display = "block";
+
+        if (response.ok) {
+          resultBox.classList.add("success");
+          resultBox.innerHTML =
+            `✅ LLM Configured Successfully!\n\n🔧 Provider: ${data.provider}\n📘 Model: ${data.llm_name}`;
+        } else {
+          resultBox.classList.remove("success");
+          resultBox.textContent = `❌ Error: ${data.detail || data.message || "Unknown error"}`;
+        }
+
+      } catch (err) {
+        console.error("Error:", err);
+        resultBox.classList.remove("success");
+        resultBox.style.display = "block";
+        resultBox.textContent = "⚠️ Server error while configuring LLM.";
+      }
+    });
+  </script>
+</body>
+</html>

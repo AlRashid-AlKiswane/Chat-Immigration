@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LLM RAG Generation | Canada Immigration</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #d32f2f;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    main {
+      max-width: 750px;
+      margin: 3rem auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      padding: 0.9rem 1.8rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #b71c1c;
+    }
+
+    .result-box {
+      margin-top: 2rem;
+      background: #fdf3f3;
+      padding: 1rem;
+      border-left: 4px solid #d32f2f;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+    }
+
+    .success {
+      background: #e8f5e9;
+      border-left: 4px solid #2e7d32;
+      color: #2e7d32;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #999;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>🇨🇦 RAG LLM Generation - Canada Express Entry</h1>
+  </header>
+
+  <main>
+    <form id="genForm">
+      <label for="userId">User ID</label>
+      <input type="text" id="userId" placeholder="e.g. admin123" required/>
+
+      <label for="prompt">Prompt</label>
+      <textarea id="prompt" placeholder="Enter the user question or system prompt..." required></textarea>
+
+      <label for="temp">Temperature: <span id="tempVal">0.7</span></label>
+      <input type="range" id="temp" min="0" max="1" step="0.01" value="0.7"/>
+
+      <label for="topP">Top-p: <span id="topPVal">0.9</span></label>
+      <input type="range" id="topP" min="0" max="1" step="0.01" value="0.9"/>
+
+      <label for="nResults">Number of Documents: <span id="nResultsVal">5</span></label>
+      <input type="range" id="nResults" min="1" max="20" step="1" value="5"/>
+
+      <label for="includeMetadata">Include Metadata?</label>
+      <select id="includeMetadata">
+        <option value="true">Yes</option>
+        <option value="false" selected>No</option>
+      </select>
+
+      <button type="submit">Generate Response</button>
+    </form>
+
+    <div id="genResult" class="result-box" style="display: none;"></div>
+  </main>
+
+  <footer>
+    &copy; 2025 Canada Express Entry Admin Panel
+  </footer>
+
+  <script>
+    const temp = document.getElementById("temp");
+    const tempVal = document.getElementById("tempVal");
+    temp.addEventListener("input", () => tempVal.textContent = temp.value);
+
+    const topP = document.getElementById("topP");
+    const topPVal = document.getElementById("topPVal");
+    topP.addEventListener("input", () => topPVal.textContent = topP.value);
+
+    const nResults = document.getElementById("nResults");
+    const nResultsVal = document.getElementById("nResultsVal");
+    nResults.addEventListener("input", () => nResultsVal.textContent = nResults.value);
+
+    document.getElementById("genForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const userId = document.getElementById("userId").value.trim();
+      const prompt = document.getElementById("prompt").value.trim();
+      const temperature = parseFloat(temp.value);
+      const topPValue = parseFloat(topP.value);
+      const nResultsValue = parseInt(nResults.value);
+      const includeMetadata = document.getElementById("includeMetadata").value === "true";
+
+      const resultBox = document.getElementById("genResult");
+
+      if (!prompt || !userId) {
+        resultBox.style.display = "block";
+        resultBox.classList.remove("success");
+        resultBox.textContent = "❗ Please enter both User ID and Prompt.";
+        return;
+      }
+
+      try {
+        const response = await fetch("/generation", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            generation_parameters: {
+              temperature: temperature,
+              top_p: topPValue
+            },
+            rag_config: {
+              n_results: nResultsValue,
+              include_metadata: includeMetadata
+            },
+            user_id: userId,
+            prompt: prompt
+          })
+        });
+
+        const data = await response.json();
+        resultBox.style.display = "block";
+
+        if (response.ok) {
+          resultBox.classList.add("success");
+          resultBox.innerHTML = `✅ Source: ${data.source}\n📘 Response:\n\n${data.response}`;
+        } else {
+          resultBox.classList.remove("success");
+          resultBox.textContent = `❌ Error: ${data.detail || data.message}`;
+        }
+
+      } catch (err) {
+        console.error(err);
+        resultBox.style.display = "block";
+        resultBox.classList.remove("success");
+        resultBox.textContent = "⚠️ Server error while generating response.";
+      }
+    });
+  </script>
+</body>
+</html>

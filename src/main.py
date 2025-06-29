@@ -10,6 +10,7 @@ import sys
 import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 
 # Setup project base path
 try:
@@ -276,3 +277,9 @@ for route, prefix, tag in route_registrations:
         )
 
 logger.info("All routes registered successfully")
+import pathlib
+
+BASE_DIR = pathlib.Path(__file__).parent.resolve()
+WEB_DIR = BASE_DIR / "src" / "web"
+
+app.mount("/", StaticFiles(directory=str(WEB_DIR), html=True), name="web")

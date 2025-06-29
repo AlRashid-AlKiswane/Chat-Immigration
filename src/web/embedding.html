@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Embed Chunks | Canada Express Entry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #d32f2f;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    main {
+      max-width: 600px;
+      margin: 3rem auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    button {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #b71c1c;
+    }
+
+    .status-box {
+      margin-top: 2rem;
+      padding: 1rem;
+      border-left: 4px solid #d32f2f;
+      background-color: #fdf3f3;
+      border-radius: 6px;
+      display: none;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+    }
+
+    .success {
+      background-color: #e8f5e9;
+      border-left-color: #2e7d32;
+      color: #2e7d32;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #999;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>🇨🇦 Embed Text Chunks to Vector DB</h1>
+  </header>
+
+  <main>
+    <p>Click the button below to generate and store vector embeddings for all available chunks in the database.</p>
+
+    <button id="embedBtn">🚀 Start Embedding</button>
+
+    <div id="statusBox" class="status-box"></div>
+  </main>
+
+  <footer>
+    &copy; 2025 Canada Immigration Chatbot System
+  </footer>
+
+  <script>
+    document.getElementById("embedBtn").addEventListener("click", async function () {
+      const statusBox = document.getElementById("statusBox");
+      statusBox.style.display = "block";
+      statusBox.classList.remove("success");
+      statusBox.textContent = "⏳ Embedding in progress...";
+
+      try {
+        const response = await fetch("/embedding", {
+          method: "POST"
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          statusBox.classList.add("success");
+          statusBox.textContent = `✅ ${data.message}`;
+        } else {
+          statusBox.textContent = `❌ Error: ${data.detail || "Embedding failed."}`;
+        }
+      } catch (err) {
+        statusBox.textContent = `⚠️ Server error: ${err.message}`;
+      }
+    });
+  </script>
+</body>
+</html>
