@@ -11,6 +11,7 @@ import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
+import pathlib
 
 # Setup project base path
 try:
@@ -24,6 +25,9 @@ except (ImportError, OSError) as e:
         exc_info=True
     )
     sys.exit(1)
+
+BASE_DIR = pathlib.Path(__file__).parent.resolve()
+WEB_DIR = BASE_DIR  / "web"
 
 # pylint: disable=wrong-import-position
 from src.logs import setup_logging
@@ -277,9 +281,4 @@ for route, prefix, tag in route_registrations:
         )
 
 logger.info("All routes registered successfully")
-import pathlib
-
-BASE_DIR = pathlib.Path(__file__).parent.resolve()
-WEB_DIR = BASE_DIR / "src" / "web"
-
 app.mount("/", StaticFiles(directory=str(WEB_DIR), html=True), name="web")
