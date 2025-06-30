@@ -36,7 +36,7 @@ from src.enums import DocsToChunks
 logger = setup_logging()
 app_settings: Settings = get_settings()
 
-docs_to_chunks_route = APIRouter()
+docs_to_chunks_route = APIRouter()f
 
 
 @docs_to_chunks_route.post("/docs_to_chunks")

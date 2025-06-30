@@ -41,7 +41,8 @@ from src.routes import (
     web_crawling_route,
     monitoring_route,
     logs_router,
-    live_rag_route
+    live_rag_route,
+    tables_crawling_route
 )
 from src.database import (
     get_sqlite_engine,
@@ -253,15 +254,16 @@ def get_status():
 
 # Route registration with error handling
 route_registrations = [
-    (upload_route, "/upload", "File Upload"),
-    (docs_to_chunks_route, "/chunking", "Document Chunking"),
-    (embedding_route, "/embedding", "Embedding"),
-    (llms_route, "/llms", "LLM Configuration"),
-    (llm_generation_route, "/Generate", "LLM Generation"),
-    (web_crawling_route, "/crawling", "Web Crawling"),
-    (monitoring_route, "/monitoring", "System Monitoring"),
-    (logs_router, "/logs", "System Logs Massages"),
-    (live_rag_route, "/live_rag", "Live RAG to with Test Query")
+    (upload_route, "/api", "File Upload"),
+    (docs_to_chunks_route, "/api", "Document Chunking"),
+    (embedding_route, "/api", "Embedding"),
+    (llms_route, "/api", "LLM Configuration"),
+    (llm_generation_route, "/api", "LLM Generation"),
+    (web_crawling_route, "/api", "Web Crawling"),
+    (monitoring_route, "/api", "System Monitoring"),
+    (logs_router, "/api", "System Logs Massages"),
+    (live_rag_route, "/api", "Live RAG to with Test Query"),
+    (tables_crawling_route, "/api", "Scrabing Tables score in immigration candi Express entury point")
 ]
 
 for route, prefix, tag in route_registrations:

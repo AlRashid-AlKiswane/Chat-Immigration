@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canada Immigration - Table Crawler</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 2em;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fafafa;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #d32f2f;
+        }
+
+        label {
+            display: block;
+            margin-top: 1.2em;
+            margin-bottom: 0.5em;
+            font-weight: bold;
+            color: #b71c1c;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.7em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 1.5em;
+            width: 100%;
+            padding: 0.9em;
+            background-color: #d32f2f;
+            color: #fff;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #b71c1c;
+        }
+
+        #result {
+            margin-top: 1.5em;
+            padding: 1em;
+            border-radius: 5px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        .success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #81c784;
+        }
+
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef5350;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇨🇦 Immigration Table Scraper</h1>
+        <form id="crawler-form">
+            <label for="url">Starting URL</label>
+            <input type="url" id="url" name="url" placeholder="https://www.canada.ca/en.html" required>
+
+            <label for="max_pages">Max Pages to Crawl</label>
+            <input type="number" id="max_pages" name="max_pages" min="1" max="50" value="5" required>
+
+            <button type="submit">Scrape Tables</button>
+        </form>
+
+        <div id="result" class="hidden"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById("crawler-form");
+        const resultBox = document.getElementById("result");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            resultBox.className = "";
+            resultBox.innerText = "Scraping in progress...";
+
+            const url = document.getElementById("url").value;
+            const maxPages = parseInt(document.getElementById("max_pages").value);
+
+            try {
+                const response = await fetch("/scraping_tables/tables_crawling", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ url: url, max_pages: maxPages }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultBox.className = "success";
+                    resultBox.innerText = `✅ Total tables found: ${data.total_tables_found}`;
+                } else {
+                    resultBox.className = "error";
+                    resultBox.innerText = `❌ ${data.detail || 'Unknown error occurred.'}`;
+                }
+            } catch (error) {
+                resultBox.className = "error";
+                resultBox.innerText = `❌ Request failed: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>

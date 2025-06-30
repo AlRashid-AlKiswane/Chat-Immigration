@@ -166,4 +166,4 @@ if __name__ == "__main__":
         logger.info(f"Scraping finished. Total tables saved: {total}")
     except Exception as e:
         logger.error(f"Fatal error: {e}")
-        sys.exit(1)      
+        sys.exit(1)

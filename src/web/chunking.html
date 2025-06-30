@@ -81,6 +81,11 @@
       color: #2e7d32;
     }
 
+  .error {
+    color: red;
+    white-space: pre-wrap;
+  }
+
     footer {
       text-align: center;
       margin-top: 4rem;
@@ -97,24 +102,15 @@
 
   <main>
     <form id="chunkForm">
-      <label for="filePath">Document File Path (optional)</label>
-      <input
-        type="text"
-        id="filePath"
-        name="file_path"
-        placeholder="Leave empty to chunk ALL documents"
-      />
-
-      <label for="doReset">Reset Chunk Table?</label>
-      <select id="doReset" name="do_reset">
-        <option value="1">Yes (clear old data)</option>
-        <option value="0" selected>No (append new chunks)</option>
+      <input type="text" id="filePath" placeholder="Enter file path" />
+      <select id="doReset">
+        <option value="0">No Reset</option>
+        <option value="1">Reset</option>
       </select>
-
-      <button type="submit">Start Chunking</button>
+      <button type="submit">Chunk Document</button>
     </form>
-
-    <div id="chunkResult" class="result-box" style="display: none;"></div>
+    
+    <div id="chunkResult" style="display:none;"></div>    
   </main>
 
   <footer>
@@ -122,46 +118,53 @@
   </footer>
 
   <script>
-    document.getElementById("chunkForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
+  document.getElementById("chunkForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-      const filePath = document.getElementById("filePath").value.trim();
-      const doReset = parseInt(document.getElementById("doReset").value);
-      const resultBox = document.getElementById("chunkResult");
+    const filePath = document.getElementById("filePath").value.trim();
+    const doResetValue = document.getElementById("doReset").value;
+    const resultBox = document.getElementById("chunkResult");
 
-      // Prepare request body
-      const requestBody = {
-        file_path: filePath || "",   // Send empty string if not provided
-        do_rest: doReset
-      };
+    // Convert the doReset value to integer safely
+    const doReset = doResetValue ? parseInt(doResetValue) : 0;
 
-      try {
-        const response = await fetch("/docs_to_chunks", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(requestBody)
-        });
+    // Prepare the request payload as required by FastAPI route
+    const requestBody = {
+      file_path: filePath || "",
+      do_rest: doReset
+    };
 
-        const data = await response.json();
+    try {
+      const response = await fetch("http://0.0.0.0:5000/api/docs_to_chunks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody)
+      });
 
-        resultBox.style.display = "block";
+      const data = await response.json();
 
-        if (response.ok) {
-          resultBox.classList.add("success");
-          resultBox.innerHTML =
-            `✅ Chunking Completed\n\n📦 Chunks Created: ${data.inserted_chunks}`;
-        } else {
-          resultBox.classList.remove("success");
-          resultBox.textContent = `❌ Error: ${data.message || data.detail}`;
-        }
+      resultBox.style.display = "block";
 
-      } catch (err) {
+      if (response.ok) {
+        resultBox.classList.add("success");
+        resultBox.classList.remove("error");
+        resultBox.innerHTML = `
+          ✅ Chunking Completed<br>
+          📦 Chunks Created: ${data.inserted_chunks}
+        `;
+      } else {
         resultBox.classList.remove("success");
-        resultBox.style.display = "block";
-        resultBox.textContent = "⚠️ Server error while processing document.";
-        console.error("Chunking error:", err);
+        resultBox.classList.add("error");
+        resultBox.innerHTML = `❌ Error: ${data.message || data.detail || 'Unknown error occurred.'}`;
       }
-    });
+    } catch (err) {
+      resultBox.classList.remove("success");
+      resultBox.classList.add("error");
+      resultBox.style.display = "block";
+      resultBox.innerHTML = "⚠️ Server error while processing document.";
+      console.error("Chunking error:", err);
+    }
+  });
   </script>
 </body>
 </html>
