@@ -26,12 +26,14 @@ except (ImportError, OSError) as e:
     )
     sys.exit(1)
 
-BASE_DIR = pathlib.Path(__file__).parent.resolve()
-WEB_DIR = BASE_DIR  / "web"
-
-# pylint: disable=wrong-import-position
-from src.logs import setup_logging
-from src.helpers import get_settings, Settings
+from src.embeddings import HuggingFaceModel, OpenAIEmbeddingModel
+from src.database import (
+    get_sqlite_engine,
+    init_chunks_table,
+    init_user_info_table,
+    init_query_response_table,
+    get_chroma_client
+)
 from src.routes import (
     upload_route,
     docs_to_chunks_route,
@@ -42,16 +44,16 @@ from src.routes import (
     monitoring_route,
     logs_router,
     live_rag_route,
-    tables_crawling_route
+    tables_crawling_route,
+    history_router
 )
-from src.database import (
-    get_sqlite_engine,
-    init_chunks_table,
-    init_user_info_table,
-    init_query_response_table,
-    get_chroma_client
-)
-from src.embeddings import HuggingFaceModel, OpenAIEmbeddingModel
+from src.helpers import get_settings, Settings
+from src.logs import setup_logging
+
+BASE_DIR = pathlib.Path(__file__).parent.resolve()
+WEB_DIR = BASE_DIR / "web"
+
+# pylint: disable=wrong-import-position
 
 # Initialize logger and settings
 logger = setup_logging()
@@ -59,7 +61,8 @@ logger.info("Initializing application settings...")
 
 try:
     app_settings: Settings = get_settings()
-    logger.debug(f"Application settings loaded successfully: {app_settings.dict()}")
+    logger.debug(
+        f"Application settings loaded successfully: {app_settings.dict()}")
 except Exception as e:
     logger.critical(
         "[Startup Critical] Failed to load application settings. "
@@ -70,6 +73,8 @@ except Exception as e:
 
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-statements
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
@@ -105,7 +110,8 @@ async def lifespan(app: FastAPI):
         try:
             logger.debug(f"Initializing {table_name}...")
             initializer(conn=app.state.conn)
-            logger.info(f"{table_name.replace('_', ' ').title()} created successfully")
+            logger.info(
+                f"{table_name.replace('_', ' ').title()} created successfully")
         except Exception as table_err:
             logger.error(
                 f"Failed to initialize {table_name}. "
@@ -124,7 +130,8 @@ async def lifespan(app: FastAPI):
 
         if model_name == "LOCAL":
             logger.info("Using local HuggingFace embedding model")
-            app.state.embedding = HuggingFaceModel(model_name=app_settings.EMBEDDING_MODEL)
+            app.state.embedding = HuggingFaceModel(
+                model_name=app_settings.EMBEDDING_MODEL)
             app.state.embedd_name = model_name
         elif model_name == "OPENAI":
             logger.info("Using OpenAI embedding model")
@@ -186,7 +193,8 @@ async def lifespan(app: FastAPI):
             conn.close()
             logger.info("Database connection closed successfully")
         else:
-            logger.warning("No active database connection found during shutdown")
+            logger.warning(
+                "No active database connection found during shutdown")
     except Exception as shutdown_err:
         logger.error(
             "Error during database connection shutdown. "
@@ -204,6 +212,7 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc"
 )
+
 
 @app.get("/", tags=["Root"])
 def read_root():
@@ -224,6 +233,7 @@ def read_root():
             detail="Internal server error"
         ) from root_err
 
+
 @app.get("/status", tags=["Monitoring"])
 def get_status():
     """System status endpoint"""
@@ -233,8 +243,8 @@ def get_status():
         status = {
             "database": "connected" if hasattr(app.state, "conn") else "disconnected",
             "embedding": app.state.embedd_name if hasattr(app.state, "embedd_name") else "none",
-            "llm": "configured" if hasattr(app.state, "llm") \
-                and app.state.llm else "not configured",
+            "llm": "configured" if hasattr(app.state, "llm")
+            and app.state.llm else "not configured",
             "vector_db": "connected" if hasattr(app.state, "vdb_client") else "disconnected"
         }
 
@@ -251,7 +261,6 @@ def get_status():
         ) from status_err
 
 
-
 # Route registration with error handling
 route_registrations = [
     (upload_route, "/api", "File Upload"),
@@ -263,7 +272,9 @@ route_registrations = [
     (monitoring_route, "/api", "System Monitoring"),
     (logs_router, "/api", "System Logs Massages"),
     (live_rag_route, "/api", "Live RAG to with Test Query"),
-    (tables_crawling_route, "/api", "Scrabing Tables score in immigration candi Express entury point")
+    (tables_crawling_route, "/api",
+     "Scrabing Tables score in immigration canada Express entury point"),
+    (history_router, "/api", "Manage chat history")
 ]
 
 for route, prefix, tag in route_registrations:

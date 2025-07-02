@@ -5,4 +5,4 @@ from .schema_llms_config import GenerationParameters, ModelInfo
 from .schema_rag_configration import RAGConfig
 from .schema_crawling import CrawlRequest
 from .schema_scraping_tables import ScrabingTables
-from .schema_history_management import ProviderChatHistory, ChatMessage, HistMessageRequest, HistoryResponse, ProviderStatsResponse
+from .schema_history_management import ProviderChatHistory, ChatMessage, HistoryResponse, ProviderStatsResponse

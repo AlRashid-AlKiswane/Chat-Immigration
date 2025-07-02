@@ -27,14 +27,14 @@ except (ImportError, OSError) as e:
 from src.history import ChatHistoryManager
 from src.enums.value_enums import ModelProvider
 from src.schema import (
-    HistMessageRequest,
+    ChatMessage,
     HistoryResponse,
     ProviderStatsResponse
 )
 from src.logs.logger import setup_logging
 
 logger = setup_logging()
-router = APIRouter(prefix="/chat/manage", tags=["chat_history"])
+history_router = APIRouter(prefix="/chat/manage", tags=["chat_history"])
 
 
 def get_chat_manager() -> ChatHistoryManager:
@@ -51,13 +51,13 @@ def format_error_response(message: str, error: str = None) -> dict:
     }
 
 
-@router.post(
+@history_router.post(
     "/{user_id}/messages",
     status_code=status.HTTP_201_CREATED
 )
 async def add_message(
     user_id: str,
-    request: HistMessageRequest,
+    request: ChatMessage,
     provider: ModelProvider,
     manager: ChatHistoryManager = Depends(get_chat_manager)
 ) -> JSONResponse:
@@ -106,7 +106,7 @@ async def add_message(
         )
 
 
-@router.get("/{user_id}/history")
+@history_router.get("/{user_id}/history")
 async def get_history(
     user_id: str,
     limit: Optional[int] = None,
@@ -142,7 +142,7 @@ async def get_history(
         )
 
 
-@router.delete("/{user_id}/history")
+@history_router.delete("/{user_id}/history")
 async def clear_history(
     user_id: str,
     manager: ChatHistoryManager = Depends(get_chat_manager)
@@ -165,7 +165,7 @@ async def clear_history(
         )
 
 
-@router.get("/users/active")
+@history_router.get("/users/active")
 async def get_active_users(
     manager: ChatHistoryManager = Depends(get_chat_manager)
 ) -> JSONResponse:

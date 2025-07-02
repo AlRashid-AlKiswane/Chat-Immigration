@@ -138,6 +138,7 @@ class ChatHistoryManager:
             The created ChatMessage instance
         """
         logger.debug(f"Adding message for user_id={user_id}, role={role}")
+        
         try:
             # create validated message
             message = ChatMessage(
@@ -186,6 +187,7 @@ class ChatHistoryManager:
         """
         logger.debug(
             f"Getting history for user_id={user_id}, limit={limit}, since={since}")
+        logger.debug(f"DEBUG - Current storage: {self._history_store}")
         if user_id not in self._history_store:
             return ProviderChatHistory(
                 user_id=user_id,
