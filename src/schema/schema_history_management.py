@@ -1,8 +1,7 @@
 
 from datetime import datetime
 from pydantic import BaseModel, Field, validator
-from typing import Literal, Optional,Dict, List
-
+from typing import Literal, Optional, Dict, List, Any
 
 
 from src.enums.value_enums import ModelProvider
@@ -10,15 +9,16 @@ from src.schema import ModelInfo
 
 
 class ChatMessage(BaseModel):
-    """Pydantic model for strongly-typed messages storge"""
+    """Pydantic model for strongly-typed message storage"""
     content: str
-    role: Literal["user", "ai"]= Field(...,description="Sender role")
-    timestamp: float = Field(default_factory = datetime.now)
-    model_info: Optional[ModelInfo] = Field(
+    role: Literal["user", "ai"] = Field(..., description="Sender role")
+    timestamp: float = Field(
+        default_factory=lambda: datetime.now().timestamp())
+    model_info: Optional["ModelInfo"] = Field(
         None,
-        descriptaion = "Required for AI messages, None for user messages"
+        description="Required for AI messages, None for user messages"
     )
-    metadata: Dict[str,str] = Field(default_factory=dict)
+    metadata: Dict[str, Any] = Field(default_factory=dict)
 
 
 class ProviderChatHistory(BaseModel):
@@ -30,7 +30,7 @@ class ProviderChatHistory(BaseModel):
     def add_message(self, message: ChatMessage):
         if message.role == "ai" and not message.model_info:
             raise ValueError("AI messages require model_info")
-        self.messages.append(message) # pylint: disable=no-member
+        self.messages.append(message)  # pylint: disable=no-member
 
 
 # Usage Example:
