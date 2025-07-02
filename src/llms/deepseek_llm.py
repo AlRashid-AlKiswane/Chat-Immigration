@@ -12,7 +12,8 @@ from typing import Optional, Dict, Any
 from openai import OpenAI
 
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    MAIN_DIR = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), "../.."))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
@@ -83,9 +84,10 @@ class DeepSeekLLM(BaseLLM):
                 model=self.model_name,
                 messages=[
                     {"role": "user", "content": prompt}
-                ],                
+                ],
                 temperature=kwargs.get("temperature", 0.7),
                 max_tokens=kwargs.get("max_tokens", 1024),
+                max_input_tokens=kwargs.get("max_input_tokens", 256),
                 top_p=kwargs.get("top_p", 1.0),
                 frequency_penalty=kwargs.get("frequency_penalty", 0.0),
                 presence_penalty=kwargs.get("presence_penalty", 0.0),
@@ -131,7 +133,9 @@ class DeepSeekLLM(BaseLLM):
             }
         }
 
+
 if __name__ == "__main__":
     model = DeepSeekLLM()
-    response = model.generate_response(prompt="What is RNN in machine learning?")
+    response = model.generate_response(
+        prompt="What is RNN in machine learning?")
     print(response)

@@ -16,11 +16,13 @@ from pydantic import Field, SecretStr, ValidationError
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    MAIN_DIR = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), "../.."))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
     sys.exit(1)
+
 
 class Settings(BaseSettings):
     """
@@ -103,10 +105,10 @@ class Settings(BaseSettings):
         secrets_dir="/run/secrets"  # For Docker secrets
     )
 
-    PROVIDER_EMBEDDING_MODEL: str =  Field("LOCAL", env="PROVIDER_EMBEDDING_MODEL")
+    PROVIDER_EMBEDDING_MODEL: str = Field(
+        "LOCAL", env="PROVIDER_EMBEDDING_MODEL")
 
     HUGGINGFACE_MODEL: str = Field(..., env="HUGGINGFACE_MODEL")
-
 
 
 def get_settings() -> Settings:
@@ -121,12 +123,12 @@ def get_settings() -> Settings:
     """
     try:
         settings = Settings()
-        
+
         # Ensure document directory exists
         settings.DOC_LOCATION_SAVE.mkdir(exist_ok=True, parents=True)
-        
+
         return settings
-        
+
     except ValidationError as e:
         print("Configuration error:", file=sys.stderr)
         print(e.json(indent=2), file=sys.stderr)
@@ -143,7 +145,7 @@ if __name__ == "__main__":
     print(f"Database: {settings.SQLITE_DB}")
     print(f"Document Location: {settings.DOC_LOCATION_SAVE}")
     print(f"Chunk Size: {settings.CHUNKS_SIZE}")
-    
+
     # Example of accessing a secret (would show as '***********' in logs)
     if settings.OPENAI_APIK:
         print("OpenAI configured k hidden)")

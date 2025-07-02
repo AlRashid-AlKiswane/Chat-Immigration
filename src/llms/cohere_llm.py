@@ -13,7 +13,8 @@ from typing import Optional, Dict, Any
 import cohere
 
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    MAIN_DIR = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), "../.."))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
@@ -27,6 +28,7 @@ from src.llms.abc_llm import BaseLLM
 # Initialize logger and settings
 logger = setup_logging()
 app_settings: Settings = get_settings()
+
 
 class CohereLLM(BaseLLM):
     """
@@ -71,6 +73,7 @@ class CohereLLM(BaseLLM):
                 message=prompt,
                 temperature=kwargs.get("temperature", 0.7),
                 max_tokens=kwargs.get("max_tokens", 256),
+                max_input_tokens=kwargs.get("max_input_tokens", 256),
             )
 
             reply = response.text.strip()
@@ -102,6 +105,7 @@ class CohereLLM(BaseLLM):
                 "max_tokens": "int"
             }
         }
+
 
 if __name__ == "__main__":
     model = CohereLLM()

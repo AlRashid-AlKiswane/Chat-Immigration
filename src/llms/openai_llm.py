@@ -14,7 +14,8 @@ from typing import Optional, Dict, Any
 import openai
 
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    MAIN_DIR = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), "../.."))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
@@ -27,6 +28,7 @@ from src.llms.abc_llm import BaseLLM
 # Initialize logger and settings
 logger = setup_logging()
 app_settings: Settings = get_settings()
+
 
 class OpenAILLM(BaseLLM):
     """
@@ -74,6 +76,7 @@ class OpenAILLM(BaseLLM):
                 messages=messages,
                 temperature=kwargs.get("temperature", 0.7),
                 max_tokens=kwargs.get("max_tokens", 256),
+                max_input_tokens=kwargs.get("max_input_tokens", 256),
                 top_p=kwargs.get("top_p", 1.0),
                 frequency_penalty=kwargs.get("frequency_penalty", 0.0),
                 presence_penalty=kwargs.get("presence_penalty", 0.0),
@@ -85,7 +88,6 @@ class OpenAILLM(BaseLLM):
         except Exception as e:
             logger.error("OpenAI API call failed: %s", e)
             raise RuntimeError(f"OpenAI LLM generation failed: {e}") from e
-
 
     def get_model_info(self) -> Dict[str, Any]:
         """
@@ -111,6 +113,7 @@ class OpenAILLM(BaseLLM):
                 "presence_penalty": "float"
             }
         }
+
 
 if __name__ == "__main__":
     model = OpenAILLM()

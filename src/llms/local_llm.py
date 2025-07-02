@@ -16,7 +16,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from huggingface_hub import login
 
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    MAIN_DIR = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), "../.."))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
@@ -60,9 +61,11 @@ class HuggingFaceLLM(BaseLLM):
             else:
                 logger.info("Model loaded to CPU.")
 
-            logger.info("Initialized HuggingFace LLM with model: %s", self.model_name)
+            logger.info(
+                "Initialized HuggingFace LLM with model: %s", self.model_name)
         except Exception as e:
-            logger.error("Failed to load HuggingFace model '%s': %s", self.model_name, e)
+            logger.error(
+                "Failed to load HuggingFace model '%s': %s", self.model_name, e)
             raise RuntimeError(f"Failed to load HuggingFace model: {e}") from e
 
     def generate_response(
@@ -95,15 +98,18 @@ class HuggingFaceLLM(BaseLLM):
             outputs = self.model.generate(
                 **inputs,
                 max_new_tokens=kwargs.get("max_tokens", 256),
+                max_input_tokens=kwargs.get("max_input_tokens", 256),
                 temperature=kwargs.get("temperature", 0.7),
                 top_p=kwargs.get("top_p", 1.0),
                 do_sample=True,
                 pad_token_id=self.tokenizer.eos_token_id,
             )
-            response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+            response = self.tokenizer.decode(
+                outputs[0], skip_special_tokens=True)
 
             # Strip input prompt if model repeats it in output
-            reply = response[len(prompt):].strip() if response.startswith(prompt) else response.strip()
+            reply = response[len(prompt):].strip() if response.startswith(
+                prompt) else response.strip()
 
             logger.info("HuggingFace response generated successfully.")
             return reply
@@ -123,7 +129,8 @@ class HuggingFaceLLM(BaseLLM):
             "model_name": self.model_name,
             "provider": "HuggingFace",
             "capabilities": {
-                "chat": False,  # Unless using a conversational model like ChatGLM, DialoGPT, etc.
+                # Unless using a conversational model like ChatGLM, DialoGPT, etc.
+                "chat": False,
                 "streaming": False,
                 "temperature_control": True,
                 "max_tokens": True
@@ -135,8 +142,10 @@ class HuggingFaceLLM(BaseLLM):
             }
         }
 
+
 if __name__ == "__main__":
 
     model = HuggingFaceLLM()
-    response = model.generate_response(prompt="What is the RNN in machine learning")
+    response = model.generate_response(
+        prompt="What is the RNN in machine learning")
     print(response)
