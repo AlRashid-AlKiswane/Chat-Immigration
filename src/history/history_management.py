@@ -1,5 +1,34 @@
 """
-chat history mangment
+history_management.py
+
+Module for managing user chat histories in AI-powered applications.
+
+This module provides an asynchronous, type-safe chat history manager
+(`ChatHistoryManager`) that handles multi-user chat logs using:
+- Custom Pydantic schemas (`ChatMessage`, `ProviderChatHistory`, `ModelInfo`)
+- LangChain’s `ConversationBufferMemory` for in-memory chat management
+- Dual storage: structured memory and LangChain memory
+- Caching with LRU for performance
+
+Features:
+- Add validated user/AI messages to per-user history
+- Store and retrieve chat history with support for time-based filtering
+- Track active users and model provider usage statistics
+- Clear chat history safely with logging and error handling
+
+Dependencies:
+- LangChain (conversation memory)
+- Pydantic v2+ (data validation and serialization)
+- Python built-ins: asyncio, datetime, logging, functools, etc.
+
+Example usage:
+>>> manager = ChatHistoryManager()
+>>> await manager.add_message("user1", "Hello", "user", provider=ModelProvider.OPENAI)
+>>> history = await manager.get_history("user1")
+>>> print(history)
+
+Author: Rama Amairy
+Date: 2025-07-02
 """
 
 import asyncio
@@ -52,10 +81,14 @@ class ChatHistoryManager:
         """
         self.max_cached_users = max_cached_users
         self._history_store: Dict[str, ProviderChatHistory] = {}
+        logger.info(
+            f"ChatHistoryManager initialized with cache size: {max_cached_users}")
 
     @lru_cache(maxsize=1000)
     def _get_memory_sync(self, user_id: str) -> ConversationBufferMemory:
         """Sync method with LRU caching"""
+        logger.debug(
+            f"Creating ConversationBufferMemory for user_id={user_id}")
         return ConversationBufferMemory(
             return_messages=True,
             memory_key="chat_history"
@@ -63,6 +96,7 @@ class ChatHistoryManager:
 
     async def get_memory(self, user_id: str) -> Awaitable[ConversationBufferMemory]:
         """Async wrapper for memory access"""
+        logger.debug(f"Fetching memory asynchronously for user_id={user_id}")
         return await asyncio.to_thread(self._get_memory_sync, user_id)
 
     async def initialize_history(
@@ -72,11 +106,15 @@ class ChatHistoryManager:
     ) -> ProviderChatHistory:
         """Initialize a new provider-specific history"""
         if user_id not in self._history_store:
+            logger.info(
+                f"Initializing history for user_id={user_id}, provider={provider}")
             self._history_store[user_id] = ProviderChatHistory(
                 user_id=user_id,
                 provider=provider,
                 messages=[]
             )
+        else:
+            logger.debug(f"History already exists for user_id={user_id}")
         return self._history_store[user_id]
 
     async def add_message(
@@ -99,6 +137,7 @@ class ChatHistoryManager:
         Returns:
             The created ChatMessage instance
         """
+        logger.debug(f"Adding message for user_id={user_id}, role={role}")
         try:
             # create validated message
             message = ChatMessage(
@@ -145,6 +184,8 @@ class ChatHistoryManager:
         Returns:
             ProviderChatHistory instance with filtered messages
         """
+        logger.debug(
+            f"Getting history for user_id={user_id}, limit={limit}, since={since}")
         if user_id not in self._history_store:
             return ProviderChatHistory(
                 user_id=user_id,
@@ -155,13 +196,17 @@ class ChatHistoryManager:
 
         # apply filters on date
         filtered_messages = history.messages.copy()
-        if since is not None:
+        if since:
             filtered_messages = [
-                m for m in filtered_messages
-                if datetime.fromtimestamp(m.timestamp) > since
-            ]
+                m for m in filtered_messages if datetime.fromtimestamp(m.timestamp) > since]
+            logger.debug(
+                f"Filtered messages since {since}: {len(filtered_messages)}")
         if limit is not None:
             filtered_messages = filtered_messages[-limit:]
+            logger.debug(
+                f"Applied limit {limit}: {len(filtered_messages)} messages")
+        logger.info(
+            f"Returning history with {len(filtered_messages)} messages for user {user_id}")
         return ProviderChatHistory(
             user_id=user_id,
             provider=history.provider,
@@ -170,6 +215,7 @@ class ChatHistoryManager:
 
     async def clear_history(self, user_id: str) -> None:
         """Clear all history for a user"""
+        logger.info(f"Clearing history for user_id={user_id}")
         try:
             # Clear LangChain memory
             memory = await self.get_memory(user_id)
@@ -189,19 +235,24 @@ class ChatHistoryManager:
 
     def get_active_users(self) -> List[str]:
         """List all users with stored history"""
-        return list(self._history_store.keys())
+        active_users = list(self._history_store.keys())
+        logger.info(f"Active users retrieved: {active_users}")
+        return active_users
 
     async def get_provider_usage(self) -> Dict[ModelProvider, int]:
         """Get message count per provider"""
+        logger.debug("Calculating provider usage stats")
         stats = {}
         for history in self._history_store.values():
             stats[history.provider] = stats.get(
                 history.provider, 0) + len(history.messages)
+        logger.info(f"Provider usage stats: {stats}")
         return stats
 
 
 # Example Usage
 async def demo():
+    """test function"""
     manager = ChatHistoryManager()
 
     # Add messages
