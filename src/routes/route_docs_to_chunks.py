@@ -5,18 +5,26 @@ Provides FastAPI endpoint for processing documents into chunks and storing them 
 Handles document loading, text chunking, and database operations with comprehensive error handling.
 """
 
+from src.enums import DocsToChunks
+from src.utils import prepare_chunks_for_insertion
+from src.controllers import load_and_chunk
+from src.database import clear_table, insert_chunks
+from src.schema import ChunkData, ChunksRequest
+from src.helpers import get_settings, Settings, get_db_conn
+from src.logs.logger import setup_logging
+from fastapi.responses import JSONResponse
+from fastapi import APIRouter, Depends, HTTPException
+import sqlite3
 import os
 import sys
 import logging
 __import__("pysqlite3")
 sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
-import sqlite3
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import JSONResponse
 
 # Set up project base directory
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    MAIN_DIR = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), "../.."))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
@@ -24,19 +32,12 @@ except (ImportError, OSError) as e:
 
 # pylint: disable=wrong-import-position
 # pylint: disable=logging-format-interpolation
-from src.logs.logger import setup_logging
-from src.helpers import get_settings, Settings, get_db_conn
-from src.schema import ChunkData, ChunksRequest
-from src.database import clear_table, insert_chunks
-from src.controllers import load_and_chunk
-from src.utils import prepare_chunks_for_insertion
-from src.enums import DocsToChunks
 
 # Initialize logger and settings
 logger = setup_logging()
 app_settings: Settings = get_settings()
 
-docs_to_chunks_route = APIRouter()f
+docs_to_chunks_route = APIRouter()
 
 
 @docs_to_chunks_route.post("/docs_to_chunks")
@@ -61,7 +62,8 @@ async def docs_to_chunks(
     do_reset = body.do_rest
 
     logger.info(
-        DocsToChunks.PROCESS_STARTED.value.format(file_path or "[ALL DOCUMENTS]")
+        DocsToChunks.PROCESS_STARTED.value.format(
+            file_path or "[ALL DOCUMENTS]")
     )
 
     try:
@@ -103,4 +105,5 @@ async def docs_to_chunks(
 
     except Exception as e:  # pylint: disable=broad-except
         logger.exception(DocsToChunks.UNEXPECTED_ERROR.value.format(e))
-        raise HTTPException(status_code=500, detail="Internal server error") from e
+        raise HTTPException(
+            status_code=500, detail="Internal server error") from e
