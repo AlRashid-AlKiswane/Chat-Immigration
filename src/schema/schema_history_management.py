@@ -32,6 +32,27 @@ class ProviderChatHistory(BaseModel):
             raise ValueError("AI messages require model_info")
         self.messages.append(message)  # pylint: disable=no-member
 
+# API Request/Response Models
+
+
+# --- Request/Response Models ---
+class HistMessageRequest(BaseModel):
+    content: str = Field(..., min_length=1, max_length=5000)
+    role: str = Field(..., regex="^(user|ai)$")
+    model_info: Optional[ModelInfo] = None
+    metadata: Optional[dict] = None
+
+class HistoryResponse(BaseModel):
+    user_id: str
+    provider: ModelProvider
+    messages: List[dict]
+    count: int
+
+class ProviderStatsResponse(BaseModel):
+    provider: ModelProvider
+    message_count: int
+
+
 
 # Usage Example:
 history = ProviderChatHistory(
