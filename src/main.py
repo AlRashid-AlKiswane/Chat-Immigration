@@ -47,6 +47,7 @@ from src.routes import (
     tables_crawling_route,
     history_router
 )
+from src.history import ChatHistoryManager
 from src.helpers import get_settings, Settings
 from src.logs import setup_logging
 
@@ -180,6 +181,10 @@ async def lifespan(app: FastAPI):
         "LLM provider not initialized at startup. "
         "Please configure it via the /llms route before generating responses."
     )
+
+    # Initialize and store the chat manager
+    app.state.chat_manager = ChatHistoryManager()
+    logger.info("ChatHistoryManager initialized and stored in app state")
 
     yield  # Application runs here
 

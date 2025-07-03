@@ -34,9 +34,11 @@ Example:
 """
 
 # Standard library imports
+from typing import Any
 import logging
 import os
 import sys
+import sqlite3
 
 # Special SQLite3 configuration
 __import__("pysqlite3")
@@ -44,34 +46,29 @@ sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 
 # Attempt to set up the main directory path
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    MAIN_DIR = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), "../.."))
     sys.path.append(MAIN_DIR)
     logging.debug("Main directory path configured: %s", MAIN_DIR)
 except (ImportError, OSError) as e:
-    logging.critical("Failed to set up main directory path: %s", e, exc_info=True)
+    logging.critical(
+        "Failed to set up main directory path: %s", e, exc_info=True)
     sys.exit(1)
 
-# pylint: disable=wrong-import-position
-from typing import Any
-import sqlite3
+from src.llms import BaseLLM
+from src.helpers import get_settings, Settings
+from src.logs import setup_logging
+from chromadb.api import ClientAPI
 
-# Third-party imports
-from fastapi import Request, HTTPException
 from starlette.status import (
     HTTP_500_INTERNAL_SERVER_ERROR,
     HTTP_503_SERVICE_UNAVAILABLE
 )
-from chromadb.api import ClientAPI
-
-# Local application imports
-from src.logs import setup_logging
-from src.helpers import get_settings, Settings
-from src.llms import BaseLLM
-
-
+from fastapi import Request, HTTPException
 # Initialize logger and application settings
 logger = setup_logging()
 app_settings: Settings = get_settings()
+
 
 def get_db_conn(request: Request) -> sqlite3.Connection:
     """
@@ -103,6 +100,7 @@ def get_db_conn(request: Request) -> sqlite3.Connection:
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error while accessing database."
         ) from e
+
 
 def get_embedd(request: Request) -> Any:
     """
@@ -136,6 +134,7 @@ def get_embedd(request: Request) -> Any:
             detail="Internal server error while accessing embedding service."
         ) from e
 
+
 def get_vdb_client(request: Request) -> ClientAPI:
     """
     Retrieve the ChromaDB vector database client from the FastAPI app state.
@@ -167,6 +166,7 @@ def get_vdb_client(request: Request) -> ClientAPI:
             detail="Internal server error while accessing vector database."
         ) from e
 
+
 def get_llm(request: Request) -> BaseLLM:
     """
     Retrieve the configured LLM instance from the FastAPI app state.
@@ -189,7 +189,8 @@ def get_llm(request: Request) -> BaseLLM:
                 detail="Language model service unavailable. Please configure an LLM first."
             )
 
-        logger.debug("LLM instance retrieved successfully: %s", llm.get_model_info())
+        logger.debug("LLM instance retrieved successfully: %s",
+                     llm.get_model_info())
         return llm
     except HTTPException:
         raise
@@ -205,3 +206,15 @@ def get_llm(request: Request) -> BaseLLM:
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error while accessing language model."
         ) from e
+
+
+def get_chat_history(request: Request):
+    """Retrieve the chat history manager from the app state."""
+    chat_history = getattr(request.app.state, "chat_manager", None)
+    if not chat_history:
+        logger.debug("Chat history manager not found in application state.")
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Chat history service unavailable."
+        )
+    return chat_history

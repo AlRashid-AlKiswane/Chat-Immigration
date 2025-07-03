@@ -12,7 +12,7 @@ import sys
 import logging
 from typing import Optional, List
 from datetime import datetime
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from fastapi.responses import JSONResponse
 
 # Set up project base directory
@@ -32,14 +32,10 @@ from src.schema import (
     ProviderStatsResponse
 )
 from src.logs.logger import setup_logging
+from src.helpers import get_chat_history
 
 logger = setup_logging()
 history_router = APIRouter(prefix="/chat/manage", tags=["chat_history"])
-
-
-def get_chat_manager() -> ChatHistoryManager:
-    """Dependency injection for chat history manager"""
-    return ChatHistoryManager()
 
 
 def format_error_response(message: str, error: str = None) -> dict:
@@ -57,9 +53,9 @@ def format_error_response(message: str, error: str = None) -> dict:
 )
 async def add_message(
     user_id: str,
-    request: ChatMessage,
+    message_data: ChatMessage,
     provider: ModelProvider,
-    manager: ChatHistoryManager = Depends(get_chat_manager)
+    manager: ChatHistoryManager = Depends(get_chat_history)
 ) -> JSONResponse:
     """
     Add a new message to user's chat history
@@ -73,11 +69,11 @@ async def add_message(
     try:
         message = await manager.add_message(
             user_id=user_id,
-            content=request.content,
-            role=request.role,
+            content=message_data.content,
+            role=message_data.role,
             provider=provider,
-            model_info=request.model_info,
-            metadata=request.metadata
+            model_info=message_data.model_info,
+            metadata=message_data.metadata
         )
 
         history = await manager.get_history(user_id)
@@ -111,7 +107,7 @@ async def get_history(
     user_id: str,
     limit: Optional[int] = None,
     since: Optional[datetime] = None,
-    manager: ChatHistoryManager = Depends(get_chat_manager)
+    manager: ChatHistoryManager = Depends(get_chat_history)
 ) -> JSONResponse:
     """
     Retrieve chat history with optional filters
@@ -145,7 +141,7 @@ async def get_history(
 @history_router.delete("/{user_id}/history")
 async def clear_history(
     user_id: str,
-    manager: ChatHistoryManager = Depends(get_chat_manager)
+    manager: ChatHistoryManager = Depends(get_chat_history)
 ) -> JSONResponse:
     """Clear all chat history for a user"""
     try:
@@ -167,7 +163,7 @@ async def clear_history(
 
 @history_router.get("/users/active")
 async def get_active_users(
-    manager: ChatHistoryManager = Depends(get_chat_manager)
+    manager: ChatHistoryManager = Depends(get_chat_history)
 ) -> JSONResponse:
     """List all users with active chat histories"""
     try:
