@@ -10,11 +10,10 @@ This module provides RESTful endpoints for managing chat histories with:
 import os
 import sys
 import logging
-from typing import Optional, List
+from typing import Optional
 from datetime import datetime
-from fastapi import APIRouter, Depends, HTTPException, status, Request
+from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-
 # Set up project base directory
 try:
     MAIN_DIR = os.path.abspath(os.path.join(
@@ -24,13 +23,10 @@ except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
     sys.exit(1)
 
+# pylint: disable=wrong-import-position
 from src.history import ChatHistoryManager
 from src.enums.value_enums import ModelProvider
-from src.schema import (
-    ChatMessage,
-    HistoryResponse,
-    ProviderStatsResponse
-)
+from src.schema import ChatMessage
 from src.logs.logger import setup_logging
 from src.helpers import get_chat_history
 

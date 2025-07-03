@@ -279,7 +279,7 @@ route_registrations = [
     (live_rag_route, "/api", "Live RAG to with Test Query"),
     (tables_crawling_route, "/api",
      "Scrabing Tables score in immigration canada Express entury point"),
-    (history_router, "/api", "Manage chat history")
+    (history_router, "/api", "chat_history")
 ]
 
 for route, prefix, tag in route_registrations:
