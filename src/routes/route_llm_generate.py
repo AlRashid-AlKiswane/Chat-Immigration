@@ -18,6 +18,8 @@ from typing import Optional
 __import__("pysqlite3")
 sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 
+from sqlite3 import Connection
+
 # Set up project base directory
 try:
     MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -38,7 +40,6 @@ from starlette.status import (
 )
 
 from chromadb import Client
-from sqlite3 import Connection
 
 # Local application imports
 from src.logs.logger import setup_logging
@@ -47,11 +48,19 @@ from src.database import fetch_all_rows, insert_query_response, search_documents
 from src.schema import GenerationParameters, RAGConfig
 from src.embeddings import BaseEmbeddings
 from src.llms import BaseLLM
+from src.history import ChatHistoryManager
+from src.enums.value_enums import ModelProvider
+from src.helpers import get_chat_history
+from src.prompt import PromptBuilder
 
 
 # Initialize logger
 logger = setup_logging()
 llm_generation_route = APIRouter()
+
+# Initialize at module level
+prompt_builder = PromptBuilder()
+
 
 @llm_generation_route.post("/generation", response_class=JSONResponse)
 async def generation(
@@ -62,7 +71,8 @@ async def generation(
     conn: Connection = Depends(get_db_conn),
     vdb_client: Client = Depends(get_vdb_client),
     embedding: BaseEmbeddings = Depends(get_embedd),
-    llm: BaseLLM = Depends(get_llm)
+    llm: BaseLLM = Depends(get_llm),
+    history: ChatHistoryManager = Depends(get_chat_history)
 ) -> JSONResponse:
     """
     Handle RAG generation request with caching and retrieval.
@@ -92,6 +102,13 @@ async def generation(
                 status_code=HTTP_400_BAD_REQUEST,
                 detail="Missing required parameters: prompt, user_id or generation_parameters"
             )
+        logger.info(f"get model information")
+        model_info = llm.get_model_info()
+        chat_history = await history.get_history(str(user_id))
+        logger.info(f"generate chat history for {user_id} in {model_info["provider"]}")
+        
+        logger.info(f"get model information")
+        model_info = llm.get_model_info()
 
         logger.debug(f"Starting generation for user {user_id} with prompt: {prompt[:50]}...")
 
@@ -141,13 +158,35 @@ async def generation(
 
         # Generate response
         try:
-            prompt_template = f"{prompt}\n\nContext:\n{retrieved_docs}"
+            #prompt_template = f"{prompt}\n\nContext:\n{retrieved_docs}"
+            prompt_template = prompt_builder.build_simple_prompt(
+                    query=prompt,
+                    context=retrieved_docs,
+                    history=chat_history.messages
+                )
             logger.debug("Generating LLM response")
 
             response = llm.generate_response(
                 prompt=prompt_template,
                 **generation_parameters.dict()
             )
+            # Store messages in history
+            try:
+                await history.add_message(
+                user_id=user_id,
+                content=prompt,
+                role="user",
+                provider=model_info["provider"]
+                )
+                await history.add_message(
+                user_id=user_id,
+                content=response,
+                role="ai",
+                provider=model_info["provider"],  # or get from config
+                )
+            except Exception as e:
+                logger.warning(f"Failed to add messages to history: {str(e)}")
+
 
             # Cache the response
             try:
