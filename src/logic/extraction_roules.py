@@ -38,7 +38,7 @@ app_settings: Settings = get_settings()
 # Constants
 TABLES_PATH = os.path.join(MAIN_DIR, "assets", "docs", "table")
 
-def extraction_rules_from_json_tables() -> pd.DataFrame
+def extraction_rules_from_json_tables() -> pd.DataFrame:
     """
     Load all JSON files from the tables directory and return them as a list of dictionaries.
 

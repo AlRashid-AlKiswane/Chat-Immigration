@@ -289,3 +289,5 @@ class CanadianExperienceFactor(CRSFactor):
         except Exception as e:
             logger.error(f"Error calculating Canadian experience score: {e}")
             raise
+
+#if __name__=="__main__":
