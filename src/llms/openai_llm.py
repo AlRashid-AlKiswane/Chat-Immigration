@@ -25,6 +25,7 @@ except (ImportError, OSError) as e:
 from src.logs import setup_logging
 from src.helpers import get_settings, Settings
 from src.llms.abc_llm import BaseLLM
+from src.enums.value_enums import ModelProvider
 # Initialize logger and settings
 logger = setup_logging()
 app_settings: Settings = get_settings()
@@ -75,8 +76,7 @@ class OpenAILLM(BaseLLM):
                 model=self.model_name,
                 messages=messages,
                 temperature=kwargs.get("temperature", 0.7),
-                max_tokens=kwargs.get("max_tokens", 256),
-                max_input_tokens=kwargs.get("max_input_tokens", 256),
+                max_tokens=kwargs.get("max_tokens", 256), #both input and output
                 top_p=kwargs.get("top_p", 1.0),
                 frequency_penalty=kwargs.get("frequency_penalty", 0.0),
                 presence_penalty=kwargs.get("presence_penalty", 0.0),
@@ -98,7 +98,7 @@ class OpenAILLM(BaseLLM):
         """
         return {
             "model_name": self.model_name,
-            "provider": "OpenAI",
+            "provider": ModelProvider.OPENAI.value,
             "capabilities": {
                 "chat": True,
                 "streaming": True,

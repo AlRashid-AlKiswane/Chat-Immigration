@@ -183,6 +183,7 @@ async def generation(
                 content=response,
                 role="ai",
                 provider=model_info["provider"],  # or get from config
+                model_info= model_info
                 )
             except Exception as e:
                 logger.warning(f"Failed to add messages to history: {str(e)}")
