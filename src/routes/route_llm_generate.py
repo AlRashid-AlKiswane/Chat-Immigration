@@ -42,7 +42,7 @@ from starlette.status import (
 from chromadb import Client
 
 # Local application imports
-from src.logs.logger import setup_logging
+from src.infra.logger import setup_logging
 from src.helpers import get_db_conn, get_vdb_client, get_embedd, get_llm
 from src.database import fetch_all_rows, insert_query_response, search_documents
 from src.schema import GenerationParameters, RAGConfig

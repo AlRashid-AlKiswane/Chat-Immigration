@@ -11,7 +11,7 @@ from src.controllers import load_and_chunk
 from src.database import clear_table, insert_chunks
 from src.schema import ChunkData, ChunksRequest
 from src.helpers import get_settings, Settings, get_db_conn
-from src.logs.logger import setup_logging
+from src.infra.logger import setup_logging
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter, Depends, HTTPException
 import sqlite3

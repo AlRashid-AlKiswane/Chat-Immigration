@@ -57,7 +57,7 @@ except (ImportError, OSError) as e:
 
 from src.llms import BaseLLM
 from src.helpers import get_settings, Settings
-from src.logs import setup_logging
+from src.infra import setup_logging
 from chromadb.api import ClientAPI
 
 from starlette.status import (

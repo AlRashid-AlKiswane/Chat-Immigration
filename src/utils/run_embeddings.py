@@ -19,7 +19,7 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # pylint: disable=wrong-import-position
-from src.logs import setup_logging
+from src.infra import setup_logging
 from src.embeddings import OpenAIEmbeddingModel, HuggingFaceModel
 
 

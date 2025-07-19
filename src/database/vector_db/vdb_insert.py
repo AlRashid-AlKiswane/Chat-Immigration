@@ -2,7 +2,7 @@
 from typing import List, Optional
 from chromadb import Client
 from chromadb.errors import ChromaError
-from src.logs.logger import setup_logging
+from src.infra.logger import setup_logging
 
 logger = setup_logging()
 

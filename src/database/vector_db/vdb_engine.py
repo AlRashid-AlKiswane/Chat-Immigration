@@ -6,7 +6,7 @@ from typing import Optional
 from chromadb import PersistentClient
 from chromadb.errors import ChromaError
 
-from src.logs.logger import setup_logging
+from src.infra.logger import setup_logging
 from src.helpers import get_settings, Settings
 
 logger = setup_logging()

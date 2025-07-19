@@ -18,7 +18,7 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # pylint: disable=wrong-import-position
-from src.logs import setup_logging
+from src.infra import setup_logging
 from src.enums.value_enums import EducationLevel,LanguageAbility
 from src.logic.factors import CRSFactor
 

@@ -32,7 +32,7 @@ from starlette.status import (
     HTTP_500_INTERNAL_SERVER_ERROR,
 )
 from chromadb import Client
-from src.logs.logger import setup_logging
+from src.infra.logger import setup_logging
 from src.helpers import get_db_conn, get_vdb_client, get_embedd
 from src.database import fetch_all_rows, insert_documents
 from src.embeddings import BaseEmbeddings

@@ -49,7 +49,7 @@ from src.routes import (
 )
 from src.history import ChatHistoryManager
 from src.helpers import get_settings, Settings
-from src.logs import setup_logging
+from src.infra import setup_logging
 
 BASE_DIR = pathlib.Path(__file__).parent.resolve()
 WEB_DIR = BASE_DIR / "web"

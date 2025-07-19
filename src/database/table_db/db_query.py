@@ -33,7 +33,7 @@ from typing import List, Dict, Any, Optional, Tuple, Union
 import sqlite3
 
 # Local application imports
-from src.logs.logger import setup_logging
+from src.infra.logger import setup_logging
 from src.helpers import get_settings, Settings
 from src.enums import QueryMsg
 

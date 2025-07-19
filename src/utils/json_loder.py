@@ -17,7 +17,7 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # Project-specific imports
-from src.logs import setup_logging
+from src.infra import setup_logging
 from src.helpers import get_settings, Settings
 
 # Setup base logger and config

@@ -6,7 +6,7 @@ Includes education, language, and Canadian work experience.
 import logging
 from typing import Dict
 
-from src.logs import setup_logging
+from src.infra import setup_logging
 from src.enums.value_enums import EducationLevel, LanguageAbility
 from src.logic.factors import CRSFactor
 

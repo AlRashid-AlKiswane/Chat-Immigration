@@ -68,7 +68,7 @@ from starlette.status import (
 )
 
 # pylint: disable=wrong-import-order
-from src.logs.logger import setup_logging
+from src.infra.logger import setup_logging
 from src.schema import CrawlRequest
 from src.controllers import WebsiteCrawler
 from typing import Dict, Any

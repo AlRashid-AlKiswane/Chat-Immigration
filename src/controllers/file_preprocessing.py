@@ -25,7 +25,7 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # pylint: disable=wrong-import-position
-from src.logs.logger import setup_logging
+from src.infra.logger import setup_logging
 from src.helpers import get_settings, Settings
 
 from src.enums import FilePreprocessingMsg
