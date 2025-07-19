@@ -22,7 +22,7 @@ from typing import Any
 
 # Setup base directory for importing project modules
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../../.."))
+    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
     print("MAIN DIR: " + str(MAIN_DIR))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:

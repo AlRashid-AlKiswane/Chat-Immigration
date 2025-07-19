@@ -112,7 +112,9 @@ class Settings(BaseSettings):
 
     ORGINA_FACTUES_TAPLE: str = Field(..., env="ORGINA_FACTUES_TAPLE")
     EXTRACTION_FACTURES_TAPLE: str = Field(..., env="EXTRACTION_FACTURES_TAPLE")
+
     AGE_TAPLE_NAME: str = Field(..., env="AGE_TAPLE_NAME")
+    EDUCATION_TAPLE_NAME: str = Field(..., env="EDUCATION_TAPLE_NAME")
 
 
 def get_settings() -> Settings:
