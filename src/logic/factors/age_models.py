@@ -23,7 +23,6 @@ from typing import Any
 # Setup base directory for importing project modules
 try:
     MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
-    print("MAIN DIR: " + str(MAIN_DIR))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
@@ -50,7 +49,34 @@ class AgeFactors(BaseModel):
     y30_without_spouse: int = Field(..., alias="30_YEARS_OF_AGE_WITHOUT_SPOUSE")
     y31_with_spouse: int = Field(..., alias="31_YEARS_OF_AGE_WITH_SPOUSE")
     y31_without_spouse: int = Field(..., alias="31_YEARS_OF_AGE_WITHOUT_SPOUSE")
-    # Continue for other ages...
+    y32_with_spouse: int = Field(..., alias="32_YEARS_OF_AGE_WITH_SPOUSE")
+    y32_without_spouse: int = Field(..., alias="32_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y33_with_spouse: int = Field(..., alias="33_YEARS_OF_AGE_WITH_SPOUSE")
+    y33_without_spouse: int = Field(..., alias="33_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y34_with_spouse: int = Field(..., alias="34_YEARS_OF_AGE_WITH_SPOUSE")
+    y34_without_spouse: int = Field(..., alias="34_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y35_with_spouse: int = Field(..., alias="35_YEARS_OF_AGE_WITH_SPOUSE")
+    y35_without_spouse: int = Field(..., alias="35_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y36_with_spouse: int = Field(..., alias="36_YEARS_OF_AGE_WITH_SPOUSE")
+    y36_without_spouse: int = Field(..., alias="36_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y37_with_spouse: int = Field(..., alias="37_YEARS_OF_AGE_WITH_SPOUSE")
+    y37_without_spouse: int = Field(..., alias="37_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y38_with_spouse: int = Field(..., alias="38_YEARS_OF_AGE_WITH_SPOUSE")
+    y38_without_spouse: int = Field(..., alias="38_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y39_with_spouse: int = Field(..., alias="39_YEARS_OF_AGE_WITH_SPOUSE")
+    y39_without_spouse: int = Field(..., alias="39_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y40_with_spouse: int = Field(..., alias="40_YEARS_OF_AGE_WITH_SPOUSE")
+    y40_without_spouse: int = Field(..., alias="40_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y41_with_spouse: int = Field(..., alias="41_YEARS_OF_AGE_WITH_SPOUSE")
+    y41_without_spouse: int = Field(..., alias="41_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y42_with_spouse: int = Field(..., alias="42_YEARS_OF_AGE_WITH_SPOUSE")
+    y42_without_spouse: int = Field(..., alias="42_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y43_with_spouse: int = Field(..., alias="43_YEARS_OF_AGE_WITH_SPOUSE")
+    y43_without_spouse: int = Field(..., alias="43_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y44_with_spouse: int = Field(..., alias="44_YEARS_OF_AGE_WITH_SPOUSE")
+    y44_without_spouse: int = Field(..., alias="44_YEARS_OF_AGE_WITHOUT_SPOUSE")
+    y45_or_more_with_spouse: int = Field(..., alias="45_YEARS_OF_AGE_OR_MORE_WITH_SPOUSE")
+    y45_or_more_without_spouse: int = Field(..., alias="45_YEARS_OF_AGE_OR_MORE_WITHOUT_SPOUSE")
 
     class Config:
         validate_by_name = True  # Pydantic v2: replaces allow_population_by_field_name

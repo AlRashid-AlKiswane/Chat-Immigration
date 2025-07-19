@@ -2,3 +2,4 @@
 
 from .age_extraction_json_to_json import extract_age_json
 from .education_extraction_json_to_json import extract_education_table
+from .first_languageextraction_json_to_json import extract_language_table

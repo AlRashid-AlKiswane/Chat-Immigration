@@ -115,6 +115,7 @@ class Settings(BaseSettings):
 
     AGE_TAPLE_NAME: str = Field(..., env="AGE_TAPLE_NAME")
     EDUCATION_TAPLE_NAME: str = Field(..., env="EDUCATION_TAPLE_NAME")
+    FIERST_LANGUAGE_TAPLE_NAME: str = Field(..., env="FIERST_LANGUAGE_TAPLE_NAME")
 
 
 def get_settings() -> Settings:
