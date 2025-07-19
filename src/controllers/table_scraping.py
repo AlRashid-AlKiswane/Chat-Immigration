@@ -41,7 +41,7 @@ app_settings: Settings = get_settings()
 class TableScraper:
     """Scraper for extracting HTML tables from websites and converting them into JSON."""
 
-    def __init__(self, start_url: str, max_pages: int = 30 ,  folder_name : str ="table"):
+    def __init__(self, start_url: str, max_pages: int = 30):
         self.start_url = start_url
         self.max_pages = max_pages
         self.visited = set()
@@ -51,7 +51,7 @@ class TableScraper:
         self.headers = {
             "User-Agent": "Mozilla/5.0 (compatible; TableScraper/1.0)"
         }
-        self.output_dir = os.path.join(app_settings.DOC_LOCATION_SAVE,folder_name)
+        self.output_dir = os.path.join(app_settings.ORGINA_FACTUES_TAPLE)
 
         try:
             os.makedirs(self.output_dir, exist_ok=True)

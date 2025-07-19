@@ -3,7 +3,7 @@
 import json
 import re
 
-def exteact_age_json(input_path, output_path):
+def extract_age_json(input_path, output_path):
     # Read the input JSON file
     with open(input_path, 'r') as f:
         data = json.load(f)
@@ -41,8 +41,3 @@ def exteact_age_json(input_path, output_path):
     with open(output_path, 'w') as f:
         json.dump(converted_data, f, indent=2)
 
-
-
-if __name__ == "__main__":
-    # Example usage:
-    exteact_age_json('/workspaces/Chat-Immigration/assets/docs/table/www.canada.ca__en_immigration_refugees_citizenship_services_immigrate_canada_express_entry_check_score_crs_criteria_html_table_1.json', 'output.json')

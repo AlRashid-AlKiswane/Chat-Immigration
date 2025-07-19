@@ -110,7 +110,9 @@ class Settings(BaseSettings):
 
     HUGGINGFACE_MODEL: str = Field(..., env="HUGGINGFACE_MODEL")
 
-    AGE_TAPLE: str = Field(..., env="AGE_TAPLE")
+    ORGINA_FACTUES_TAPLE: str = Field(..., env="ORGINA_FACTUES_TAPLE")
+    EXTRACTION_FACTURES_TAPLE: str = Field(..., env="EXTRACTION_FACTURES_TAPLE")
+    AGE_TAPLE_NAME: str = Field(..., env="AGE_TAPLE_NAME")
 
 
 def get_settings() -> Settings:
