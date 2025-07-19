@@ -1,0 +1,82 @@
+[
+    {
+        "label": "17 years of age or less",
+        "points_without_spouse": 0
+    },
+    {
+        "label": "18 years of age",
+        "points_without_spouse": 99
+    },
+    {
+        "label": "19 years of age",
+        "points_without_spouse": 105
+    },
+    {
+        "label": "20 to 29 years of age",
+        "points_without_spouse": 110
+    },
+    {
+        "label": "30 years of age",
+        "points_without_spouse": 105
+    },
+    {
+        "label": "31 years of age",
+        "points_without_spouse": 99
+    },
+    {
+        "label": "32 years of age",
+        "points_without_spouse": 94
+    },
+    {
+        "label": "33 years of age",
+        "points_without_spouse": 88
+    },
+    {
+        "label": "34 years of age",
+        "points_without_spouse": 83
+    },
+    {
+        "label": "35 years of age",
+        "points_without_spouse": 77
+    },
+    {
+        "label": "36 years of age",
+        "points_without_spouse": 72
+    },
+    {
+        "label": "37 years of age",
+        "points_without_spouse": 66
+    },
+    {
+        "label": "38 years of age",
+        "points_without_spouse": 61
+    },
+    {
+        "label": "39 years of age",
+        "points_without_spouse": 55
+    },
+    {
+        "label": "40 years of age",
+        "points_without_spouse": 50
+    },
+    {
+        "label": "41 years of age",
+        "points_without_spouse": 39
+    },
+    {
+        "label": "42 years of age",
+        "points_without_spouse": 28
+    },
+    {
+        "label": "43 years of age",
+        "points_without_spouse": 17
+    },
+    {
+        "label": "44 years of age",
+        "points_without_spouse": 6
+    },
+    {
+        "label": "45 years of age or more",
+        "points_without_spouse": 0
+    }
+]

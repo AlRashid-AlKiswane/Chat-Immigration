@@ -6,3 +6,4 @@ class ModelProvider(str, Enum):
     COHERE = "cohere"
     GOOGLE = "google"
     LOCAL = "local"
+

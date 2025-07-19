@@ -43,6 +43,7 @@ class ColoredFormatter(logging.Formatter):
 _logger_initialized = False
 
 def setup_logging(
+    name: str = "logger_app",
     log_dir=f"{MAIN_DIR}/logs",
     log_file="app.log",
     console_level=logging.DEBUG,
@@ -61,7 +62,7 @@ def setup_logging(
     # pylint: disable=global-statement
     global _logger_initialized
 
-    logger__ = logging.getLogger("app_logger")
+    logger__ = logging.getLogger(name)
     logger__.setLevel(logging.DEBUG)
 
     if _logger_initialized:

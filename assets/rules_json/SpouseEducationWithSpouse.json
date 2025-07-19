@@ -1,0 +1,34 @@
+[
+    {
+        "label": "Less than secondary school (high school)",
+        "points_with_spouse": 0
+    },
+    {
+        "label": "Secondary school (high school graduation)",
+        "points_with_spouse": 2
+    },
+    {
+        "label": "One-year program at a university, college, trade or technical school, or other institute",
+        "points_with_spouse": 6
+    },
+    {
+        "label": "Two-year program at a university, college, trade or technical in school, or other institute",
+        "points_with_spouse": 7
+    },
+    {
+        "label": "Bachelor's degree OR a three or more year program at a university, college, trade or technical school, or other institute",
+        "points_with_spouse": 8
+    },
+    {
+        "label": "Two or more certificates, diplomas, or degrees. One must be for a program of three or more years",
+        "points_with_spouse": 9
+    },
+    {
+        "label": "Master's degree, or professional degree needed to practice in a licensed profession (For “professional degree”, the degree program must have been in: medicine, veterinary medicine, dentistry, optometry, law, chiropractic medicine, or pharmacy.)",
+        "points_with_spouse": 10
+    },
+    {
+        "label": "Doctoral level university degree (PhD)",
+        "points_with_spouse": 10
+    }
+]

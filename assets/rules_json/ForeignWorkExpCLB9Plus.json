@@ -1,0 +1,14 @@
+[
+    {
+        "label": "No foreign work experience",
+        "points_with_spouse": 0
+    },
+    {
+        "label": "1 or 2 years of foreign work experience",
+        "points_with_spouse": 25
+    },
+    {
+        "label": "3 years or more of foreign work experience",
+        "points_with_spouse": 50
+    }
+]

@@ -1,0 +1,18 @@
+[
+    {
+        "label": "CLB 4 or less",
+        "points_with_spouse": 0
+    },
+    {
+        "label": "CLB 5 or 6",
+        "points_with_spouse": 1
+    },
+    {
+        "label": "CLB 7 or 8",
+        "points_with_spouse": 3
+    },
+    {
+        "label": "CLB 9 or more",
+        "points_with_spouse": 6
+    }
+]

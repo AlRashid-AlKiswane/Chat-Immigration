@@ -1,0 +1,37 @@
+[
+    {
+        "label": "Less than CLB 4",
+        "points_with_spouse": 0,
+        "points_without_spouse": 0
+    },
+    {
+        "label": "CLB 4 or 5",
+        "points_with_spouse": 6,
+        "points_without_spouse": 6
+    },
+    {
+        "label": "CLB 6",
+        "points_with_spouse": 8,
+        "points_without_spouse": 9
+    },
+    {
+        "label": "CLB 7",
+        "points_with_spouse": 16,
+        "points_without_spouse": 17
+    },
+    {
+        "label": "CLB 8",
+        "points_with_spouse": 22,
+        "points_without_spouse": 23
+    },
+    {
+        "label": "CLB 9",
+        "points_with_spouse": 29,
+        "points_without_spouse": 31
+    },
+    {
+        "label": "CLB 10 or more",
+        "points_with_spouse": 32,
+        "points_without_spouse": 34
+    }
+]
