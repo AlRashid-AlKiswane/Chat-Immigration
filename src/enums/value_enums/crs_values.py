@@ -5,8 +5,8 @@ class EducationLevel(Enum):
     SECONDARY_DIPLOMA = "secondary_diploma"
     ONE_YEAR_POST_SECONDARY = "one_year_post_secondary"
     TWO_YEAR_POST_SECONDARY = "two_year_post_secondary"
-    THREE_YEAR_POST_SECONDARY_OR_MORE = "three_year_post_secondary_or_more"
-    TWO_OR_MORE_POST_SECONDARY = "two_or_more_post_secondary_one_three_year"
+    BACHELOR_OR_THREE_YEAR_POST_SECONDARY_OR_MORE = "Bachelor_or_three_year_post_secondary_or_more"
+    TWO_OR_MORE_CERTIFICATES = "two_or_more_post_secondary_one_three_year"
     MASTERS_OR_PROFESSIONAL_DEGREE = "masters_or_professional_degree"
     PHD = "phd"
 

@@ -22,7 +22,7 @@ from typing import Any
 
 # Setup base directory for importing project modules
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
+    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),  "../.."))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
@@ -119,6 +119,79 @@ def get_age_factors(input_json_path: str, extracted_output_path: str) -> AgeFact
 
     return age_factors
 
+
+def calculate_age_points(age: int, has_spouse: bool, age_factors: AgeFactors) -> int:
+    """
+    Calculate CRS points based on age and marital status with comprehensive validation.
+    
+    Args:
+        age: Applicant's age (17-100)
+        has_spouse: Whether applicant has a spouse
+        age_factors: Loaded AgeFactors model
+    
+    Returns:
+        CRS points for age factor
+    
+    Raises:
+        ValueError: For invalid age input
+    """
+    logger.info(f"Calculating age points for age {age}, spouse: {has_spouse}")
+    
+    if not isinstance(age, int) or age < 17 or age > 100:
+        logger.error(f"Invalid age input: {age}")
+        raise ValueError("Age must be between 17 and 100")
+    
+    try:
+        if age <= 17:
+            points = (age_factors.y17_or_less_with_spouse if has_spouse 
+                     else age_factors.y17_or_less_without_spouse)
+        elif age == 18:
+            points = age_factors.y18_with_spouse if has_spouse else age_factors.y18_without_spouse
+        elif age == 19:
+            points = age_factors.y19_with_spouse if has_spouse else age_factors.y19_without_spouse
+        elif 20 <= age <= 29:
+            points = age_factors.y20_29_with_spouse if has_spouse else age_factors.y20_29_without_spouse
+        elif age == 30:
+            points = age_factors.y30_with_spouse if has_spouse else age_factors.y30_without_spouse
+        elif age == 31:
+            points = age_factors.y31_with_spouse if has_spouse else age_factors.y31_without_spouse
+        elif age == 32:
+            points = age_factors.y32_with_spouse if has_spouse else age_factors.y32_without_spouse
+        elif age == 33:
+            points = age_factors.y33_with_spouse if has_spouse else age_factors.y33_without_spouse
+        elif age == 34:
+            points = age_factors.y34_with_spouse if has_spouse else age_factors.y34_without_spouse
+        elif age == 35:
+            points = age_factors.y35_with_spouse if has_spouse else age_factors.y35_without_spouse
+        elif age == 36:
+            points = age_factors.y36_with_spouse if has_spouse else age_factors.y36_without_spouse
+        elif age == 37:
+            points = age_factors.y37_with_spouse if has_spouse else age_factors.y37_without_spouse
+        elif age == 38:
+            points = age_factors.y38_with_spouse if has_spouse else age_factors.y38_without_spouse
+        elif age == 39:
+            points = age_factors.y39_with_spouse if has_spouse else age_factors.y39_without_spouse
+        elif age == 40:
+            points = age_factors.y40_with_spouse if has_spouse else age_factors.y40_without_spouse
+        elif age == 41:
+            points = age_factors.y41_with_spouse if has_spouse else age_factors.y41_without_spouse
+        elif age == 42:
+            points = age_factors.y42_with_spouse if has_spouse else age_factors.y42_without_spouse
+        elif age == 43:
+            points = age_factors.y43_with_spouse if has_spouse else age_factors.y43_without_spouse
+        elif age == 44:
+            points = age_factors.y44_with_spouse if has_spouse else age_factors.y44_without_spouse
+        else:  # 45+
+            points = (age_factors.y45_or_more_with_spouse if has_spouse 
+                     else age_factors.y45_or_more_without_spouse)
+        
+        logger.debug(f"Calculated {points} points for age {age}")
+        return points
+        
+    except Exception as e:
+        logger.error(f"Failed to calculate age points: {str(e)}")
+        raise RuntimeError("Age points calculation failed") from e
+
 def main():
     """
     Main async function to demonstrate extracting and loading age factors.
@@ -134,12 +207,23 @@ def main():
         logger.info("Successfully loaded age factors.")
 
         # Example access
-        print("Age 30 WITH spouse points:", age_factors.y17_or_less_with_spouse)
-        print("Age 30 WITHOUT spouse points:", age_factors.y31_with_spouse)
+        print("Age 30 WITH spouse points:", age_factors.y30_with_spouse)
+        print("Age 30 WITHOUT spouse points:", age_factors.y30_without_spouse)
+
+        # Example calculations
+        examples = [
+            (17, True), (18, False), (25, True), 
+            (30, False), (45, True), (50, False)
+        ]
+        
+        for age, has_spouse in examples:
+            points = calculate_age_points(age, has_spouse, age_factors)
+            status = "with spouse" if has_spouse else "without spouse"
+            print(f"Age {age} {status}: {points} points")
 
     except Exception as e:
         logger.error("Failed to process age factors: %s", e)
 
 
 if __name__ == "__main__":
-    main()
+    main() 

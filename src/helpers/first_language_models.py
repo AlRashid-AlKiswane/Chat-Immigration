@@ -20,7 +20,7 @@ from pydantic import BaseModel, Field
 
 # Setup base directory
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),  "../.."))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
     logging.error("Failed to set main directory path: %s", e)

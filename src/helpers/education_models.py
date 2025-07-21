@@ -21,7 +21,7 @@ from typing import Any
 
 # Setup base directory for importing project modules
 try:
-    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+    MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),  "../.."))
     print("MAIN DIR: " + str(MAIN_DIR))
     sys.path.append(MAIN_DIR)
 except (ImportError, OSError) as e:
@@ -30,6 +30,7 @@ except (ImportError, OSError) as e:
 
 from src.infra import setup_logging
 from src.controllers import extract_education_table
+from src.enums.value_enums import EducationLevel
 
 logger = setup_logging(name="EDUCATION_MODELS_FACTORS")
 
@@ -99,6 +100,62 @@ def get_education_factors(input_json_path: str, extracted_output_path: str) -> E
 
     return education_factors
 
+def calculate_education_points(
+    education_level: EducationLevel,
+    has_spouse: bool,
+    education_factors: EducationFactors
+) -> int:
+    """
+    Calculate CRS points for education level with validation
+    
+    Args:
+        education_level: EducationLevel enum value
+        has_spouse: Boolean indicating spouse status
+        education_factors: Loaded EducationFactors model
+    
+    Returns:
+        CRS points for education factor
+    
+    Raises:
+        ValueError: For invalid inputs
+    """
+    logger.info(f"Calculating education points for {education_level}, spouse: {has_spouse}")
+    
+    try:
+        if education_level == EducationLevel.LESS_THAN_SECONDARY:
+            points = (education_factors.less_than_secondary_with_spouse if has_spouse
+                     else education_factors.less_than_secondary_without_spouse)
+        elif education_level == EducationLevel.SECONDARY_DIPLOMA:
+            points = (education_factors.secondary_diploma_with_spouse if has_spouse
+                     else education_factors.secondary_diploma_without_spouse)
+        elif education_level == EducationLevel.ONE_YEAR_POST_SECONDARY:
+            points = (education_factors.one_year_program_with_spouse if has_spouse
+                     else education_factors.one_year_program_without_spouse)
+        elif education_level == EducationLevel.TWO_YEAR_POST_SECONDARY:
+            points = (education_factors.two_year_program_with_spouse if has_spouse
+                     else education_factors.two_year_program_without_spouse)
+        elif education_level == EducationLevel.BACHELOR_OR_THREE_YEAR_POST_SECONDARY_OR_MORE:
+            points = (education_factors.bachelors_with_spouse if has_spouse
+                     else education_factors.bachelors_without_spouse)
+        elif education_level == EducationLevel.TWO_OR_MORE_CERTIFICATES:
+            points = (education_factors.two_or_more_certificates_with_spouse if has_spouse
+                     else education_factors.two_or_more_certificates_without_spouse)
+        elif education_level == EducationLevel.MASTERS_OR_PROFESSIONAL_DEGREE:
+            points = (education_factors.masters_or_professional_with_spouse if has_spouse
+                     else education_factors.masters_or_professional_without_spouse)
+        elif education_level == EducationLevel.PHD:
+            points = (education_factors.phd_with_spouse if has_spouse
+                     else education_factors.phd_without_spouse)
+        else:
+            raise ValueError(f"Unknown education level: {education_level}")
+        
+        logger.debug(f"Calculated {points} points for {education_level}")
+        return points
+        
+    except Exception as e:
+        logger.error(f"Education points calculation failed: {str(e)}")
+        raise ValueError("Failed to calculate education points") from e
+
 def main():
     """
     Main function to demonstrate extracting and loading education factors.
@@ -116,6 +173,20 @@ def main():
         # Example access
         print("Bachelor's degree WITH spouse points:", education_factors.bachelors_with_spouse)
         print("PhD WITHOUT spouse points:", education_factors.phd_without_spouse)
+
+        # Example calculations
+        examples = [
+            (EducationLevel.LESS_THAN_SECONDARY, True),
+            (EducationLevel.BACHELOR_OR_THREE_YEAR_POST_SECONDARY_OR_MORE, False),
+            (EducationLevel.TWO_OR_MORE_CERTIFICATES, True),
+            (EducationLevel.PHD, False)
+        ]
+        
+        for level, has_spouse in examples:
+            points = calculate_education_points(level, has_spouse, education_factors)
+            status = "with spouse" if has_spouse else "without spouse"
+            print(f"{level.value.replace('_', ' ').title()} {status}: {points} points")
+            
 
     except Exception as e:
         logger.error("Failed to process education factors: %s", e)
