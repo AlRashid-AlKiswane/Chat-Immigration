@@ -1,16 +1,15 @@
 """
 File Upload API Module
 
-This module provides FastAPI endpoints for handling file uploads with:
-- Single or multiple file upload support
+This module provides a unified FastAPI endpoint for handling file uploads with:
+- Support for one or many file uploads
 - File type validation
 - Filename sanitization
 - Secure file storage
-- Comprehensive error handling
+- Robust error logging and JSON responses
 
-API Endpoints:
-    POST /upload/ - Handles single file upload with validation
-    POST /upload/multiple/ - Handles multiple file uploads with validation
+API Endpoint:
+    POST /upload/ - Handles both single and multiple file uploads
 """
 
 import os
@@ -29,24 +28,19 @@ except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
     sys.exit(1)
 
-# pylint: disable=wrong-import-position
-# pylint: disable=logging-format-interpolation
 from src.infra.logger import setup_logging
 from src.helpers import get_settings, Settings
 from src.controllers import generate_unique_filename
 from src.enums import FileUploadMsg
 
-# Initialize logger and settings
 logger = setup_logging()
 app_settings: Settings = get_settings()
-
 upload_route = APIRouter()
-
 UPLOAD_DIR = app_settings.DOC_LOCATION_SAVE
 
 
 def _save_uploaded_file(file: UploadFile, upload_dir: str) -> dict:
-    """Helper function to save an uploaded file with validation."""
+    """Helper function to save a validated and sanitized uploaded file."""
     sanitized_filename = generate_unique_filename(file.filename)
     file_extension = os.path.splitext(sanitized_filename)[1].lower().lstrip(".")
 
@@ -80,50 +74,15 @@ def _save_uploaded_file(file: UploadFile, upload_dir: str) -> dict:
 
 
 @upload_route.post("/upload/")
-async def upload_single_file(file: UploadFile = File(...)):
+async def upload_files(files: List[UploadFile] = File(...)):
     """
-    Upload a single file to the server after validating its extension.
+    Upload one or more files to the server after validating their extensions.
 
     Args:
-        file: The file being uploaded.
-        app_settings: Application configuration settings.
+        files (List[UploadFile]): One or more files submitted via multipart/form-data.
 
     Returns:
-        JSONResponse: Response indicating success or failure.
-    """
-    try:
-        file_info = _save_uploaded_file(file, UPLOAD_DIR)
-        logger.info(FileUploadMsg.SINGLE_UPLOAD_SUCCESS.value.format(file.filename))
-        return JSONResponse(
-            status_code=status.HTTP_200_OK,
-            content={
-                "message": FileUploadMsg.SINGLE_UPLOAD_SUCCESS.value.format(
-                    file.filename
-                ),
-                "file": file_info,
-            },
-        )
-    except HTTPException:
-        raise
-    except Exception as e:  # pylint: disable=broad-except
-        logger.exception(FileUploadMsg.UPLOAD_ERROR.value.format(e))
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=FileUploadMsg.get_http_detail(FileUploadMsg.UPLOAD_ERROR, str(e)),
-        ) from e
-
-
-@upload_route.post("/upload/multiple/")
-async def upload_multiple_files(files: List[UploadFile] = File(...)):
-    """
-    Upload multiple files to the server after validating their extensions.
-
-    Args:
-        files: List of files being uploaded.
-        app_settings: Application configuration settings.
-
-    Returns:
-        JSONResponse: Response indicating success/failure for each file.
+        JSONResponse: JSON summary of upload results including success and failure details.
     """
     results = {"successful": [], "failed": []}
 
@@ -141,7 +100,7 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
                     "status_code": e.status_code,
                 }
             )
-        except Exception as e:  # pylint: disable=broad-except
+        except Exception as e:
             logger.exception(FileUploadMsg.UPLOAD_ERROR.value.format(e))
             results["failed"].append(
                 {
@@ -150,23 +109,23 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
                     "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
                 }
             )
-    logger.info(
-        FileUploadMsg.MULTI_UPLOAD_SUCCESS.value.format(
-            len(results["successful"]), len(results["failed"])
-        )
-    )
+
+    total = len(files)
+    success = len(results["successful"])
+    failed = len(results["failed"])
+
+    log_msg = FileUploadMsg.MULTI_UPLOAD_SUCCESS.value.format(success, failed)
+    logger.info(log_msg)
 
     return JSONResponse(
         status_code=status.HTTP_207_MULTI_STATUS,
         content={
-            "message": FileUploadMsg.MULTI_UPLOAD_SUCCESS.value.format(
-                len(results["successful"]), len(results["failed"])
-            ),
+            "message": log_msg,
             "results": results,
             "summary": {
-                "total": len(files),
-                "successful": len(results["successful"]),
-                "failed": len(results["failed"]),
+                "total": total,
+                "successful": success,
+                "failed": failed,
             },
         },
     )

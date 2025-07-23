@@ -214,38 +214,3 @@ async def crawl_website(
             detail="An unexpected error occurred during crawling"
         )
 
-@web_crawling_route.get("/crawl/status", response_class=JSONResponse)
-async def check_crawl_status(request: Request) -> JSONResponse:
-    """
-    Endpoint to check the status of the crawling service.
-    
-    Args:
-        request: FastAPI Request object
-        
-    Returns:
-        JSONResponse: Service status information
-    """
-    try:
-        logger.info(f"Status check from {request.client.host}")
-
-        # Add any service health checks here
-        status_data = {
-            "status": "operational",
-            "version": "1.0.0",
-            "dependencies": {
-                "database": "connected",
-                "storage": "available",
-            }
-        }
-
-        return JSONResponse(
-            content=status_data,
-            status_code=HTTP_200_OK
-        )
-
-    except Exception as e:
-        logger.error(f"Status check failed: {e}")
-        return HTTPException(
-            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Service status check failed"
-        )

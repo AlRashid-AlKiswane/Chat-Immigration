@@ -39,7 +39,7 @@ from chromadb import Client
 
 # Local application imports
 from src.infra.logger import setup_logging
-from src.helpers import get_vdb_client, get_embedd
+from src import get_vdb_client, get_embedd
 from src.database import search_documents
 from src.schema import RAGConfig
 from src.embeddings import BaseEmbeddings

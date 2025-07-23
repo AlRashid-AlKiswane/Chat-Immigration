@@ -56,6 +56,8 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 from src.llms import BaseLLM
+from src.embeddings import BaseEmbeddings
+
 from src.helpers import get_settings, Settings
 from src.infra import setup_logging
 from chromadb.api import ClientAPI
@@ -102,7 +104,7 @@ def get_db_conn(request: Request) -> sqlite3.Connection:
         ) from e
 
 
-def get_embedd(request: Request) -> Any:
+def get_embedd(request: Request) -> BaseEmbeddings:
     """
     Retrieve the embedding model from the FastAPI app state.
 

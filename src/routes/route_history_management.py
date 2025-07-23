@@ -28,10 +28,10 @@ from src.history import ChatHistoryManager
 from src.enums.value_enums import ModelProvider
 from src.schema import ChatMessage
 from src.infra.logger import setup_logging
-from src.helpers import get_chat_history
+from src import get_chat_history
 
 logger = setup_logging()
-history_router = APIRouter(prefix="/chat/manage", tags=["chat_history"])
+history_router = APIRouter()
 
 
 def format_error_response(message: str, error: str = None) -> dict:

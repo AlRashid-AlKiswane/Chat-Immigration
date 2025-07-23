@@ -33,7 +33,7 @@ from starlette.status import (
 )
 from chromadb import Client
 from src.infra.logger import setup_logging
-from src.helpers import get_db_conn, get_vdb_client, get_embedd
+from src import get_db_conn, get_vdb_client, get_embedd
 from src.database import fetch_all_rows, insert_documents
 from src.embeddings import BaseEmbeddings
 

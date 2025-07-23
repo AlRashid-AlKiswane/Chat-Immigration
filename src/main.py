@@ -1,38 +1,28 @@
-"""
-Main entry point for the Immigration Chatbot FastAPI application.
-
-Handles application startup and shutdown events, sets up SQLite database tables,
-and includes routes for file upload and document chunking.
-"""
-
 import os
 import sys
 import logging
+import pathlib
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
-import pathlib
 
 # Setup project base path
 try:
     MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../"))
     sys.path.append(MAIN_DIR)
-    logging.debug(f"Project base path set to: {MAIN_DIR}")
 except (ImportError, OSError) as e:
-    logging.critical(
-        "[Startup Critical] Failed to set up project base path. "
-        f"Error: {str(e)}. System paths: {sys.path}",
-        exc_info=True
-    )
+    logging.critical("[Startup Critical] Failed to set project base path.", exc_info=True)
     sys.exit(1)
 
+# Local imports after sys.path setup
 from src.embeddings import HuggingFaceModel, OpenAIEmbeddingModel
 from src.database import (
     get_sqlite_engine,
     init_chunks_table,
     init_user_info_table,
     init_query_response_table,
-    get_chroma_client
+    get_chroma_client,
 )
 from src.routes import (
     upload_route,
@@ -45,258 +35,121 @@ from src.routes import (
     logs_router,
     live_rag_route,
     tables_crawling_route,
-    history_router
+    history_router,
 )
 from src.history import ChatHistoryManager
 from src.helpers import get_settings, Settings
 from src.infra import setup_logging
 
+# Constants
 BASE_DIR = pathlib.Path(__file__).parent.resolve()
 WEB_DIR = BASE_DIR / "web"
 
-# pylint: disable=wrong-import-position
-
-# Initialize logger and settings
+# Initialize logging and settings
 logger = setup_logging()
-logger.info("Initializing application settings...")
+logger.info("Loading application settings...")
 
 try:
     app_settings: Settings = get_settings()
-    logger.debug(
-        f"Application settings loaded successfully: {app_settings.dict()}")
+    logger.debug(f"App settings: {app_settings.dict()}")
 except Exception as e:
-    logger.critical(
-        "[Startup Critical] Failed to load application settings. "
-        f"Error: {str(e)}. Environment variables: {dict(os.environ)}",
-        exc_info=True
-    )
+    logger.critical("[Startup Critical] Failed to load app settings.", exc_info=True)
     sys.exit(1)
-
-# pylint: disable=too-many-branches
-# pylint: disable=too-many-statements
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """
-    Lifespan context to handle startup and shutdown events.
-    Initializes and tears down database resources with comprehensive logging.
-    """
-    logger.info("Starting Immigration Chatbot API initialization...")
+    """Handles application startup and shutdown."""
+    logger.info("Starting Immigration Chatbot API...")
 
-    # Initialize SQLite database
+    # Database initialization
     try:
-        logger.debug("Initializing SQLite engine...")
         app.state.conn = get_sqlite_engine()
-        logger.info("SQLite engine initialized successfully")
-    except Exception as db_err:
-        logger.critical(
-            "Failed to initialize SQLite engine. "
-            f"Error type: {type(db_err).__name__}, Error: {str(db_err)}",
-            exc_info=True
-        )
-        raise HTTPException(
-            status_code=500,
-            detail="Database initialization failed"
-        ) from db_err
+        logger.info("SQLite connection established.")
+    except Exception as e:
+        logger.critical("Database engine initialization failed.", exc_info=True)
+        raise HTTPException(status_code=500, detail="DB init failed")
 
-    # Initialize database tables
-    table_initializers = {
+    # Initialize tables
+    for name, func in {
         "chunks_table": init_chunks_table,
         "user_info_table": init_user_info_table,
-        "query_response_table": init_query_response_table
-    }
-
-    for table_name, initializer in table_initializers.items():
+        "query_response_table": init_query_response_table,
+    }.items():
         try:
-            logger.debug(f"Initializing {table_name}...")
-            initializer(conn=app.state.conn)
-            logger.info(
-                f"{table_name.replace('_', ' ').title()} created successfully")
-        except Exception as table_err:
-            logger.error(
-                f"Failed to initialize {table_name}. "
-                f"Error type: {type(table_err).__name__}, Error: {str(table_err)}",
-                exc_info=True
-            )
-            raise HTTPException(
-                status_code=500,
-                detail=f"Database table {table_name} initialization failed"
-            ) from table_err
+            func(conn=app.state.conn)
+            logger.info(f"{name.replace('_', ' ').title()} initialized.")
+        except Exception as e:
+            logger.error(f"{name} init failed.", exc_info=True)
+            raise HTTPException(status_code=500, detail=f"Init failed: {name}")
 
-    # Initialize embedding model
+    # Embedding model
     try:
-        logger.debug("Initializing embedding model...")
-        model_name = app_settings.PROVIDER_EMBEDDING_MODEL
-
-        if model_name == "LOCAL":
-            logger.info("Using local HuggingFace embedding model")
-            app.state.embedding = HuggingFaceModel(
-                model_name=app_settings.EMBEDDING_MODEL)
-            app.state.embedd_name = model_name
-        elif model_name == "OPENAI":
-            logger.info("Using OpenAI embedding model")
+        provider = app_settings.PROVIDER_EMBEDDING_MODEL
+        if provider == "LOCAL":
+            app.state.embedding = HuggingFaceModel(model_name=app_settings.EMBEDDING_MODEL)
+        elif provider == "OPENAI":
             app.state.embedding = OpenAIEmbeddingModel()
-            app.state.embedd_name = model_name
-        else:
-            logger.warning(f"Unknown embedding model specified: {model_name}")
-            app.state.embedding = None
-            app.state.embedd_name = "NONE"
+        logger.info(f"Embedding model: {provider}")
+    except Exception as e:
+        logger.error("Embedding model initialization failed.", exc_info=True)
+        raise HTTPException(status_code=500, detail="Embedding model init failed")
 
-        if app.state.embedding:
-            logger.info(f"Embedding model initialized: {model_name}")
-        else:
-            logger.warning("No valid embedding model configured")
-
-    except Exception as embed_err:
-        logger.error(
-            "Failed to initialize embedding model. "
-            f"Model: {model_name}, Error: {str(embed_err)}",
-            exc_info=True
-        )
-        raise HTTPException(
-            status_code=500,
-            detail="Embedding model initialization failed"
-        ) from embed_err
-
-    # Initialize ChromaDB client
+    # ChromaDB client
     try:
-        logger.debug("Initializing ChromaDB client...")
         app.state.vdb_client = get_chroma_client()
-        logger.info("ChromaDB vector store client initialized successfully")
-    except Exception as vdb_err:
-        logger.error(
-            "Failed to initialize ChromaDB client. "
-            f"Error: {str(vdb_err)}",
-            exc_info=True
-        )
-        raise HTTPException(
-            status_code=500,
-            detail="Vector database initialization failed"
-        ) from vdb_err
+        logger.info("ChromaDB client initialized.")
+    except Exception as e:
+        logger.error("ChromaDB init failed.", exc_info=True)
+        raise HTTPException(status_code=500, detail="Vector DB init failed")
 
-    # Initialize LLM (can be configured later)
-    app.state.llm = None
-    logger.warning(
-        "LLM provider not initialized at startup. "
-        "Please configure it via the /llms route before generating responses."
-    )
-
-    # Initialize and store the chat manager
+    # Chat manager
     app.state.chat_manager = ChatHistoryManager()
-    logger.info("ChatHistoryManager initialized and stored in app state")
+    logger.info("Chat manager initialized.")
 
-    yield  # Application runs here
+    yield  # Run app
 
-    # Shutdown procedures
-    logger.info("Starting application shutdown...")
-
+    # Shutdown
     try:
-        conn = getattr(app.state, "conn", None)
-        if conn:
-            logger.debug("Closing database connection...")
-            conn.close()
-            logger.info("Database connection closed successfully")
-        else:
-            logger.warning(
-                "No active database connection found during shutdown")
-    except Exception as shutdown_err:
-        logger.error(
-            "Error during database connection shutdown. "
-            f"Error: {str(shutdown_err)}",
-            exc_info=True
-        )
+        if getattr(app.state, "conn", None):
+            app.state.conn.close()
+            logger.info("SQLite connection closed.")
+    except Exception as e:
+        logger.warning("Shutdown error.", exc_info=True)
 
-    logger.info("Application shutdown completed")
 
-# Create FastAPI app with lifespan
+# Create FastAPI app
 app = FastAPI(
     title="Immigration Chatbot",
     version="1.0.0",
     lifespan=lifespan,
     docs_url="/docs",
-    redoc_url="/redoc"
+    redoc_url="/redoc",
 )
 
-
-@app.get("/", tags=["Root"])
-def read_root():
-    """Health check endpoint"""
-    try:
-        logger.debug("Root endpoint accessed")
-        return {
-            "status": "healthy",
-            "version": app.version,
-        }
-    except Exception as root_err:
-        logger.error(
-            f"Error in root endpoint. Error: {str(root_err)}",
-            exc_info=True
-        )
-        raise HTTPException(
-            status_code=500,
-            detail="Internal server error"
-        ) from root_err
-
-
-@app.get("/status", tags=["Monitoring"])
-def get_status():
-    """System status endpoint"""
-    try:
-        logger.debug("Status check requested")
-
-        status = {
-            "database": "connected" if hasattr(app.state, "conn") else "disconnected",
-            "embedding": app.state.embedd_name if hasattr(app.state, "embedd_name") else "none",
-            "llm": "configured" if hasattr(app.state, "llm")
-            and app.state.llm else "not configured",
-            "vector_db": "connected" if hasattr(app.state, "vdb_client") else "disconnected"
-        }
-
-        logger.info(f"System status: {status}")
-        return status
-    except Exception as status_err:
-        logger.error(
-            f"Error in status endpoint. Error: {str(status_err)}",
-            exc_info=True
-        )
-        raise HTTPException(
-            status_code=500,
-            detail="Status check failed"
-        ) from status_err
-
-
-# Route registration with error handling
-route_registrations = [
+# Register API routes
+for route, prefix, tag in [
     (upload_route, "/api", "File Upload"),
     (docs_to_chunks_route, "/api", "Document Chunking"),
     (embedding_route, "/api", "Embedding"),
     (llms_route, "/api", "LLM Configuration"),
     (llm_generation_route, "/api", "LLM Generation"),
     (web_crawling_route, "/api", "Web Crawling"),
-    (monitoring_route, "/api", "System Monitoring"),
-    (logs_router, "/api", "System Logs Massages"),
-    (live_rag_route, "/api", "Live RAG to with Test Query"),
-    (tables_crawling_route, "/api",
-     "Scrabing Tables score in immigration canada Express entury point"),
-    (history_router, "/api", "chat_history")
-]
-
-for route, prefix, tag in route_registrations:
+    (monitoring_route, "/api", "Monitoring"),
+    (logs_router, "/api", "Logs"),
+    (live_rag_route, "/api", "Live RAG"),
+    (tables_crawling_route, "/api", "Table Crawling"),
+    (history_router, "/api", "Chat History"),
+]:
     try:
-        logger.debug(f"Registering {tag.lower()} route...")
-        app.include_router(
-            route,
-            prefix=prefix,
-            tags=[tag]
-        )
-        logger.info(f"{tag} route registered successfully")
+        app.include_router(route, prefix=prefix, tags=[tag])
+        logger.info(f"{tag} route registered.")
     except Exception as e:
-        logger.critical(
-            f"Failed to register {tag.lower()} route. "
-            f"Error: {str(e)}",
-            exc_info=True
-        )
+        logger.critical(f"Failed to register {tag} route.", exc_info=True)
 
-logger.info("All routes registered successfully")
-app.mount("/", StaticFiles(directory=str(WEB_DIR), html=True), name="web")
+# Serve static files for the frontend UI
+if WEB_DIR.exists():
+    app.mount("/", StaticFiles(directory=str(WEB_DIR), html=True), name="web")
+    logger.info(f"Web UI mounted at '/'. Directory: {WEB_DIR}")
+else:
+    logger.warning(f"Web directory not found: {WEB_DIR}. Static UI not mounted.")

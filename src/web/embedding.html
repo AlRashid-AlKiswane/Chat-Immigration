@@ -100,7 +100,7 @@
       statusBox.textContent = "⏳ Embedding in progress...";
 
       try {
-        const response = await fetch("/embedding", {
+        const response = await fetch("/api/embedding", {
           method: "POST"
         });
 

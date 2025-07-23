@@ -85,15 +85,3 @@ async def get_system_resources() -> JSONResponse:
             detail="Failed to retrieve system resources"
         )
 
-@monitoring_route.get("/health", response_class=JSONResponse)
-async def health_check() -> JSONResponse:
-    """
-    Basic health check endpoint
-    
-    Returns:
-        JSONResponse: Service status information
-    """
-    return JSONResponse(
-        content={"status": "healthy"},
-        status_code=HTTP_200_OK
-    )

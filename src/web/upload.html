@@ -101,7 +101,7 @@
   <main>
     <form id="uploadForm">
       <label for="fileInput">Upload your immigration document</label>
-      <input type="file" id="fileInput" name="file" required />
+      <input type="file" id="fileInput" name="files" multiple required />
 
       <button type="submit">Upload File</button>
     </form>
@@ -112,48 +112,56 @@
   <footer>
     &copy; 2025 Canada Express Entry Admin Panel
   </footer>
+<script>
+  document.getElementById('uploadForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-  <script>
-    document.getElementById('uploadForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
+    const fileInput = document.getElementById('fileInput');
+    const resultBox = document.getElementById('uploadResult');
+    resultBox.style.display = 'block';
 
-      const fileInput = document.getElementById('fileInput');
-      const resultBox = document.getElementById('uploadResult');
-      resultBox.style.display = 'block';
+    if (!fileInput.files.length) {
+      resultBox.textContent = "❗ Please select at least one file to upload.";
+      resultBox.classList.remove('success');
+      return;
+    }
 
-      if (!fileInput.files.length) {
-        resultBox.textContent = "❗ Please select a file to upload.";
-        resultBox.classList.remove('success');
-        return;
-      }
+    const formData = new FormData();
+    for (const file of fileInput.files) {
+      formData.append("files", file);  // <-- key must match FastAPI's `files`
+    }
 
-      const formData = new FormData();
-      formData.append("file", fileInput.files[0]);
+    try {
+      const response = await fetch("/api/upload/", {
+        method: "POST",
+        body: formData,
+      });
 
-      try {
-        const response = await fetch("/upload/", {
-          method: "POST",
-          body: formData
-        });
+      const data = await response.json();
 
-        const data = await response.json();
+      if (response.status === 207) {
+        let resultText = `📦 Total Files: ${data.summary.total}\n✅ Success: ${data.summary.successful}\n❌ Failed: ${data.summary.failed}\n\n`;
 
-        if (response.ok) {
-          resultBox.innerHTML =
-            `✅ File Uploaded Successfully!\n\n` +
-            `📄 File: ${data.file.filename}\n📁 Saved to: ${data.file.saved_to}\n📦 Size: ${data.file.size} bytes`;
-          resultBox.classList.add('success');
-        } else {
-          resultBox.textContent = `❌ Error: ${data.detail || "Unknown error"}`;
-          resultBox.classList.remove('success');
+        for (const file of data.results.successful) {
+          resultText += `✅ ${file.original_filename} saved as ${file.filename} (${file.size} bytes)\n`;
         }
 
-      } catch (err) {
-        console.error(err);
-        resultBox.textContent = "⚠️ Server error: Upload failed.";
+        for (const file of data.results.failed) {
+          resultText += `❌ ${file.filename}: ${file.error}\n`;
+        }
+
+        resultBox.textContent = resultText;
+        resultBox.classList.toggle('success', data.summary.successful > 0);
+      } else {
+        resultBox.textContent = `❌ Unexpected response: ${data.detail || "Unknown error"}`;
         resultBox.classList.remove('success');
       }
-    });
-  </script>
+    } catch (err) {
+      console.error(err);
+      resultBox.textContent = "⚠️ Server error: Upload failed.";
+      resultBox.classList.remove('success');
+    }
+  });
+</script>
 </body>
 </html>

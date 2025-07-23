@@ -139,7 +139,7 @@
       statusMessage.style.display = "block";
 
       try {
-        const response = await fetch('/crawl', {
+        const response = await fetch('/api/crawl', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

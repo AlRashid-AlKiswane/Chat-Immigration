@@ -10,7 +10,8 @@ from src.utils import prepare_chunks_for_insertion
 from src.controllers import load_and_chunk
 from src.database import clear_table, insert_chunks
 from src.schema import ChunkData, ChunksRequest
-from src.helpers import get_settings, Settings, get_db_conn
+from src.helpers import get_settings, Settings
+from src import get_db_conn
 from src.infra.logger import setup_logging
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter, Depends, HTTPException

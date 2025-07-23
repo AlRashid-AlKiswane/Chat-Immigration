@@ -107,7 +107,7 @@
             const maxPages = parseInt(document.getElementById("max_pages").value);
 
             try {
-                const response = await fetch("/scraping_tables/tables_crawling", {
+                const response = await fetch("/api/tables_crawling", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

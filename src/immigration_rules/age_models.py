@@ -11,14 +11,10 @@ The module:
 - Handles filesystem setup and robust error logging.
 """
 
-import asyncio
 import os
-from pathlib import Path
 import sys
 import logging
 from pydantic import BaseModel, Field
-from typing import Any
-
 
 # Setup base directory for importing project modules
 try:
@@ -226,4 +222,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main() 
+    main()
