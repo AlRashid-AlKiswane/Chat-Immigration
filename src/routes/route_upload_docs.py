@@ -28,7 +28,7 @@ except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
     sys.exit(1)
 
-from src.infra.logger import setup_logging
+from src.infra import setup_logging
 from src.helpers import get_settings, Settings
 from src.controllers import generate_unique_filename
 from src.enums import FileUploadMsg

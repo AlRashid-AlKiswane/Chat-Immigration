@@ -42,14 +42,13 @@ from starlette.status import (
 from chromadb import Client
 
 # Local application imports
-from src.infra.logger import setup_logging
+from src.infra import setup_logging
 from src import get_db_conn, get_vdb_client, get_embedd, get_llm
 from src.database import fetch_all_rows, insert_query_response, search_documents
 from src.schema import GenerationParameters, RAGConfig
 from src.embeddings import BaseEmbeddings
 from src.llms import BaseLLM
 from src.history import ChatHistoryManager
-from src.enums.value_enums import ModelProvider
 from src import get_chat_history
 from src.prompt import PromptBuilder
 

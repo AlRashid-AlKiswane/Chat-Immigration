@@ -35,8 +35,7 @@ from starlette.status import (
 )
 
 # pylint: disable=wrong-import-order
-from src.infra.logger import setup_logging
-from src.infra import DeviceMonitor
+from src.infra import setup_logging, DeviceMonitor
 
 # Initialize logger and settings
 logger = setup_logging(name="ROUTE-MONITORING")

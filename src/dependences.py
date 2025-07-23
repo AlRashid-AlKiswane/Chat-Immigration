@@ -56,7 +56,7 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 from src.llms import BaseLLM
-from src.embeddings import BaseEmbeddings
+from src.embeddings import OpenAIEmbeddingModel
 
 from src.helpers import get_settings, Settings
 from src.infra import setup_logging
@@ -68,7 +68,7 @@ from starlette.status import (
 )
 from fastapi import Request, HTTPException
 # Initialize logger and application settings
-logger = setup_logging()
+logger = setup_logging(name="DEPENDES")
 app_settings: Settings = get_settings()
 
 
@@ -104,7 +104,7 @@ def get_db_conn(request: Request) -> sqlite3.Connection:
         ) from e
 
 
-def get_embedd(request: Request) -> BaseEmbeddings:
+def get_embedd(request: Request) -> OpenAIEmbeddingModel:
     """
     Retrieve the embedding model from the FastAPI app state.
 

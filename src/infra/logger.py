@@ -25,21 +25,24 @@ except (ImportError, OSError) as e:
 
 # Define log colors
 COLORS = {
-    "INFO": "\033[94m",    # Blue
-    "DEBUG": "\033[92m",   # Green
-    "WARNING": "\033[93m", # Yellow
-    "ERROR": "\033[91m",   # Red
-    "END": "\033[0m",      # Reset color
+    "DEBUG": "\033[92m",    # Green
+    "INFO": "\033[94m",     # Blue
+    "WARNING": "\033[93m",  # Yellow
+    "ERROR": "\033[91m",    # Red
+    "CRITICAL": "\033[95m", # Magenta
+    "END": "\033[0m",       # Reset
 }
 
+
 class ColoredFormatter(logging.Formatter):
-    """Custom formatter to add colors to log messages."""
+    """
+    Formatter that colors the entire log line based on level.
+    """
     def format(self, record):
         message = super().format(record)
-        return f"{COLORS.get(record.levelname, '')}{message}{COLORS['END']}"
+        color = COLORS.get(record.levelname.replace(COLORS["END"], ""), "")
+        return f"{color}{message}{COLORS['END']}"
 
-# Global flag to avoid reinitializing
-_logger_initialized = False
 
 def setup_logging(
     name: str = "logger_app",
@@ -48,7 +51,7 @@ def setup_logging(
     console_level: int = logging.DEBUG,
 ) -> logging.Logger:
     """
-    Set up logging configuration with colored console output and file logging.
+    Set up logging configuration with colored console output and rotating file logging.
 
     Args:
         name (str): Name of the logger.
@@ -59,51 +62,43 @@ def setup_logging(
     Returns:
         logging.Logger: Configured logger instance.
     """
-    global _logger_initialized
-
     logger__ = logging.getLogger(name)
     logger__.setLevel(logging.DEBUG)
 
-    if _logger_initialized:
+    # Avoid adding duplicate handlers
+    if logger__.hasHandlers():
         return logger__
 
     # Ensure log directory exists
     Path(log_dir).mkdir(parents=True, exist_ok=True)
     log_path = Path(log_dir) / log_file
 
-    # Console handler (colored output)
-    if not any(isinstance(h, logging.StreamHandler) for h in logger__.handlers):
-        console_handler = logging.StreamHandler(sys.stdout)
-        console_handler.setLevel(console_level)
-        console_handler.setFormatter(
-            ColoredFormatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
-        )
-        logger__.addHandler(console_handler)
+    formatter_str = "%(asctime)s - [%(name)s] - %(levelname)s - %(message)s"
 
-    # File handler (rotating)
-    if not any(isinstance(h, RotatingFileHandler) for h in logger__.handlers):
-        file_handler = RotatingFileHandler(log_path, maxBytes=1_048_576, backupCount=5)
-        file_handler.setLevel(logging.DEBUG)
-        file_handler.setFormatter(
-            logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
-        )
-        logger__.addHandler(file_handler)
+    # Console handler with full-line color
+    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler.setLevel(console_level)
+    console_handler.setFormatter(ColoredFormatter(formatter_str))
+    logger__.addHandler(console_handler)
 
-    _logger_initialized = True
+    # File handler without color
+    file_handler = RotatingFileHandler(log_path, maxBytes=1_048_576, backupCount=5)
+    file_handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(logging.Formatter(formatter_str))
+    logger__.addHandler(file_handler)
+
     return logger__
 
-# Initialize the logger once at module import
-logger = setup_logging()
 
 # Example usage
 def log_examples():
-    """
-    Log demonstration across all levels.
-    """
+    logger = setup_logging("TEST")
+    """Log demonstration across all levels."""
     logger.debug("This is a debug message - detailed technical information.")
     logger.info("This is an info message - general application flow.")
     logger.warning("This is a warning message - something unexpected happened.")
     logger.error("This is an error message - something failed.")
+    logger.critical("This is a critical message - application might crash.")
 
 if __name__ == "__main__":
     log_examples()

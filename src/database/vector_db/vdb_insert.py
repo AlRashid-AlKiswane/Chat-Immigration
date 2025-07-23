@@ -2,7 +2,7 @@
 from typing import List, Optional
 from chromadb import Client
 from chromadb.errors import ChromaError
-from src.infra.logger import setup_logging
+from src.infra import setup_logging
 
 logger = setup_logging(name="VECTORE-DB")
 

@@ -85,12 +85,7 @@ async def lifespan(app: FastAPI):
 
     # Embedding model
     try:
-        provider = app_settings.PROVIDER_EMBEDDING_MODEL
-        if provider == "LOCAL":
-            app.state.embedding = HuggingFaceModel(model_name=app_settings.EMBEDDING_MODEL)
-        elif provider == "OPENAI":
-            app.state.embedding = OpenAIEmbeddingModel()
-        logger.info(f"Embedding model: {provider}")
+        app.state.embedding = OpenAIEmbeddingModel()
     except Exception as e:
         logger.error("Embedding model initialization failed.", exc_info=True)
         raise HTTPException(status_code=500, detail="Embedding model init failed")

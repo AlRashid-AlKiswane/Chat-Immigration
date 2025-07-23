@@ -67,7 +67,7 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # pylint: disable= wrong-import-position
-from src.infra.logger import setup_logging
+from src.infra import setup_logging
 from src.enums import MonitoringLogMsg
 
 logger = setup_logging(name="MONITORING-RESCEOURCES")

@@ -34,7 +34,7 @@ from starlette.status import (
     HTTP_400_BAD_REQUEST,
     HTTP_500_INTERNAL_SERVER_ERROR,
 )
-from src.infra.logger import setup_logging
+from src.infra import setup_logging
 from src.schema import ModelInfo
 from src.llms import (
     CohereLLM,

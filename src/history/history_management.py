@@ -57,7 +57,7 @@ except (ImportError, OSError) as e:
 # pylint: disable=wrong-import-position
 # pylint: disable=logging-format-interpolation
 
-from src.infra.logger import setup_logging
+from src.infra import setup_logging
 from src.schema import ChatMessage, ProviderChatHistory, ModelInfo
 from src.enums.value_enums import ModelProvider
 

@@ -32,11 +32,6 @@ from typing import List, Dict, Any, Optional, Tuple, Union
 # Third-party imports
 import sqlite3
 
-# Local application imports
-from src.infra.logger import setup_logging
-from src.helpers import get_settings, Settings
-from src.enums import QueryMsg
-
 # Special SQLite configuration
 __import__("pysqlite3")
 sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
@@ -49,6 +44,11 @@ try:
 except (ImportError, OSError) as e:
     logging.critical("Failed to set up main directory path: %s", e, exc_info=True)
     sys.exit(1)
+
+# Local application imports
+from src.infra import setup_logging
+from src.helpers import get_settings, Settings
+from src.enums import QueryMsg
 
 # Initialize application settings and logger
 logger = setup_logging(name="TABLE-DATABASE")

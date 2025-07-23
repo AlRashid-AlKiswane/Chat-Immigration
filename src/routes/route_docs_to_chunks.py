@@ -5,14 +5,6 @@ Provides FastAPI endpoint for processing documents into chunks and storing them 
 Handles document loading, text chunking, and database operations with comprehensive error handling.
 """
 
-from src.enums import DocsToChunks
-from src.utils import prepare_chunks_for_insertion
-from src.controllers import load_and_chunk
-from src.database import clear_table, insert_chunks
-from src.schema import ChunkData, ChunksRequest
-from src.helpers import get_settings, Settings
-from src import get_db_conn
-from src.infra.logger import setup_logging
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter, Depends, HTTPException
 import sqlite3
@@ -31,6 +23,14 @@ except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
     sys.exit(1)
 
+from src.enums import DocsToChunks
+from src.utils import prepare_chunks_for_insertion
+from src.controllers import load_and_chunk
+from src.database import clear_table, insert_chunks
+from src.schema import ChunkData, ChunksRequest
+from src.helpers import get_settings, Settings
+from src import get_db_conn
+from src.infra import setup_logging
 # pylint: disable=wrong-import-position
 # pylint: disable=logging-format-interpolation
 

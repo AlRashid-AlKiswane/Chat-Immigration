@@ -21,6 +21,7 @@ import sys
 import logging
 from pathlib import Path
 from typing import Optional
+import aiofiles
 
 # pylint: disable=wrong-import-position
 __import__("pysqlite3")
@@ -30,7 +31,6 @@ sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 try:
     MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
     sys.path.append(MAIN_DIR)
-    from src.infra import setup_logging
 except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
     sys.exit(1)
@@ -41,7 +41,8 @@ from starlette.status import (
     HTTP_404_NOT_FOUND,
     HTTP_500_INTERNAL_SERVER_ERROR,
 )
-import aiofiles
+
+from src.infra import setup_logging
 
 # Initialize logger
 logger = setup_logging(name="ROUTE-LOGS")

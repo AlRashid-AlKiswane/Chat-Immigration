@@ -32,7 +32,7 @@ except Exception as e:
     sys.exit(1)
 
 # Custom imports
-from src.infra.logger import setup_logging
+from src.infra import setup_logging
 from src.helpers import get_settings, Settings
 
 logger = setup_logging(name="TAPLE-SCRAPING")

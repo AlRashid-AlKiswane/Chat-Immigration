@@ -11,6 +11,7 @@ The embedding is performed using the OpenAIEmbeddingModel.
 import logging
 import os
 import sys
+from tqdm import tqdm
 
 __import__("pysqlite3")
 sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
@@ -93,10 +94,9 @@ async def embedding(
         logger.info("%d chunks fetched from the database.", len(chunks))
 
         success_count = 0
-        for chunk in chunks:
+        for chunk in tqdm(chunks, desc="Embedding Chunks", unit="chunk"):
             text, chunk_id = chunk["text"], chunk["id"]
             try:
-                logger.debug("Embedding chunk ID %s", chunk_id)
                 embedding_vector = embedding.embed_texts([text])[0]
 
                 insert_documents(
@@ -108,11 +108,10 @@ async def embedding(
                     metadatas=None
                 )
 
-                logger.debug("Chunk ID %s embedded and inserted.", chunk_id)
                 success_count += 1
 
-            except Exception as embed_err:  # broad exception handling is fine here
-                logger.error("Error embedding chunk ID %s: %s", chunk_id, embed_err)
+            except Exception as embed_err:
+                logger.error(f"Error embedding chunk ID {chunk_id}: {embed_err}")
 
         logger.info("Successfully embedded %d out of %d chunks.", success_count, len(chunks))
         return JSONResponse(

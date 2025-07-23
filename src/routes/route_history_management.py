@@ -27,7 +27,7 @@ except (ImportError, OSError) as e:
 from src.history import ChatHistoryManager
 from src.enums.value_enums import ModelProvider
 from src.schema import ChatMessage
-from src.infra.logger import setup_logging
+from src.infra import setup_logging
 from src import get_chat_history
 
 logger = setup_logging(name="ROUTE-HISTORY-MANAGEMENT")
