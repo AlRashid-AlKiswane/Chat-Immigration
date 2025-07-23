@@ -6,7 +6,7 @@ from chromadb import Client
 from chromadb.errors import ChromaError
 from src.infra.logger import setup_logging
 
-logger = setup_logging()
+logger = setup_logging(name="VECTORE-DB")
 
 def search_documents(
     client: Client,

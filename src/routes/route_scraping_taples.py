@@ -44,7 +44,7 @@ from src.controllers import TableScraper
 from pydantic import ValidationError
 
 # Initialize logger
-logger = setup_logging()
+logger = setup_logging(name="ROUTE-SCRAPING")
 
 tables_crawling_route = APIRouter()
 

@@ -70,7 +70,7 @@ except (ImportError, OSError) as e:
 from src.infra.logger import setup_logging
 from src.enums import MonitoringLogMsg
 
-logger = setup_logging()
+logger = setup_logging(name="MONITORING-RESCEOURCES")
 
 
 class DeviceMonitor:

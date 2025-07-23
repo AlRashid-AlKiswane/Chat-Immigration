@@ -9,7 +9,7 @@ from chromadb.errors import ChromaError
 from src.infra.logger import setup_logging
 from src.helpers import get_settings, Settings
 
-logger = setup_logging()
+logger = setup_logging(name="VECTORE-DB")
 app_settings: Settings = get_settings()
 
 def get_chroma_client() -> Optional[PersistentClient]:

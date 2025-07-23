@@ -38,7 +38,7 @@ from src.helpers import get_settings, Settings
 
 # Initialize application settings and logger
 app_settings: Settings = get_settings()
-logger = setup_logging()
+logger = setup_logging(name="WEB-SCRAPING")
 
 
 class WebsiteCrawler:

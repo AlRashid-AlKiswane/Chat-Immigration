@@ -61,7 +61,7 @@ from src.infra.logger import setup_logging
 from src.schema import ChatMessage, ProviderChatHistory, ModelInfo
 from src.enums.value_enums import ModelProvider
 
-logger = setup_logging()
+logger = setup_logging(name="HISTORY-MANAGEMENT")
 
 
 class ChatHistoryManager:

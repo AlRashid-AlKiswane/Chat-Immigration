@@ -46,7 +46,7 @@ BASE_DIR = pathlib.Path(__file__).parent.resolve()
 WEB_DIR = BASE_DIR / "web"
 
 # Initialize logging and settings
-logger = setup_logging()
+logger = setup_logging(name="MAIN")
 logger.info("Loading application settings...")
 
 try:

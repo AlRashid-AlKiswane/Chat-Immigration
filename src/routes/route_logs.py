@@ -30,6 +30,7 @@ sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 try:
     MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
     sys.path.append(MAIN_DIR)
+    from src.infra import setup_logging
 except (ImportError, OSError) as e:
     logging.error("Failed to set up main directory path: %s", e)
     sys.exit(1)
@@ -43,7 +44,7 @@ from starlette.status import (
 import aiofiles
 
 # Initialize logger
-logger = logging.getLogger(__name__)
+logger = setup_logging(name="ROUTE-LOGS")
 
 logs_router = APIRouter()
 

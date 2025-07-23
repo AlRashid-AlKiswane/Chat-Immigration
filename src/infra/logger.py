@@ -7,7 +7,7 @@ This module provides a centralized logging system with four log levels:
 - WARNING (yellow)
 - ERROR (red)
 
-Logs are saved to 'app.log' in the logs directory.
+Logs are saved to 'app.log' in the logs directory and include logger names.
 """
 
 import logging
@@ -39,19 +39,19 @@ class ColoredFormatter(logging.Formatter):
         return f"{COLORS.get(record.levelname, '')}{message}{COLORS['END']}"
 
 # Global flag to avoid reinitializing
-# pylint: disable=invalid-name
 _logger_initialized = False
 
 def setup_logging(
     name: str = "logger_app",
-    log_dir=f"{MAIN_DIR}/logs",
-    log_file="app.log",
-    console_level=logging.DEBUG,
-):
+    log_dir: str = f"{MAIN_DIR}/logs",
+    log_file: str = "app.log",
+    console_level: int = logging.DEBUG,
+) -> logging.Logger:
     """
     Set up logging configuration with colored console output and file logging.
 
     Args:
+        name (str): Name of the logger.
         log_dir (str): Directory to store log files.
         log_file (str): Name of the log file.
         console_level (int): Console log level (e.g., logging.DEBUG).
@@ -59,7 +59,6 @@ def setup_logging(
     Returns:
         logging.Logger: Configured logger instance.
     """
-    # pylint: disable=global-statement
     global _logger_initialized
 
     logger__ = logging.getLogger(name)
@@ -76,14 +75,18 @@ def setup_logging(
     if not any(isinstance(h, logging.StreamHandler) for h in logger__.handlers):
         console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setLevel(console_level)
-        console_handler.setFormatter(ColoredFormatter("%(asctime)s - %(levelname)s - %(message)s"))
+        console_handler.setFormatter(
+            ColoredFormatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
+        )
         logger__.addHandler(console_handler)
 
     # File handler (rotating)
     if not any(isinstance(h, RotatingFileHandler) for h in logger__.handlers):
         file_handler = RotatingFileHandler(log_path, maxBytes=1_048_576, backupCount=5)
         file_handler.setLevel(logging.DEBUG)
-        file_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+        file_handler.setFormatter(
+            logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
+        )
         logger__.addHandler(file_handler)
 
     _logger_initialized = True
@@ -95,7 +98,7 @@ logger = setup_logging()
 # Example usage
 def log_examples():
     """
-    Example
+    Log demonstration across all levels.
     """
     logger.debug("This is a debug message - detailed technical information.")
     logger.info("This is an info message - general application flow.")

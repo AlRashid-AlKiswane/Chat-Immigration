@@ -45,7 +45,7 @@ from src.llms import (
 )
 
 llms_route = APIRouter()
-setup_logging()
+logger = setup_logging(name="ROUTE-LLMS-CONFIG")
 
 @llms_route.post("/llms/configure", response_class=JSONResponse)
 async def configure_llm(
@@ -73,12 +73,12 @@ async def configure_llm(
         >>> }
     """
     try:
-        logging.debug("Received LLM configuration request: %s", llm_info.dict())
+        logger.debug("Received LLM configuration request: %s", llm_info.dict())
 
         provider = llm_info.provider.lower()
         llm_name = llm_info.model_name
 
-        logging.info("Attempting to configure %s llm: %s", provider, llm_name)
+        logger.info("Attempting to configure %s llm: %s", provider, llm_name)
 
         # Initialize the appropriate LLM based on provider
         llm: Any = None
@@ -94,7 +94,7 @@ async def configure_llm(
             llm = HuggingFaceLLM(model_name=llm_name)
         else:
             error_msg = f"Unsupported provider: {provider}"
-            logging.warning(error_msg)
+            logger.warning(error_msg)
             raise HTTPException(
                 status_code=HTTP_400_BAD_REQUEST,
                 detail=error_msg
@@ -103,7 +103,7 @@ async def configure_llm(
         # Verify llm initialization was successful
         if not llm:
             error_msg = f"Failed to initialize llm {llm_name} from provider {provider}"
-            logging.error(error_msg)
+            logger.error(error_msg)
             raise HTTPException(
                 status_code=HTTP_500_INTERNAL_SERVER_ERROR,
                 detail=error_msg
@@ -111,7 +111,7 @@ async def configure_llm(
 
         # Store the llm in the application state
         request.app.state.llm = llm
-        logging.info("Successfully configured %s llm: %s", provider, llm_name)
+        logger.info("Successfully configured %s llm: %s", provider, llm_name)
 
         response_data = {
             "message": "LLM configured successfully",
@@ -119,19 +119,19 @@ async def configure_llm(
             "llm_name": llm_name
         }
 
-        logging.debug("Configuration response data: %s", response_data)
+        logger.debug("Configuration response data: %s", response_data)
         return JSONResponse(
             status_code=HTTP_200_OK,
             content=response_data
         )
 
     except HTTPException:
-        logging.warning("HTTPException raised during LLM configuration", exc_info=True)
+        logger.warning("HTTPException raised during LLM configuration", exc_info=True)
         raise
 
     except ValueError as e:
         error_msg = f"Invalid configuration value: {str(e)}"
-        logging.error(error_msg, exc_info=True)
+        logger.error(error_msg, exc_info=True)
         return HTTPException(
             status_code=HTTP_400_BAD_REQUEST,
             detail=error_msg
@@ -139,7 +139,7 @@ async def configure_llm(
 
     except ImportError as e:
         error_msg = f"Required dependencies not available: {str(e)}"
-        logging.error(error_msg, exc_info=True)
+        logger.error(error_msg, exc_info=True)
         return HTTPException(
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
             detail=error_msg
@@ -147,7 +147,7 @@ async def configure_llm(
     # pylint: disable=broad-exception-caught
     except Exception as e:
         error_msg = f"Unexpected error configuring LLM: {str(e)}"
-        logging.critical(error_msg, exc_info=True)
+        logger.critical(error_msg, exc_info=True)
         return HTTPException(
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
             detail=error_msg

@@ -35,7 +35,7 @@ from src.enums import DocToChunksMsg
 
 # Initialize application settings and logger
 app_settings: Settings = get_settings()
-logger = setup_logging()
+logger = setup_logging(name="DOCS-CHUNKS-CORE")
 
 
 def load_and_chunk(file_path: Optional[str] = None) -> Dict[str, Any]:

@@ -33,7 +33,8 @@ from src.helpers import get_settings, Settings
 from src.controllers import generate_unique_filename
 from src.enums import FileUploadMsg
 
-logger = setup_logging()
+logger = setup_logging(name="ROUTE-UPLOAD-DOCS")
+
 app_settings: Settings = get_settings()
 upload_route = APIRouter()
 UPLOAD_DIR = app_settings.DOC_LOCATION_SAVE

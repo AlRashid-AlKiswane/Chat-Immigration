@@ -26,8 +26,9 @@ from src.infra import setup_logging
 from src.helpers import get_settings, Settings
 from src.llms.abc_llm import BaseLLM
 from src.enums.value_enums import ModelProvider
+
 # Initialize logger and settings
-logger = setup_logging()
+logger = setup_logging(name="OPENAI-PROVIDER")
 app_settings: Settings = get_settings()
 
 

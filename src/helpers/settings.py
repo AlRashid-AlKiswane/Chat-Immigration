@@ -91,6 +91,8 @@ class Settings(BaseSettings):
         description="OpenAI model name"
     )
 
+    EMBEDDING_OPENAI: str = Field(..., env="text-embedding-3-large")
+
     # [Similar SecretStr patterns for other APIs...]
     GEMINI_APIK: Optional[SecretStr] = Field(None, env="GEMINI_APIK")
     COHERE_APIK: Optional[SecretStr] = Field(None, env="COHERE_APIK")

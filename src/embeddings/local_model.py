@@ -26,7 +26,7 @@ from src.helpers import get_settings, Settings
 from src.enums import HuggingFaceMsg
 
 # Initialize application settings and logger
-logger = setup_logging()
+logger = setup_logging(name="HUGGINGFACE-EMBEDDING")
 app_settings: Settings = get_settings()
 
 

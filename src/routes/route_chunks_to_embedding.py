@@ -38,7 +38,7 @@ from src.database import fetch_all_rows, insert_documents
 from src.embeddings import BaseEmbeddings
 
 # Initialize logger and settings
-logger = setup_logging()
+logger = setup_logging(name="ROUTE-CHUNKS-EMBEDDING")
 
 embedding_route = APIRouter()
 

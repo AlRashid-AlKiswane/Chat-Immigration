@@ -30,7 +30,7 @@ from src.schema import ChatMessage
 from src.infra.logger import setup_logging
 from src import get_chat_history
 
-logger = setup_logging()
+logger = setup_logging(name="ROUTE-HISTORY-MANAGEMENT")
 history_router = APIRouter()
 
 

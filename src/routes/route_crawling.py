@@ -76,7 +76,7 @@ from urllib.parse import urlparse
 from pydantic import ValidationError
 
 # Initialize logger and settings
-logger = setup_logging()
+logger = setup_logging(name="ROUTE-CRAWLING")
 
 web_crawling_route = APIRouter()
 

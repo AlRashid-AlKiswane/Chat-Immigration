@@ -51,7 +51,7 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # Initialize application settings and logger
-logger = setup_logging()
+logger = setup_logging(name="TABLE-DATABASE")
 app_settings: Settings = get_settings()
 
 # pylint: disable=logging-not-lazy

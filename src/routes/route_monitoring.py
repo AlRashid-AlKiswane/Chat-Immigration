@@ -39,7 +39,7 @@ from src.infra.logger import setup_logging
 from src.infra import DeviceMonitor
 
 # Initialize logger and settings
-logger = setup_logging()
+logger = setup_logging(name="ROUTE-MONITORING")
 
 monitoring_route = APIRouter()
 

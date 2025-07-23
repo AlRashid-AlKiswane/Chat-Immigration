@@ -44,7 +44,7 @@ from src.database import search_documents
 from src.schema import RAGConfig
 from src.embeddings import BaseEmbeddings
 
-logger = setup_logging()
+logger = setup_logging(name="ROUTE-LIVE-RAG")
 
 live_rag_route = APIRouter()
 

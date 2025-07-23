@@ -55,7 +55,7 @@ from src.prompt import PromptBuilder
 
 
 # Initialize logger
-logger = setup_logging()
+logger = setup_logging(name="LLM-GENERATION")
 llm_generation_route = APIRouter()
 
 # Initialize at module level

@@ -25,7 +25,7 @@ from src.helpers import get_settings, Settings
 from src.enums import OPenAPIEmbeddingMsg
 
 # Initialize application settings and logger
-logger = setup_logging()
+logger = setup_logging(name="OPENAI-EMBEDDING")
 app_settings: Settings = get_settings()
 
 
@@ -47,7 +47,7 @@ class OpenAIEmbeddingModel:
         max_batch_size (int): Maximum number of texts to process in a single batch
     """
 
-    def __init__(self, api_key: str = app_settings.OPENAI_APIK, model_name: Optional[str] = None):
+    def __init__(self):
         """
         Initialize the OpenAI embedding model wrapper.
 
@@ -59,8 +59,10 @@ class OpenAIEmbeddingModel:
         Raises:
             ValueError: If API key or model name are missing or invalid.
         """
-        self.api_key = api_key or app_settings.openai_api_key
-        self.model_name = model_name or app_settings.openai_embedding_model
+        self.api_key = (app_settings.OPENAI_APIK.get_secret_value()
+                        if app_settings.OPENAI_APIK
+                        else None)
+        self.model_name = app_settings.EMBEDDING_OPENAI
         self.max_batch_size = 2048  # OpenAI's maximum batch size for embeddings
 
         if not self.api_key:
@@ -143,6 +145,6 @@ class OpenAIEmbeddingModel:
             raise
 
 if __name__ == "__main__":
-    embedd = OpenAIEmbeddingModel(model_name="text-embedding-3-large")
+    embedd = OpenAIEmbeddingModel()
     embeddings_vectore = embedd.embed_texts(texts="How are u rashid, u can help me")
     print(embeddings_vectore)

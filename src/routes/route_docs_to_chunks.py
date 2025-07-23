@@ -35,7 +35,7 @@ except (ImportError, OSError) as e:
 # pylint: disable=logging-format-interpolation
 
 # Initialize logger and settings
-logger = setup_logging()
+logger = setup_logging(name="ROUTE-DOCS-CHUNKING")
 app_settings: Settings = get_settings()
 
 docs_to_chunks_route = APIRouter()
