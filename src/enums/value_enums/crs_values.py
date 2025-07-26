@@ -15,13 +15,16 @@ class EducationLevel(Enum):
     def values(cls):
         """helper method that returns all valid values of an Enum as a set."""
         return {member.value for member in cls}
+    
+    
 
-
-class LanguageAbility(Enum):
-    READING = "reading"
-    WRITING = "writing"
-    LISTENING = "listening"
-    SPEAKING = "speaking"
+class LanguageTestEnum(str, Enum):
+    """Enum for supported language tests in Express Entry."""
+    IELTS = "IELTS"      # English
+    CELPIP = "CELPIP"    # English
+    TEF = "TEF"          # French
+    TCF = "TCF"          # French
+    PTE = "PTE"          # English (Pearson Test)
 
     @classmethod
     def values(cls):
