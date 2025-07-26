@@ -21,3 +21,4 @@ chromadb
 cohere
 pandas
 html5lib
+bs4

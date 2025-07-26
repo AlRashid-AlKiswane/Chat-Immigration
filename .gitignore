@@ -2,6 +2,7 @@
 
 # Env
 .venv/
+venv/
 
 *.db
 
