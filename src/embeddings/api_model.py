@@ -110,8 +110,6 @@ class OpenAIEmbeddingModel:
             # Process texts in batches
             for i in range(0, len(texts), batch_size):
                 batch = texts[i:i + batch_size]
-                logger.debug(OPenAPIEmbeddingMsg.BATCH_START.value %
-                           (i, min(i + batch_size, len(texts)), len(texts)))
 
                 try:
                     response = client.embeddings.create(
@@ -132,12 +130,6 @@ class OpenAIEmbeddingModel:
                         (i, i + batch_size, str(e))
                     )
                     raise
-
-            logger.info(
-                OPenAPIEmbeddingMsg.GENERATION_SUCCESS.value %
-                (len(texts),
-                (len(texts) // batch_size) + 1)
-            )
             return embeddings
 
         except Exception as e:
