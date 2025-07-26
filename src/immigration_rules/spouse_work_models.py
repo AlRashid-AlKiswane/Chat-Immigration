@@ -73,10 +73,62 @@ def get_spouse_work_experience_factors(input_json_path: str, extracted_output_pa
     try:
         logger.info("Loading extracted JSON into model...")
         success, result = load_json_file(file_path=extracted_output_path)
-        return SpouseWorkExperienceFactors(**result)
+        return SpouseWorkExperienceFactors(**result) # type: ignore
     except Exception as e:
         logger.error("Model loading failed: %s", e)
         raise RuntimeError("Spouse work experience parsing error") from e
+    
+def calculate_spouse_work_experience_points(
+    years_of_experience: int,
+    has_spouse: bool,
+    factors: SpouseWorkExperienceFactors
+) -> int:
+    """
+    Calculate CRS points for spouse's Canadian work experience.
+
+    Args:
+        years_of_experience (int): Number of years spouse has Canadian work experience.
+        has_spouse (bool): Whether spouse is included in the application.
+        factors (SpouseWorkExperienceFactors): Loaded scoring factors.
+
+    Returns:
+        int: CRS points for spouse work experience.
+
+    Raises:
+        ValueError: If input values are invalid.
+    """
+    logger.info(f"Calculating spouse work experience points for {years_of_experience} years, spouse included: {has_spouse}")
+
+    if not isinstance(years_of_experience, int) or years_of_experience < 0:
+        raise ValueError("years_of_experience must be a non-negative integer")
+
+    if not isinstance(has_spouse, bool):
+        raise ValueError("has_spouse must be a boolean")
+
+    suffix = "with_spouse" if has_spouse else "without_spouse"
+
+    try:
+        if years_of_experience == 0:
+            attr_name = f"none_or_less_than_a_year_{suffix}"
+        elif years_of_experience == 1:
+            attr_name = f"one_year_{suffix}"
+        elif years_of_experience == 2:
+            attr_name = f"two_years_{suffix}"
+        elif years_of_experience == 3:
+            attr_name = f"three_years_{suffix}"
+        elif years_of_experience == 4:
+            attr_name = f"four_years_{suffix}"
+        else:  # 5 years or more
+            attr_name = f"five_years_or_more_{suffix}"
+
+        points = getattr(factors, attr_name)
+        logger.info(f"Spouse work experience points for attribute '{attr_name}': {points}")
+        return points
+
+    except AttributeError as e:
+        logger.error(f"Attribute '{attr_name}' not found in spouse work experience factors: {e}")
+        raise ValueError(f"Invalid spouse work experience attribute: {attr_name}") from e
+
 
 
 def main():
@@ -94,6 +146,11 @@ def main():
         logger.info("Loaded spouse work experience factors.")
         print("5+ years WITH spouse:", factors.five_years_or_more_with_spouse)
         print("None or <1 year WITHOUT spouse:", factors.none_or_less_than_a_year_without_spouse)
+        # Example calculation
+        example_years = 3
+        example_has_spouse = False
+        score = calculate_spouse_work_experience_points(example_years, example_has_spouse, factors)
+        print(f"Calculated spouse work experience points for {example_years} years (has spouse={example_has_spouse}): {score}")
     except Exception as e:
         logger.error("Processing failed: %s", e)
 
