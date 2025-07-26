@@ -78,7 +78,7 @@ def setup_logging(
     log_path = Path(log_dir) / log_file
 
     # Formatter string
-    formatter_str = "%(asctime)s - [%(name)s] - %(levelname)s - %(message)s"
+    formatter_str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
     # Console handler (with color)
     console_handler = logging.StreamHandler(sys.stdout)
