@@ -51,10 +51,75 @@ def get_foreign_canadian_combo_points(input_json: str, extracted_json: str) -> F
 
     try:
         success, data = load_json_file(file_path=extracted_json)
-        return ForeignCanadianWorkFactors(**data)
+        return ForeignCanadianWorkFactors(**data) # type: ignore
     except Exception as e:
         logger.error("Model loading failed: %s", e)
         raise
+
+def calculate_foreign_canadian_work_points(
+    foreign_work_years: int,
+    canadian_work_years: int,
+    factors: ForeignCanadianWorkFactors
+) -> int:
+    """
+    Calculate CRS points for the combination of foreign work experience and Canadian work experience.
+
+    This function evaluates the points based on these categories:
+
+    - Foreign work experience:
+      * No foreign work experience (0 years)
+      * One or two years of foreign work experience
+      * Three or more years of foreign work experience
+
+    - Canadian work experience:
+      * One year (1)
+      * Two or more years (2 or more)
+
+    Args:
+        foreign_work_years (int): Number of years of foreign work experience (outside Canada).
+            Must be a non-negative integer.
+        canadian_work_years (int): Number of years of Canadian work experience.
+            Must be a non-negative integer.
+        factors (ForeignCanadianWorkFactors): An instance of the factors model
+            containing CRS points for each combination.
+
+    Returns:
+        int: CRS points for foreign + Canadian work experience combination.
+
+    Raises:
+        ValueError: If any of the year inputs are negative or invalid.
+        AttributeError: If the corresponding attribute is missing in the factors model.
+    """
+    if foreign_work_years < 0 or canadian_work_years < 0:
+        raise ValueError("Work experience years must be non-negative integers")
+
+    # Determine foreign work category key
+    if foreign_work_years == 0:
+        foreign_key = "no_experience"
+    elif 1 <= foreign_work_years <= 2:
+        foreign_key = "one_two_years"
+    else:  # 3 or more years
+        foreign_key = "three_plus_years"
+
+    # Determine Canadian work category suffix key
+    if canadian_work_years == 1:
+        canada_key = "canada1"
+    elif canadian_work_years >= 2:
+        canada_key = "canada2"
+    else:
+        # If 0 years Canadian work experience, no points for combo
+        # Could also raise error depending on rules
+        return 0
+
+    attr_name = f"{foreign_key}_{canada_key}"
+
+    try:
+        points = getattr(factors, attr_name)
+    except AttributeError as e:
+        raise AttributeError(f"Attribute '{attr_name}' missing in factors model") from e
+
+    return points
+
 
 
 if __name__ == "__main__":
@@ -68,5 +133,12 @@ if __name__ == "__main__":
         model = get_foreign_canadian_combo_points(input_path, output_path)
         print("Foreign + Canadian work combination model:")
         print("1 or 2 years of foreign work experience + (+ 1) year of Canadian work experience points= ", model.one_two_years_canada1)
+
+        points = calculate_foreign_canadian_work_points(
+        foreign_work_years=2,
+        canadian_work_years=1,
+        factors=model
+        )
+        print(f"CRS points for foreign + Canadian work combo: {points}")
     except Exception as e:
         logger.error("Processing failed: %s", e)

@@ -44,10 +44,46 @@ def get_certificate_of_qualification_points(input_json: str, extracted_json: str
 
     try:
         success, data = load_json_file(file_path=extracted_json)
-        return CertificateOfQualificationFactors(**data)
+        return CertificateOfQualificationFactors(**data) # type: ignore
     except Exception as e:
         logger.error("Model loading failed: %s", e)
         raise
+
+def calculate_certificate_of_qualification_points(
+    clb_level: int,
+    factors: CertificateOfQualificationFactors
+) -> int:
+    """
+    Calculate CRS points for the certificate of qualification based on CLB level.
+
+    Args:
+        clb_level (int): Canadian Language Benchmark (CLB) level of the applicant.
+            Should be a positive integer (e.g., 5, 6, 7, or higher).
+        factors (CertificateOfQualificationFactors): Model containing CRS points 
+            for certificate qualification based on CLB levels.
+
+    Returns:
+        int: CRS points awarded for the certificate of qualification.
+
+    Raises:
+        ValueError: If clb_level is less than 5 (certificate points start from CLB 5).
+        AttributeError: If the corresponding attribute is missing in the factors model.
+    """
+    if clb_level < 5:
+        raise ValueError("CLB level must be 5 or higher for certificate qualification points")
+
+    if 5 <= clb_level <= 6:
+        attr_name = "clb_5_or_6"
+    else:  # clb_level 7 or higher
+        attr_name = "clb_7_or_more"
+
+    try:
+        points = getattr(factors, attr_name)
+    except AttributeError as e:
+        raise AttributeError(f"Attribute '{attr_name}' missing in CertificateOfQualificationFactors model") from e
+
+    return points
+
 
 
 if __name__ == "__main__":
@@ -61,5 +97,8 @@ if __name__ == "__main__":
         model = get_certificate_of_qualification_points(input_path, output_path)
         print("Certificate of Qualification model:")
         print(model)
+        clb = 7
+        points = calculate_certificate_of_qualification_points(clb_level=clb, factors=model)
+        print(f"CRS points for certificate of qualification at CLB {clb}: {points}")
     except Exception as e:
         logger.error("Processing failed: %s", e)

@@ -97,10 +97,10 @@ def calculate_language_points(
     test_name: str,
     user_scores: Dict[str, float],
     has_spouse: bool,
-    language_factors: FirstLanguageFactors,
-) -> int:
+    language_factors: "FirstLanguageFactors",
+) -> tuple[int, int]:
     """
-    Calculate total CRS language points based on user test scores and CLB conversion.
+    Calculate total CRS language points and return the minimum CLB level.
 
     Args:
         test_name: Name of the language test (IELTS, CELPIP, TEF, TCF, PTE).
@@ -109,16 +109,18 @@ def calculate_language_points(
         language_factors: FirstLanguageFactors model loaded from JSON table.
 
     Returns:
-        int: Total CRS points for language (sum of all four abilities)
+        tuple[int, int]: (total_points, min_clb)
     """
     logger.info(f"Calculating language points for {test_name}, spouse={has_spouse}")
     suffix = "with_spouse" if has_spouse else "without_spouse"
 
     total_points = 0
+    clb_levels = []
 
     for ability, score in user_scores.items():
         # 1) Convert test score to CLB
         clb_level = convert_score_to_clb(test_name, ability, score)
+        clb_levels.append(clb_level)
         logger.debug(f"{ability}: score={score} => CLB={clb_level}")
 
         # 2) Determine attribute name from CLB level
@@ -147,8 +149,10 @@ def calculate_language_points(
         total_points += points
         logger.debug(f"{ability}: CLB={clb_level} -> {points} points")
 
-    logger.info(f"Total language points: {total_points}")
-    return total_points
+    min_clb = min(clb_levels) if clb_levels else 0
+    logger.info(f"Total language points: {total_points}, Min CLB: {min_clb}")
+
+    return total_points, min_clb
 
 def main():
     """

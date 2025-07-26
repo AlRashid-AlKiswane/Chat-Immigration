@@ -12,6 +12,7 @@ except Exception as e:
     sys.exit(1)
 
 from src.infra import setup_logging
+from src.enums.value_enums import EducationLevel
 
 logger = setup_logging(name="CANADIAN_WORK_EDU_MODEL")
 
@@ -55,10 +56,62 @@ def get_canadian_work_education_points(input_json: str, extracted_json: str) -> 
 
     try:
         success, data = load_json_file(file_path=extracted_json)
-        return CanadianWorkEducationFactors(**data)
+        return CanadianWorkEducationFactors(**data) # type: ignore
     except Exception as e:
         logger.error("Model loading failed: %s", e)
         raise
+
+def calculate_canadian_work_education_points(education_level: EducationLevel, canadian_work_years: int, factors: CanadianWorkEducationFactors) -> int:
+    """
+    Calculate CRS points based on the combination of the applicant's education level 
+    and Canadian work experience duration using predefined scoring factors.
+
+    The Canadian work experience considered must be **valid Canadian work experience** 
+    (i.e., work performed in Canada, meeting immigration program requirements).
+
+    The function differentiates scoring based on whether the Canadian work experience 
+    is at least 2 years or less, applying the corresponding points from the factors model.
+
+    Args:
+        education_level (EducationLevel): The highest education credential of the applicant.
+            Must be one of the predefined EducationLevel enum values.
+        canadian_work_years (int): Number of years of Canadian work experience.
+            Only Canadian work experience counts towards these points.
+        factors (CanadianWorkEducationFactors): An instance of the factors model containing
+            the CRS points associated with each education and Canadian work experience combination.
+
+    Returns:
+        int: CRS points corresponding to the combined education level and Canadian work experience.
+
+    Raises:
+        AttributeError: If the corresponding attribute for the education and work year 
+            combination is not found in the factors model.
+    """
+    logger.info(f"Calculating Canadian work + education points for education={education_level}, work years={canadian_work_years}")
+
+    # Choose 1YR or 2YR bucket (2YR if years >= 2 else 1YR)
+    year_suffix = "2YR" if canadian_work_years >= 2 else "1YR"
+
+    mapping = {
+        EducationLevel.SECONDARY_DIPLOMA: f"secondary_school_{year_suffix}",
+        EducationLevel.ONE_YEAR_POST_SECONDARY: f"one_year_post_sec_{year_suffix}",
+        EducationLevel.TWO_OR_MORE_CERTIFICATES: f"two_or_more_post_sec_{year_suffix}",
+        EducationLevel.MASTERS_OR_PROFESSIONAL_DEGREE: f"masters_or_prof_{year_suffix}",
+        EducationLevel.PHD: f"doctorate_{year_suffix.lower()}",
+    }
+
+    attr_name = mapping.get(education_level, None)
+    if attr_name is None:
+        logger.warning(f"Education level '{education_level.value}' not mapped.")
+        return 0
+
+    try:
+        points = getattr(factors, attr_name)
+        logger.info(f"Attribute '{attr_name}' => {points} points")
+        return points
+    except AttributeError:
+        logger.error(f"Attribute '{attr_name}' not found in factors")
+        return 0
 
 if __name__ == "__main__":
     from src.helpers import get_settings, Settings
@@ -71,5 +124,13 @@ if __name__ == "__main__":
         model = get_canadian_work_education_points(input_path, output_path)
         print("Loaded Canadian work + education model:")
         print("2YR + Master's:", model.masters_or_prof_2YR)
+
+        # Test call
+        education_level = EducationLevel.MASTERS_OR_PROFESSIONAL_DEGREE
+        canadian_work_years = 2
+
+        points = calculate_canadian_work_education_points(education_level, canadian_work_years, factors=model)
+        print(f"Points for {education_level.value} with {canadian_work_years} year(s) Canadian work experience: {points}")
+
     except Exception as e:
         logger.error("Processing failed: %s", e)

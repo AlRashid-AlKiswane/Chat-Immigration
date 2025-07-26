@@ -82,10 +82,10 @@ def calculate_spouse_language_points(
     user_score: dict,
     has_spouse: bool,
     factors: SpouseLanguageFactors
-) -> int:
+) -> tuple[int, int]:
     """
     Calculate CRS points for spouse's language abilities (reading, writing,
-    speaking, and listening) based on test scores.
+    speaking, and listening) and return the minimum CLB level.
 
     Args:
         test_name (str): Name of the language test (e.g., IELTS, CELPIP).
@@ -95,7 +95,7 @@ def calculate_spouse_language_points(
         factors (SpouseLanguageFactors): Loaded scoring factors model.
 
     Returns:
-        int: Total CRS points for spouse's language ability.
+        tuple[int, int]: (Total CRS points, Minimum CLB level)
 
     Raises:
         ValueError: If parameters are invalid or mapping fails.
@@ -112,11 +112,13 @@ def calculate_spouse_language_points(
         raise ValueError("has_spouse must be a boolean")
 
     total_points = 0
+    clb_levels = []
     suffix = "with_spouse" if has_spouse else "without_spouse"
 
     for ability, score in user_score.items():
         # Convert the raw test score to CLB level
         clb_level = convert_score_to_clb(test_name, ability, score)
+        clb_levels.append(clb_level)
         logger.debug(f"Ability={ability}: raw_score={score} => CLB={clb_level}")
 
         # Map the CLB level to the correct attribute in the factors model
@@ -139,8 +141,11 @@ def calculate_spouse_language_points(
             logger.error(f"Attribute '{attr_name}' not found in spouse language factors: {e}")
             raise ValueError(f"Invalid spouse language attribute: {attr_name}") from e
 
-    logger.info(f"Total spouse language points: {total_points}")
-    return total_points
+    min_clb = min(clb_levels) if clb_levels else 0
+    logger.info(f"Total spouse language points: {total_points}, Min CLB: {min_clb}")
+
+    return total_points, min_clb
+
 
 def main():
     """
