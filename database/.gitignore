@@ -3,3 +3,4 @@
 *.db-wal
 *.sqlite3
 *.sqlite3-*
+*/

@@ -33,7 +33,7 @@ logger = setup_logging(name="TABLE-DATABASE")
 app_settings: Settings = get_settings()
 
 
-def get_sqlite_engine() -> Optional[sqlite3.Connection]:
+def get_sqlite_engine(db_conn: Optional[str] = None) -> Optional[sqlite3.Connection]:
     """
     Creates and returns a connection to an SQLite database with robust error handling.
 
@@ -49,7 +49,7 @@ def get_sqlite_engine() -> Optional[sqlite3.Connection]:
         if not app_settings.SQLITE_DB:
             raise ValueError(EngineMsg.MISSING_DB_PATH.value)
 
-        db_path = Path(app_settings.SQLITE_DB)
+        db_path = Path(db_conn or app_settings.SQLITE_DB)
         db_dir = db_path.parent
 
         # Ensure directory exists with proper permissions

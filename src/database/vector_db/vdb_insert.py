@@ -33,7 +33,6 @@ def insert_documents(
             metadatas=metadatas if metadatas else None
         )
 
-        logger.info("Inserted %d documents into '%s'", len(ids), collection_name)
         return True
 
     except ChromaError as ce:

@@ -1,4 +1,7 @@
 import warnings
+import logging
+
+logging.getLogger("passlib.handlers.bcrypt").setLevel(logging.ERROR)
 
 # Suppress specific warnings
 warnings.filterwarnings(
@@ -12,4 +15,5 @@ from .dependences import (get_db_conn,
                           get_embedd,
                           get_vdb_client,
                           get_llm,
-                          get_chat_history)
+                          get_chat_history,
+                          get_vdb_collection)

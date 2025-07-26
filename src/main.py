@@ -6,8 +6,9 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
 
-# Setup project base path
+# --- Setup project base path ---
 try:
     MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../"))
     sys.path.append(MAIN_DIR)
@@ -15,7 +16,7 @@ except (ImportError, OSError) as e:
     logging.critical("[Startup Critical] Failed to set project base path.", exc_info=True)
     sys.exit(1)
 
-# Local imports after sys.path setup
+# --- Local Imports ---
 from src.embeddings import HuggingFaceModel, OpenAIEmbeddingModel
 from src.database import (
     get_sqlite_engine,
@@ -25,52 +26,53 @@ from src.database import (
     get_chroma_client,
 )
 from src.routes import (
+    auth_route,
     upload_route,
+    tables_crawling_route,
+    web_crawling_route,
     docs_to_chunks_route,
     embedding_route,
+    live_rag_route,
     llms_route,
     llm_generation_route,
-    web_crawling_route,
+    history_router,
+    graph_ui_route,
     monitoring_route,
     logs_router,
-    live_rag_route,
-    tables_crawling_route,
-    history_router,
+    storage_management_route,
 )
 from src.history import ChatHistoryManager
 from src.helpers import get_settings, Settings
 from src.infra import setup_logging
 
-# Constants
+# --- Constants ---
 BASE_DIR = pathlib.Path(__file__).parent.resolve()
 WEB_DIR = BASE_DIR / "web"
 
-# Initialize logging and settings
+# --- Logging and Settings ---
 logger = setup_logging(name="MAIN")
 logger.info("Loading application settings...")
 
 try:
     app_settings: Settings = get_settings()
-    logger.debug(f"App settings: {app_settings.dict()}")
-except Exception as e:
+    logger.debug(f"App settings loaded: {app_settings.dict()}")
+except Exception:
     logger.critical("[Startup Critical] Failed to load app settings.", exc_info=True)
     sys.exit(1)
 
-
+# --- FastAPI Lifespan Events ---
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Handles application startup and shutdown."""
+    """Handles startup and shutdown lifecycle of the app."""
     logger.info("Starting Immigration Chatbot API...")
 
-    # Database initialization
     try:
         app.state.conn = get_sqlite_engine()
         logger.info("SQLite connection established.")
-    except Exception as e:
-        logger.critical("Database engine initialization failed.", exc_info=True)
-        raise HTTPException(status_code=500, detail="DB init failed")
+    except Exception:
+        logger.critical("Failed to initialize SQLite engine.", exc_info=True)
+        raise HTTPException(status_code=500, detail="SQLite init failed")
 
-    # Initialize tables
     for name, func in {
         "chunks_table": init_chunks_table,
         "user_info_table": init_user_info_table,
@@ -79,72 +81,94 @@ async def lifespan(app: FastAPI):
         try:
             func(conn=app.state.conn)
             logger.info(f"{name.replace('_', ' ').title()} initialized.")
-        except Exception as e:
-            logger.error(f"{name} init failed.", exc_info=True)
+        except Exception:
+            logger.error(f"{name} initialization failed.", exc_info=True)
             raise HTTPException(status_code=500, detail=f"Init failed: {name}")
 
-    # Embedding model
     try:
         app.state.embedding = OpenAIEmbeddingModel()
-    except Exception as e:
+        logger.info("Embedding model initialized.")
+    except Exception:
         logger.error("Embedding model initialization failed.", exc_info=True)
         raise HTTPException(status_code=500, detail="Embedding model init failed")
 
-    # ChromaDB client
     try:
-        app.state.vdb_client = get_chroma_client()
+        vdb_client = get_chroma_client()
+        collection = vdb_client.get_or_create_collection(name="chunks")
+        app.state.vdb_client = vdb_client
+        app.state.vdb_collection = collection
         logger.info("ChromaDB client initialized.")
-    except Exception as e:
-        logger.error("ChromaDB init failed.", exc_info=True)
-        raise HTTPException(status_code=500, detail="Vector DB init failed")
+    except Exception:
+        logger.error("ChromaDB client initialization failed.", exc_info=True)
+        raise HTTPException(status_code=500, detail="ChromaDB init failed")
 
-    # Chat manager
-    app.state.chat_manager = ChatHistoryManager()
-    logger.info("Chat manager initialized.")
+    try:
+        app.state.chat_manager = ChatHistoryManager()
+        logger.info("Chat manager initialized.")
+    except Exception:
+        logger.warning("Failed to initialize chat manager.", exc_info=True)
 
-    yield  # Run app
+    yield  # --- APPLICATION RUNNING ---
 
     # Shutdown
     try:
         if getattr(app.state, "conn", None):
             app.state.conn.close()
             logger.info("SQLite connection closed.")
-    except Exception as e:
-        logger.warning("Shutdown error.", exc_info=True)
+    except Exception:
+        logger.warning("Error closing SQLite connection.", exc_info=True)
 
+    try:
+        if getattr(app.state, "vdb_client", None):
+            app.state.vdb_client.reset()
+            logger.info("ChromaDB client shut down.")
+    except Exception:
+        logger.warning("Error shutting down ChromaDB client.", exc_info=True)
 
-# Create FastAPI app
+    logger.info("Application shutdown complete.")
+
+# --- Create FastAPI App ---
 app = FastAPI(
-    title="Immigration Chatbot",
+    title="Canada Express Entry Chatbot",
     version="1.0.0",
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc",
 )
 
-# Register API routes
-for route, prefix, tag in [
-    (upload_route, "/api", "File Upload"),
-    (docs_to_chunks_route, "/api", "Document Chunking"),
-    (embedding_route, "/api", "Embedding"),
-    (llms_route, "/api", "LLM Configuration"),
-    (llm_generation_route, "/api", "LLM Generation"),
-    (web_crawling_route, "/api", "Web Crawling"),
-    (monitoring_route, "/api", "Monitoring"),
-    (logs_router, "/api", "Logs"),
-    (live_rag_route, "/api", "Live RAG"),
-    (tables_crawling_route, "/api", "Table Crawling"),
-    (history_router, "/api", "Chat History"),
-]:
-    try:
-        app.include_router(route, prefix=prefix, tags=[tag])
-        logger.info(f"{tag} route registered.")
-    except Exception as e:
-        logger.critical(f"Failed to register {tag} route.", exc_info=True)
+# --- Include API Routes ---
+app.include_router(auth_route)
+app.include_router(upload_route)
+app.include_router(tables_crawling_route)
+app.include_router(web_crawling_route)
+app.include_router(docs_to_chunks_route)
+app.include_router(embedding_route)
+app.include_router(live_rag_route)
+app.include_router(llms_route)
+app.include_router(llm_generation_route)
+app.include_router(history_router)
+app.include_router(graph_ui_route)
+app.include_router(monitoring_route)
+app.include_router(logs_router)
+app.include_router(storage_management_route)
 
-# Serve static files for the frontend UI
-if WEB_DIR.exists():
-    app.mount("/", StaticFiles(directory=str(WEB_DIR), html=True), name="web")
-    logger.info(f"Web UI mounted at '/'. Directory: {WEB_DIR}")
+# --- Serve Static HTML UI ---
+auth_html_path = WEB_DIR / "auth.html"
+
+if auth_html_path.exists():
+    @app.get("/", response_class=HTMLResponse)
+    async def serve_auth_ui():
+        try:
+            with open(auth_html_path, "r", encoding="utf-8") as f:
+                return f.read()
+        except Exception:
+            logger.error("Failed to load auth.html", exc_info=True)
+            raise HTTPException(status_code=500, detail="Failed to load auth UI.")
+    logger.info("Main UI route '/' is serving auth.html.")
 else:
-    logger.warning(f"Web directory not found: {WEB_DIR}. Static UI not mounted.")
+    logger.warning("auth.html not found in web directory. '/' route disabled.")
+
+# --- Mount /static for any assets like CSS/JS/images ---
+if (WEB_DIR / "static").exists():
+    app.mount("/static", StaticFiles(directory=str(WEB_DIR / "static")), name="static")
+    logger.info("Static files mounted at '/static'.")

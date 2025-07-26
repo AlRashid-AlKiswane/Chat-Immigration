@@ -220,3 +220,16 @@ def get_chat_history(request: Request):
             detail="Chat history service unavailable."
         )
     return chat_history
+
+def get_vdb_collection(request: Request):
+    """
+    Retrieve the ChromaDB collection instance from app state.
+    """
+    try:
+        collection = getattr(request.app.state, "vdb_collection", None)
+        if not collection:
+            raise HTTPException(status_code=503, detail="Vector DB collection not available")
+        return collection
+    except Exception as e:
+        logger.exception("Error retrieving ChromaDB collection")
+        raise HTTPException(status_code=500, detail="Internal server error")

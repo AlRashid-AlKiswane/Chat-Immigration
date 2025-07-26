@@ -75,11 +75,3 @@ def clear_table(conn: sqlite3.Connection, table_name: str) -> None:
         error_msg = ClearMsg.CLEAR_OPERATION_ERROR % (table_name, str(e))
         logger.exception(error_msg)
         raise RuntimeError(error_msg) from e
-
-    finally:
-        if cursor:
-            try:
-                cursor.close()
-                logger.debug(ClearMsg.CURSOR_CLOSED % table_name)
-            except sqlite3.Error as e:
-                logger.warning(ClearMsg.CURSOR_ERROR % str(e))
