@@ -1,0 +1,18 @@
+[
+  {
+    "Factor": "Brother or sister living in Canada (18 years or older, citizen or permanent resident)",
+    "Maximum points per factor": 15
+  },
+  {
+    "Factor": "French language skills",
+    "Maximum points per factor": 50
+  },
+  {
+    "Factor": "Post-secondary education in Canada",
+    "Maximum points per factor": 30
+  },
+  {
+    "Factor": "Provincial or territorial nomination",
+    "Maximum points per factor": 600
+  }
+]

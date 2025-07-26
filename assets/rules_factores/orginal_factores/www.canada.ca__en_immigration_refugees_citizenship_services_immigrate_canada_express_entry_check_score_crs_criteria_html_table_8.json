@@ -1,0 +1,22 @@
+[
+  {
+    "Canadian Language Benchmark (CLB) level per ability (reading, writing, speaking and listening)": "CLB 4 or less",
+    "Maximum 20 points for section  Maximum 5 points per ability": 0,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Canadian Language Benchmark (CLB) level per ability (reading, writing, speaking and listening)": "CLB 5 or 6",
+    "Maximum 20 points for section  Maximum 5 points per ability": 1,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Canadian Language Benchmark (CLB) level per ability (reading, writing, speaking and listening)": "CLB 7 or 8",
+    "Maximum 20 points for section  Maximum 5 points per ability": 3,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Canadian Language Benchmark (CLB) level per ability (reading, writing, speaking and listening)": "CLB 9 or more",
+    "Maximum 20 points for section  Maximum 5 points per ability": 5,
+    "Without spouse or common-law partner (Does not apply)": ""
+  }
+]

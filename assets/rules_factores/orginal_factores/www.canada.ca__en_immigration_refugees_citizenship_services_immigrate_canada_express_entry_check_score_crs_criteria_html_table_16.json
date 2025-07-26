@@ -1,0 +1,17 @@
+[
+  {
+    "Years of experience": "No foreign work experience",
+    "Points for foreign work experience + 1 year of Canadian work experience (Maximum 25 points)": 0,
+    "Points for foreign work experience + 2 years or more of Canadian work experience (Maximum 50 points)": 0
+  },
+  {
+    "Years of experience": "1 or 2 years of foreign work experience",
+    "Points for foreign work experience + 1 year of Canadian work experience (Maximum 25 points)": 13,
+    "Points for foreign work experience + 2 years or more of Canadian work experience (Maximum 50 points)": 25
+  },
+  {
+    "Years of experience": "3 years or more of foreign work experience",
+    "Points for foreign work experience + 1 year of Canadian work experience (Maximum 25 points)": 25,
+    "Points for foreign work experience + 2 years or more of Canadian work experience (Maximum 50 points)": 50
+  }
+]

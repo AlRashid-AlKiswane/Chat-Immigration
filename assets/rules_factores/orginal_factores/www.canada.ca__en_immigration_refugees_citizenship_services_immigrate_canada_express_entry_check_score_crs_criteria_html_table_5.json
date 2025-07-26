@@ -1,0 +1,32 @@
+[
+  {
+    "Canadian work experience": "None or less than a year",
+    "With a spouse or common-law partner (Maximum 70 points)": 0,
+    "Without a spouse or common-law partner (Maximum 80 points)": 0
+  },
+  {
+    "Canadian work experience": "1 year",
+    "With a spouse or common-law partner (Maximum 70 points)": 35,
+    "Without a spouse or common-law partner (Maximum 80 points)": 40
+  },
+  {
+    "Canadian work experience": "2 years",
+    "With a spouse or common-law partner (Maximum 70 points)": 46,
+    "Without a spouse or common-law partner (Maximum 80 points)": 53
+  },
+  {
+    "Canadian work experience": "3 years",
+    "With a spouse or common-law partner (Maximum 70 points)": 56,
+    "Without a spouse or common-law partner (Maximum 80 points)": 64
+  },
+  {
+    "Canadian work experience": "4 years",
+    "With a spouse or common-law partner (Maximum 70 points)": 63,
+    "Without a spouse or common-law partner (Maximum 80 points)": 72
+  },
+  {
+    "Canadian work experience": "5 years or more",
+    "With a spouse or common-law partner (Maximum 70 points)": 70,
+    "Without a spouse or common-law partner (Maximum 80 points)": 80
+  }
+]

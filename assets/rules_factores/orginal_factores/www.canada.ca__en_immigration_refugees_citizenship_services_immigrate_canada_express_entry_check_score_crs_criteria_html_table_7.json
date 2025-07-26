@@ -1,0 +1,42 @@
+[
+  {
+    "Spouse’s or common-law partner’s level of education": "Less than secondary school (high school)",
+    "With spouse or common-law partner (Maximum 10 points)": 0,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Spouse’s or common-law partner’s level of education": "Secondary school (high school graduation)",
+    "With spouse or common-law partner (Maximum 10 points)": 2,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Spouse’s or common-law partner’s level of education": "One-year program at a university, college, trade or technical school, or other institute",
+    "With spouse or common-law partner (Maximum 10 points)": 6,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Spouse’s or common-law partner’s level of education": "Two-year program at a university, college, trade or technical in school, or other institute",
+    "With spouse or common-law partner (Maximum 10 points)": 7,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Spouse’s or common-law partner’s level of education": "Bachelor's degree OR a three or more year program at a university, college, trade or technical school, or other institute",
+    "With spouse or common-law partner (Maximum 10 points)": 8,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Spouse’s or common-law partner’s level of education": "Two or more certificates, diplomas, or degrees. One must be for a program of three or more years",
+    "With spouse or common-law partner (Maximum 10 points)": 9,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Spouse’s or common-law partner’s level of education": "Master's degree, or professional degree needed to practice in a licensed profession (For “professional degree”, the degree program must have been in: medicine, veterinary medicine, dentistry, optometry, law, chiropractic medicine, or pharmacy.)",
+    "With spouse or common-law partner (Maximum 10 points)": 10,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Spouse’s or common-law partner’s level of education": "Doctoral level university degree (PhD)",
+    "With spouse or common-law partner (Maximum 10 points)": 10,
+    "Without spouse or common-law partner (Does not apply)": ""
+  }
+]

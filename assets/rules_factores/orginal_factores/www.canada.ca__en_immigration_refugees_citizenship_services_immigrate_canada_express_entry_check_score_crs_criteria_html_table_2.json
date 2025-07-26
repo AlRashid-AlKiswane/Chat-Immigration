@@ -1,0 +1,42 @@
+[
+  {
+    "Level of Education": "Less than secondary school (high school)",
+    "With a spouse or common-law partner (Maximum 140 points)": 0,
+    "Without a spouse or common-law partner (Maximum 150 points)": 0
+  },
+  {
+    "Level of Education": "Secondary diploma (high school graduation)",
+    "With a spouse or common-law partner (Maximum 140 points)": 28,
+    "Without a spouse or common-law partner (Maximum 150 points)": 30
+  },
+  {
+    "Level of Education": "One-year degree, diploma or certificate from a university, college, trade or technical school, or other institute",
+    "With a spouse or common-law partner (Maximum 140 points)": 84,
+    "Without a spouse or common-law partner (Maximum 150 points)": 90
+  },
+  {
+    "Level of Education": "Two-year program at a university, college, trade or technical school, or other institute",
+    "With a spouse or common-law partner (Maximum 140 points)": 91,
+    "Without a spouse or common-law partner (Maximum 150 points)": 98
+  },
+  {
+    "Level of Education": "Bachelor's degree OR a three or more year program at a university, college, trade or technical school, or other institute",
+    "With a spouse or common-law partner (Maximum 140 points)": 112,
+    "Without a spouse or common-law partner (Maximum 150 points)": 120
+  },
+  {
+    "Level of Education": "Two or more certificates, diplomas, or degrees. One must be for a program of three or more years",
+    "With a spouse or common-law partner (Maximum 140 points)": 119,
+    "Without a spouse or common-law partner (Maximum 150 points)": 128
+  },
+  {
+    "Level of Education": "Master's degree, OR professional degree needed to practice in a licensed profession (For “professional degree,” the degree program must have been in: medicine, veterinary medicine, dentistry, optometry, law, chiropractic medicine, or pharmacy.)",
+    "With a spouse or common-law partner (Maximum 140 points)": 126,
+    "Without a spouse or common-law partner (Maximum 150 points)": 135
+  },
+  {
+    "Level of Education": "Doctoral level university degree (Ph.D.)",
+    "With a spouse or common-law partner (Maximum 140 points)": 140,
+    "Without a spouse or common-law partner (Maximum 150 points)": 150
+  }
+]

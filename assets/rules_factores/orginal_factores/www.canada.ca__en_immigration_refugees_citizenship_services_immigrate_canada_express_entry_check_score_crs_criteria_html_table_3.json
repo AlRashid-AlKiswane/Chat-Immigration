@@ -1,0 +1,37 @@
+[
+  {
+    "Canadian Language Benchmark (CLB) level per ability": "Less than CLB 4",
+    "With a spouse or common-law partner (Maximum 128 points)": 0,
+    "Without a spouse or common-law partner (Maximum 136 points)": 0
+  },
+  {
+    "Canadian Language Benchmark (CLB) level per ability": "CLB 4 or 5",
+    "With a spouse or common-law partner (Maximum 128 points)": 6,
+    "Without a spouse or common-law partner (Maximum 136 points)": 6
+  },
+  {
+    "Canadian Language Benchmark (CLB) level per ability": "CLB 6",
+    "With a spouse or common-law partner (Maximum 128 points)": 8,
+    "Without a spouse or common-law partner (Maximum 136 points)": 9
+  },
+  {
+    "Canadian Language Benchmark (CLB) level per ability": "CLB 7",
+    "With a spouse or common-law partner (Maximum 128 points)": 16,
+    "Without a spouse or common-law partner (Maximum 136 points)": 17
+  },
+  {
+    "Canadian Language Benchmark (CLB) level per ability": "CLB 8",
+    "With a spouse or common-law partner (Maximum 128 points)": 22,
+    "Without a spouse or common-law partner (Maximum 136 points)": 23
+  },
+  {
+    "Canadian Language Benchmark (CLB) level per ability": "CLB 9",
+    "With a spouse or common-law partner (Maximum 128 points)": 29,
+    "Without a spouse or common-law partner (Maximum 136 points)": 31
+  },
+  {
+    "Canadian Language Benchmark (CLB) level per ability": "CLB 10 or more",
+    "With a spouse or common-law partner (Maximum 128 points)": 32,
+    "Without a spouse or common-law partner (Maximum 136 points)": 34
+  }
+]

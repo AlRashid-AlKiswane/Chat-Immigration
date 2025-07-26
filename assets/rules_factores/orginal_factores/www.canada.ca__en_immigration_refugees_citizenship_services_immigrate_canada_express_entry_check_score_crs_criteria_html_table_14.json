@@ -1,0 +1,27 @@
+[
+  {
+    "With Canadian work experience and a post-secondary degree": "Secondary school (high school) credential or less",
+    "Points for education + 1 year of Canadian work experience (Maximum 25 points)": 0,
+    "Points for education + 2 years or more of Canadian work experience (Maximum 50 points)": 0
+  },
+  {
+    "With Canadian work experience and a post-secondary degree": "Post-secondary program credential of one year or longer",
+    "Points for education + 1 year of Canadian work experience (Maximum 25 points)": 13,
+    "Points for education + 2 years or more of Canadian work experience (Maximum 50 points)": 25
+  },
+  {
+    "With Canadian work experience and a post-secondary degree": "Two or more post-secondary program credentials AND at least one of these credentials was issued on completion of a post-secondary program of three years or longer",
+    "Points for education + 1 year of Canadian work experience (Maximum 25 points)": 25,
+    "Points for education + 2 years or more of Canadian work experience (Maximum 50 points)": 50
+  },
+  {
+    "With Canadian work experience and a post-secondary degree": "A university-level credential at the master’s level or at the level of an entry-to-practice professional degree for an occupation listed in the National Occupational Classification matrix at Skill Level A for which licensing by a provincial regulatory body is required",
+    "Points for education + 1 year of Canadian work experience (Maximum 25 points)": 25,
+    "Points for education + 2 years or more of Canadian work experience (Maximum 50 points)": 50
+  },
+  {
+    "With Canadian work experience and a post-secondary degree": "A university-level credential at the doctoral level",
+    "Points for education + 1 year of Canadian work experience (Maximum 25 points)": 25,
+    "Points for education + 2 years or more of Canadian work experience (Maximum 50 points)": 50
+  }
+]

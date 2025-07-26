@@ -1,0 +1,22 @@
+[
+  {
+    "Canadian Language Benchmark (CLB) level per ability": "CLB 4 or less",
+    "With a spouse or common-law partner (Maximum 22 points)": 0,
+    "Without a spouse or common-law partner (Maximum 24 points)": 0
+  },
+  {
+    "Canadian Language Benchmark (CLB) level per ability": "CLB 5 or 6",
+    "With a spouse or common-law partner (Maximum 22 points)": 1,
+    "Without a spouse or common-law partner (Maximum 24 points)": 1
+  },
+  {
+    "Canadian Language Benchmark (CLB) level per ability": "CLB 7 or 8",
+    "With a spouse or common-law partner (Maximum 22 points)": 3,
+    "Without a spouse or common-law partner (Maximum 24 points)": 3
+  },
+  {
+    "Canadian Language Benchmark (CLB) level per ability": "CLB 9 or more",
+    "With a spouse or common-law partner (Maximum 22 points)": 6,
+    "Without a spouse or common-law partner (Maximum 24 points)": 6
+  }
+]

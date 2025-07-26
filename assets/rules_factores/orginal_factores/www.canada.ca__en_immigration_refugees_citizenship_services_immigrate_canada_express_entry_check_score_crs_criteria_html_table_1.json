@@ -1,0 +1,102 @@
+[
+  {
+    "Age": "17 years of age or less",
+    "With a spouse or common-law partner (Maximum 100 points)": 0,
+    "Without a spouse or common-law partner (Maximum 110 points)": 0
+  },
+  {
+    "Age": "18 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 90,
+    "Without a spouse or common-law partner (Maximum 110 points)": 99
+  },
+  {
+    "Age": "19 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 95,
+    "Without a spouse or common-law partner (Maximum 110 points)": 105
+  },
+  {
+    "Age": "20 to 29 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 100,
+    "Without a spouse or common-law partner (Maximum 110 points)": 110
+  },
+  {
+    "Age": "30 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 95,
+    "Without a spouse or common-law partner (Maximum 110 points)": 105
+  },
+  {
+    "Age": "31 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 90,
+    "Without a spouse or common-law partner (Maximum 110 points)": 99
+  },
+  {
+    "Age": "32 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 85,
+    "Without a spouse or common-law partner (Maximum 110 points)": 94
+  },
+  {
+    "Age": "33 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 80,
+    "Without a spouse or common-law partner (Maximum 110 points)": 88
+  },
+  {
+    "Age": "34 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 75,
+    "Without a spouse or common-law partner (Maximum 110 points)": 83
+  },
+  {
+    "Age": "35 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 70,
+    "Without a spouse or common-law partner (Maximum 110 points)": 77
+  },
+  {
+    "Age": "36 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 65,
+    "Without a spouse or common-law partner (Maximum 110 points)": 72
+  },
+  {
+    "Age": "37 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 60,
+    "Without a spouse or common-law partner (Maximum 110 points)": 66
+  },
+  {
+    "Age": "38 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 55,
+    "Without a spouse or common-law partner (Maximum 110 points)": 61
+  },
+  {
+    "Age": "39 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 50,
+    "Without a spouse or common-law partner (Maximum 110 points)": 55
+  },
+  {
+    "Age": "40 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 45,
+    "Without a spouse or common-law partner (Maximum 110 points)": 50
+  },
+  {
+    "Age": "41 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 35,
+    "Without a spouse or common-law partner (Maximum 110 points)": 39
+  },
+  {
+    "Age": "42 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 25,
+    "Without a spouse or common-law partner (Maximum 110 points)": 28
+  },
+  {
+    "Age": "43 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 15,
+    "Without a spouse or common-law partner (Maximum 110 points)": 17
+  },
+  {
+    "Age": "44 years of age",
+    "With a spouse or common-law partner (Maximum 100 points)": 5,
+    "Without a spouse or common-law partner (Maximum 110 points)": 6
+  },
+  {
+    "Age": "45 years of age or more",
+    "With a spouse or common-law partner (Maximum 100 points)": 0,
+    "Without a spouse or common-law partner (Maximum 110 points)": 0
+  }
+]

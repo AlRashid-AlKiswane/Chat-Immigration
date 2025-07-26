@@ -1,0 +1,32 @@
+[
+  {
+    "Spouse's Canadian work experience": "None or less than a year",
+    "Maximum 10 points": 0,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Spouse's Canadian work experience": "1 year",
+    "Maximum 10 points": 5,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Spouse's Canadian work experience": "2 years",
+    "Maximum 10 points": 7,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Spouse's Canadian work experience": "3 years",
+    "Maximum 10 points": 8,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Spouse's Canadian work experience": "4 years",
+    "Maximum 10 points": 9,
+    "Without spouse or common-law partner (Does not apply)": ""
+  },
+  {
+    "Spouse's Canadian work experience": "5 years or more",
+    "Maximum 10 points": 10,
+    "Without spouse or common-law partner (Does not apply)": ""
+  }
+]

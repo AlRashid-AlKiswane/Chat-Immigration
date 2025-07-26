@@ -1,0 +1,22 @@
+[
+  {
+    "Factors": "Age",
+    "Points with a spouse or common-law partner": 100,
+    "Points without a spouse or common-law partner": 110
+  },
+  {
+    "Factors": "Level of education",
+    "Points with a spouse or common-law partner": 140,
+    "Points without a spouse or common-law partner": 150
+  },
+  {
+    "Factors": "Official languages proficiency",
+    "Points with a spouse or common-law partner": 150,
+    "Points without a spouse or common-law partner": 160
+  },
+  {
+    "Factors": "Canadian work experience Info",
+    "Points with a spouse or common-law partner": 70,
+    "Points without a spouse or common-law partner": 80
+  }
+]
