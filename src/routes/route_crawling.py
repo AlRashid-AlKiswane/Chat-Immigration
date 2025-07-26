@@ -78,7 +78,11 @@ from pydantic import ValidationError
 # Initialize logger and settings
 logger = setup_logging(name="ROUTE-CRAWLING")
 
-web_crawling_route = APIRouter()
+web_crawling_route = APIRouter(
+    prefix="/api/v1/web_crawling",
+    tags=["Web Crawling"],
+    responses={HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
 
 def validate_url(url: str) -> bool:
     """Validate the URL format.
@@ -96,10 +100,10 @@ def validate_url(url: str) -> bool:
         logger.error(f"URL validation failed for {url}: {e}")
         return False
 
-@web_crawling_route.post("/crawl", response_class=JSONResponse)
+@web_crawling_route.post("", response_class=JSONResponse)
 async def crawl_website(
     request: Request,
-    crawl_request: CrawlRequest = Depends()
+    crawl_request: CrawlRequest,
 ) -> JSONResponse:
     """
     Endpoint to initiate website crawling.

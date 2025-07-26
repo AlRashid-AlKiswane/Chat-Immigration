@@ -47,7 +47,11 @@ from src.infra import setup_logging
 # Initialize logger
 logger = setup_logging(name="ROUTE-LOGS")
 
-logs_router = APIRouter()
+logs_router = APIRouter(
+    prefix="/api/v1/logs",
+    tags=["Logs"],
+    responses={HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
 
 # Define the log file path safely
 try:
@@ -73,7 +77,7 @@ def validate_log_file(path: Path) -> bool:
         logger.warning(f"Log file validation failed: {e}")
         return False
 
-@logs_router.get("/logs", response_class=PlainTextResponse)
+@logs_router.get("", response_class=PlainTextResponse)
 async def get_logs(
     lines: Optional[int] = None,
     tail: bool = False

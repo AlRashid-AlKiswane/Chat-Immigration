@@ -41,11 +41,15 @@ from src.embeddings import BaseEmbeddings
 # Initialize logger and settings
 logger = setup_logging(name="ROUTE-CHUNKS-EMBEDDING")
 
-embedding_route = APIRouter()
+embedding_route = APIRouter(
+    prefix="/api/v1/embedding",
+    tags=["Embedding"],
+    responses={HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
 
-
-@embedding_route.post("/embedding", response_class=JSONResponse)
+@embedding_route.post("", response_class=JSONResponse)
 async def embedding(
+    limit: int,
     conn: Connection = Depends(get_db_conn),
     vdb_client: Client = Depends(get_vdb_client),
     embedding: BaseEmbeddings = Depends(get_embedd)
@@ -83,7 +87,8 @@ async def embedding(
             )
 
         logger.debug("Fetching chunks from the database.")
-        chunks = fetch_all_rows(conn=conn, table_name="chunks", columns=["text", "id"])
+        chunks = fetch_all_rows(conn=conn, table_name="chunks", columns=["text", "id"],
+                                limit=limit)
         if not chunks:
             logger.warning("No chunks found in the database.")
             raise HTTPException(

@@ -46,9 +46,13 @@ from pydantic import ValidationError
 # Initialize logger
 logger = setup_logging(name="ROUTE-SCRAPING")
 
-tables_crawling_route = APIRouter()
+tables_crawling_route = APIRouter(
+    prefix="/api/v1/tables_crawling",
+    tags=["Tables Crawling"],
+    responses={HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
 
-@tables_crawling_route.post("/tables_crawling", response_class=JSONResponse)
+@tables_crawling_route.post("", response_class=JSONResponse)
 async def tables_crawling(body: ScrabingTables) -> JSONResponse:
     """
     Endpoint to crawl web pages starting from a URL and scrape HTML tables.

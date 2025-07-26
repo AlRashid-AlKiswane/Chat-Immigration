@@ -36,7 +36,8 @@ from fastapi.responses import JSONResponse
 from starlette.status import (
     HTTP_200_OK,
     HTTP_400_BAD_REQUEST,
-    HTTP_500_INTERNAL_SERVER_ERROR
+    HTTP_500_INTERNAL_SERVER_ERROR,
+    HTTP_404_NOT_FOUND
 )
 
 from chromadb import Client
@@ -55,13 +56,17 @@ from src.prompt import PromptBuilder
 
 # Initialize logger
 logger = setup_logging(name="LLM-GENERATION")
-llm_generation_route = APIRouter()
+llm_generation_route = APIRouter(
+    prefix="/api/v1/llm_generation",
+    tags=["LLM Generation"],
+    responses={HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
 
 # Initialize at module level
 prompt_builder = PromptBuilder()
 
 
-@llm_generation_route.post("/generation", response_class=JSONResponse)
+@llm_generation_route.post("", response_class=JSONResponse)
 async def generation(
     generation_parameters: GenerationParameters,
     rag_config: RAGConfig,
@@ -147,7 +152,6 @@ async def generation(
                 n_results=rag_config.n_results,
                 include_metadata=rag_config.include_metadata
             )
-            logger.debug(f"Retrieved {len(retrieved_docs)} documents")
         except Exception as e:
             logger.error(f"Document retrieval failed: {str(e)}", exc_info=True)
             raise HTTPException(
@@ -205,7 +209,6 @@ async def generation(
                     "response": response,
                     "source": "generation",
                     "user_id": user_id,
-                    "retrieved_docs_count": len(retrieved_docs)
                 }
             )
 

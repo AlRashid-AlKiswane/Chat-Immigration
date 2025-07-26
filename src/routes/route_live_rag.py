@@ -32,7 +32,8 @@ from fastapi.responses import JSONResponse
 from starlette.status import (
     HTTP_200_OK,
     HTTP_400_BAD_REQUEST,
-    HTTP_500_INTERNAL_SERVER_ERROR
+    HTTP_500_INTERNAL_SERVER_ERROR,
+    HTTP_404_NOT_FOUND
 )
 
 from chromadb import Client
@@ -46,12 +47,16 @@ from src.embeddings import BaseEmbeddings
 
 logger = setup_logging(name="ROUTE-LIVE-RAG")
 
-live_rag_route = APIRouter()
+live_rag_route = APIRouter(
+    prefix="/api/v1/live_rag",
+    tags=["Live RAG"],
+    responses={HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
 
-@live_rag_route.post("/live_rag", response_class=JSONResponse)
+@live_rag_route.post("", response_class=JSONResponse)
 async def live_rag(
     query: str,
-    rag_config: RAGConfig = Depends(),
+    rag_config: RAGConfig,
     vdb_client: Client = Depends(get_vdb_client),
     embedding: BaseEmbeddings = Depends(get_embedd),
 ) -> JSONResponse:

@@ -19,6 +19,7 @@ import logging
 from typing import List
 from fastapi import APIRouter, UploadFile, File, HTTPException, status
 from fastapi.responses import JSONResponse
+from starlette.status import HTTP_404_NOT_FOUND
 
 # Set up project base directory
 try:
@@ -36,7 +37,13 @@ from src.enums import FileUploadMsg
 logger = setup_logging(name="ROUTE-UPLOAD-DOCS")
 
 app_settings: Settings = get_settings()
-upload_route = APIRouter()
+
+upload_route = APIRouter(
+    prefix="/api/v1/upload",
+    tags=["Upload"],
+    responses={HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
+
 UPLOAD_DIR = app_settings.DOC_LOCATION_SAVE
 
 
@@ -74,7 +81,7 @@ def _save_uploaded_file(file: UploadFile, upload_dir: str) -> dict:
         ) from e
 
 
-@upload_route.post("/upload/")
+@upload_route.post("")
 async def upload_files(files: List[UploadFile] = File(...)):
     """
     Upload one or more files to the server after validating their extensions.

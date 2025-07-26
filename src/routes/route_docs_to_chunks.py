@@ -7,6 +7,7 @@ Handles document loading, text chunking, and database operations with comprehens
 
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter, Depends, HTTPException
+from starlette.status import HTTP_404_NOT_FOUND
 import sqlite3
 import os
 import sys
@@ -38,10 +39,14 @@ from src.infra import setup_logging
 logger = setup_logging(name="ROUTE-DOCS-CHUNKING")
 app_settings: Settings = get_settings()
 
-docs_to_chunks_route = APIRouter()
+docs_to_chunks_route = APIRouter(
+    prefix="/api/v1/docs_to_chunks",
+    tags=["Docs To Chunks"],
+    responses={HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
 
 
-@docs_to_chunks_route.post("/docs_to_chunks")
+@docs_to_chunks_route.post("")
 async def docs_to_chunks(
     body: ChunksRequest, conn: sqlite3.Connection = Depends(get_db_conn)
 ) -> JSONResponse:

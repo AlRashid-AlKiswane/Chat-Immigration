@@ -33,6 +33,7 @@ from starlette.status import (
     HTTP_200_OK,
     HTTP_400_BAD_REQUEST,
     HTTP_500_INTERNAL_SERVER_ERROR,
+    HTTP_404_NOT_FOUND
 )
 from src.infra import setup_logging
 from src.schema import ModelInfo
@@ -44,10 +45,15 @@ from src.llms import (
     HuggingFaceLLM
 )
 
-llms_route = APIRouter()
+llms_route = APIRouter(
+    prefix="/api/v1/llms/config",
+    tags=["LLMs"],
+    responses={HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
+
 logger = setup_logging(name="ROUTE-LLMS-CONFIG")
 
-@llms_route.post("/llms/configure", response_class=JSONResponse)
+@llms_route.post("", response_class=JSONResponse)
 async def configure_llm(
     request: Request,
     llm_info: ModelInfo

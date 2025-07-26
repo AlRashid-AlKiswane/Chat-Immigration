@@ -32,6 +32,7 @@ from fastapi.responses import JSONResponse
 from starlette.status import (
     HTTP_200_OK,
     HTTP_500_INTERNAL_SERVER_ERROR,
+    HTTP_404_NOT_FOUND
 )
 
 # pylint: disable=wrong-import-order
@@ -40,9 +41,13 @@ from src.infra import setup_logging, DeviceMonitor
 # Initialize logger and settings
 logger = setup_logging(name="ROUTE-MONITORING")
 
-monitoring_route = APIRouter()
+monitoring_route = APIRouter(
+    prefix="/api/v1/monitoring",
+    tags=["Monitoring"],
+    responses={HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
 
-@monitoring_route.get("/resources", response_class=JSONResponse)
+@monitoring_route.get("", response_class=JSONResponse)
 async def get_system_resources() -> JSONResponse:
     """
     Get comprehensive system resource information

@@ -14,6 +14,8 @@ from typing import Optional
 from datetime import datetime
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
+from starlette.status import HTTP_404_NOT_FOUND
+
 # Set up project base directory
 try:
     MAIN_DIR = os.path.abspath(os.path.join(
@@ -31,8 +33,11 @@ from src.infra import setup_logging
 from src import get_chat_history
 
 logger = setup_logging(name="ROUTE-HISTORY-MANAGEMENT")
-history_router = APIRouter()
-
+history_router = APIRouter(
+    prefix="/api/v1/history",
+    tags=["History"],
+    responses={HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
 
 def format_error_response(message: str, error: str = None) -> dict:
     """Standard error response format"""
