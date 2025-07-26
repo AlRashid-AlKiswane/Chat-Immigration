@@ -3,72 +3,170 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LLM Configuration | Canada Immigration</title>
-
+  <title>LLM Configuration | Canada Express Entry</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #d32f2f;
+      --primary-light: #ff6659;
+      --primary-dark: #9a0007;
+      --secondary: #f5f5f5;
+      --text: #212121;
+      --text-light: #757575;
+      --white: #ffffff;
+      --maple-leaf: #d52b1e;
+    }
+    
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f5f5;
+      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background-color: var(--secondary);
+      color: var(--text);
       margin: 0;
       padding: 0;
-      color: #333;
+      line-height: 1.6;
     }
 
     header {
-      background-color: #d32f2f;
-      color: white;
-      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
       text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 2rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    header::before {
+      content: "❄️";
+      position: absolute;
+      font-size: 8rem;
+      opacity: 0.05;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .canada-flag {
+      width: 40px;
+      height: 20px;
+      display: inline-block;
+      background: linear-gradient(
+        to right,
+        #d52b1e 0%, #d52b1e 33.33%,
+        white 33.33%, white 66.66%,
+        #d52b1e 66.66%, #d52b1e 100%
+      );
+      position: relative;
+    }
+    
+    .canada-flag::after {
+      content: "🍁";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
     }
 
     main {
-      max-width: 650px;
+      max-width: 700px;
       margin: 3rem auto;
-      background-color: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      background-color: var(--white);
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
     }
 
     label {
       font-weight: 600;
       display: block;
-      margin-top: 1rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
     }
 
-    input[type="text"], select {
+    input[type="text"], 
+    select {
       width: 100%;
-      padding: 0.6rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+    }
+
+    input[type="text"]:focus, 
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
     }
 
     button {
-      background-color: #d32f2f;
-      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
       border: none;
-      padding: 0.8rem 1.6rem;
-      font-weight: bold;
-      border-radius: 6px;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      margin-top: 1rem;
     }
 
     button:hover {
-      background-color: #b71c1c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
     }
 
     .result-box {
-      margin-top: 1.5rem;
-      background: #fdf3f3;
-      padding: 1rem;
-      border-left: 4px solid #d32f2f;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      white-space: pre-wrap;
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      line-height: 1.6;
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .success {
@@ -77,63 +175,130 @@
       color: #2e7d32;
     }
 
+    .error {
+      background: #ffebee;
+      border-left: 4px solid #c62828;
+      color: #c62828;
+    }
+
+    .result-icon {
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+
+    .config-details {
+      margin-top: 1rem;
+      background: rgba(0,0,0,0.03);
+      padding: 1rem;
+      border-radius: 6px;
+    }
+
+    .config-item {
+      display: flex;
+      margin-bottom: 0.5rem;
+    }
+
+    .config-label {
+      font-weight: 600;
+      min-width: 100px;
+    }
+
     footer {
       text-align: center;
-      margin-top: 4rem;
+      padding: 2rem;
+      color: var(--text-light);
       font-size: 0.9rem;
-      color: #999;
+      background-color: var(--white);
+      margin-top: 3rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 1.5rem;
+        margin: 2rem 1rem;
+      }
+      
+      h1 {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <h1>🇨🇦 LLM Configuration - Canada Express Entry</h1>
+    <div class="header-content">
+      <h1>
+        <span class="canada-flag"></span>
+        LLM Configuration - Canada Express Entry
+        <span class="canada-flag"></span>
+      </h1>
+    </div>
   </header>
 
   <main>
     <form id="llmForm">
-      <label for="provider">LLM Provider</label>
-      <select id="provider" required>
-        <option value="">Select Provider</option>
-        <option value="openai">OpenAI</option>
-        <option value="cohere">Cohere</option>
-        <option value="deepseek">DeepSeek</option>
-        <option value="gemini">Gemini</option>
-        <option value="huggingface">HuggingFace</option>
-        <option value="local">Local (HF)</option>
-      </select>
+      <div class="form-group">
+        <label for="provider"><i class="fas fa-server"></i> LLM Provider</label>
+        <select id="provider" required>
+          <option value="">Select Provider</option>
+          <option value="openai">OpenAI</option>
+          <option value="cohere">Cohere</option>
+          <option value="deepseek">DeepSeek</option>
+          <option value="gemini">Gemini</option>
+          <option value="huggingface">HuggingFace</option>
+          <option value="local">Local (HF)</option>
+        </select>
+      </div>
 
-      <label for="modelName">Model Name</label>
-      <input type="text" id="modelName" placeholder="e.g., gpt-4, command-r, llama3-chat"/>
+      <div class="form-group">
+        <label for="modelName"><i class="fas fa-microchip"></i> Model Name</label>
+        <input type="text" id="modelName" placeholder="e.g., gpt-4, command-r, llama3-chat" required/>
+      </div>
 
-      <button type="submit">Configure LLM</button>
+      <button type="submit">
+        <i class="fas fa-cogs"></i> Configure LLM
+      </button>
     </form>
 
-    <div id="llmResult" class="result-box" style="display: none;"></div>
+    <div id="llmResult" class="result-box"></div>
   </main>
 
   <footer>
-    &copy; 2025 Canada Express Entry Admin Panel
+    &copy; 2025 Canada Express Entry AI Administration • Powered by FastAPI
+    <br>
+    <small>Official colors inspired by the Canadian flag (#D52B1E)</small>
   </footer>
 
   <script>
     document.getElementById("llmForm").addEventListener("submit", async function (e) {
       e.preventDefault();
-
+  
       const provider = document.getElementById("provider").value.trim();
       const modelName = document.getElementById("modelName").value.trim();
       const resultBox = document.getElementById("llmResult");
-
+  
       if (!provider || !modelName) {
         resultBox.style.display = "block";
-        resultBox.classList.remove("success");
-        resultBox.textContent = "❗ Please select a provider and enter model name.";
+        resultBox.className = "result-box error";
+        resultBox.innerHTML = `
+          <i class="fas fa-exclamation-circle result-icon"></i>
+          Please select a provider and enter model name.
+        `;
         return;
       }
-
+  
       try {
-        const response = await fetch("/api/llms/configure/", {
+        // Show processing state
+        resultBox.style.display = "block";
+        resultBox.className = "result-box";
+        resultBox.innerHTML = `
+          <i class="fas fa-cog fa-spin result-icon"></i>
+          Configuring LLM settings...
+        `;
+
+        const response = await fetch("/api/v1/llms/config", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -141,26 +306,53 @@
             model_name: modelName
           })
         });
-
+  
         const data = await response.json();
-        resultBox.style.display = "block";
-
+        
         if (response.ok) {
-          resultBox.classList.add("success");
-          resultBox.innerHTML =
-            `✅ LLM Configured Successfully!\n\n🔧 Provider: ${data.provider}\n📘 Model: ${data.llm_name}`;
+          resultBox.className = "result-box success";
+          resultBox.innerHTML = `
+            <i class="fas fa-check-circle result-icon"></i>
+            <strong>LLM Configured Successfully!</strong>
+            <div class="config-details">
+              <div class="config-item">
+                <span class="config-label">Provider:</span>
+                <span>${data.provider}</span>
+              </div>
+              <div class="config-item">
+                <span class="config-label">Model:</span>
+                <span>${data.llm_name}</span>
+              </div>
+              <div class="config-item">
+                <span class="config-label">Status:</span>
+                <span>Active</span>
+              </div>
+            </div>
+          `;
         } else {
-          resultBox.classList.remove("success");
-          resultBox.textContent = `❌ Error: ${data.detail || data.message || "Unknown error"}`;
+          resultBox.className = "result-box error";
+          resultBox.innerHTML = `
+            <i class="fas fa-exclamation-circle result-icon"></i>
+            <strong>Configuration Error</strong>
+            <div class="config-details">
+              ${data.detail || data.message || "Unknown error occurred"}
+            </div>
+          `;
         }
-
+  
       } catch (err) {
         console.error("Error:", err);
-        resultBox.classList.remove("success");
+        resultBox.className = "result-box error";
         resultBox.style.display = "block";
-        resultBox.textContent = "⚠️ Server error while configuring LLM.";
+        resultBox.innerHTML = `
+          <i class="fas fa-exclamation-triangle result-icon"></i>
+          <strong>Server Error</strong>
+          <div class="config-details">
+            Could not connect to the configuration service. Please try again later.
+          </div>
+        `;
       }
     });
-  </script>
+  </script>  
 </body>
 </html>

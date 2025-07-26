@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Immigration Canada | Storage Management</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #d32f2f;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    main {
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    .controls {
+      background-color: #f9f9f9;
+      border-left: 5px solid #d32f2f;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border-radius: 5px;
+    }
+    .controls h2 {
+      margin-top: 0;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    input[type="checkbox"] {
+      margin-right: 0.5rem;
+      cursor: pointer;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.5rem 1.5rem;
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    button:hover:not(:disabled) {
+      background-color: #b71c1c;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    #response-section {
+      background: #f1f1f1;
+      padding: 1rem;
+      border-left: 5px solid #d32f2f;
+      border-radius: 5px;
+      min-height: 120px;
+      white-space: pre-wrap;
+      font-family: monospace;
+      font-size: 0.95rem;
+      color: #444;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #f1f1f1;
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Immigration Canada - Storage Management Console</h1>
+  </header>
+
+  <main>
+    <section class="controls">
+      <h2>Reset Options</h2>
+      <form id="reset-form">
+        <label><input type="checkbox" name="layers_all" /> Reset All Layers</label>
+        <label><input type="checkbox" name="do_reset_table_db" /> Reset DB Tables</label>
+        <label><input type="checkbox" name="do_reset_chunks_table" /> Reset Chunks Table</label>
+        <label><input type="checkbox" name="do_reset_collection_vdb" /> Reset VDB Collections</label>
+        <label><input type="checkbox" name="do_reset_chunks_collection" /> Reset Chunks VDB Collection</label>
+        <button type="submit">Submit Reset</button>
+      </form>
+    </section>
+
+    <section id="response-section" aria-live="polite">
+      Awaiting action...
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Immigration, Refugees and Citizenship Canada</p>
+  </footer>
+  <script>
+    const form = document.getElementById("reset-form");
+    const responseSection = document.getElementById("response-section");
+    const endpoint = "/api/v1/storage"; // Adjust if needed
+  
+    function renderResponse(data) {
+      if (!data.success) {
+        return `<p style="color: red; font-weight: bold;">${data.message || 'Operation failed.'}</p>`;
+      }
+  
+      const results = data.results || {};
+      const rows = Object.entries(results).map(([key, val]) => {
+        const labelMap = {
+          chunks: "Chunks Table Reset",
+          query_responses: "Query Responses Table Reset",
+          vector_db_collections_reset: "Vector DB Collections Reset",
+          chunks_collection_reset: "Chunks Vector DB Collection Reset"
+        };
+        const label = labelMap[key] || key;
+  
+        const statusIcon = val
+          ? '<span style="color: green; font-weight: bold;">&#10004;</span>' // ✓
+          : '<span style="color: red; font-weight: bold;">&#10008;</span>';  // ✘
+  
+        return `<tr><td>${label}</td><td style="text-align:center;">${statusIcon}</td></tr>`;
+      }).join("");
+  
+      return `
+        <h3 style="color: #2e7d32;">${data.message || 'Storage Reset Result'}</h3>
+        <table style="width: 100%; border-collapse: collapse; font-size: 1rem;">
+          <thead>
+            <tr style="background-color: #d32f2f; color: white;">
+              <th style="padding: 0.5rem; text-align: left;">Component</th>
+              <th style="padding: 0.5rem; text-align: center;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `;
+    }
+  
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      responseSection.textContent = "Processing reset request...";
+      const submitBtn = form.querySelector("button[type=submit]");
+      submitBtn.disabled = true;
+  
+      const formData = new FormData(form);
+      const payload = {};
+      for (const key of [
+        "layers_all",
+        "do_reset_table_db",
+        "do_reset_chunks_table",
+        "do_reset_collection_vdb",
+        "do_reset_chunks_collection"
+      ]) {
+        payload[key] = formData.has(key);
+      }
+  
+      try {
+        const query = new URLSearchParams(payload).toString();
+        const res = await fetch(`${endpoint}?${query}`, {
+          method: "POST"
+        });
+  
+        if (!res.ok) {
+          const errorText = await res.text();
+          responseSection.textContent = `Error ${res.status}: ${errorText}`;
+          submitBtn.disabled = false;
+          return;
+        }
+  
+        const data = await res.json();
+        // Use the pretty renderer here
+        responseSection.innerHTML = renderResponse(data);
+  
+      } catch (error) {
+        responseSection.textContent = `Network error: ${error.message}`;
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>  
+</body>
+</html>

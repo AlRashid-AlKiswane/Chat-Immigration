@@ -2,328 +2,431 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Admin Panel | Canada Express Entry</title>
+  <title>System Monitor – Canada Immigration</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
+      background: #fff;
       margin: 0;
-      padding: 0;
-      background-color: #fff;
-      color: #111;
+      color: #222;
     }
 
     header {
-      background: linear-gradient(135deg, #d32f2f, #f44336);
+      background: linear-gradient(to right, #d32f2f, #f44336);
       color: white;
       text-align: center;
       padding: 1.5rem 1rem;
-      font-size: 1.75rem;
-      font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #eee;
-      padding: 0.5rem;
-      gap: 1rem;
-    }
-
-    nav button {
-      background-color: #d32f2f;
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    nav button.active {
-      background-color: #b71c1c;
-    }
-
-    section {
-      display: none;
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 2rem;
-      border-radius: 10px;
-      background-color: #fafafa;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-    }
-
-    section.active {
-      display: block;
-    }
-
-    /* Logs Viewer styles */
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      align-items: center;
-    }
-
-    input[type="number"] {
-      width: 100px;
-      padding: 0.5rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    label {
+      font-size: 2rem;
       font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    button {
-      background-color: #d32f2f;
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #b71c1c;
-    }
-
-    pre {
-      background-color: #eee;
-      padding: 1rem;
-      border-radius: 6px;
-      max-height: 500px;
-      overflow-y: auto;
-      white-space: pre-wrap;
-      font-size: 0.9rem;
-      border-left: 5px solid #d32f2f;
-    }
-
-    /* System Monitor styles */
     .section-header {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: #d32f2f;
-      border-bottom: 2px solid #d32f2f;
-      padding-bottom: 0.5rem;
+      text-align: center;
+      margin: 2rem auto 1rem;
+      font-size: 1.4rem;
+      color: #b71c1c;
     }
 
-    .resource-grid {
+    .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .resource-card {
-      border-radius: 8px;
+      gap: 2rem;
       padding: 1rem;
-      color: white;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      max-width: 1000px;
+      margin: auto;
     }
 
-    .resource-title {
+    .card {
+      text-align: center;
+      padding: 1rem;
+      border-radius: 8px;
+      background: #fafafa;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      margin: 0.5rem 0 1rem;
       font-size: 1.2rem;
+      color: #333;
+    }
+
+    .ring-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: auto;
+    }
+
+    .ring-container svg {
+      transform: rotate(-90deg);
+    }
+
+    .ring-container .percent-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.1rem;
       font-weight: bold;
-      margin-bottom: 0.5rem;
+      color: #222;
     }
 
-    .resource-details {
-      font-size: 1rem;
-    }
-
-    .refresh-btn {
-      background-color: #d32f2f;
-      color: white;
-      border: none;
-      padding: 0.8rem 1.8rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .refresh-btn:hover {
-      background-color: #b71c1c;
-    }
-
-    .health {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-top: 1rem;
-      padding: 0.8rem;
-      border-radius: 6px;
-    }
-
-    .low { background-color: #2e7d32; }
-    .medium { background-color: #ffa000; }
-    .high { background-color: #d32f2f; }
-    .default { background-color: #616161; }
-
-    footer {
-      text-align: center;
-      margin: 3rem auto 1rem;
+    .info {
+      margin-top: 0.75rem;
       font-size: 0.9rem;
       color: #666;
     }
+
+    .low-color { stroke: #2e7d32; }     /* Green */
+    .medium-color { stroke: #fbc02d; }  /* Yellow */
+    .high-color { stroke: #d32f2f; }    /* Red */
+    .na { stroke: #999; }
   </style>
 </head>
 <body>
 
-  <header>Canada Express Entry – Admin Dashboard</header>
-
-  <nav>
-    <button id="tab-logs" class="active" onclick="showTab('logs')">📄 Logs</button>
-    <button id="tab-monitor" onclick="showTab('monitor')">💻 System Monitoring</button>
-  </nav>
-
-  <!-- Logs Viewer Section -->
-  <section id="logs" class="active">
-    <div class="controls">
-      <label for="lines">Lines:</label>
-      <input type="number" id="lines" min="1" placeholder="e.g. 20" />
-      <label><input type="checkbox" id="tail" /> Tail (last N lines)</label>
-      <button onclick="loadLogs()">Fetch Logs</button>
-      <button onclick="loadLogs(true)">Load All</button>
-    </div>
-    <pre id="logOutput">⬅️ Logs will appear here...</pre>
-  </section>
-
-  <!-- System Monitoring Section -->
-  <section id="monitor">
-    <div class="section-header">System Resources</div>
-    <div class="resource-grid" id="resourceGrid"></div>
-    <button class="refresh-btn" onclick="loadResources()">Refresh Resources</button>
-
-    <div class="section-header">Health Check</div>
-    <div id="healthStatus" class="health">Loading health status...</div>
-  </section>
-
-  <footer>
-    &copy; 2025 Canada Immigration Assistant – Admin Panel
-  </footer>
+  <header>🇨🇦 Canada Immigration – System Monitor</header>
+  <div class="section-header">Live System Resources</div>
+  <div class="grid" id="dashboardGrid"></div>
 
   <script>
-    function showTab(tabId) {
-      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-      document.querySelectorAll("nav button").forEach(btn => btn.classList.remove("active"));
-      document.getElementById(tabId).classList.add("active");
-      document.getElementById("tab-" + tabId).classList.add("active");
+    const RADIUS = 50;
+    const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+
+    function getRingClass(percent, type = "default") {
+      if (typeof percent !== "number") return "na";
+
+      if (type === "battery") {
+        if (percent >= 75) return "low-color";     // Green
+        if (percent >= 50) return "medium-color";  // Yellow
+        return "high-color";                       // Red
+      }
+
+      // Default for CPU, Memory, Disk
+      if (percent < 50) return "low-color";        // Green
+      if (percent < 75) return "medium-color";     // Yellow
+      return "high-color";                         // Red
     }
 
-    async function loadLogs(loadAll = false) {
-      const lines = document.getElementById("lines").value;
-      const tail = document.getElementById("tail").checked;
-      const output = document.getElementById("logOutput");
-      output.textContent = "⏳ Loading logs...";
-
-      let url = "/logs";
-      const params = new URLSearchParams();
-
-      if (!loadAll) {
-        if (lines) {
-          params.append("lines", lines);
-          if (tail) params.append("tail", "true");
-        } else {
-          alert("Please specify number of lines or click 'Load All'.");
-          output.textContent = "⚠️ No input provided.";
-          return;
-        }
+    function createRing(title, percent, infoText = "", type = "default") {
+      if (typeof percent !== "number") {
+        return `
+          <div class="card">
+            <h2>${title}</h2>
+            <div class="ring-container">
+              <div class="percent-label">N/A</div>
+            </div>
+          </div>
+        `;
       }
 
-      if (!loadAll && params.toString()) {
-        url += "?" + params.toString();
-      }
-
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          const err = await response.json();
-          output.textContent = `❌ Error: ${err.detail || response.statusText}`;
-          return;
-        }
-
-        const data = await response.text();
-        output.textContent = data || "✅ No log entries available.";
-      } catch (err) {
-        output.textContent = "❌ Failed to fetch logs: " + err.message;
-      }
-    }
-
-    function getUsageClass(usage) {
-      if (typeof usage === 'number') {
-        if (usage < 50) return 'low';
-        if (usage < 75) return 'medium';
-        return 'high';
-      }
-      return 'default';
-    }
-
-    function renderResourceCard(key, data) {
-      let usageValue = data.usage;
-      let usageDisplay = (usageValue !== undefined) ? `${usageValue}%` : JSON.stringify(data);
-      let dynamicClass = getUsageClass(usageValue);
-      const title = key.charAt(0).toUpperCase() + key.slice(1);
+      const strokeDash = CIRCUMFERENCE * (1 - percent / 100);
+      const colorClass = getRingClass(percent, type);
 
       return `
-        <div class="resource-card ${dynamicClass}">
-          <div class="resource-title">${title}</div>
-          <div class="resource-details">${usageDisplay}</div>
+        <div class="card">
+          <h2>${title}</h2>
+          <div class="ring-container">
+            <svg width="120" height="120">
+              <circle cx="60" cy="60" r="${RADIUS}" stroke="#eee" stroke-width="10" fill="none"/>
+              <circle cx="60" cy="60" r="${RADIUS}" stroke-width="10"
+                      fill="none" stroke-dasharray="${CIRCUMFERENCE}"
+                      stroke-dashoffset="${strokeDash}" class="${colorClass}" />
+            </svg>
+            <div class="percent-label">${percent.toFixed(1)}%</div>
+          </div>
+          ${infoText ? `<div class="info">${infoText}</div>` : ""}
         </div>
       `;
     }
 
-    async function loadResources() {
-      try {
-        const resResponse = await fetch("/resources");
-        const resData = await resResponse.json();
-        const grid = document.getElementById("resourceGrid");
-        grid.innerHTML = "";
-
-        if (resResponse.ok && resData.data) {
-          for (const key in resData.data) {
-            if (Object.hasOwnProperty.call(resData.data, key)) {
-              grid.innerHTML += renderResourceCard(key, resData.data[key]);
-            }
-          }
-        } else {
-          grid.innerHTML = "<p>Failed to load resources.</p>";
-        }
-      } catch (err) {
-        console.error("Error loading resources:", err);
-        document.getElementById("resourceGrid").innerHTML = "<p>Error loading resources.</p>";
-      }
+    async function loadMonitoringData() {
+      const grid = document.getElementById("dashboardGrid");
 
       try {
-        const healthResponse = await fetch("/health");
-        const healthData = await healthResponse.json();
-        const healthStatus = document.getElementById("healthStatus");
+        const res = await fetch("/api/v1/monitoring");
+        const json = await res.json();
+        const data = json?.data || {};
 
-        if (healthResponse.ok && healthData.status === "healthy") {
-          healthStatus.textContent = "Status: Healthy";
-          healthStatus.style.backgroundColor = "#2e7d32";
-          healthStatus.style.color = "white";
-        } else {
-          healthStatus.textContent = "Status: Unhealthy";
-          healthStatus.style.backgroundColor = "#d32f2f";
-          healthStatus.style.color = "white";
-        }
+        const cards = [];
+
+        const cpu = data.cpu || {};
+        cards.push(createRing("CPU", cpu.cpu_usage, cpu.cpu_temp ? `Temp: ${cpu.cpu_temp}°C` : "", "default"));
+
+        const mem = data.memory || {};
+        cards.push(createRing("Memory", mem.percent, mem.used && mem.total ? `${mem.used} / ${mem.total} MB` : "", "default"));
+
+        const disk = data.disk || {};
+        const diskPercent = (disk.used && disk.total) ? (disk.used / disk.total) * 100 : undefined;
+        cards.push(createRing("Disk", diskPercent, disk.used && disk.total ? `${disk.used} / ${disk.total} GB` : "", "default"));
+
+        const batt = data.battery || {};
+        cards.push(createRing("Battery", batt.percent, batt.plugged_in !== undefined ? (batt.plugged_in ? "🔌 Plugged In" : "🔋 On Battery") : "", "battery"));
+
+        grid.innerHTML = cards.join("");
       } catch (err) {
-        document.getElementById("healthStatus").textContent = "Error fetching health status.";
+        grid.innerHTML = `<div class="card"><h2>Error</h2><div class="info">Failed to fetch system data.</div></div>`;
+        console.error("Monitoring fetch error:", err);
       }
     }
 
-    // Auto-load system resources on first view
     window.addEventListener("load", () => {
-      loadResources();
+      loadMonitoringData();
+      setInterval(loadMonitoringData, 5000);
+    });
+  </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>App Logs Viewer – 🇨🇦 Canada Immigration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 0;
+      background: #f5f7fa;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(to right, #d32f2f, #f44336);
+      color: white;
+      padding: 1rem 1.5rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      user-select: none;
+      text-align: center;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 1.5rem;
+      max-width: 900px;
+      margin: auto;
+      width: 100%;
+    }
+
+    form {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    label {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    input[type="number"] {
+      width: 80px;
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      text-align: right;
+    }
+
+    select {
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 0.5rem 1.2rem;
+      background: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background: #b71c1c;
+    }
+
+    #logOutput {
+      flex: 1;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      box-shadow: inset 0 0 10px #000;
+    }
+
+    /* Color classes for log levels */
+    .log-error {
+      color: #ff6b6b; /* soft red */
+      font-weight: 700;
+    }
+    .log-info {
+      color: #4dabf7; /* bright blue */
+    }
+    .log-debug {
+      color: #4caf50; /* green */
+      font-style: italic;
+    }
+
+    #status {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #666;
+      user-select: none;
+      min-height: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <header>🇨🇦 Canada Immigration – Application Logs Viewer</header>
+  <main>
+    <form id="logForm" aria-label="Log retrieval form">
+      <label for="linesInput">Lines:</label>
+      <input
+        type="number"
+        id="linesInput"
+        name="lines"
+        min="1"
+        placeholder="e.g. 100"
+        aria-describedby="linesHelp"
+      />
+      <label for="modeSelect">Mode:</label>
+      <select id="modeSelect" name="mode" aria-describedby="modeHelp">
+        <option value="full">Full</option>
+        <option value="head">Head</option>
+        <option value="tail" selected>Tail</option>
+      </select>
+      <button type="submit">Fetch Logs</button>
+    </form>
+
+    <div id="status" aria-live="polite" role="status"></div>
+    <pre id="logOutput" tabindex="0" aria-label="Log file content"></pre>
+  </main>
+
+  <script>
+    const form = document.getElementById('logForm');
+    const logOutput = document.getElementById('logOutput');
+    const statusEl = document.getElementById('status');
+    const linesInput = document.getElementById('linesInput');
+    const modeSelect = document.getElementById('modeSelect');
+
+    let autoRefreshTimer = null;
+
+    function escapeHtml(unsafe) {
+      return unsafe.replace(/[&<>"']/g, (match) => {
+        const escapeMap = {
+          '&': "&amp;",
+          '<': "&lt;",
+          '>': "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        };
+        return escapeMap[match];
+      });
+    }
+
+    // Add color spans based on log level keywords
+    function colorizeLogLines(logText) {
+      const lines = logText.split('\n');
+      return lines.map(line => {
+        const escapedLine = escapeHtml(line);
+        if (/error/i.test(line)) {
+          return `<span class="log-error">${escapedLine}</span>`;
+        } else if (/info/i.test(line)) {
+          return `<span class="log-info">${escapedLine}</span>`;
+        } else if (/debug/i.test(line)) {
+          return `<span class="log-debug">${escapedLine}</span>`;
+        } else {
+          return escapedLine;
+        }
+      }).join('\n');
+    }
+
+    async function fetchLogs(lines, mode) {
+      try {
+        statusEl.textContent = 'Loading logs...';
+
+        const params = new URLSearchParams();
+
+        if (mode !== 'full') {
+          if (!lines || lines <= 0) {
+            statusEl.textContent = 'Please enter a positive number of lines.';
+            return;
+          }
+          params.append('lines', lines);
+          params.append('tail', mode === 'tail' ? 'true' : 'false');
+        }
+
+        const response = await fetch(`/api/v1/logs?${params.toString()}`);
+
+        if (!response.ok) {
+          const errText = await response.text();
+          statusEl.textContent = `Error: ${response.status} - ${errText}`;
+          return;
+        }
+
+        const text = await response.text();
+
+        logOutput.innerHTML = colorizeLogLines(text);
+
+        statusEl.textContent = `Logs loaded (${mode}${lines ? `, ${lines} lines` : ''}). Scroll the output below.`;
+
+        if (mode === 'tail') {
+          logOutput.scrollTop = logOutput.scrollHeight;
+        } else {
+          logOutput.scrollTop = 0;
+        }
+      } catch (error) {
+        statusEl.textContent = 'Failed to fetch logs.';
+        console.error('Fetch error:', error);
+      }
+    }
+
+    // Fetch logs and restart timer
+    function refreshLogs() {
+      const lines = parseInt(linesInput.value, 10);
+      const mode = modeSelect.value;
+
+      fetchLogs(lines, mode);
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      refreshLogs();
+
+      // Reset the interval timer on manual fetch
+      if (autoRefreshTimer) {
+        clearInterval(autoRefreshTimer);
+      }
+      autoRefreshTimer = setInterval(refreshLogs, 5000);
+    });
+
+    // Initial load + start auto-refresh every 5 seconds
+    window.addEventListener('load', () => {
+      linesInput.value = 100;
+      modeSelect.value = 'tail';
+      refreshLogs();
+      autoRefreshTimer = setInterval(refreshLogs, 5000);
     });
   </script>
 </body>

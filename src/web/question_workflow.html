@@ -153,17 +153,16 @@
             color: #374151;
         }
 
-        .input-group select {
+        .input-group input, .input-group select {
             width: 100%;
             padding: 12px 16px;
             border: 2px solid #e5e7eb;
             border-radius: 8px;
             font-size: 16px;
             transition: border-color 0.3s ease;
-            background: white;
         }
 
-        .input-group select:focus {
+        .input-group input:focus, .input-group select:focus {
             outline: none;
             border-color: #dc2626;
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
@@ -199,7 +198,6 @@
             cursor: pointer;
             transition: all 0.3s ease;
             min-width: 120px;
-            position: relative;
         }
 
         .btn-primary {
@@ -212,12 +210,6 @@
             box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
         }
 
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
         .btn-secondary {
             background: #f3f4f6;
             color: #374151;
@@ -228,7 +220,7 @@
             background: #e5e7eb;
         }
 
-        .success-card {
+        .result-card {
             background: linear-gradient(135deg, #059669 0%, #047857 100%);
             color: white;
             border-radius: 16px;
@@ -237,54 +229,19 @@
             margin: 20px 0;
         }
 
-        .loading {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .result-score {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
         }
 
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid transparent;
-            border-top: 2px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .alert {
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            font-weight: 500;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-        }
-
-        .alert.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .alert.success {
-            background: #d1fae5;
-            color: #047857;
-            border: 1px solid #a7f3d0;
-        }
-
-        .alert.error {
-            background: #fee2e2;
-            color: #dc2626;
-            border: 1px solid #fecaca;
+        .ineligible-card {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
         }
 
         .hidden {
@@ -333,10 +290,8 @@
         </div>
         
         <div class="step-indicator" id="stepIndicator">
-            Step 1 of 20
+            Step 1 of 15
         </div>
-
-        <div id="alert" class="alert"></div>
 
         <div class="question-card" id="questionCard">
             <div class="question-title" id="questionTitle"></div>
@@ -345,12 +300,7 @@
             
             <div class="buttons">
                 <button class="btn btn-secondary" id="backBtn" onclick="goBack()" style="display: none;">Back</button>
-                <button class="btn btn-primary" id="nextBtn" onclick="goNext()">
-                    <span class="btn-text">Next</span>
-                    <div class="loading">
-                        <div class="spinner"></div>
-                    </div>
-                </button>
+                <button class="btn btn-primary" id="nextBtn" onclick="goNext()">Next</button>
             </div>
         </div>
 
@@ -358,11 +308,89 @@
     </div>
 
     <script>
+        // Language test score mappings
+        const IELTS_BAND_TO_CLB = {
+            "listening": [[4.5, 4], [5.0, 5], [5.5, 6], [6.0, 7], [6.5, 8], [7.0, 9], [8.0, 10]],
+            "speaking": [[4.0, 4], [5.0, 5], [5.5, 6], [6.0, 7], [6.5, 8], [7.0, 9], [7.5, 10]],
+            "reading": [[3.5, 4], [4.0, 5], [4.5, 6], [5.5, 7], [6.0, 8], [6.5, 9], [7.0, 10]],
+            "writing": [[4.0, 4], [5.0, 5], [5.5, 6], [6.0, 7], [6.5, 8], [7.0, 9], [7.5, 10]]
+        };
+
+        const CELPIP_TO_CLB = {
+            "listening": [[5, 4], [6, 5], [7, 6], [8, 7], [9, 8], [10, 9], [11, 10]],
+            "speaking": [[5, 4], [6, 5], [7, 6], [8, 7], [9, 8], [10, 9], [11, 10]],
+            "reading": [[4, 4], [5, 5], [6, 6], [7, 7], [8, 8], [9, 9], [10, 10]],
+            "writing": [[4, 4], [5, 5], [6, 6], [7, 7], [8, 8], [9, 9], [10, 10]]
+        };
+
+        const TEF_TO_CLB = {
+            "listening": [[146, 4], [159, 5], [167, 6], [176, 7], [186, 8], [193, 9], [207, 10]],
+            "speaking": [[181, 4], [207, 5], [232, 6], [248, 7], [263, 8], [279, 9], [298, 10]],
+            "reading": [[121, 4], [149, 5], [174, 6], [207, 7], [232, 8], [248, 9], [263, 10]],
+            "writing": [[181, 4], [207, 5], [232, 6], [248, 7], [263, 8], [279, 9], [298, 10]]
+        };
+
+        const TCF_TO_CLB = {
+            "listening": [[181, 4], [207, 5], [232, 6], [248, 7], [263, 8], [279, 9], [298, 10]],
+            "speaking": [[181, 4], [207, 5], [232, 6], [248, 7], [263, 8], [279, 9], [298, 10]],
+            "reading": [[181, 4], [207, 5], [232, 6], [248, 7], [263, 8], [279, 9], [298, 10]],
+            "writing": [[181, 4], [207, 5], [232, 6], [248, 7], [263, 8], [279, 9], [298, 10]]
+        };
+
+        const PTE_TO_CLB = {
+            "reading": [[24, 3], [33, 4], [42, 5], [51, 6], [60, 7], [69, 8], [78, 9], [88, 10]],
+            "writing": [[32, 3], [41, 4], [51, 5], [60, 6], [69, 7], [79, 8], [88, 9], [90, 10]],
+            "listening": [[18, 3], [28, 4], [39, 5], [50, 6], [60, 7], [71, 8], [82, 9], [89, 10]],
+            "speaking": [[34, 3], [42, 4], [51, 5], [59, 6], [68, 7], [76, 8], [84, 9], [89, 10]]
+        };
+
+        const AGE_POINTS = {
+            "17_YEARS_OF_AGE_OR_LESS_WITH_SPOUSE": 0,
+            "17_YEARS_OF_AGE_OR_LESS_WITHOUT_SPOUSE": 0,
+            "18_YEARS_OF_AGE_WITH_SPOUSE": 90,
+            "18_YEARS_OF_AGE_WITHOUT_SPOUSE": 99,
+            "19_YEARS_OF_AGE_WITH_SPOUSE": 95,
+            "19_YEARS_OF_AGE_WITHOUT_SPOUSE": 105,
+            "20_TO_29_YEARS_OF_AGE_WITH_SPOUSE": 100,
+            "20_TO_29_YEARS_OF_AGE_WITHOUT_SPOUSE": 110,
+            "30_YEARS_OF_AGE_WITH_SPOUSE": 95,
+            "30_YEARS_OF_AGE_WITHOUT_SPOUSE": 105,
+            "31_YEARS_OF_AGE_WITH_SPOUSE": 90,
+            "31_YEARS_OF_AGE_WITHOUT_SPOUSE": 99,
+            "32_YEARS_OF_AGE_WITH_SPOUSE": 85,
+            "32_YEARS_OF_AGE_WITHOUT_SPOUSE": 94,
+            "33_YEARS_OF_AGE_WITH_SPOUSE": 80,
+            "33_YEARS_OF_AGE_WITHOUT_SPOUSE": 88,
+            "34_YEARS_OF_AGE_WITH_SPOUSE": 75,
+            "34_YEARS_OF_AGE_WITHOUT_SPOUSE": 83,
+            "35_YEARS_OF_AGE_WITH_SPOUSE": 70,
+            "35_YEARS_OF_AGE_WITHOUT_SPOUSE": 77,
+            "36_YEARS_OF_AGE_WITH_SPOUSE": 65,
+            "36_YEARS_OF_AGE_WITHOUT_SPOUSE": 72,
+            "37_YEARS_OF_AGE_WITH_SPOUSE": 60,
+            "37_YEARS_OF_AGE_WITHOUT_SPOUSE": 66,
+            "38_YEARS_OF_AGE_WITH_SPOUSE": 55,
+            "38_YEARS_OF_AGE_WITHOUT_SPOUSE": 61,
+            "39_YEARS_OF_AGE_WITH_SPOUSE": 50,
+            "39_YEARS_OF_AGE_WITHOUT_SPOUSE": 55,
+            "40_YEARS_OF_AGE_WITH_SPOUSE": 45,
+            "40_YEARS_OF_AGE_WITHOUT_SPOUSE": 50,
+            "41_YEARS_OF_AGE_WITH_SPOUSE": 35,
+            "41_YEARS_OF_AGE_WITHOUT_SPOUSE": 39,
+            "42_YEARS_OF_AGE_WITH_SPOUSE": 25,
+            "42_YEARS_OF_AGE_WITHOUT_SPOUSE": 28,
+            "43_YEARS_OF_AGE_WITH_SPOUSE": 15,
+            "43_YEARS_OF_AGE_WITHOUT_SPOUSE": 17,
+            "44_YEARS_OF_AGE_WITH_SPOUSE": 5,
+            "44_YEARS_OF_AGE_WITHOUT_SPOUSE": 6,
+            "45_YEARS_OF_AGE_OR_MORE_WITH_SPOUSE": 0,
+            "45_YEARS_OF_AGE_OR_MORE_WITHOUT_SPOUSE": 0
+        };
+
         // Application state
         let currentStep = 0;
         let answers = {};
-        let totalSteps = 20;
-        const API_BASE = '/api/v1';
+        let totalSteps = 15;
 
         // Question flow definition
         const questions = [
@@ -406,30 +434,10 @@
             {
                 id: 'age',
                 title: 'How old are you?',
-                subtitle: 'Select your age range',
-                type: 'radio',
-                options: [
-                    { value: '17_or_less', label: '17 years or younger' },
-                    { value: '18', label: '18 years' },
-                    { value: '19', label: '19 years' },
-                    { value: '20_to_29', label: '20 to 29 years' },
-                    { value: '30', label: '30 years' },
-                    { value: '31', label: '31 years' },
-                    { value: '32', label: '32 years' },
-                    { value: '33', label: '33 years' },
-                    { value: '34', label: '34 years' },
-                    { value: '35', label: '35 years' },
-                    { value: '36', label: '36 years' },
-                    { value: '37', label: '37 years' },
-                    { value: '38', label: '38 years' },
-                    { value: '39', label: '39 years' },
-                    { value: '40', label: '40 years' },
-                    { value: '41', label: '41 years' },
-                    { value: '42', label: '42 years' },
-                    { value: '43', label: '43 years' },
-                    { value: '44', label: '44 years' },
-                    { value: '45_or_more', label: '45 years or older' }
-                ]
+                subtitle: 'Enter your age in years',
+                type: 'number',
+                min: 17,
+                max: 65
             },
             {
                 id: 'education_level',
@@ -448,11 +456,20 @@
                 ]
             },
             {
+                id: 'canada_education',
+                title: 'Have you earned a Canadian degree, diploma or certificate?',
+                type: 'radio',
+                options: [
+                    {value: 'yes', label: 'Yes'},
+                    {value: 'no', label: 'No'}
+                ]
+            },
+            {
                 id: 'education_eca',
                 title: 'Choose the best answer to describe this level of education',
                 subtitle: 'Have you had an Educational Credential Assessment (ECA) for this credential?',
                 type: 'radio',
-                condition: (answers) => answers.education_level !== 'less_than_secondary',
+                condition: (answers) => answers.canada_education == 'yes',
                 options: [
                     { value: 'secondary_or_less', label: 'Secondary school (high school) credential or less' },
                     { value: 'one_or_two_diploma', label: 'One-year or two-year diploma or certificate' },
@@ -484,36 +501,11 @@
                 ]
             },
             {
-                id: 'first_language_listening',
-                title: 'First Language - Listening Score',
-                subtitle: 'Select your listening score',
-                type: 'select',
-                condition: (answers) => answers.language_test_recent === 'yes' && answers.first_language_test,
-                options: []
-            },
-            {
-                id: 'first_language_speaking',
-                title: 'First Language - Speaking Score',
-                subtitle: 'Select your speaking score',
-                type: 'select',
-                condition: (answers) => answers.language_test_recent === 'yes' && answers.first_language_test,
-                options: []
-            },
-            {
-                id: 'first_language_reading',
-                title: 'First Language - Reading Score',
-                subtitle: 'Select your reading score',
-                type: 'select',
-                condition: (answers) => answers.language_test_recent === 'yes' && answers.first_language_test,
-                options: []
-            },
-            {
-                id: 'first_language_writing',
-                title: 'First Language - Writing Score',
-                subtitle: 'Select your writing score',
-                type: 'select',
-                condition: (answers) => answers.language_test_recent === 'yes' && answers.first_language_test,
-                options: []
+                id: 'first_language_scores',
+                title: 'Enter your test scores for your first official language',
+                subtitle: 'Enter the exact scores from your official test results',
+                type: 'scores',
+                condition: (answers) => answers.language_test_recent === 'yes' && answers.first_language_test
             },
             {
                 id: 'second_language_test',
@@ -531,36 +523,11 @@
                 ]
             },
             {
-                id: 'second_language_listening',
-                title: 'Second Language - Listening Score',
-                subtitle: 'Select your listening score',
-                type: 'select',
-                condition: (answers) => answers.second_language_test && answers.second_language_test !== 'not_applicable',
-                options: []
-            },
-            {
-                id: 'second_language_speaking',
-                title: 'Second Language - Speaking Score',
-                subtitle: 'Select your speaking score',
-                type: 'select',
-                condition: (answers) => answers.second_language_test && answers.second_language_test !== 'not_applicable',
-                options: []
-            },
-            {
-                id: 'second_language_reading',
-                title: 'Second Language - Reading Score',
-                subtitle: 'Select your reading score',
-                type: 'select',
-                condition: (answers) => answers.second_language_test && answers.second_language_test !== 'not_applicable',
-                options: []
-            },
-            {
-                id: 'second_language_writing',
-                title: 'Second Language - Writing Score',
-                subtitle: 'Select your writing score',
-                type: 'select',
-                condition: (answers) => answers.second_language_test && answers.second_language_test !== 'not_applicable',
-                options: []
+                id: 'second_language_scores',
+                title: 'Enter your test scores for your second official language',
+                subtitle: 'Enter the exact scores from your official test results',
+                type: 'scores',
+                condition: (answers) => answers.second_language_test && answers.second_language_test !== 'not_applicable'
             },
             {
                 id: 'canadian_work_experience',
@@ -597,73 +564,114 @@
                     { value: 'yes', label: 'Yes' },
                     { value: 'no', label: 'No' }
                 ]
-            }
+            },
+            {
+                id: 'job_offer',
+                title: 'Do you have a valid job offer supported by a Labour Market Impact Assessment (if needed)?',
+                subtitle: 'The job offer must be valid and supported by LMIA when required',
+                type: 'radio',
+                options: [
+                    { value: 'yes', label: 'Yes' },
+                    { value: 'no', label: 'No' }
+                ]
+            },
+            {
+                id: 'noc_teer',
+                title: 'Which NOC TEER is the job offer?',
+                subtitle: 'Find out your job’s TEER if you don’t know.',
+                type: 'radio',
+                condition: (answers) => answers.job_offer == 'yes',
+                options: [
+                    { value: 'noc_teer_0_major_group_00', label: 'NOC TEER Major group 00' },
+                    { value: 'noc_teer_1_2_or_3_or_any_teer_0_than_major_group_00', label: 'NOC TEER 1, 2, or 3, or any TEER 0 other than Major gropu 00' },
+                    {value: 'noc_teer_4_or_5', label: 'NOC TEER 4 or 5'}
+                ]
+            },
+            {
+                id: 'do_have_nomination',
+                title: 'Do you have a nomination certificate from a province or territory?',
+                type: 'radio',
+                condition: (answers) => answers.job_offer == 'yes',
+                options: [
+                    { value: 'yes', label: 'Yes' },
+                    { value: 'no', label: 'No' }
+                ]
+            },
+            {
+                id: 'siblings_',
+                title: 'Do you or your spouse or common law partner (if they will come with you to Canada) have at least one brother or sister living in Canada who is a citizen or permanent resident?',
+                subtitle: 'Note: to answer yes, the brother or sister must be',
+                type: 'radio',
+                condition: (answers) => answers.job_offer == 'yes',
+                options: [
+                    { value: 'yes', label: 'Yes' },
+                    { value: 'no', label: 'No' }
+                ]
+            },
+            {
+                id: 'education_come',
+                title: 'Do you or your spouse or common law partner (if they will come with you to Canada) have at least one brother or sister living in Canada who is a citizen or permanent resident?',
+                subtitle: 'Note: to answer yes, the brother or sister must be',
+                type: 'radio',
+                condition: (answers) => answers.job_offer == 'yes',
+                options: [
+                    { value: 'yes', label: 'Yes' },
+                    { value: 'no', label: 'No' }
+                ]
+            },
+
         ];
 
-        // Score options for different language tests
-        const scoreOptions = {
-            'IELTS': {
-                listening: ['4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0', '8.5', '9.0'],
-                speaking: ['4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0', '8.5', '9.0'],
-                reading: ['3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0', '8.5', '9.0'],
-                writing: ['4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0', '7.5', '8.0', '8.5', '9.0']
-            },
-            'CELPIP-G': {
-                listening: ['4', '5', '6', '7', '8', '9', '10', '11', '12'],
-                speaking: ['4', '5', '6', '7', '8', '9', '10', '11', '12'],
-                reading: ['4', '5', '6', '7', '8', '9', '10', '11', '12'],
-                writing: ['4', '5', '6', '7', '8', '9', '10', '11', '12']
-            },
-            'PTE CORE': {
-                listening: Array.from({length: 72}, (_, i) => (i + 18).toString()),
-                speaking: Array.from({length: 56}, (_, i) => (i + 34).toString()),
-                reading: Array.from({length: 65}, (_, i) => (i + 24).toString()),
-                writing: Array.from({length: 59}, (_, i) => (i + 32).toString())
-            },
-            'TEF CANADA': {
-                listening: Array.from({length: 62}, (_, i) => (i + 146).toString()),
-                speaking: Array.from({length: 118}, (_, i) => (i + 181).toString()),
-                reading: Array.from({length: 143}, (_, i) => (i + 121).toString()),
-                writing: Array.from({length: 118}, (_, i) => (i + 181).toString())
-            },
-            'TCF CANADA': {
-                listening: Array.from({length: 118}, (_, i) => (i + 181).toString()),
-                speaking: Array.from({length: 118}, (_, i) => (i + 181).toString()),
-                reading: Array.from({length: 118}, (_, i) => (i + 181).toString()),
-                writing: Array.from({length: 118}, (_, i) => (i + 181).toString())
+        function convertScoreToCLB(testType, skill, score) {
+            let mapping;
+            switch (testType) {
+                case 'IELTS':
+                    mapping = IELTS_BAND_TO_CLB[skill];
+                    break;
+                case 'CELPIP-G':
+                    mapping = CELPIP_TO_CLB[skill];
+                    break;
+                case 'PTE CORE':
+                    mapping = PTE_TO_CLB[skill];
+                    break;
+                case 'TEF CANADA':
+                    mapping = TEF_TO_CLB[skill];
+                    break;
+                case 'TCF CANADA':
+                    mapping = TCF_TO_CLB[skill];
+                    break;
+                default:
+                    return 0;
             }
-        };
 
-        function getScoreOptions(testType, skill) {
-            if (!testType || !scoreOptions[testType] || !scoreOptions[testType][skill]) {
-                return [];
+            for (let i = mapping.length - 1; i >= 0; i--) {
+                if (score >= mapping[i][0]) {
+                    return mapping[i][1];
+                }
             }
-            return scoreOptions[testType][skill];
+            return 0;
         }
 
-        function showAlert(message, type = 'error') {
-            const alert = document.getElementById('alert');
-            alert.textContent = message;
-            alert.className = `alert ${type} show`;
-            setTimeout(() => {
-                alert.classList.remove('show');
-            }, 5000);
-        }
-
-        function setLoading(isLoading) {
-            const btn = document.getElementById('nextBtn');
-            const btnText = btn.querySelector('.btn-text');
-            const loading = btn.querySelector('.loading');
+        function calculateAge(age) {
+            const hasSpouse = ['married', 'common_law'].includes(answers.marital_status) && 
+                             answers.spouse_coming === 'yes';
             
-            if (isLoading) {
-                btn.disabled = true;
-                btnText.style.opacity = '0';
-                loading.style.display = 'block';
+            let ageKey;
+            if (age <= 17) {
+                ageKey = hasSpouse ? "17_YEARS_OF_AGE_OR_LESS_WITH_SPOUSE" : "17_YEARS_OF_AGE_OR_LESS_WITHOUT_SPOUSE";
+            } else if (age === 18) {
+                ageKey = hasSpouse ? "18_YEARS_OF_AGE_WITH_SPOUSE" : "18_YEARS_OF_AGE_WITHOUT_SPOUSE";
+            } else if (age === 19) {
+                ageKey = hasSpouse ? "19_YEARS_OF_AGE_WITH_SPOUSE" : "19_YEARS_OF_AGE_WITHOUT_SPOUSE";
+            } else if (age >= 20 && age <= 29) {
+                ageKey = hasSpouse ? "20_TO_29_YEARS_OF_AGE_WITH_SPOUSE" : "20_TO_29_YEARS_OF_AGE_WITHOUT_SPOUSE";
+            } else if (age >= 45) {
+                ageKey = hasSpouse ? "45_YEARS_OF_AGE_OR_MORE_WITH_SPOUSE" : "45_YEARS_OF_AGE_OR_MORE_WITHOUT_SPOUSE";
             } else {
-                btn.disabled = false;
-                btnText.style.opacity = '1';
-                loading.style.display = 'none';
+                ageKey = hasSpouse ? `${age}_YEARS_OF_AGE_WITH_SPOUSE` : `${age}_YEARS_OF_AGE_WITHOUT_SPOUSE`;
             }
+            
+            return AGE_POINTS[ageKey] || 0;
         }
 
         function renderQuestion(questionIndex) {
@@ -677,7 +685,7 @@
                 if (currentStep < questions.length) {
                     renderQuestion(currentStep);
                 } else {
-                    submitData();
+                    showResults();
                 }
                 return;
             }
@@ -728,48 +736,129 @@
 
                 content.appendChild(options);
 
-            } else if (question.type === 'select') {
+            } else if (question.type === 'number') {
                 const inputGroup = document.createElement('div');
                 inputGroup.className = 'input-group';
 
-                const select = document.createElement('select');
-                select.id = question.id;
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.id = question.id;
+                input.min = question.min || 0;
+                input.max = question.max || 100;
+                input.value = answers[question.id] || '';
+                input.placeholder = 'Enter your age';
 
-                // Add default option
-                const defaultOption = document.createElement('option');
-                defaultOption.value = '';
-                defaultOption.textContent = 'Select your score';
-                select.appendChild(defaultOption);
+                input.addEventListener('input', () => {
+                    answers[question.id] = parseInt(input.value);
+                });
 
-                // Determine which test type to use for score options
-                let testType;
-                if (question.id.includes('first_language')) {
-                    testType = answers.first_language_test;
-                } else if (question.id.includes('second_language')) {
-                    testType = answers.second_language_test;
+                inputGroup.appendChild(input);
+                content.appendChild(inputGroup);
+
+            } else if (question.type === 'scores') {
+            const testType = (answers.first_language_test || answers.second_language_test || '').toUpperCase();
+            const scoresGrid = document.createElement('div');
+            scoresGrid.className = 'scores-grid';
+
+            const skills = ['listening', 'speaking', 'reading', 'writing'];
+
+            // Score presets for each test and skill
+            const scorePresets = {
+                'IELTS': {
+                    listening: [8.5, 8.0, 7.5, 7.0, 6.0, 5.5, 5.0, 4.5],
+                    speaking: [7.5, 7.0, 6.5, 6.0, 5.5, 5.0, 4.0],
+                    reading:  [8.0, 7.0, 6.5, 6.0, 5.0, 4.0, 3.5],
+                    writing:  [7.5, 7.0, 6.5, 6.0, 5.5, 5.0, 4.0]
+                },
+                'CELPIP': {
+                    listening: [10, 9, 8, 7, 6, 5, 4],
+                    speaking: [10, 9, 8, 7, 6, 5, 4],
+                    reading:  [10, 9, 8, 7, 6, 5, 4],
+                    writing:  [10, 9, 8, 7, 6, 5, 4]
+                },
+                'PTE': {
+                    reading:   ['88–90', '78–87', '69–77', '60–68', '51–59', '42–50', '33–41', '24–32'],
+                    writing:   ['90', '88–89', '79–87', '69–78', '60–68', '51–59', '41–50', '32–40'],
+                    listening: ['89–90', '82–88', '71–81', '60–70', '50–59', '39–49', '28–38', '18–27'],
+                    speaking:  ['89–90', '84–88', '76–83', '68–75', '59–67', '51–58', '42–50', '34–41']
+                },
+                'TEF': {
+                    reading:   ['546–699', '503–545', '462–502', '434–461', '393–433', '352–392', '306–351'],
+                    writing:   ['558–699', '512–557', '472–511', '428–471', '379–427', '330–378', '268–329'],
+                    listening: ['546–699', '503–545', '462–502', '434–461', '393–433', '352–392', '306–351'],
+                    speaking:  ['556–699', '518–555', '494–517', '456–493', '422–455', '387–421', '328–386']
+                },
+                'TCF': {
+                    reading:   ['549–699', '524–548', '499–523', '453–498', '406–452', '375–405', '342–374'],
+                    writing:   ['16–20', '14–15', '12–13', '10–11', '7–9', '6', '4–5'],
+                    listening: ['549–699', '523–548', '503–522', '458–502', '398–457', '369–397', '331–368'],
+                    speaking:  ['16–20', '14–15', '12–13', '10–11', '7–9', '6', '4–5']
+                }
+            };
+
+            skills.forEach(skill => {
+                const scoreItem = document.createElement('div');
+                scoreItem.className = 'score-item';
+
+                const label = document.createElement('label');
+                label.textContent = skill.charAt(0).toUpperCase() + skill.slice(1);
+                label.htmlFor = `${question.id}_${skill}`;
+
+                scoreItem.appendChild(label);
+
+                const testKey = testType.includes('PTE') ? 'PTE'
+                            : testType.includes('TEF') ? 'TEF'
+                            : testType.includes('TCF') ? 'TCF'
+                            : testType.includes('CELPIP') ? 'CELPIP'
+                            : testType.includes('IELTS') ? 'IELTS'
+                            : 'UNKNOWN';
+
+                const options = scorePresets[testKey]?.[skill];
+
+                if (options && Array.isArray(options)) {
+                    const select = document.createElement('select');
+                    select.id = `${question.id}_${skill}`;
+                    select.name = `${question.id}_${skill}`;
+
+                    select.innerHTML = `<option value="">-- Select --</option>`;
+                    options.forEach(val => {
+                        const option = document.createElement('option');
+                        option.value = val;
+                        option.textContent = val;
+                        if (answers[`${question.id}_${skill}`] == val) {
+                            option.selected = true;
+                        }
+                        select.appendChild(option);
+                    });
+
+                    select.addEventListener('change', () => {
+                        answers[`${question.id}_${skill}`] = select.value;
+                    });
+
+                    scoreItem.appendChild(select);
+                } else {
+                    // Fallback numeric input
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.id = `${question.id}_${skill}`;
+                    input.step = '1';
+                    input.min = '0';
+                    input.max = '999';
+                    input.value = answers[`${question.id}_${skill}`] || '';
+                    input.placeholder = `${skill} score`;
+
+                    input.addEventListener('input', () => {
+                        answers[`${question.id}_${skill}`] = parseFloat(input.value);
+                    });
+
+                    scoreItem.appendChild(input);
                 }
 
-                // Get skill from question id
-                const skill = question.id.split('_').pop(); // Gets 'listening', 'speaking', etc.
-                
-                const scores = getScoreOptions(testType, skill);
-                scores.forEach(score => {
-                    const option = document.createElement('option');
-                    option.value = score;
-                    option.textContent = score;
-                    if (answers[question.id] === score) {
-                        option.selected = true;
-                    }
-                    select.appendChild(option);
-                });
+                scoresGrid.appendChild(scoreItem);
+            });
 
-                select.addEventListener('change', () => {
-                    answers[question.id] = select.value;
-                });
-
-                inputGroup.appendChild(select);
-                content.appendChild(inputGroup);
-            }
+            content.appendChild(scoresGrid);
+        }
 
             // Update progress
             const progress = ((currentStep + 1) / totalSteps) * 100;
@@ -799,7 +888,7 @@
             if (currentStep < questions.length) {
                 renderQuestion(currentStep);
             } else {
-                submitData();
+                showResults();
             }
         }
 
@@ -816,79 +905,65 @@
             if (currentQuestion.type === 'radio') {
                 const selected = document.querySelector(`input[name="${currentQuestion.id}"]:checked`);
                 if (!selected) {
-                    showAlert('Please select an option before continuing.');
+                    alert('Please select an option before continuing.');
                     return false;
                 }
-            } else if (currentQuestion.type === 'select') {
-                const select = document.getElementById(currentQuestion.id);
-                if (!select.value) {
-                    showAlert('Please select a score before continuing.');
+            } else if (currentQuestion.type === 'number') {
+                const input = document.getElementById(currentQuestion.id);
+                if (!input.value || input.value < (currentQuestion.min || 0)) {
+                    alert('Please enter a valid value.');
                     return false;
+                }
+            } else if (currentQuestion.type === 'scores') {
+                const skills = ['listening', 'speaking', 'reading', 'writing'];
+                for (let skill of skills) {
+                    const input = document.getElementById(`${currentQuestion.id}_${skill}`);
+                    if (!input.value) {
+                        alert(`Please enter your ${skill} score.`);
+                        return false;
+                    }
                 }
             }
             
             return true;
         }
 
-        async function submitData() {
-            setLoading(true);
-            
-            const submissionData = {
-                timestamp: new Date().toISOString(),
-                answers: answers
-            };
-
-            try {
-                const response = await fetch(`${API_BASE}/user_information`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(submissionData)
-                });
-
-                let result;
-                try {
-                    result = await response.json();
-                } catch (jsonError) {
-                    console.error('JSON parse error:', jsonError);
-                    result = { detail: 'Server returned an invalid response' };
-                }
-
-                if (response.ok) {
-                    showSuccess(result);
-                } else {
-                    console.error('Submission failed:', result);
-                    showAlert(result.detail || `Submission failed: ${response.status} ${response.statusText}`);
-                }
-            } catch (error) {
-                console.error('Submission error:', error);
-                showAlert('Network error. Please check your connection and try again.');
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        function showSuccess(result) {
+        function showResults() {
+            const results = calculatePoints();
             const resultCard = document.getElementById('resultCard');
             const questionCard = document.getElementById('questionCard');
             
             questionCard.classList.add('hidden');
             resultCard.classList.remove('hidden');
 
+            const isEligible = results.total >= 67; // Minimum CRS score approximation
+
             resultCard.innerHTML = `
-                <div class="success-card">
-                    <h2>✅ Assessment Submitted Successfully!</h2>
-                    <p style="font-size: 18px; margin: 20px 0;">
-                        Your immigration assessment has been submitted and is being processed.
-                    </p>
-                    <p>
-                        Our AI system will analyze your information and calculate your Express Entry score.
-                        You will receive the results shortly.
-                    </p>
-                    <div style="margin-top: 30px;">
-                        <button class="btn btn-primary" onclick="downloadAnswers()">Download Your Answers (JSON)</button>
-                        <button class="btn btn-secondary" onclick="resetAssessment()" style="margin-left: 10px;">Start New Assessment</button>
+                <div class="${isEligible ? 'result-card' : 'ineligible-card'}">
+                    <h2>${isEligible ? '🎉 Congratulations!' : '😔 Not Eligible'}</h2>
+                    <div class="result-score">${results.total}</div>
+                    <p>${isEligible ? 
+                        'Based on your answers, you may be eligible for Express Entry with an estimated CRS score of:' : 
+                        'Based on your answers, you may not meet the minimum requirements for Express Entry.'
+                    }</p>
+                    
+                    <div style="margin-top: 30px; text-align: left; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px;">
+                        <h3>Points Breakdown:</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>Age: ${results.breakdown.age || 0} points</li>
+                            <li>Education: ${results.breakdown.education || 0} points</li>
+                            <li>First Language: ${results.breakdown.firstLanguage || 0} points</li>
+                            <li>Second Language: ${results.breakdown.secondLanguage || 0} points</li>
+                            <li>Canadian Work: ${results.breakdown.canadianWork || 0} points</li>
+                            <li>Foreign Work: ${results.breakdown.foreignWork || 0} points</li>
+                            <li>Trade Certificate: ${results.breakdown.tradeCertificate || 0} points</li>
+                            <li>Job Offer: ${results.breakdown.jobOffer || 0} points</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="downloadResults()">Download Results (JSON)</button>
+                        <button class="btn btn-secondary" onclick="resetAssessment()" style="margin-left: 10px;">Start Over</button>
                     </div>
                 </div>
             `;
@@ -902,7 +977,7 @@
             resultCard.classList.remove('hidden');
 
             resultCard.innerHTML = `
-                <div style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; border-radius: 16px; padding: 40px; text-align: center; margin: 20px 0;">
+                <div class="ineligible-card">
                     <h2>❌ Not Eligible</h2>
                     <p style="font-size: 18px; margin: 20px 0;">
                         I'm sorry, you are not eligible for Express Entry immigration.
@@ -918,18 +993,20 @@
             `;
         }
 
-        function downloadAnswers() {
+        function downloadResults() {
+            const results = calculatePoints();
             const data = {
                 timestamp: new Date().toISOString(),
                 answers: answers,
-                status: 'submitted_for_processing'
+                results: results,
+                eligible: results.total >= 67
             };
 
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'immigration_assessment_answers.json';
+            a.download = 'immigration_assessment_results.json';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);

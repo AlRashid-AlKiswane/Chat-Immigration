@@ -2,150 +2,380 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Live RAG Q&A | Canada Express Entry</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <title>Live RAG Question Answering | Canada Express Entry</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #d32f2f;
+      --primary-light: #ff6659;
+      --primary-dark: #9a0007;
+      --secondary: #f5f5f5;
+      --text: #212121;
+      --text-light: #757575;
+      --white: #ffffff;
+      --maple-leaf: #d52b1e;
+    }
+    
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fefefe;
+      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background-color: var(--secondary);
+      color: var(--text);
       margin: 0;
       padding: 0;
-      color: #222;
+      line-height: 1.6;
     }
 
     header {
-      background-color: #d32f2f;
-      color: white;
-      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
       text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 2rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    header::before {
+      content: "❄️";
+      position: absolute;
+      font-size: 8rem;
+      opacity: 0.05;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .canada-flag {
+      width: 40px;
+      height: 20px;
+      display: inline-block;
+      background: linear-gradient(
+        to right,
+        #d52b1e 0%, #d52b1e 33.33%,
+        white 33.33%, white 66.66%,
+        #d52b1e 66.66%, #d52b1e 100%
+      );
+      position: relative;
+    }
+    
+    .canada-flag::after {
+      content: "🍁";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
     }
 
     main {
-      max-width: 700px;
+      max-width: 800px;
       margin: 3rem auto;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      background-color: var(--white);
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
     }
 
     label {
-      display: block;
-      margin-bottom: 0.5rem;
       font-weight: 600;
+      display: block;
+      margin-bottom: 0.75rem;
+      color: var(--text);
     }
 
-    textarea {
+    input[type="text"] {
       width: 100%;
-      height: 120px;
-      padding: 1rem;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
       font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      resize: vertical;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
+    }
+
+    input[type="text"]::placeholder {
+      color: #aaa;
     }
 
     button {
-      margin-top: 1.2rem;
-      background-color: #d32f2f;
-      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
       border: none;
-      padding: 0.75rem 2rem;
+      padding: 1rem 2rem;
       font-size: 1rem;
-      font-weight: bold;
-      border-radius: 6px;
+      font-weight: 600;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
     }
 
     button:hover {
-      background-color: #b71c1c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
     }
 
-    .response-box {
+    #response {
       margin-top: 2rem;
-      padding: 1.2rem;
-      background-color: #f3f3f3;
-      border-left: 5px solid #d32f2f;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      white-space: pre-wrap;
+      padding: 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      line-height: 1.6;
+      animation: fadeIn 0.5s ease;
+      background: #f9f9f9;
+      border-left: 4px solid var(--primary);
     }
 
-    .response-title {
-      font-weight: bold;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #response h2, #response h3 {
+      margin-top: 1.5rem;
+      color: var(--primary);
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+
+    #response ul {
+      padding-left: 1.25rem;
+    }
+
+    #response ul li {
       margin-bottom: 0.5rem;
+      padding-left: 0.5rem;
+    }
+
+    #response pre {
+      background: rgba(0,0,0,0.03);
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .loading {
+      color: #1976d2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .error {
+      color: #b71c1c;
+      background: #ffebee;
+      border-left: 4px solid #b71c1c;
+      padding: 1rem;
+      border-radius: 6px;
+    }
+
+    .source-item {
+      background: rgba(0,0,0,0.02);
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border-radius: 6px;
+      border-left: 3px solid var(--primary);
+    }
+
+    .distance-badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
     }
 
     footer {
       text-align: center;
-      margin-top: 4rem;
+      padding: 2rem;
+      color: var(--text-light);
       font-size: 0.9rem;
-      color: #888;
+      background-color: var(--white);
+      margin-top: 3rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 1.5rem;
+        margin: 2rem 1rem;
+      }
+      
+      h1 {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <h1>🇨🇦 Live RAG Question Answering</h1>
+    <div class="header-content">
+      <h1>
+        <span class="canada-flag"></span>
+        Live RAG Question Answering
+        <span class="canada-flag"></span>
+      </h1>
+    </div>
   </header>
 
   <main>
-    <label for="queryInput">Enter your immigration question:</label>
-    <textarea id="queryInput" placeholder="e.g. What is the minimum CRS score for Express Entry?"></textarea>
+    <form id="rag-form">
+      <div class="form-group">
+        <label for="query-input"><i class="fas fa-question-circle"></i> Enter your immigration question:</label>
+        <input type="text" id="query-input" name="query" placeholder="e.g. What are the requirements for Express Entry?" required />
+      </div>
+      
+      <button type="submit">
+        <i class="fas fa-search"></i> Ask Canada Immigration AI
+      </button>
+    </form>
 
-    <button id="submitBtn">🔍 Ask Now</button>
-
-    <div id="responseBox" class="response-box" style="display: none;">
-      <div class="response-title">Answer:</div>
-      <div id="answerContent"></div>
-      <div class="response-title" style="margin-top: 1rem;">Sources & Metadata:</div>
-      <pre id="metadataContent" style="font-size: 0.85rem;"></pre>
-    </div>
+    <div id="response"></div>
   </main>
 
   <footer>
-    &copy; 2025 Canada Immigration Assistant
+    &copy; 2025 Canada Express Entry AI Administration • Powered by FastAPI
+    <br>
+    <small>Official colors inspired by the Canadian flag (#D52B1E)</small>
   </footer>
 
   <script>
-    document.getElementById("submitBtn").addEventListener("click", async () => {
-      const query = document.getElementById("queryInput").value.trim();
-      const responseBox = document.getElementById("responseBox");
-      const answerContent = document.getElementById("answerContent");
-      const metadataContent = document.getElementById("metadataContent");
+    const form = document.getElementById('rag-form');
+    const responseDiv = document.getElementById('response');
 
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const query = document.getElementById('query-input').value.trim();
       if (!query) {
-        alert("Please enter your question.");
+        responseDiv.innerHTML = '<div class="error"><i class="fas fa-exclamation-circle"></i> Please enter a question about Canadian immigration.</div>';
         return;
       }
 
-      responseBox.style.display = "block";
-      answerContent.textContent = "⏳ Loading answer...";
-      metadataContent.textContent = "";
+      responseDiv.innerHTML = `
+        <div class="loading">
+          <i class="fas fa-circle-notch fa-spin"></i> 
+          Processing your question about Canadian immigration...
+        </div>
+      `;
+
+      const ragConfig = {
+        n_results: 5,
+        include_metadata: true
+      };
 
       try {
-        const response = await fetch("/live_rag", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: new URLSearchParams({ query })
+        const response = await fetch(`/api/v1/live_rag?query=${encodeURIComponent(query)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(ragConfig)
         });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          responseDiv.innerHTML = `
+            <div class="error">
+              <i class="fas fa-exclamation-circle"></i> 
+              Error: ${errorData.detail || response.statusText}
+            </div>
+          `;
+          return;
+        }
 
         const data = await response.json();
 
-        if (response.ok) {
-          answerContent.textContent = data.answer || "No answer provided.";
-          metadataContent.textContent = JSON.stringify(data.metadata, null, 2);
-        } else {
-          answerContent.textContent = `❌ Error: ${data.detail || "Failed to get a response."}`;
+        // Sort sources and distances if both exist and same length
+        let sortedSources = [];
+        if (data.sources && data.distances && 
+            Array.isArray(data.sources) && Array.isArray(data.distances) &&
+            data.sources.length === data.distances.length) {
+          // Pair them and sort by distances ascending
+          const paired = data.sources.map((src, i) => ({src, dist: data.distances[i]}));
+          paired.sort((a,b) => a.dist - b.dist);
+          sortedSources = paired;
         }
+
+        let html = `<h2><i class="fas fa-comment-dots"></i> Answer:</h2>`;
+
+        if (Array.isArray(data.answer)) {
+          html += `<div class="answer-content">${data.answer.map(a => 
+            `<p>${typeof a === 'string' ? a : JSON.stringify(a)}</p>`
+          ).join('')}</div>`;
+        } else {
+          html += `<div class="answer-content">${data.answer}</div>`;
+        }
+
+        if (sortedSources.length > 0) {
+          html += `<h3><i class="fas fa-book-open"></i> Reference Sources:</h3>`;
+          sortedSources.forEach(({src, dist}) => {
+            html += `
+              <div class="source-item">
+                ${src}
+                <span class="distance-badge">Similarity: ${(1 - dist).toFixed(3)}</span>
+              </div>
+            `;
+          });
+        } else if (data.sources && data.sources.length > 0) {
+          html += `<h3><i class="fas fa-book-open"></i> Reference Sources:</h3>`;
+          data.sources.forEach((source) => {
+            html += `<div class="source-item">${source}</div>`;
+          });
+        }
+
+        if (data.metadata) {
+          html += `
+            <h3><i class="fas fa-info-circle"></i> Additional Information:</h3>
+            <pre>${JSON.stringify(data.metadata, null, 2)}</pre>
+          `;
+        }
+
+        responseDiv.innerHTML = html;
+
       } catch (err) {
-        answerContent.textContent = `⚠️ Server error: ${err.message}`;
+        responseDiv.innerHTML = `
+          <div class="error">
+            <i class="fas fa-exclamation-triangle"></i> 
+            Unexpected error: ${err.message}
+          </div>
+        `;
+        console.error("RAG error:", err);
       }
     });
   </script>

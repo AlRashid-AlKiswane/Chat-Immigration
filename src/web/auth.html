@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canadian Immigration Assistant AI - Authentication</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 900px;
+            min-height: 600px;
+            display: flex;
+            border: 2px solid #dc2626;
+        }
+
+        .info-panel {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M25 25h50v50h-50z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>') repeat;
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .logo-icon::before {
+            content: '🍁';
+            font-size: 28px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .info-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .info-content h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .info-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .features {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .features li {
+            margin: 10px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 14px;
+        }
+
+        .features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #fef2f2;
+            font-weight: bold;
+        }
+
+        .auth-panel {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .auth-toggle {
+            display: flex;
+            background: #f3f4f6;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #6b7280;
+        }
+
+        .toggle-btn.active {
+            background: #dc2626;
+            color: white;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+        }
+
+        .form-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form.hidden {
+            transform: translateX(100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #dc2626;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #9ca3af;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .alert.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .alert.success {
+            background: #d1fae5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+
+        .alert.error {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                margin: 20px;
+                max-width: none;
+            }
+
+            .info-panel {
+                padding: 30px 20px;
+                min-height: auto;
+            }
+
+            .auth-panel {
+                padding: 30px 20px;
+            }
+
+            .logo-text {
+                font-size: 18px;
+            }
+
+            .info-content h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="info-panel">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <div class="logo-text">
+                    Canadian Immigration<br>
+                    Assistant AI
+                </div>
+            </div>
+            
+            <div class="info-content">
+                <h2>Your AI-Powered Immigration Guide</h2>
+                <p>Navigate Canada's immigration process with confidence using our intelligent assistant powered by advanced AI technology.</p>
+                
+                <ul class="features">
+                    <li>Personalized immigration pathway recommendations</li>
+                    <li>Document checklist and preparation guidance</li>
+                    <li>Real-time application status tracking</li>
+                    <li>Expert answers to your immigration questions</li>
+                    <li>Multilingual support for global applicants</li>
+                    <li>Secure and confidential data handling</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="auth-panel">
+            <div class="auth-toggle">
+                <button class="toggle-btn active" onclick="showLogin()">Sign In</button>
+                <button class="toggle-btn" onclick="showRegister()">Register</button>
+            </div>
+
+            <div id="alert" class="alert"></div>
+
+            <div class="form-container">
+                <form id="loginForm" class="form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginUsername">Username</label>
+                        <input type="text" id="loginUsername" name="user_name" placeholder="Enter your username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">Sign In</span>
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
+
+                <form id="registerForm" class="form hidden" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="registerUsername">Username *</label>
+                        <input type="text" id="registerUsername" name="user_name" placeholder="Choose a username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerEmail">Email Address *</label>
+                        <input type="email" id="registerEmail" name="email" placeholder="your.email@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerFullName">Full Name</label>
+                        <input type="text" id="registerFullName" name="full_name" placeholder="Your full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerPhone">Phone Number</label>
+                        <input type="tel" id="registerPhone" name="phone_number" placeholder="+1 (555) 123-4567">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerPassword">Password *</label>
+                        <input type="password" id="registerPassword" name="password" placeholder="Create a secure password" required>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">Create Account</span>
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
+            </div>
+
+            <div class="footer-text">
+                Secure authentication powered by advanced encryption<br>
+                🔒 Your data is protected and confidential
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentForm = 'login';
+        const API_BASE = '/api/v1'; // Adjust this to match your backend URL
+
+        // Form switching
+        function showLogin() {
+            if (currentForm === 'login') return;
+            
+            currentForm = 'login';
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+            
+            toggleBtns[0].classList.add('active');
+            toggleBtns[1].classList.remove('active');
+            
+            hideAlert();
+        }
+
+        function showRegister() {
+            if (currentForm === 'register') return;
+            
+            currentForm = 'register';
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            
+            registerForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+            
+            toggleBtns[1].classList.add('active');
+            toggleBtns[0].classList.remove('active');
+            
+            hideAlert();
+        }
+
+        // Alert system
+        function showAlert(message, type = 'error') {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert ${type} show`;
+        }
+
+        function hideAlert() {
+            const alert = document.getElementById('alert');
+            alert.classList.remove('show');
+        }
+
+        // Loading state management
+        function setLoading(formId, isLoading) {
+            const form = document.getElementById(formId);
+            const btn = form.querySelector('.submit-btn');
+            const btnText = btn.querySelector('.btn-text');
+            const loading = btn.querySelector('.loading');
+            
+            if (isLoading) {
+                btn.disabled = true;
+                btnText.style.opacity = '0';
+                loading.style.display = 'block';
+            } else {
+                btn.disabled = false;
+                btnText.style.opacity = '1';
+                loading.style.display = 'none';
+            }
+        }
+
+        // Form submission handlers
+        async function handleLogin(event) {
+            event.preventDefault();
+            hideAlert();
+            setLoading('loginForm', true);
+            
+            const formData = new FormData(event.target);
+            const loginData = {
+                user_name: formData.get('user_name'),
+                password: formData.get('password')
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(loginData)
+                });
+
+                let result;
+                try {
+                    result = await response.json();
+                } catch (jsonError) {
+                    // If response isn't JSON, create a generic error object
+                    result = { detail: 'Server returned an invalid response' };
+                }
+
+                if (response.ok) {
+                    showAlert('Login successful! Redirecting...', 'success');
+                    
+                    // Store the token securely (in a real app, consider using httpOnly cookies)
+                    const token = result.access_token;
+                    
+                    // Simulate redirect after successful login
+                    setTimeout(() => {
+                        showAlert('Welcome to Canadian Immigration Assistant AI!', 'success');
+                        // In a real application, you would redirect to the dashboard
+                        // window.location.href = '/dashboard';
+                    }, 1500);
+                } else {
+                    showAlert(result.detail || 'Login failed. Please check your credentials.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('Network error. Please check your connection and try again.');
+            } finally {
+                setLoading('loginForm', false);
+            }
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            hideAlert();
+            setLoading('registerForm', true);
+            
+            const formData = new FormData(event.target);
+            
+            // Build query parameters to match your FastAPI endpoint signature
+            const params = new URLSearchParams();
+            params.append('user_name', formData.get('user_name'));
+            params.append('password', formData.get('password'));
+            params.append('email', formData.get('email'));
+            params.append('full_name', formData.get('full_name') || '');
+            
+            const phoneNumber = formData.get('phone_number');
+            if (phoneNumber && phoneNumber.trim()) {
+                params.append('phone_number', phoneNumber);
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/register?${params.toString()}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                let result;
+                try {
+                    result = await response.json();
+                } catch (jsonError) {
+                    console.error('JSON parse error:', jsonError);
+                    result = { detail: 'Server returned an invalid response' };
+                }
+
+                if (response.ok) {
+                    showAlert('Registration successful! You can now sign in.', 'success');
+                    
+                    // Clear the form
+                    event.target.reset();
+                    
+                    // Auto-switch to login after 2 seconds
+                    setTimeout(() => {
+                        showLogin();
+                    }, 2000);
+                } else {
+                    console.error('Registration failed:', result);
+                    showAlert(result.detail || `Registration failed: ${response.status} ${response.statusText}`);
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showAlert('Network error. Please check your connection and try again.');
+            } finally {
+                setLoading('registerForm', false);
+            }
+        }
+
+        // Input validation and UX improvements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add input focus animations
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('focused');
+                });
+            });
+
+            // Password strength indicator (basic)
+            const passwordInputs = document.querySelectorAll('input[type="password"]');
+            passwordInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    const password = this.value;
+                    const isStrong = password.length >= 8 && 
+                                   /[A-Z]/.test(password) && 
+                                   /[a-z]/.test(password) && 
+                                   /[0-9]/.test(password);
+                    
+                    if (password.length > 0) {
+                        this.style.borderColor = isStrong ? '#059669' : '#f59e0b';
+                    } else {
+                        this.style.borderColor = '#e5e7eb';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

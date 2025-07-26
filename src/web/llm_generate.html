@@ -1,93 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LLM RAG Generation | Canada Immigration</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LLM Generation | Canada Express Entry</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #d32f2f;
+      --primary-light: #ff6659;
+      --primary-dark: #9a0007;
+      --secondary: #f5f5f5;
+      --text: #212121;
+      --text-light: #757575;
+      --white: #ffffff;
+      --maple-leaf: #d52b1e;
+    }
+    
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f5f5;
+      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background-color: var(--secondary);
+      color: var(--text);
       margin: 0;
       padding: 0;
-      color: #333;
+      line-height: 1.6;
     }
 
     header {
-      background-color: #d32f2f;
-      color: white;
-      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
       text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 2rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    header::before {
+      content: "❄️";
+      position: absolute;
+      font-size: 8rem;
+      opacity: 0.05;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .canada-flag {
+      width: 40px;
+      height: 20px;
+      display: inline-block;
+      background: linear-gradient(
+        to right,
+        #d52b1e 0%, #d52b1e 33.33%,
+        white 33.33%, white 66.66%,
+        #d52b1e 66.66%, #d52b1e 100%
+      );
+      position: relative;
+    }
+    
+    .canada-flag::after {
+      content: "🍁";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
     }
 
     main {
-      max-width: 750px;
+      max-width: 800px;
       margin: 3rem auto;
-      background-color: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      background-color: var(--white);
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
     }
 
     label {
       font-weight: 600;
       display: block;
-      margin-top: 1rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
     }
 
-    input[type="text"], textarea, select {
+    input[type="text"], 
+    textarea, 
+    select {
       width: 100%;
-      padding: 0.7rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 0.95rem;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
     }
 
     textarea {
       resize: vertical;
-      min-height: 100px;
+      min-height: 150px;
+    }
+
+    input[type="text"]:focus, 
+    textarea:focus, 
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
+    }
+
+    .slider-container {
+      margin-bottom: 1.5rem;
     }
 
     input[type="range"] {
       width: 100%;
+      height: 8px;
+      -webkit-appearance: none;
+      background: #ddd;
+      border-radius: 4px;
+      outline: none;
+      margin-top: 0.5rem;
     }
 
-    .slider-label {
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      background: var(--primary-dark);
+      transform: scale(1.1);
+    }
+
+    .slider-labels {
       display: flex;
       justify-content: space-between;
       font-size: 0.9rem;
-      color: #555;
-      margin-top: -0.5rem;
-      margin-bottom: 1rem;
+      color: var(--text-light);
+      margin-top: 0.5rem;
+    }
+
+    .slider-value {
+      font-weight: 600;
+      color: var(--primary);
     }
 
     button {
-      background-color: #d32f2f;
-      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
       border: none;
-      padding: 0.9rem 1.8rem;
-      font-weight: bold;
-      border-radius: 6px;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      margin-top: 1rem;
     }
 
     button:hover {
-      background-color: #b71c1c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
     }
 
     .result-box {
       margin-top: 2rem;
-      background: #fdf3f3;
-      padding: 1rem;
-      border-left: 4px solid #d32f2f;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      white-space: pre-wrap;
+      padding: 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      line-height: 1.6;
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .success {
@@ -96,57 +216,167 @@
       color: #2e7d32;
     }
 
+    .error {
+      background: #ffebee;
+      border-left: 4px solid #c62828;
+      color: #c62828;
+    }
+
+    .processing {
+      background: #e3f2fd;
+      border-left: 4px solid #1565c0;
+      color: #1565c0;
+    }
+
+    .result-icon {
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+
+    .response-content {
+      margin-top: 1rem;
+      background: rgba(0,0,0,0.03);
+      padding: 1rem;
+      border-radius: 6px;
+      white-space: pre-wrap;
+    }
+
+    .config-details {
+      margin-top: 1rem;
+      background: rgba(0,0,0,0.03);
+      padding: 1rem;
+      border-radius: 6px;
+    }
+
+    .config-item {
+      display: flex;
+      margin-bottom: 0.5rem;
+    }
+
+    .config-label {
+      font-weight: 600;
+      min-width: 120px;
+    }
+
     footer {
       text-align: center;
-      margin-top: 4rem;
+      padding: 2rem;
+      color: var(--text-light);
       font-size: 0.9rem;
-      color: #999;
+      background-color: var(--white);
+      margin-top: 3rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 1.5rem;
+        margin: 2rem 1rem;
+      }
+      
+      h1 {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <h1>🇨🇦 RAG LLM Generation - Canada Express Entry</h1>
+    <div class="header-content">
+      <h1>
+        <span class="canada-flag"></span>
+        LLM Generation - Canada Express Entry
+        <span class="canada-flag"></span>
+      </h1>
+    </div>
   </header>
-
+</head>
+<body>
   <main>
     <form id="genForm">
-      <label for="userId">User ID</label>
-      <input type="text" id="userId" placeholder="e.g. admin123" required/>
+      <div class="form-group">
+        <label for="userId"><i class="fas fa-user"></i> User ID</label>
+        <input type="text" id="userId" placeholder="e.g. applicant123" required/>
+      </div>
 
-      <label for="prompt">Prompt</label>
-      <textarea id="prompt" placeholder="Enter the user question or system prompt..." required></textarea>
+      <div class="form-group">
+        <label for="prompt"><i class="fas fa-comment-dots"></i> Immigration Question</label>
+        <textarea id="prompt" placeholder="Ask about Canadian immigration policies, requirements, or procedures..." required></textarea>
+      </div>
 
-      <label for="temp">Temperature: <span id="tempVal">0.7</span></label>
-      <input type="range" id="temp" min="0" max="1" step="0.01" value="0.7"/>
+      <!-- Sliders and Inputs -->
+      <div class="slider-container">
+        <label for="temp"><i class="fas fa-thermometer-half"></i> Temperature</label>
+        <input type="range" id="temp" min="0" max="1" step="0.01" value="0.7"/>
+        <div class="slider-labels">
+          <span>Precise (0.0)</span>
+          <span class="slider-value" id="tempVal">0.7</span>
+          <span>Creative (1.0)</span>
+        </div>
+      </div>
 
-      <label for="topP">Top-p: <span id="topPVal">0.9</span></label>
-      <input type="range" id="topP" min="0" max="1" step="0.01" value="0.9"/>
+      <div class="slider-container">
+        <label for="maxTokens"><i class="fas fa-ruler"></i> Max Tokens</label>
+        <input type="range" id="maxTokens" min="50" max="1000" step="10" value="100"/>
+        <div class="slider-labels">
+          <span>Short (50)</span>
+          <span class="slider-value" id="maxTokensVal">100</span>
+          <span>Long (1000)</span>
+        </div>
+      </div>
 
-      <label for="nResults">Number of Documents: <span id="nResultsVal">5</span></label>
-      <input type="range" id="nResults" min="1" max="20" step="1" value="5"/>
+      <div class="slider-container">
+        <label for="topP"><i class="fas fa-filter"></i> Top-p Sampling</label>
+        <input type="range" id="topP" min="0" max="1" step="0.01" value="0.95"/>
+        <div class="slider-labels">
+          <span>Narrow (0.0)</span>
+          <span class="slider-value" id="topPVal">0.95</span>
+          <span>Broad (1.0)</span>
+        </div>
+      </div>
 
-      <label for="includeMetadata">Include Metadata?</label>
-      <select id="includeMetadata">
-        <option value="true">Yes</option>
-        <option value="false" selected>No</option>
-      </select>
+      <div class="slider-container">
+        <label for="nResults"><i class="fas fa-file-alt"></i> Documents to Retrieve</label>
+        <input type="range" id="nResults" min="1" max="10" step="1" value="3"/>
+        <div class="slider-labels">
+          <span>Few (1)</span>
+          <span class="slider-value" id="nResultsVal">3</span>
+          <span>Many (10)</span>
+        </div>
+      </div>
 
-      <button type="submit">Generate Response</button>
+      <div class="form-group">
+        <label for="includeMetadata"><i class="fas fa-info-circle"></i> Include Metadata?</label>
+        <select id="includeMetadata">
+          <option value="false" selected>No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
+
+      <button type="submit">
+        <i class="fas fa-robot"></i> Generate Immigration Response
+      </button>
     </form>
 
-    <div id="genResult" class="result-box" style="display: none;"></div>
+    <div id="genResult" class="result-box"></div>
   </main>
 
   <footer>
-    &copy; 2025 Canada Express Entry Admin Panel
+    &copy; 2025 Canada Express Entry AI Administration • Powered by FastAPI
+    <br>
+    <small>Official colors inspired by the Canadian flag (#D52B1E)</small>
   </footer>
 
   <script>
+    // Update slider value labels
     const temp = document.getElementById("temp");
     const tempVal = document.getElementById("tempVal");
     temp.addEventListener("input", () => tempVal.textContent = temp.value);
+
+    const maxTokens = document.getElementById("maxTokens");
+    const maxTokensVal = document.getElementById("maxTokensVal");
+    maxTokens.addEventListener("input", () => maxTokensVal.textContent = maxTokens.value);
 
     const topP = document.getElementById("topP");
     const topPVal = document.getElementById("topPVal");
@@ -162,53 +392,105 @@
       const userId = document.getElementById("userId").value.trim();
       const prompt = document.getElementById("prompt").value.trim();
       const temperature = parseFloat(temp.value);
+      const maxTokensValue = parseInt(maxTokens.value);
       const topPValue = parseFloat(topP.value);
       const nResultsValue = parseInt(nResults.value);
       const includeMetadata = document.getElementById("includeMetadata").value === "true";
-
       const resultBox = document.getElementById("genResult");
 
       if (!prompt || !userId) {
         resultBox.style.display = "block";
-        resultBox.classList.remove("success");
-        resultBox.textContent = "❗ Please enter both User ID and Prompt.";
+        resultBox.className = "result-box error";
+        resultBox.innerHTML = `
+          <i class="fas fa-exclamation-circle result-icon"></i>
+          Please enter both User ID and an immigration question.
+        `;
         return;
       }
 
+      const requestBody = {
+        generation_parameters: {
+          temperature: temperature,
+          max_tokens: maxTokensValue,
+          top_p: topPValue,
+          top_k: 50,
+          max_input_tokens: 1024
+        },
+        rag_config: {
+          n_results: nResultsValue,
+          include_metadata: includeMetadata
+        },
+        user_id: userId,
+        prompt: prompt
+      };
+
       try {
-        const response = await fetch("/api/generation", {
+        resultBox.style.display = "block";
+        resultBox.className = "result-box processing";
+        resultBox.innerHTML = `
+          <i class="fas fa-cog fa-spin result-icon"></i>
+          Generating response about Canadian immigration...
+        `;
+
+        const url = new URL("/api/v1/llm_generation", window.location.origin);
+        url.searchParams.append("user_id", userId);
+        url.searchParams.append("prompt", prompt);
+
+        const response = await fetch(url, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json"
+          },
           body: JSON.stringify({
             generation_parameters: {
               temperature: temperature,
-              top_p: topPValue
+              max_tokens: maxTokensValue,
+              top_p: topPValue,
+              top_k: 50,
+              max_input_tokens: 1024
             },
             rag_config: {
               n_results: nResultsValue,
               include_metadata: includeMetadata
-            },
-            user_id: userId,
-            prompt: prompt
+            }
           })
         });
-
-        const data = await response.json();
-        resultBox.style.display = "block";
-
-        if (response.ok) {
-          resultBox.classList.add("success");
-          resultBox.innerHTML = `✅ Source: ${data.source}\n📘 Response:\n\n${data.response}`;
-        } else {
-          resultBox.classList.remove("success");
-          resultBox.textContent = `❌ Error: ${data.detail || data.message}`;
+        if (!response.ok) {
+          let errorData = {};
+          try {
+            errorData = await response.json();
+          } catch (_) {}
+          throw new Error(errorData.detail || "Failed to generate response");
         }
 
+        const data = await response.json();
+
+        resultBox.className = "result-box success";
+        resultBox.innerHTML = `
+          <i class="fas fa-check-circle result-icon"></i>
+          <strong>Immigration Response Generated</strong>
+          <div class="config-details">
+            <div class="config-item">
+              <span class="config-label">Source:</span>
+              <span>${data.source || 'AI Generation'}</span>
+            </div>
+          </div>
+          <div class="response-content">
+            ${data.response}
+          </div>
+        `;
+
       } catch (err) {
-        console.error(err);
+        console.error("Generation error:", err);
         resultBox.style.display = "block";
-        resultBox.classList.remove("success");
-        resultBox.textContent = "⚠️ Server error while generating response.";
+        resultBox.className = "result-box error";
+        resultBox.innerHTML = `
+          <i class="fas fa-exclamation-triangle result-icon"></i>
+          <strong>Error Generating Response</strong>
+          <div class="response-content">
+            ${err.message || 'An unexpected error occurred'}
+          </div>
+        `;
       }
     });
   </script>

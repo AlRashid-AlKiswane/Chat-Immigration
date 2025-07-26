@@ -4,116 +4,295 @@
   <meta charset="UTF-8" />
   <title>Embed Chunks | Canada Express Entry</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #d32f2f;
+      --primary-light: #ff6659;
+      --primary-dark: #9a0007;
+      --secondary: #f5f5f5;
+      --text: #212121;
+      --text-light: #757575;
+      --white: #ffffff;
+      --maple-leaf: #d52b1e;
+    }
+    
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f9f9f9;
+      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background-color: var(--secondary);
+      color: var(--text);
       margin: 0;
       padding: 0;
-      color: #333;
+      line-height: 1.6;
     }
 
     header {
-      background-color: #d32f2f;
-      color: white;
-      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
       text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 2rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    header::before {
+      content: "❄️";
+      position: absolute;
+      font-size: 8rem;
+      opacity: 0.05;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .canada-flag {
+      width: 40px;
+      height: 20px;
+      display: inline-block;
+      background: linear-gradient(
+        to right,
+        #d52b1e 0%, #d52b1e 33.33%,
+        white 33.33%, white 66.66%,
+        #d52b1e 66.66%, #d52b1e 100%
+      );
+      position: relative;
+    }
+    
+    .canada-flag::after {
+      content: "🍁";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
     }
 
     main {
-      max-width: 600px;
+      max-width: 700px;
       margin: 3rem auto;
-      background-color: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      background-color: var(--white);
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
       text-align: center;
     }
 
+    .description {
+      color: var(--text-light);
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    input[type="number"] {
+      padding: 0.8rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      width: 120px;
+      text-align: center;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
+    }
+
     button {
-      background-color: #d32f2f;
-      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
       border: none;
       padding: 1rem 2rem;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
       font-size: 1rem;
-      margin-top: 1.5rem;
-      transition: background 0.3s ease;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 1rem;
     }
 
     button:hover {
-      background-color: #b71c1c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
     }
 
     .status-box {
       margin-top: 2rem;
-      padding: 1rem;
-      border-left: 4px solid #d32f2f;
-      background-color: #fdf3f3;
-      border-radius: 6px;
+      padding: 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      line-height: 1.6;
       display: none;
-      font-size: 0.95rem;
-      white-space: pre-wrap;
+      animation: fadeIn 0.5s ease;
+      text-align: left;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .success {
-      background-color: #e8f5e9;
-      border-left-color: #2e7d32;
+      background: #e8f5e9;
+      border-left: 4px solid #2e7d32;
       color: #2e7d32;
+    }
+
+    .error {
+      background: #ffebee;
+      border-left: 4px solid #c62828;
+      color: #c62828;
+    }
+
+    .processing {
+      background: #e3f2fd;
+      border-left: 4px solid #1565c0;
+      color: #1565c0;
+    }
+
+    .status-icon {
+      margin-right: 10px;
+      font-size: 1.2rem;
     }
 
     footer {
       text-align: center;
-      margin-top: 4rem;
+      padding: 2rem;
+      color: var(--text-light);
       font-size: 0.9rem;
-      color: #999;
+      background-color: var(--white);
+      margin-top: 3rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 1.5rem;
+        margin: 2rem 1rem;
+      }
+      
+      h1 {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <h1>🇨🇦 Embed Text Chunks to Vector DB</h1>
+    <div class="header-content">
+      <h1>
+        <span class="canada-flag"></span>
+        Embed Text Chunks to Vector DB
+        <span class="canada-flag"></span>
+      </h1>
+    </div>
   </header>
 
   <main>
-    <p>Click the button below to generate and store vector embeddings for all available chunks in the database.</p>
+    <p class="description">
+      Transform document chunks into vector embeddings for AI processing. 
+      Specify how many chunks to process in this batch.
+    </p>
 
-    <button id="embedBtn">🚀 Start Embedding</button>
+    <div class="input-group">
+      <label for="limitInput"><i class="fas fa-layer-group"></i> Chunk Limit</label>
+      <input type="number" id="limitInput" value="100" min="1" max="1000" />
+    </div>
+
+    <button id="embedBtn">
+      <i class="fas fa-rocket"></i> Start Embedding
+    </button>
 
     <div id="statusBox" class="status-box"></div>
   </main>
 
   <footer>
-    &copy; 2025 Canada Immigration Chatbot System
+    &copy; 2025 Canada Express Entry AI Administration • Powered by FastAPI
+    <br>
+    <small>Official colors inspired by the Canadian flag (#D52B1E)</small>
   </footer>
 
   <script>
     document.getElementById("embedBtn").addEventListener("click", async function () {
       const statusBox = document.getElementById("statusBox");
+      const limit = document.getElementById("limitInput").value || 100;
+      
+      // Show processing state
       statusBox.style.display = "block";
-      statusBox.classList.remove("success");
-      statusBox.textContent = "⏳ Embedding in progress...";
+      statusBox.className = "status-box processing";
+      statusBox.innerHTML = `
+        <i class="fas fa-cog fa-spin status-icon"></i>
+        <strong>Embedding in Progress</strong><br><br>
+        Processing ${limit} chunks into vector embeddings...
+      `;
 
       try {
-        const response = await fetch("/api/embedding", {
+        const response = await fetch(`/api/v1/embedding?limit=${limit}`, {
           method: "POST"
         });
 
         const data = await response.json();
 
         if (response.ok) {
-          statusBox.classList.add("success");
-          statusBox.textContent = `✅ ${data.message}`;
+          statusBox.className = "status-box success";
+          statusBox.innerHTML = `
+            <i class="fas fa-check-circle status-icon"></i>
+            <strong>Embedding Completed Successfully</strong><br><br>
+            <i class="fas fa-database"></i> ${data.message || "Chunks successfully embedded"}<br>
+            <i class="fas fa-clock"></i> Processing time: ${data.processing_time || 'N/A'} seconds
+          `;
         } else {
-          statusBox.textContent = `❌ Error: ${data.detail || "Embedding failed."}`;
+          statusBox.className = "status-box error";
+          statusBox.innerHTML = `
+            <i class="fas fa-exclamation-circle status-icon"></i>
+            <strong>Embedding Error</strong><br><br>
+            ${data.detail || data.message || "Embedding process failed"}
+          `;
         }
       } catch (err) {
-        statusBox.textContent = `⚠️ Server error: ${err.message}`;
+        statusBox.className = "status-box error";
+        statusBox.innerHTML = `
+          <i class="fas fa-exclamation-triangle status-icon"></i>
+          <strong>Network Error</strong><br><br>
+          Could not connect to the embedding service. Please try again later.
+          ${err.message ? `<br><small>${err.message}</small>` : ''}
+        `;
+        console.error("Embedding error:", err);
       }
     });
   </script>

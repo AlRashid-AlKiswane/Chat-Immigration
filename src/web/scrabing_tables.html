@@ -86,7 +86,7 @@
             <input type="url" id="url" name="url" placeholder="https://www.canada.ca/en.html" required>
 
             <label for="max_pages">Max Pages to Crawl</label>
-            <input type="number" id="max_pages" name="max_pages" min="1" max="50" value="5" required>
+            <input type="number" id="max_pages" name="max_pages" min="1" max="1" value="1" required>
 
             <button type="submit">Scrape Tables</button>
         </form>
@@ -107,7 +107,7 @@
             const maxPages = parseInt(document.getElementById("max_pages").value);
 
             try {
-                const response = await fetch("/api/tables_crawling", {
+                const response = await fetch("/api/v1/api/tables_crawling", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

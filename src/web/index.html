@@ -4,86 +4,321 @@
   <meta charset="UTF-8" />
   <title>Canada Express Entry | AI Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #d32f2f;
+      --primary-light: #ff6659;
+      --primary-dark: #9a0007;
+      --secondary: #f5f5f5;
+      --text: #212121;
+      --text-light: #757575;
+      --white: #ffffff;
+      --maple-leaf: #d52b1e;
+    }
+    
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fefefe;
-      color: #212121;
+      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background-color: var(--secondary);
+      color: var(--text);
       margin: 0;
       padding: 0;
+      line-height: 1.6;
     }
 
     header {
-      background-color: #d32f2f;
-      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
       text-align: center;
-      padding: 1.5rem;
-      font-size: 1.8rem;
-      font-weight: bold;
+      padding: 2rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    header::before {
+      content: "❄️";
+      position: absolute;
+      font-size: 8rem;
+      opacity: 0.05;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .subtitle {
+      font-weight: 300;
+      margin-top: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .canada-flag {
+      width: 40px;
+      height: 20px;
+      display: inline-block;
+      background: linear-gradient(
+        to right,
+        #d52b1e 0%, #d52b1e 33.33%,
+        white 33.33%, white 66.66%,
+        #d52b1e 66.66%, #d52b1e 100%
+      );
+      position: relative;
+    }
+    
+    .canada-flag::after {
+      content: "🍁";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
     }
 
     main {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 2rem auto;
-      padding: 1rem;
+      padding: 0 1rem;
     }
 
-    .grid {
+    .dashboard {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
+      margin-top: 1.5rem;
     }
 
     .card {
-      background-color: #fff;
-      border: 2px solid #d32f2f;
-      border-radius: 10px;
-      padding: 1.5rem;
+      background-color: var(--white);
+      border-radius: 12px;
+      padding: 1.8rem 1.5rem;
       text-align: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: all 0.3s ease;
       cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-left: 4px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 140px;
+      position: relative;
+      overflow: hidden;
     }
 
     .card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      border-left: 4px solid var(--primary-dark);
     }
 
-    .card a {
-      color: #d32f2f;
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .card-title {
+      color: var(--primary);
       text-decoration: none;
       font-size: 1.2rem;
       font-weight: 600;
+      margin: 0;
+    }
+
+    .card-desc {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: space-between;
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .stat-item {
+      text-align: center;
+      flex: 1;
+      padding: 0 1rem;
+    }
+
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
     }
 
     .footer {
       text-align: center;
       padding: 2rem;
-      color: #aaa;
+      color: var(--text-light);
       font-size: 0.9rem;
+      background-color: var(--white);
+      margin-top: 3rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      }
+      
+      .stats-bar {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
     }
   </style>
 </head>
 <body>
-  <header>🇨🇦 Canada Express Entry AI Panel</header>
-
+  <header>
+    <div class="header-content">
+      <h1>
+        <span class="canada-flag"></span>
+        Canada Express Entry AI Panel
+        <span class="canada-flag"></span>
+      </h1>
+      <p class="subtitle">Advanced tools for immigration process automation</p>
+    </div>
+  </header>
   <main>
-    <div class="grid">
-      <div class="card"><a href="chunking.html">🔗 Chunking</a></div>
-      <div class="card"><a href="crawling.html">🌐 Web Crawling</a></div>
-      <div class="card"><a href="scrabing_tables.html">🌐 Tables Crawling</a></div>
-      <div class="card"><a href="embedding.html">🧠 Embedding</a></div>
-      <div class="card"><a href="history_management.html">📜 History Management</a></div>
-      <div class="card"><a href="live_rag.html">🛰️ Live RAG</a></div>
-      <div class="card"><a href="llm_generate.html">🤖 LLM Generation</a></div>
-      <div class="card"><a href="llms_config.html">⚙️ LLM Config</a></div>
-      <div class="card"><a href="logs_monitoring.html">📈 Logs Monitoring</a></div>
-      <div class="card"><a href="upload.html">📂 File Upload</a></div>
+    <div class="dashboard">
+      <div class="card" onclick="window.location.href='chunking.html'">
+        <div class="card-icon"><i class="fas fa-cut"></i></div>
+        <h3 class="card-title">Content Chunking</h3>
+        <p class="card-desc">Break documents into manageable sections</p>
+      </div>
+      
+      <div class="card" onclick="window.location.href='crawling.html'">
+        <div class="card-icon"><i class="fas fa-spider"></i></div>
+        <h3 class="card-title">Web Crawling</h3>
+        <p class="card-desc">Extract information from government sites</p>
+      </div>
+      
+      <div class="card" onclick="window.location.href='scrabing_tables.html'">
+        <div class="card-icon"><i class="fas fa-table"></i></div>
+        <h3 class="card-title">Tables Crawling</h3>
+        <p class="card-desc">Extract and process tabular data</p>
+      </div>
+      
+      <div class="card" onclick="window.location.href='embedding.html'">
+        <div class="card-icon"><i class="fas fa-brain"></i></div>
+        <h3 class="card-title">Embedding</h3>
+        <p class="card-desc">Transform text into vector representations</p>
+      </div>
+      
+      <div class="card" onclick="window.location.href='history_management.html'">
+        <div class="card-icon"><i class="fas fa-history"></i></div>
+        <h3 class="card-title">History Management</h3>
+        <p class="card-desc">Track and manage user interactions</p>
+      </div>
+      
+      <div class="card" onclick="window.location.href='live_rag.html'">
+        <div class="card-icon"><i class="fas fa-satellite-dish"></i></div>
+        <h3 class="card-title">Live RAG</h3>
+        <p class="card-desc">Real-time retrieval augmented generation</p>
+      </div>
+      
+      <div class="card" onclick="window.location.href='llm_generate.html'">
+        <div class="card-icon"><i class="fas fa-robot"></i></div>
+        <h3 class="card-title">LLM Generation</h3>
+        <p class="card-desc">Generate responses with AI models</p>
+      </div>
+      
+      <div class="card" onclick="window.location.href='llms_config.html'">
+        <div class="card-icon"><i class="fas fa-cogs"></i></div>
+        <h3 class="card-title">LLM Configuration</h3>
+        <p class="card-desc">Manage model settings and parameters</p>
+      </div>
+      
+      <div class="card" onclick="window.location.href='logs_monitoring.html'">
+        <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+        <h3 class="card-title">Logs Monitoring</h3>
+        <p class="card-desc">Track system performance and usage</p>
+      </div>
+      
+      <div class="card" onclick="window.location.href='upload.html'">
+        <div class="card-icon"><i class="fas fa-file-upload"></i></div>
+        <h3 class="card-title">File Upload</h3>
+        <p class="card-desc">Process applicant documents</p>
+      </div>
+      
+      <div class="card" onclick="window.location.href='graph_ui.html'">
+        <div class="card-icon"><i class="fas fa-project-diagram"></i></div>
+        <h3 class="card-title">Graph Relations</h3>
+        <p class="card-desc">Visualize data relationships</p>
+      </div>
+      
+      <div class="card" onclick="window.location.href='storage_managment.html'">
+        <div class="card-icon"><i class="fas fa-database"></i></div>
+        <h3 class="card-title">Storage Management</h3>
+        <p class="card-desc">Manage system data storage</p>
+      </div>
+      <div class="card" onclick="window.location.href='score_calculation.html'">
+        <div class="card-icon"><i class="fas fa-calculator"></i></div>
+        <h3 class="card-title">Score Calculation</h3>
+        <p class="card-desc">CRS points estimation</p>
+      </div>
     </div>
   </main>
 
   <div class="footer">
-    &copy; 2025 Canada Express Entry Chatbot Admin • Powered by FastAPI
+    &copy; 2025 Canada Express Entry AI Administration • Powered by FastAPI & AI Canada
+    <br>
+    <small>Official colors inspired by the Canadian flag (#D52B1E)</small>
   </div>
 </body>
 </html>
