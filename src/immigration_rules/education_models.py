@@ -93,7 +93,7 @@ def get_education_factors(input_json_path: str, extracted_output_path: str) -> E
     try:
         logger.info("Loading extracted JSON data into EducationFactors model...")
         success, result = load_json_file(file_path=extracted_output_path)
-        education_factors = EducationFactors(**result)
+        education_factors = EducationFactors(**result) # type: ignore
     except Exception as e:
         logger.error("Failed to parse extracted JSON into EducationFactors model: %s", e)
         raise RuntimeError("Error loading education factors from extracted data") from e
@@ -106,55 +106,61 @@ def calculate_education_points(
     education_factors: EducationFactors
 ) -> int:
     """
-    Calculate CRS points for education level with validation
-    
+    Calculate CRS points for education level with if-else logic and spouse consideration.
+
     Args:
-        education_level: EducationLevel enum value
-        has_spouse: Boolean indicating spouse status
-        education_factors: Loaded EducationFactors model
-    
+        education_level (EducationLevel): Enum member representing education level.
+        has_spouse (bool): Whether applicant has a spouse.
+        education_factors (EducationFactors): Pydantic model with points attributes.
+
     Returns:
-        CRS points for education factor
-    
+        int: CRS points for education level.
+
     Raises:
-        ValueError: For invalid inputs
+        ValueError: For invalid inputs or unknown education levels.
+        RuntimeError: If factor attribute is missing.
     """
-    logger.info(f"Calculating education points for {education_level}, spouse: {has_spouse}")
-    
+    logger.info(f"Calculating education points for {education_level.name}, spouse: {has_spouse}")
+
+    if not isinstance(education_level, EducationLevel):
+        raise ValueError("education_level must be an instance of EducationLevel enum")
+
+    if not isinstance(has_spouse, bool):
+        raise ValueError("has_spouse must be a boolean")
+
+    suffix = "with_spouse" if has_spouse else "without_spouse"
+
     try:
         if education_level == EducationLevel.LESS_THAN_SECONDARY:
-            points = (education_factors.less_than_secondary_with_spouse if has_spouse
-                     else education_factors.less_than_secondary_without_spouse)
+            attr_name = f"less_than_secondary_{suffix}"
         elif education_level == EducationLevel.SECONDARY_DIPLOMA:
-            points = (education_factors.secondary_diploma_with_spouse if has_spouse
-                     else education_factors.secondary_diploma_without_spouse)
+            attr_name = f"secondary_diploma_{suffix}"
         elif education_level == EducationLevel.ONE_YEAR_POST_SECONDARY:
-            points = (education_factors.one_year_program_with_spouse if has_spouse
-                     else education_factors.one_year_program_without_spouse)
+            attr_name = f"one_year_program_{suffix}"
         elif education_level == EducationLevel.TWO_YEAR_POST_SECONDARY:
-            points = (education_factors.two_year_program_with_spouse if has_spouse
-                     else education_factors.two_year_program_without_spouse)
+            attr_name = f"two_year_program_{suffix}"
         elif education_level == EducationLevel.BACHELOR_OR_THREE_YEAR_POST_SECONDARY_OR_MORE:
-            points = (education_factors.bachelors_with_spouse if has_spouse
-                     else education_factors.bachelors_without_spouse)
+            attr_name = f"bachelors_{suffix}"
         elif education_level == EducationLevel.TWO_OR_MORE_CERTIFICATES:
-            points = (education_factors.two_or_more_certificates_with_spouse if has_spouse
-                     else education_factors.two_or_more_certificates_without_spouse)
+            attr_name = f"two_or_more_certificates_{suffix}"
         elif education_level == EducationLevel.MASTERS_OR_PROFESSIONAL_DEGREE:
-            points = (education_factors.masters_or_professional_with_spouse if has_spouse
-                     else education_factors.masters_or_professional_without_spouse)
+            attr_name = f"masters_or_professional_{suffix}"
         elif education_level == EducationLevel.PHD:
-            points = (education_factors.phd_with_spouse if has_spouse
-                     else education_factors.phd_without_spouse)
+            attr_name = f"phd_{suffix}"
         else:
             raise ValueError(f"Unknown education level: {education_level}")
-        
-        logger.debug(f"Calculated {points} points for {education_level}")
+
+        points = getattr(education_factors, attr_name)
+        logger.debug(f"Points for {education_level.name} ({suffix}): {points}")
         return points
-        
+
+    except AttributeError as e:
+        logger.error(f"Missing attribute {attr_name} in education factors: {e}")
+        raise RuntimeError(f"Error accessing education factor '{attr_name}'") from e
     except Exception as e:
-        logger.error(f"Education points calculation failed: {str(e)}")
-        raise ValueError("Failed to calculate education points") from e
+        logger.error(f"Error calculating education points: {e}")
+        raise RuntimeError("Education points calculation failed") from e
+
 
 def main():
     """

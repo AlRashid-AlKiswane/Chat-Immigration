@@ -108,7 +108,7 @@ def get_age_factors(input_json_path: str, extracted_output_path: str) -> AgeFact
     try:
         logger.info("Loading extracted JSON data into AgeFactors model...")
         success, result = load_json_file(file_path=extracted_output_path)
-        age_factors = AgeFactors(**result)
+        age_factors = AgeFactors(**result) # type: ignore
     except Exception as e:
         logger.error("Failed to parse extracted JSON into AgeFactors model: %s", e)
         raise RuntimeError("Error loading age factors from extracted data") from e
@@ -132,58 +132,68 @@ def calculate_age_points(age: int, has_spouse: bool, age_factors: AgeFactors) ->
         ValueError: For invalid age input
     """
     logger.info(f"Calculating age points for age {age}, spouse: {has_spouse}")
-    
+
+    # Input Validation
     if not isinstance(age, int) or age < 17 or age > 100:
         logger.error(f"Invalid age input: {age}")
-        raise ValueError("Age must be between 17 and 100")
-    
+        raise ValueError("Age must be an integer between 17 and 100")
+
+    # Determine the attribute suffix based on spouse status
+    # This avoids repeating the if/else check in every age condition.
+    suffix = "with_spouse" if has_spouse else "without_spouse"
+
     try:
+        # Determine which attribute of age_factors to access based on age
         if age <= 17:
-            points = (age_factors.y17_or_less_with_spouse if has_spouse 
-                     else age_factors.y17_or_less_without_spouse)
+            attr_name = f"y17_or_less_{suffix}"
         elif age == 18:
-            points = age_factors.y18_with_spouse if has_spouse else age_factors.y18_without_spouse
+            attr_name = f"y18_{suffix}"
         elif age == 19:
-            points = age_factors.y19_with_spouse if has_spouse else age_factors.y19_without_spouse
-        elif 20 <= age <= 29:
-            points = age_factors.y20_29_with_spouse if has_spouse else age_factors.y20_29_without_spouse
+            attr_name = f"y19_{suffix}"
+        elif 20 <= age <= 29: # Assuming JSON data correctly reflects points for 20-29 group
+            attr_name = f"y20_29_{suffix}"
         elif age == 30:
-            points = age_factors.y30_with_spouse if has_spouse else age_factors.y30_without_spouse
+            attr_name = f"y30_{suffix}"
         elif age == 31:
-            points = age_factors.y31_with_spouse if has_spouse else age_factors.y31_without_spouse
+            attr_name = f"y31_{suffix}"
         elif age == 32:
-            points = age_factors.y32_with_spouse if has_spouse else age_factors.y32_without_spouse
+            attr_name = f"y32_{suffix}"
         elif age == 33:
-            points = age_factors.y33_with_spouse if has_spouse else age_factors.y33_without_spouse
+            attr_name = f"y33_{suffix}"
         elif age == 34:
-            points = age_factors.y34_with_spouse if has_spouse else age_factors.y34_without_spouse
+            attr_name = f"y34_{suffix}"
         elif age == 35:
-            points = age_factors.y35_with_spouse if has_spouse else age_factors.y35_without_spouse
+            attr_name = f"y35_{suffix}"
         elif age == 36:
-            points = age_factors.y36_with_spouse if has_spouse else age_factors.y36_without_spouse
+            attr_name = f"y36_{suffix}"
         elif age == 37:
-            points = age_factors.y37_with_spouse if has_spouse else age_factors.y37_without_spouse
+            attr_name = f"y37_{suffix}"
         elif age == 38:
-            points = age_factors.y38_with_spouse if has_spouse else age_factors.y38_without_spouse
+            attr_name = f"y38_{suffix}"
         elif age == 39:
-            points = age_factors.y39_with_spouse if has_spouse else age_factors.y39_without_spouse
+            attr_name = f"y39_{suffix}"
         elif age == 40:
-            points = age_factors.y40_with_spouse if has_spouse else age_factors.y40_without_spouse
+            attr_name = f"y40_{suffix}"
         elif age == 41:
-            points = age_factors.y41_with_spouse if has_spouse else age_factors.y41_without_spouse
+            attr_name = f"y41_{suffix}"
         elif age == 42:
-            points = age_factors.y42_with_spouse if has_spouse else age_factors.y42_without_spouse
+            attr_name = f"y42_{suffix}"
         elif age == 43:
-            points = age_factors.y43_with_spouse if has_spouse else age_factors.y43_without_spouse
+            attr_name = f"y43_{suffix}"
         elif age == 44:
-            points = age_factors.y44_with_spouse if has_spouse else age_factors.y44_without_spouse
-        else:  # 45+
-            points = (age_factors.y45_or_more_with_spouse if has_spouse 
-                     else age_factors.y45_or_more_without_spouse)
-        
-        logger.debug(f"Calculated {points} points for age {age}")
+            attr_name = f"y44_{suffix}"
+        else: # age >= 45
+            attr_name = f"y45_or_more_{suffix}"
+
+        # Access the points using getattr
+        points = getattr(age_factors, attr_name)
+        logger.debug(f"Calculated {points} points for age {age} ({suffix})")
         return points
-        
+
+    except AttributeError as e:
+        # This should ideally not happen if the AgeFactors model is correctly populated
+        logger.error(f"Age factor attribute not found: {attr_name}. Error: {e}")
+        raise RuntimeError(f"Error accessing age factor data for '{attr_name}'") from e
     except Exception as e:
         logger.error(f"Failed to calculate age points: {str(e)}")
         raise RuntimeError("Age points calculation failed") from e
@@ -194,6 +204,7 @@ def main():
     """
     from src.helpers import get_settings, Settings
     app_settings: Settings = get_settings()
+    
 
     input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.AGE_TAPLE_NAME)
     extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "age_factors.json")

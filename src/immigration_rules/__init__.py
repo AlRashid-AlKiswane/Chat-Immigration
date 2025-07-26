@@ -15,19 +15,19 @@ Exposed Components:
 - Loaders: Functions that parse JSON and return validated model instances
 """
 
-from .canadian_work_exp_models import WorkExperienceFactors, get_work_experience_factors
+from .canadian_work_exp_models import WorkExperienceFactors, get_work_experience_factors,calculate_work_experience_points
 from .foreign_canadian_work_models import ForeignCanadianWorkFactors, get_foreign_canadian_combo_points
 from .work_education_models import CanadianWorkEducationFactors, get_canadian_work_education_points
 from .certificate_of_qualification_models import CertificateOfQualificationFactors, get_certificate_of_qualification_points
 from .foreign_work_language_models import ForeignWorkLanguageCombinationFactors, get_foreign_work_language_points
 from .spouse_education_models import SpouseEducationFactors, get_spouse_education_factors
 from .additional_point_models import AdditionalPointsFactors, get_additional_points_factors
-from .education_models import EducationFactors, get_education_factors
+from .education_models import EducationFactors, get_education_factors,calculate_education_points
 from .language_education_models import LanguageEducationCombinationFactors, get_language_education_points
 from .spouse_language_models import SpouseLanguageFactors, get_spouse_language_factors
-from .age_models import AgeFactors, get_age_factors
-from .first_language_models import FirstLanguageFactors, get_first_language_factors
-from .second_language_models import SecondLanguageFactors, get_second_language_factors
+from .age_models import AgeFactors, get_age_factors,calculate_age_points
+from .first_language_models import FirstLanguageFactors, get_first_language_factors, calculate_language_points
+from .second_language_models import SecondLanguageFactors, get_second_language_factors,calculate_second_language_points
 from .spouse_work_models import SpouseWorkExperienceFactors, get_spouse_work_experience_factors
 
 __all__ = [

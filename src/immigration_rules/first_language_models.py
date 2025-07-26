@@ -11,12 +11,12 @@ The module:
 - Handles filesystem setup and robust error logging.
 """
 
-import asyncio
 import os
 import sys
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field
+from typing import Dict
 
 # Setup base directory
 try:
@@ -27,7 +27,7 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 from src.infra import setup_logging
-from src.controllers import extract_education_table
+from src.controllers import extract_education_table ,convert_score_to_clb
 logger = setup_logging(name="FIRST_LANGUAGE_MODELS")
 
 class FirstLanguageFactors(BaseModel):
@@ -87,11 +87,68 @@ def get_first_language_factors(input_json_path: str, extracted_output_path: str)
     try:
         logger.info("Loading extracted JSON into model...")
         success, result = load_json_file(file_path=extracted_output_path)
-        return FirstLanguageFactors(**result)
+        return FirstLanguageFactors(**result) # type: ignore
 
     except Exception as e:
         logger.error("Failed to parse JSON: %s", e)
         raise RuntimeError("Language factors model loading failed") from e
+    
+def calculate_language_points(
+    test_name: str,
+    user_scores: Dict[str, float],
+    has_spouse: bool,
+    language_factors: FirstLanguageFactors,
+) -> int:
+    """
+    Calculate total CRS language points based on user test scores and CLB conversion.
+
+    Args:
+        test_name: Name of the language test (IELTS, CELPIP, TEF, TCF, PTE).
+        user_scores: Dict with keys ["reading", "writing", "listening", "speaking"] and numeric scores.
+        has_spouse: True if the applicant has a spouse.
+        language_factors: FirstLanguageFactors model loaded from JSON table.
+
+    Returns:
+        int: Total CRS points for language (sum of all four abilities)
+    """
+    logger.info(f"Calculating language points for {test_name}, spouse={has_spouse}")
+    suffix = "with_spouse" if has_spouse else "without_spouse"
+
+    total_points = 0
+
+    for ability, score in user_scores.items():
+        # 1) Convert test score to CLB
+        clb_level = convert_score_to_clb(test_name, ability, score)
+        logger.debug(f"{ability}: score={score} => CLB={clb_level}")
+
+        # 2) Determine attribute name from CLB level
+        if clb_level == 0:  # below CLB 4
+            attr_name = f"less_than_clb_4_{suffix}"
+        elif clb_level in [4, 5]:
+            attr_name = f"clb_4_or_5_{suffix}"
+        elif clb_level == 6:
+            attr_name = f"clb_6_{suffix}"
+        elif clb_level == 7:
+            attr_name = f"clb_7_{suffix}"
+        elif clb_level == 8:
+            attr_name = f"clb_8_{suffix}"
+        elif clb_level == 9:
+            attr_name = f"clb_9_{suffix}"
+        else:  # CLB 10 or more
+            attr_name = f"clb_10_or_more_{suffix}"
+
+        # 3) Fetch points from language_factors
+        try:
+            points = getattr(language_factors, attr_name)
+        except AttributeError:
+            logger.error(f"Attribute '{attr_name}' not found in language factors")
+            points = 0
+
+        total_points += points
+        logger.debug(f"{ability}: CLB={clb_level} -> {points} points")
+
+    logger.info(f"Total language points: {total_points}")
+    return total_points
 
 def main():
     """
@@ -108,6 +165,13 @@ def main():
         logger.info("Language factors loaded successfully.")
         print("CLB 9 WITH spouse:", factors.clb_9_with_spouse)
         print("CLB 10+ WITHOUT spouse:", factors.clb_10_or_more_without_spouse)
+        print("calculate language score:")
+        user_scores = {"reading": 75.0, "writing": 85.0, "listening": 70.0, "speaking": 77.0}
+        language_test_name= "PTE"
+        print(f"calculate language points for user score {user_scores} for {language_test_name} test")
+
+        points = calculate_language_points(language_test_name, user_scores, has_spouse=False, language_factors=factors)
+        print(f"language score result: {points}")
     except Exception as e:
         logger.error("Failed to load language data: %s", e)
 
