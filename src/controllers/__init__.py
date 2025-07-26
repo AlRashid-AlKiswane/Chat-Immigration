@@ -44,6 +44,7 @@ from .work_education_json_to_json import extract_canadian_work_edu_points
 from .foreign_work_language_json_to_json import extract_foreign_work_language_points
 from .foreign_canadian_work_json_to_json import extract_foreign_canadian_work_points
 from .certificate_of_qualification_json_to_json import extract_certificate_of_qualification
+from .score_to_clb import convert_score_to_clb
 
 __all__ = [
     "generate_unique_filename",
@@ -64,4 +65,5 @@ __all__ = [
     "extract_foreign_work_language_points",
     "extract_foreign_canadian_work_points",
     "extract_certificate_of_qualification",
+    "convert_score_to_clb",
 ]
