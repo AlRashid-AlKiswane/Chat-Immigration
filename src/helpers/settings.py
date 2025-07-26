@@ -130,6 +130,10 @@ class Settings(BaseSettings):
     CERTIFICATE_QUALIFICATION_TABLE_NAME:str = Field(...,env="CERTIFICATE_QUALIFICATION_TABLE_NAME")
     ADDITIONAL_POINTS_TABLE_NAME: str=Field(...,env="ADDITIONAL_POINTS_TABLE_NAME")
 
+    SECRET_KEY: Optional[SecretStr] = Field(None, env="SECRET_KEY")
+    ALGORITHM: Optional[SecretStr] = Field(None, env="ALGORITHM")
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = Field(..., env="ACCESS_TOKEN_EXPIRE_MINUTES")
+    AUTH_DB: str = Field(..., env="AUTH_DB")
 
 def get_settings() -> Settings:
     """
