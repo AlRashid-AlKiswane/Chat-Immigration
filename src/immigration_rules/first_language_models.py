@@ -30,6 +30,12 @@ from src.infra import setup_logging
 from src.controllers import extract_education_table ,convert_score_to_clb
 logger = setup_logging(name="FIRST_LANGUAGE_MODELS")
 
+from src.helpers import get_settings, Settings
+app_settings: Settings = get_settings()
+
+input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.FIERST_LANGUAGE_TAPLE_NAME)
+extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "first_language_factors.json")
+
 class FirstLanguageFactors(BaseModel):
     """
     Pydantic model for first-language CLB level immigration scoring.
@@ -53,7 +59,7 @@ class FirstLanguageFactors(BaseModel):
     class Config:
         validate_by_name = True
 
-def get_first_language_factors(input_json_path: str, extracted_output_path: str) -> FirstLanguageFactors:
+def get_first_language_factors(input_json_path: str =input_json_path, extracted_output_path: str=extracted_output_path) -> FirstLanguageFactors:
     """
     Extracts first language factors from a raw JSON file and loads them into a model.
 
@@ -158,11 +164,7 @@ def main():
     """
     Run an example of loading first language factors using project settings.
     """
-    from src.helpers import get_settings, Settings
-    app_settings: Settings = get_settings()
 
-    input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.FIERST_LANGUAGE_TAPLE_NAME)
-    extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "first_language_factors.json")
 
     try:
         factors = get_first_language_factors(input_json_path, extracted_output_path)

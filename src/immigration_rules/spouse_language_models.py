@@ -20,6 +20,12 @@ from src.controllers import convert_score_to_clb
 
 logger = setup_logging(name="SPOUSE_LANGUAGE_MODELS_FACTORS")
 
+from src.helpers import get_settings, Settings
+app_settings: Settings = get_settings()
+
+input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.SPOUSE_LANGUAGE_TABLE_NAME)
+extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "spouse_language_factors.json")
+
 class SpouseLanguageFactors(BaseModel):
     """
     Pydantic model for language benchmark level immigration scoring.
@@ -37,7 +43,7 @@ class SpouseLanguageFactors(BaseModel):
     class Config:
         validate_by_name = True
 
-def get_spouse_language_factors(input_json_path: str, extracted_output_path: str) -> SpouseLanguageFactors:
+def get_spouse_language_factors(input_json_path: str =input_json_path, extracted_output_path: str=extracted_output_path) -> SpouseLanguageFactors:
     """
     Extracts spouse language rule data and loads it into a model.
 
@@ -151,11 +157,7 @@ def main():
     """
     Demonstrates usage of the spouse language rule parser.
     """
-    from src.helpers import get_settings, Settings
-    app_settings: Settings = get_settings()
 
-    input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.SPOUSE_LANGUAGE_TABLE_NAME)
-    extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "spouse_language_factors.json")
 
     try:
         factors = get_spouse_language_factors(input_json_path, extracted_output_path)

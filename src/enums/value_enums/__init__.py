@@ -1,2 +1,2 @@
 from .model_provider import ModelProvider
-from .crs_values import EducationLevel, LanguageTestEnum
+from .crs_values import EducationLevel, LanguageTestEnum,MaritalStatus,CanadianEducationCategory

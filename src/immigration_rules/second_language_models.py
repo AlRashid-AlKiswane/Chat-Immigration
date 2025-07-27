@@ -29,6 +29,12 @@ from src.controllers import extract_second_language_table,convert_score_to_clb
 
 logger = setup_logging(name="SECOND_LANGUAGE_MODELS")
 
+from src.helpers import get_settings, Settings
+app_settings: Settings = get_settings()
+
+input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.SECOND_LANGUAGE_TAPLE_NAME)
+extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "second_language_factors.json")
+
 class SecondLanguageFactors(BaseModel):
     """
     Represents second-language CLB immigration points with/without spouse.
@@ -45,7 +51,7 @@ class SecondLanguageFactors(BaseModel):
     class Config:
         validate_by_name = True
 
-def get_second_language_factors(input_json_path: str, extracted_output_path: str) -> SecondLanguageFactors:
+def get_second_language_factors(input_json_path: str =input_json_path, extracted_output_path: str=extracted_output_path) -> SecondLanguageFactors:
     """
     Extracts second language rule data and loads it into a model.
 
@@ -89,7 +95,7 @@ def calculate_second_language_points(
     scores: dict,  # {"listening":7.5, "speaking":7.0, "reading":6.5, "writing":6.0}
     has_spouse: bool,
     factors: SecondLanguageFactors,
-) -> int:
+) -> tuple[int,int]:
     """
     Calculate CRS points for second official language.
 
@@ -141,7 +147,7 @@ def calculate_second_language_points(
     try:
         points = getattr(factors, attr_name)
         logger.info(f"Second language points = {points} (based on min CLB {min_clb}, attribute '{attr_name}')")
-        return points
+        return points, min_clb
     except AttributeError as e:
         logger.error(f"Factor attribute '{attr_name}' not found in SecondLanguageFactors: {e}")
         raise RuntimeError(f"Invalid factor mapping for CLB level {min_clb}")
@@ -150,11 +156,7 @@ def main():
     """
     Demonstrates usage of the second-language rule parser.
     """
-    from src.helpers import get_settings, Settings
-    app_settings: Settings = get_settings()
 
-    input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.SECOND_LANGUAGE_TAPLE_NAME)
-    extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "second_language_factors.json")
 
     try:
         factors = get_second_language_factors(input_json_path, extracted_output_path)

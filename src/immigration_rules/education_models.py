@@ -31,8 +31,12 @@ except (ImportError, OSError) as e:
 from src.infra import setup_logging
 from src.controllers import extract_education_table
 from src.enums.value_enums import EducationLevel
+from src.helpers import get_settings, Settings
+app_settings: Settings = get_settings()
 
 logger = setup_logging(name="EDUCATION_MODELS_FACTORS")
+input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.EDUCATION_TAPLE_NAME)
+extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "education_factors.json")
 
 class EducationFactors(BaseModel):
     """
@@ -59,7 +63,7 @@ class EducationFactors(BaseModel):
     class Config:
         validate_by_name = True
 
-def get_education_factors(input_json_path: str, extracted_output_path: str) -> EducationFactors:
+def get_education_factors(input_json_path: str = input_json_path, extracted_output_path: str = extracted_output_path) -> EducationFactors:
     """
     Extracts education factors from a raw JSON file and loads them into an EducationFactors model.
 
@@ -166,11 +170,7 @@ def main():
     """
     Main function to demonstrate extracting and loading education factors.
     """
-    from src.helpers import get_settings, Settings
-    app_settings: Settings = get_settings()
 
-    input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.EDUCATION_TAPLE_NAME)
-    extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "education_factors.json")
 
     try:
         education_factors = get_education_factors(input_json_path, extracted_output_path)

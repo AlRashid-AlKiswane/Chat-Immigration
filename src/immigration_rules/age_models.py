@@ -25,8 +25,12 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 from src.infra import setup_logging
+from src.helpers import get_settings, Settings
+app_settings: Settings = get_settings()
 
 logger = setup_logging(name="AGE_MODELS_FACTORS")
+input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.AGE_TAPLE_NAME)
+extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "age_factors.json")
 
 class AgeFactors(BaseModel):
     """
@@ -77,7 +81,7 @@ class AgeFactors(BaseModel):
     class Config:
         validate_by_name = True  # Pydantic v2: replaces allow_population_by_field_name
 
-def get_age_factors(input_json_path: str, extracted_output_path: str) -> AgeFactors:
+def get_age_factors(input_json_path: str = input_json_path, extracted_output_path: str=extracted_output_path) -> AgeFactors:
     """
     Extracts age factors from a raw JSON file and loads them into an AgeFactors model.
 
@@ -202,8 +206,7 @@ def main():
     """
     Main async function to demonstrate extracting and loading age factors.
     """
-    from src.helpers import get_settings, Settings
-    app_settings: Settings = get_settings()
+
     
 
     input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.AGE_TAPLE_NAME)
