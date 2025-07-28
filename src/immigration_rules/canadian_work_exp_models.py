@@ -30,6 +30,13 @@ from src.controllers import extract_key_value_table
 logger = setup_logging(name="WORK_EXPERIENCE_MODELS")
 
 
+from src.helpers import get_settings, Settings
+app_settings: Settings = get_settings()
+
+input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.WORK_EXPERIENCE_TABLE_NAME)
+extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "work_experience_factors.json")
+
+
 class WorkExperienceFactors(BaseModel):
     """
     Represents Canadian work experience immigration points with/without spouse.
@@ -51,7 +58,7 @@ class WorkExperienceFactors(BaseModel):
         validate_by_name = True
 
 
-def get_work_experience_factors(input_json_path: str, extracted_output_path: str) -> WorkExperienceFactors:
+def get_work_experience_factors(input_json_path: str =input_json_path, extracted_output_path: str=extracted_output_path) -> WorkExperienceFactors:
     """
     Extracts Canadian work experience rule data and loads it into a model.
 
@@ -140,11 +147,7 @@ def main():
     """
     Demonstrates usage of the work experience rule parser.
     """
-    from src.helpers import get_settings, Settings
-    app_settings: Settings = get_settings()
 
-    input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.WORK_EXPERIENCE_TABLE_NAME)
-    extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "work_experience_factors.json")
 
     try:
         factors = get_work_experience_factors(input_json_path, extracted_output_path)

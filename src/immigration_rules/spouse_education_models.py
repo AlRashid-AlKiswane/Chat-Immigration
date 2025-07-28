@@ -29,6 +29,11 @@ from src.enums.value_enums import EducationLevel
 
 logger = setup_logging(name="SPOUSE_EDUCATION_MODELS")
 
+from src.helpers import get_settings, Settings
+app_settings: Settings = get_settings()
+
+input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.SPOUSE_EDUCATION_TABLE_NAME)
+extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "spouse_education_factors.json")
 
 class SpouseEducationFactors(BaseModel):
     """
@@ -95,7 +100,7 @@ class SpouseEducationFactors(BaseModel):
         validate_by_name = True
 
 
-def get_spouse_education_factors(input_json_path: str, extracted_output_path: str) -> SpouseEducationFactors:
+def get_spouse_education_factors(input_json_path: str =input_json_path, extracted_output_path: str=extracted_output_path) -> SpouseEducationFactors:
     """
     Extracts spouse education rule data and loads it into a model.
 
@@ -197,11 +202,7 @@ def main():
     """
     Demonstrates usage of the spouse education rule parser.
     """
-    from src.helpers import get_settings, Settings
-    app_settings: Settings = get_settings()
 
-    input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.SPOUSE_EDUCATION_TABLE_NAME)
-    extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "spouse_education_factors.json")
 
     try:
         factors = get_spouse_education_factors(input_json_path, extracted_output_path)

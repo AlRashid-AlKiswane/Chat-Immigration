@@ -32,3 +32,27 @@ class LanguageTestEnum(str, Enum):
         helper method that returns all valid values of an Enum as a set.
         """
         return {member.value for member in cls}
+    
+
+class MaritalStatus(str, Enum):
+    """Enum for marital status options in Express Entry."""
+    ANNULLED = "Annulled Marriage"
+    COMMON_LAW = "Common-Law"
+    DIVORCED = "Divorced / Separated"
+    LEGALLY_SEPARATED = "Legally Separated"
+    MARRIED = "Married"
+    SINGLE = "Never Married / Single"
+    WIDOWED = "Widowed"  # Corrected from "Midowed"
+
+    @classmethod
+    def values(cls):
+        """Returns all valid values of the Enum as a set."""
+        return {member.value for member in cls}
+    
+
+class CanadianEducationCategory(Enum):
+    """Canadian education categories for additional points calculation."""
+    NONE = "none"  # No Canadian education
+    SECONDARY_OR_LESS = "secondary_or_less"  # 0 points
+    ONE_TWO_YEAR = "one_two_year"  # Points for 1-2 year credential  
+    THREE_PLUS_OR_ADVANCED = "three_plus_or_advanced"  # Points for 3+ years OR Master's/Professional/Doctoral

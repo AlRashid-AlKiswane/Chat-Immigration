@@ -15,6 +15,11 @@ from src.infra import setup_logging
 
 logger = setup_logging(name="SPOUSE_WORK_EXPERIENCE_FACTORS")
 
+from src.helpers import get_settings, Settings
+app_settings: Settings = get_settings()
+
+input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.SPOUSE_WORK_EXPERIENCE_TABLE_NAME)
+extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "spouse_work_experience_factors.json")
 
 class SpouseWorkExperienceFactors(BaseModel):
     """
@@ -38,7 +43,7 @@ class SpouseWorkExperienceFactors(BaseModel):
         validate_by_name = True
 
 
-def get_spouse_work_experience_factors(input_json_path: str, extracted_output_path: str) -> SpouseWorkExperienceFactors:
+def get_spouse_work_experience_factors(input_json_path: str =input_json_path, extracted_output_path: str=extracted_output_path) -> SpouseWorkExperienceFactors:
     """
     Extracts and loads spouse Canadian work experience rules into a structured model.
 
@@ -135,11 +140,7 @@ def main():
     """
     Demonstrates usage of the spouse work experience rule parser.
     """
-    from src.helpers import get_settings, Settings
-    app_settings: Settings = get_settings()
 
-    input_json_path = os.path.join(app_settings.ORGINA_FACTUES_TAPLE, app_settings.SPOUSE_WORK_EXPERIENCE_TABLE_NAME)
-    extracted_output_path = os.path.join(app_settings.EXTRACTION_FACTURES_TAPLE, "spouse_work_experience_factors.json")
 
     try:
         factors = get_spouse_work_experience_factors(input_json_path, extracted_output_path)

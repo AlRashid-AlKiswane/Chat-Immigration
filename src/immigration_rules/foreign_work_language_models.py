@@ -15,6 +15,11 @@ from src.infra import setup_logging
 
 logger = setup_logging(name="FOREIGN_WORK_LANG_COMBO_MODEL")
 
+from src.helpers import get_settings, Settings
+settings: Settings = get_settings()
+
+input_path = os.path.join(settings.ORGINA_FACTUES_TAPLE, settings.FOREIGN_WORK_LANGUAGE_TABLE_NAME)
+output_path = os.path.join(settings.EXTRACTION_FACTURES_TAPLE, "foreign_work_language_points.json")
 
 class ForeignWorkLanguageFactors(BaseModel):
     """
@@ -34,7 +39,7 @@ class ForeignWorkLanguageFactors(BaseModel):
         validate_by_name = True
 
 
-def get_foreign_work_language_points(input_json: str, extracted_json: str) -> ForeignWorkLanguageFactors:
+def get_foreign_work_language_points(input_json: str =input_path, extracted_json: str =output_path) -> ForeignWorkLanguageFactors:
     from src.utils import load_json_file
     from src.controllers import extract_foreign_work_language_points
 
@@ -120,11 +125,7 @@ def calculate_foreign_work_language_points(
 
 
 if __name__ == "__main__":
-    from src.helpers import get_settings, Settings
-    settings: Settings = get_settings()
 
-    input_path = os.path.join(settings.ORGINA_FACTUES_TAPLE, settings.FOREIGN_WORK_LANGUAGE_TABLE_NAME)
-    output_path = os.path.join(settings.EXTRACTION_FACTURES_TAPLE, "foreign_work_language_points.json")
 
     try:
         model = get_foreign_work_language_points(input_path, output_path)

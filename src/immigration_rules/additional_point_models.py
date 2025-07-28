@@ -2,7 +2,7 @@ import os
 import sys
 import logging
 from pydantic import BaseModel, Field
-from typing import Any,Optional
+from typing import Any, Optional
 
 # Setup for importing shared utilities
 try:
@@ -16,6 +16,12 @@ from src.infra import setup_logging
 from src.enums.value_enums import LanguageTestEnum
 
 logger = setup_logging(name="ADDITIONAL_POINTS_MODEL")
+
+from src.helpers import get_settings, Settings
+settings: Settings = get_settings()
+
+input_path = os.path.join(settings.ORGINA_FACTUES_TAPLE, settings.ADDITIONAL_POINTS_TABLE_NAME)
+output_path = os.path.join(settings.EXTRACTION_FACTURES_TAPLE, "additional_points_factors.json")
 
 class AdditionalPointsFactors(BaseModel):
     """
@@ -31,24 +37,30 @@ class AdditionalPointsFactors(BaseModel):
     class Config:
         validate_by_name = True
 
-def get_additional_points_factors(input_json: str, extracted_json: str) -> AdditionalPointsFactors:
+    def __init__(self, **data: Any):
+        super().__init__(**data)
+        logger.debug(f"AdditionalPointsFactors model initialized with values: {self.dict()}")
+
+def get_additional_points_factors(input_json: str = input_path, extracted_json: str = output_path) -> AdditionalPointsFactors:
     from src.utils import load_json_file
     from src.controllers import extract_additional_points
 
     try:
-        logger.info("Extracting additional points factors...")
+        logger.info(f"Starting extraction of additional points factors from {input_json}")
         extract_additional_points(
             input_path=input_json,
             output_path=extracted_json,
             label_key="Additional points"
         )
+        logger.info("Extraction completed successfully.")
     except Exception as e:
         logger.error("Extraction failed: %s", e)
         raise
 
     try:
         success, data = load_json_file(file_path=extracted_json)
-        return AdditionalPointsFactors(**data) # type: ignore
+        logger.debug(f"Data loaded from {extracted_json}: {data}")
+        return AdditionalPointsFactors(**data)  # type: ignore
     except Exception as e:
         logger.error("Model loading failed: %s", e)
         raise
@@ -63,71 +75,57 @@ def calculate_additional_points(
 ) -> int:
     """
     Calculate the Express Entry additional points based on various criteria.
-    
-    Args:
-        points_factors: Loaded AdditionalPointsFactors model with point values
-        first_test: Dictionary containing:
-            - 'test_name': LanguageTestEnum value
-            - 'clb_level': Minimum CLB/NCLC score (4-12)
-        second_test: Optional dictionary with same structure as first_test
-        has_sibling_in_canada: Whether applicant has a sibling in Canada
-        has_provincial_nomination: Whether applicant has a provincial nomination
-        canadian_education_years: Years of Canadian post-secondary education
-
-    Returns:
-        Total additional points calculated
     """
+    logger.info("Calculating additional points...")
     total_points = 0
 
     # 1. Sibling points
     if has_sibling_in_canada:
         total_points += points_factors.brother_or_sister_living_in_canada_who_is_a_citizen_or_permanent_resident_of_canada
+        logger.debug(f"Added sibling points: {total_points}")
 
     # 2. Language points
     french_tests = {LanguageTestEnum.TEF, LanguageTestEnum.TCF}
     first_is_french = first_test['test_name'] in french_tests
     second_is_french = second_test is not None and second_test['test_name'] in french_tests
 
-    # Get French and English scores regardless of test order
     french_clb = (
         first_test['clb_level'] if first_is_french else
-        second_test['clb_level'] if second_is_french else # type: ignore
-        0
+        second_test['clb_level'] if second_is_french else 0 # type: ignore
     )
-
     english_clb = (
         first_test['clb_level'] if not first_is_french else
-        second_test['clb_level'] if second_test is not None and not second_is_french else
-        0
+        second_test['clb_level'] if second_test is not None and not second_is_french else 0
     )
 
-    # Apply French bonus rules
+    logger.debug(f"French CLB: {french_clb}, English CLB: {english_clb}")
+
     if french_clb >= 7:
         if english_clb <= 4:
             total_points += points_factors.scored_nclc_7_or_higher_on_all_four_french_language_skills_and_scored_clb_4_or_lower_in_english_or_didn_t_take_an_english_test
+            logger.debug(f"Added French CLB≥7 + English ≤4 points: {total_points}")
         elif english_clb >= 5:
             total_points += points_factors.scored_nclc_7_or_higher_on_all_four_french_language_skills_and_scored_clb_5_or_higher_on_all_four_english_skills
+            logger.debug(f"Added French CLB≥7 + English ≥5 points: {total_points}")
 
     # 3. Canadian education
     if canadian_education_years in {1, 2}:
         total_points += points_factors.post_secondary_education_in_canada_credential_of_one_or_two_years
+        logger.debug(f"Added education 1-2 years points: {total_points}")
     elif canadian_education_years >= 3:
         total_points += points_factors.post_secondary_education_in_canada_credential_three_years_or_longer
+        logger.debug(f"Added education 3+ years points: {total_points}")
 
     # 4. Provincial nomination
     if has_provincial_nomination:
         total_points += points_factors.provincial_or_territorial_nomination
+        logger.debug(f"Added provincial nomination points: {total_points}")
 
+    logger.info(f"Total additional points: {total_points}")
     return total_points
 
 
 if __name__ == "__main__":
-    from src.helpers import get_settings, Settings
-    settings: Settings = get_settings()
-
-    input_path = os.path.join(settings.ORGINA_FACTUES_TAPLE, settings.ADDITIONAL_POINTS_TABLE_NAME)
-    output_path = os.path.join(settings.EXTRACTION_FACTURES_TAPLE, "additional_points_factors.json")
-
     try:
         model = get_additional_points_factors(input_path, output_path)
         print("Loaded additional points model:")
@@ -157,6 +155,7 @@ if __name__ == "__main__":
         ]
 
         for case in test_cases:
+            logger.info(f"Running test case: {case['name']}")
             points = calculate_additional_points(
                 points_factors=model,
                 first_test=case["first_test"],

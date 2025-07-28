@@ -16,9 +16,17 @@ from src.enums.value_enums import EducationLevel
 
 logger = setup_logging(name="LANG_EDU_COMBO_MODEL")
 
+from src.helpers import get_settings, Settings
+settings: Settings = get_settings()
+
+input_path = os.path.join(settings.ORGINA_FACTUES_TAPLE, settings.LANGUAGE_EDUCATION_TABLE_NAME)
+output_path = os.path.join(settings.EXTRACTION_FACTURES_TAPLE, "language_education_points.json")
+
+
 class LanguageEducationCombinationFactors(BaseModel):
     """
     Language and education combination points model.
+    Based on CLB 7+ vs CLB 9+ thresholds and education levels.
     """
     high_school_clb7: int = Field(..., alias="SECONDARY_SCHOOL_HIGH_SCHOOL_CREDENTIAL_OR_LESS_CLB7")
     high_school_clb9: int = Field(..., alias="SECONDARY_SCHOOL_HIGH_SCHOOL_CREDENTIAL_OR_LESS_CLB9")
@@ -38,7 +46,8 @@ class LanguageEducationCombinationFactors(BaseModel):
     class Config:
         validate_by_name = True
 
-def get_language_education_points(input_json: str, extracted_json: str) -> LanguageEducationCombinationFactors:
+
+def get_language_education_points(input_json: str = input_path, extracted_json: str = output_path) -> LanguageEducationCombinationFactors:
     from src.utils import load_json_file
     from src.controllers import extract_language_education_points
 
@@ -55,11 +64,10 @@ def get_language_education_points(input_json: str, extracted_json: str) -> Langu
 
     try:
         success, data = load_json_file(file_path=extracted_json)
-        return LanguageEducationCombinationFactors(**data) # type: ignore
+        return LanguageEducationCombinationFactors(**data)  # type: ignore
     except Exception as e:
         logger.error("Model loading failed: %s", e)
         raise
-
 
 
 def calculate_language_education_points(
@@ -67,49 +75,87 @@ def calculate_language_education_points(
     min_clb: int,
     factors: LanguageEducationCombinationFactors
 ) -> int:
+    """
+    Calculate language + education combination points based on education level and CLB score.
+    """
     logger.info(f"Calculating language+education points for education={education_level}, min CLB={min_clb}")
 
-    clb_threshold = 9 if min_clb >= 9 else 7
-
-    # Map enum to factor attribute names
-    mapping = {
-        EducationLevel.SECONDARY_DIPLOMA: f"high_school_clb{clb_threshold}",
-        EducationLevel.ONE_YEAR_POST_SECONDARY: f"post_sec_one_plus_clb{clb_threshold}",
-        EducationLevel.TWO_OR_MORE_CERTIFICATES: f"two_plus_post_sec_3yr_clb{clb_threshold}",
-        EducationLevel.MASTERS_OR_PROFESSIONAL_DEGREE: f"masters_or_professional_clb{clb_threshold}",
-        EducationLevel.PHD: f"doctorate_clb{clb_threshold}",
+    # Must be at least CLB 7 to get any points
+    if min_clb < 7:
+        logger.info("CLB below 7 - no combination points awarded")
+        return 0
+    
+    # Determine which CLB tier applies
+    clb_tier = "clb9" if min_clb >= 9 else "clb7"
+    
+    # Updated mapping aligned with the Skill Transferability table
+    education_mapping = {
+        # High school or less
+        EducationLevel.LESS_THAN_SECONDARY: "high_school",
+        EducationLevel.SECONDARY_DIPLOMA: "high_school",
+        
+        # One/two-year post-secondary AND Bachelor's (3+ years) -> one year+ category
+        EducationLevel.ONE_YEAR_POST_SECONDARY: "post_sec_one_plus",
+        EducationLevel.TWO_YEAR_POST_SECONDARY: "post_sec_one_plus",
+        EducationLevel.BACHELOR_OR_THREE_YEAR_POST_SECONDARY_OR_MORE: "post_sec_one_plus",
+        
+        # Two or more credentials (with one 3+ years)
+        EducationLevel.TWO_OR_MORE_CERTIFICATES: "two_plus_post_sec_3yr",
+        
+        # Master's and professional degrees
+        EducationLevel.MASTERS_OR_PROFESSIONAL_DEGREE: "masters_or_professional",
+        
+        # Doctorate
+        EducationLevel.PHD: "doctorate",
     }
 
-    attr_name = mapping.get(education_level, None)
-    if attr_name is None:
-        logger.warning(f"Education level '{education_level.value}' not mapped for points calculation.")
+    education_category = education_mapping.get(education_level)
+    if education_category is None:
+        logger.warning(f"Education level '{education_level.value}' not found in mapping.")
         return 0
 
+    # Build the attribute name dynamically
+    attr_name = f"{education_category}_{clb_tier}"
+    
     try:
         points = getattr(factors, attr_name)
-        logger.info(f"Attribute '{attr_name}' => {points} points")
+        logger.info(f"Education '{education_level.value}' + CLB {min_clb} => '{attr_name}' => {points} points")
         return points
     except AttributeError:
-        logger.error(f"Attribute '{attr_name}' not found in factors")
+        logger.error(f"Attribute '{attr_name}' not found in factors model")
         return 0
 
 
 if __name__ == "__main__":
-    from src.helpers import get_settings, Settings
-    settings: Settings = get_settings()
-
-    input_path = os.path.join(settings.ORGINA_FACTUES_TAPLE, settings.LANGUAGE_EDUCATION_TABLE_NAME)
-    output_path = os.path.join(settings.EXTRACTION_FACTURES_TAPLE, "language_education_points.json")
-
     try:
         model = get_language_education_points(input_path, output_path)
         print("Loaded language + education combination model:")
-        print("CLB9 + Doctorate:", model.doctorate_clb9)
-        education_level= EducationLevel.ONE_YEAR_POST_SECONDARY
-        min_clb=8
-
-        points = calculate_language_education_points(education_level, min_clb, factors=model)
-        print(f"Points for {education_level.value} with min CLB {min_clb}: {points}")
+        print(f"CLB7 + High School: {model.high_school_clb7}")
+        print(f"CLB9 + High School: {model.high_school_clb9}")
+        print(f"CLB7 + One Year Post-Sec: {model.post_sec_one_plus_clb7}")
+        print(f"CLB9 + One Year Post-Sec: {model.post_sec_one_plus_clb9}")
+        print(f"CLB7 + Two+ Credentials: {model.two_plus_post_sec_3yr_clb7}")
+        print(f"CLB9 + Two+ Credentials: {model.two_plus_post_sec_3yr_clb9}")
+        print(f"CLB7 + Master's: {model.masters_or_professional_clb7}")
+        print(f"CLB9 + Master's: {model.masters_or_professional_clb9}")
+        print(f"CLB7 + Doctorate: {model.doctorate_clb7}")
+        print(f"CLB9 + Doctorate: {model.doctorate_clb9}")
+        
+        # Test cases
+        test_cases = [
+            (EducationLevel.ONE_YEAR_POST_SECONDARY, 8),
+            (EducationLevel.ONE_YEAR_POST_SECONDARY, 9),
+            (EducationLevel.BACHELOR_OR_THREE_YEAR_POST_SECONDARY_OR_MORE, 7),
+            (EducationLevel.TWO_OR_MORE_CERTIFICATES, 9),
+            (EducationLevel.MASTERS_OR_PROFESSIONAL_DEGREE, 9),
+            (EducationLevel.SECONDARY_DIPLOMA, 6),  # Should get 0 points
+            (EducationLevel.PHD, 9),
+        ]
+        
+        print("\nTest calculations:")
+        for education_level, min_clb in test_cases:
+            points = calculate_language_education_points(education_level, min_clb, factors=model)
+            print(f"{education_level.value} + min CLB {min_clb}: {points} points")
 
     except Exception as e:
         logger.error("Processing failed: %s", e)

@@ -1,68 +1,156 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Literal, Union
 
-IELTS_BAND_TO_CLB: Dict[str, List[Tuple[float, int]]] = {
-    "listening": [(4.5, 4), (5.0, 5), (5.5, 6), (6.0, 7), (6.5, 8), (7.0, 9), (8.0, 10)],
-    "speaking": [(4.0, 4), (5.0, 5), (5.5, 6), (6.0, 7), (6.5, 8), (7.0, 9), (7.5, 10)],
-    "reading": [(3.5, 4), (4.0, 5), (4.5, 6), (5.5, 7), (6.0, 8), (6.5, 9), (7.0, 10)],
-    "writing": [(4.0, 4), (5.0, 5), (5.5, 6), (6.0, 7), (6.5, 8), (7.0, 9), (7.5, 10)],
+# Define types
+LanguageTestType = Literal["listening", "speaking", "reading", "writing"]
+ScoreThreshold = Union[float, int, Tuple[int, int]]
+TestConversionTable = Dict[LanguageTestType, List[Tuple[ScoreThreshold, int]]]
+
+# IELTS to CLB conversion
+IELTS_TO_CLB: TestConversionTable = {
+    "listening": [
+        (4.0, 4), (4.5, 5), (5.0, 6), (6.0, 7),
+        (7.5, 8), (8.0, 9), (8.5, 10)
+    ],
+    "speaking": [
+        (4.0, 4), (5.0, 5), (5.5, 6), (6.0, 7),
+        (6.5, 8), (7.0, 9), (7.5, 10)
+    ],
+   "reading": [
+    (3.5, 4), (4.0, 5), (5.0, 6), (6.0, 7),
+    (6.5, 8), (7.0, 9), (8.0, 10)
+        ],
+    "writing": [
+        (4.0, 4), (5.0, 5), (5.5, 6), (6.0, 7),
+        (6.5, 8), (7.0, 9), (7.5, 10)
+    ]
 }
 
-CELPIP_TO_CLB: Dict[str, List[Tuple[int, int]]] = {
-    "listening": [(5, 4), (6, 5), (7, 6), (8, 7), (9, 8), (10, 9), (11, 10)],
-    "speaking": [(5, 4), (6, 5), (7, 6), (8, 7), (9, 8), (10, 9), (11, 10)],
-    "reading": [(4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10)],
-    "writing": [(4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10)],
+# CELPIP to CLB conversion (1:1 mapping)
+CELPIP_TO_CLB: TestConversionTable = {
+    "listening": [(k, k) for k in range(4, 11)],
+    "speaking": [(k, k) for k in range(4, 11)],
+    "reading": [(k, k) for k in range(4, 11)],
+    "writing": [(k, k) for k in range(4, 11)]
 }
 
-TEF_TO_CLB: Dict[str, List[Tuple[int, int]]] = {
-    "listening": [(146, 4), (159, 5), (167, 6), (176, 7), (186, 8), (193, 9), (207, 10)],
-    "speaking": [(181, 4), (207, 5), (232, 6), (248, 7), (263, 8), (279, 9), (298, 10)],
-    "reading": [(121, 4), (149, 5), (174, 6), (207, 7), (232, 8), (248, 9), (263, 10)],
-    "writing": [(181, 4), (207, 5), (232, 6), (248, 7), (263, 8), (279, 9), (298, 10)],
+# TEF Canada to NCLC conversion
+TEF_TO_NCLC: TestConversionTable = {
+    "reading": [
+        (549, 10), (524, 9), (499, 8), (453, 7),
+        (406, 6), (375, 5), (342, 4)
+    ],
+    "writing": [
+        (20, 10), (19, 10), (18, 10), (17, 10), (16, 10),
+        (15, 9), (14, 9),
+        (13, 8), (12, 8),
+        (11, 7), (10, 7),
+        (9, 6), (8, 6), (7, 6),
+        (6, 5),
+        (5, 4), (4, 4)
+    ],
+    "listening": [
+        (549, 10), (523, 9), (503, 8), (458, 7),
+        (398, 6), (369, 5), (331, 4)
+    ],
+    "speaking": [
+        (20, 10), (19, 10), (18, 10), (17, 10), (16, 10),
+        (15, 9), (14, 9),
+        (13, 8), (12, 8),
+        (11, 7), (10, 7),
+        (9, 6), (8, 6), (7, 6),
+        (6, 5),
+        (5, 4), (4, 4)
+    ]
 }
 
-TCF_TO_CLB: Dict[str, List[Tuple[int, int]]] = {
-    "listening": [(181, 4), (207, 5), (232, 6), (248, 7), (263, 8), (279, 9), (298, 10)],
-    "speaking": [(181, 4), (207, 5), (232, 6), (248, 7), (263, 8), (279, 9), (298, 10)],
-    "reading": [(181, 4), (207, 5), (232, 6), (248, 7), (263, 8), (279, 9), (298, 10)],
-    "writing": [(181, 4), (207, 5), (232, 6), (248, 7), (263, 8), (279, 9), (298, 10)],
-}
-
-# PTE mappings based on official ranges, using the min score of each CLB range
-PTE_TO_CLB: Dict[str, List[Tuple[int, int]]] = {
-    "reading": [(24, 3), (33, 4), (42, 5), (51, 6), (60, 7), (69, 8), (78, 9), (88, 10)],
-    "writing": [(32, 3), (41, 4), (51, 5), (60, 6), (69, 7), (79, 8), (88, 9), (90, 10)],
-    "listening": [(18, 3), (28, 4), (39, 5), (50, 6), (60, 7), (71, 8), (82, 9), (89, 10)],
-    "speaking": [(34, 3), (42, 4), (51, 5), (59, 6), (68, 7), (76, 8), (84, 9), (89, 10)],
+# TCF Canada to CLB conversion
+TCF_TO_CLB: TestConversionTable = {
+    "reading": [
+        ((88, 90), 10), ((78, 87), 9), ((69, 77), 8),
+        ((60, 68), 7), ((51, 59), 6), ((42, 50), 5),
+        ((33, 41), 4), ((24, 32), 3)
+    ],
+    "writing": [
+        ((90, 90), 10), ((88, 89), 9), ((79, 87), 8),
+        ((69, 78), 7), ((60, 68), 6), ((51, 59), 5),
+        ((41, 50), 4), ((32, 40), 3)
+    ],
+    "listening": [
+        ((89, 90), 10), ((82, 88), 9), ((71, 81), 8),
+        ((60, 70), 7), ((50, 59), 6), ((39, 49), 5),
+        ((28, 38), 4), ((18, 27), 3)
+    ],
+    "speaking": [
+        ((89, 90), 10), ((84, 88), 9), ((76, 83), 8),
+        ((68, 75), 7), ((59, 67), 6), ((51, 58), 5),
+        ((42, 50), 4), ((34, 41), 3)
+    ]
 }
 
 TEST_MAPPINGS = {
-    "IELTS": IELTS_BAND_TO_CLB,
+    "IELTS": IELTS_TO_CLB,
     "CELPIP": CELPIP_TO_CLB,
-    "TEF": TEF_TO_CLB,
-    "TCF": TCF_TO_CLB,
-    "PTE": PTE_TO_CLB,
+    "TEF": TEF_TO_NCLC,
+    "TCF": TCF_TO_CLB
 }
 
-def convert_score_to_clb(test_name: str, ability: str, score: float) -> int:
+def convert_score_to_clb(
+    test_name: str,
+    ability: str,
+    score: Union[float, int, Tuple[int, int]]
+) -> int:
+    """
+    Convert language test score to CLB/NCLC level.
+    
+    Args:
+        test_name: One of 'IELTS', 'CELPIP', 'TEF', 'TCF'
+        ability: Language skill being tested ('listening', 'speaking', 'reading', 'writing')
+        score: Test score (format varies by test)
+        
+    Returns:
+        CLB/NCLC level (3-10)
+        
+    Raises:
+        ValueError: For invalid test names, abilities, or score ranges
+    """
     test_name = test_name.upper()
-    ability = ability.lower()
-
+    ability_lower = ability.lower()
+    
+    # Validate test name
     if test_name not in TEST_MAPPINGS:
-        raise ValueError(f"Test '{test_name}' not supported")
-
+        raise ValueError(
+            f"Unsupported test '{test_name}'. "
+            f"Supported tests: {list(TEST_MAPPINGS.keys())}"
+        )
+    
+    # Validate ability
+    valid_abilities = ["listening", "speaking", "reading", "writing"]
+    if ability_lower not in valid_abilities:
+        raise ValueError(
+            f"Invalid ability '{ability}'. "
+            f"Must be one of {valid_abilities}"
+        )
+    
     mapping = TEST_MAPPINGS[test_name]
-
-    if ability not in mapping:
-        raise ValueError(f"Ability '{ability}' not recognized for test '{test_name}'")
-
-    thresholds = mapping[ability]
-
-    clb = 0
-    for min_score, clb_level in thresholds:
-        if score >= min_score:
-            clb = clb_level
+    thresholds = mapping[ability_lower]  # type: ignore
+    min_level = 3  # Minimum CLB level
+    
+    for threshold, clb_level in sorted(
+        thresholds,
+        key=lambda x: x[0] if not isinstance(x[0], tuple) else x[0][0],
+        reverse=True
+    ):
+        if isinstance(threshold, tuple):
+            # Handle range-based thresholds (TCF)
+            if isinstance(score, tuple):
+                if threshold[0] <= score[0] <= threshold[1]:
+                    return clb_level
+            else:
+                if threshold[0] <= score <= threshold[1]:
+                    return clb_level
         else:
-            break
-
-    return clb
+            # Handle minimum threshold (IELTS/CELPIP/TEF)
+            if not isinstance(score, tuple) and score >= threshold:
+                return clb_level
+                
+    return min_level
