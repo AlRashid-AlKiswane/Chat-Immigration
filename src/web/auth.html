@@ -302,6 +302,32 @@
             color: #6b7280;
         }
 
+        .master-key-group {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .master-key-group label {
+            color: #6b7280 !important;
+            font-size: 13px !important;
+            margin-bottom: 5px;
+        }
+
+        .master-key-group input {
+            background: #fff !important;
+            font-size: 14px !important;
+        }
+
+        .master-key-info {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -366,7 +392,7 @@
                 <form id="loginForm" class="form" onsubmit="handleLogin(event)">
                     <div class="form-group">
                         <label for="loginUsername">Username</label>
-                        <input type="text" id="loginUsername" name="user_name" placeholder="Enter your username" required>
+                        <input type="text" id="loginUsername" name="username" placeholder="Enter your username" required>
                     </div>
                     
                     <div class="form-group">
@@ -385,7 +411,7 @@
                 <form id="registerForm" class="form hidden" onsubmit="handleRegister(event)">
                     <div class="form-group">
                         <label for="registerUsername">Username *</label>
-                        <input type="text" id="registerUsername" name="user_name" placeholder="Choose a username" required>
+                        <input type="text" id="registerUsername" name="username" placeholder="Choose a username" required>
                     </div>
                     
                     <div class="form-group">
@@ -401,6 +427,14 @@
                     <div class="form-group">
                         <label for="registerPhone">Phone Number</label>
                         <input type="tel" id="registerPhone" name="phone_number" placeholder="+1 (555) 123-4567">
+                    </div>
+                    
+                    <div class="master-key-group">
+                        <div class="form-group">
+                            <label for="registerMasterKey">Master Key (Optional)</label>
+                            <input type="password" id="registerMasterKey" name="master_key" placeholder="Enter master key for admin privileges">
+                            <div class="master-key-info">Leave empty for regular user account. Admin privileges require valid master key.</div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -496,56 +530,64 @@
 
         // Form submission handlers
         async function handleLogin(event) {
-            event.preventDefault();
-            hideAlert();
-            setLoading('loginForm', true);
-            
-            const formData = new FormData(event.target);
-            const loginData = {
-                user_name: formData.get('user_name'),
-                password: formData.get('password')
-            };
+        event.preventDefault();
+        hideAlert();
+        setLoading('loginForm', true);
 
+        const formData = new FormData(event.target);
+        const loginData = {
+            username: formData.get('username'),
+            password: formData.get('password')
+        };
+
+        try {
+            const response = await fetch(`${API_BASE}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginData)
+            });
+
+            let result;
             try {
-                const response = await fetch(`${API_BASE}/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(loginData)
-                });
-
-                let result;
-                try {
-                    result = await response.json();
-                } catch (jsonError) {
-                    // If response isn't JSON, create a generic error object
-                    result = { detail: 'Server returned an invalid response' };
-                }
-
-                if (response.ok) {
-                    showAlert('Login successful! Redirecting...', 'success');
-                    
-                    // Store the token securely (in a real app, consider using httpOnly cookies)
-                    const token = result.access_token;
-                    
-                    // Simulate redirect after successful login
-                    setTimeout(() => {
-                        showAlert('Welcome to Canadian Immigration Assistant AI!', 'success');
-                        // In a real application, you would redirect to the dashboard
-                        // window.location.href = '/dashboard';
-                    }, 1500);
-                } else {
-                    showAlert(result.detail || 'Login failed. Please check your credentials.');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                showAlert('Network error. Please check your connection and try again.');
-            } finally {
-                setLoading('loginForm', false);
+                result = await response.json();
+            } catch (jsonError) {
+                console.error('JSON parse error:', jsonError);
+                result = { detail: 'Server returned an invalid response' };
             }
-        }
 
+            if (response.ok) {
+                showAlert('Login successful! Redirecting...', 'success');
+
+                const token = result.access_token;
+                const role = result.role;
+                const userName = loginData.username;
+
+                // Store all auth data
+                localStorage.setItem('authToken', token);
+                localStorage.setItem('userName', userName);
+                localStorage.setItem('userRole', role);
+                localStorage.setItem('lastActivity', new Date().getTime());
+
+                // Redirect based on role
+                setTimeout(() => {
+                    if (role === 'admin') {
+                        window.location.href = '/index.html';
+                    } else {
+                        window.location.href = '/question_workflow.html';
+                    }
+                }, 1000);
+            } else {
+                showAlert(result.detail || 'Login failed. Please check your credentials.');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            showAlert('Network error. Please check your connection and try again.');
+        } finally {
+            setLoading('loginForm', false);
+        }
+    }
         async function handleRegister(event) {
             event.preventDefault();
             hideAlert();
@@ -553,29 +595,41 @@
             
             const formData = new FormData(event.target);
             
-            // Build query parameters to match your FastAPI endpoint signature
-            const params = new URLSearchParams();
-            params.append('user_name', formData.get('user_name'));
-            params.append('password', formData.get('password'));
-            params.append('email', formData.get('email'));
-            params.append('full_name', formData.get('full_name') || '');
-            
-            const phoneNumber = formData.get('phone_number');
-            if (phoneNumber && phoneNumber.trim()) {
-                params.append('phone_number', phoneNumber);
-            }
+            // Build JSON payload to match your RegisterInput Pydantic model
+            const registerData = {
+            user_name: formData.get('username'),  // ✅ Fix this key name
+            password: formData.get('password'),
+            email: formData.get('email'),
+            full_name: formData.get('full_name') || null,
+            phone_number: formData.get('phone_number') || null,
+            master_key: formData.get('master_key') || null
+            };
+
+
+            // Remove null values to clean up the payload
+            Object.keys(registerData).forEach(key => {
+                if (registerData[key] === null || registerData[key] === '') {
+                    delete registerData[key];
+                }
+            });
 
             try {
-                const response = await fetch(`${API_BASE}/register?${params.toString()}`, {
+                console.log('Sending registration request:', registerData);
+                
+                const response = await fetch(`${API_BASE}/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                    }
+                    },
+                    body: JSON.stringify(registerData)
                 });
+
+                console.log('Registration response status:', response.status);
 
                 let result;
                 try {
                     result = await response.json();
+                    console.log('Registration response data:', result);
                 } catch (jsonError) {
                     console.error('JSON parse error:', jsonError);
                     result = { detail: 'Server returned an invalid response' };
@@ -620,6 +674,9 @@
             // Password strength indicator (basic)
             const passwordInputs = document.querySelectorAll('input[type="password"]');
             passwordInputs.forEach(input => {
+                // Skip master key field for password strength validation
+                if (input.name === 'master_key') return;
+                
                 input.addEventListener('input', function() {
                     const password = this.value;
                     const isStrong = password.length >= 8 && 

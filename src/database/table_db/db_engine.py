@@ -67,7 +67,7 @@ def get_sqlite_engine(db_conn: Optional[str] = None) -> Optional[sqlite3.Connect
 
         # Create database connection
         try:
-            conn = sqlite3.connect(str(db_path))
+            conn = sqlite3.connect(str(db_path), check_same_thread=False)
             conn.execute("PRAGMA journal_mode=WAL")  # Enable Write-Ahead Logging
             logger.info(EngineMsg.CONNECT_SUCCESS.value.format(db_path))
             return conn

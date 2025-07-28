@@ -133,7 +133,7 @@ class Settings(BaseSettings):
     SECRET_KEY: Optional[SecretStr] = Field(None, env="SECRET_KEY")
     ALGORITHM: Optional[SecretStr] = Field(None, env="ALGORITHM")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = Field(..., env="ACCESS_TOKEN_EXPIRE_MINUTES")
-    AUTH_DB: str = Field(..., env="AUTH_DB")
+    MASTER_KEY: Optional[SecretStr] = Field(..., env="MASTER_KEY")
 
 def get_settings() -> Settings:
     """

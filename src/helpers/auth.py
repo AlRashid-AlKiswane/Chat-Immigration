@@ -11,14 +11,14 @@ Key Features:
 """
 
 import os
+import sqlite3
 import sys
 import logging
 from datetime import datetime, timedelta
 from typing import Optional
 
-from jose import JWTError, jwt
+from jose import jwt
 from passlib.context import CryptContext
-from pydantic import BaseModel
 
 # Setup project base path
 try:
@@ -31,7 +31,6 @@ except (ImportError, OSError) as e:
 # pylint: disable=wrong-import-position
 from src.infra import setup_logging
 from src.helpers import get_settings, Settings
-from src.schema import User, Token, TokenData, UserInDB
 
 # Initialize logging
 logger = setup_logging(name="AUTHENTICATION")
@@ -39,6 +38,7 @@ logger = setup_logging(name="AUTHENTICATION")
 # Load application settings
 try:
     app_settings: Settings = get_settings()
+
 except Exception as e:
     logger.critical("Failed to load application settings.", exc_info=True)
     sys.exit(1)

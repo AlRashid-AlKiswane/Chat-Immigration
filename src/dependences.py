@@ -39,6 +39,7 @@ import logging
 import os
 import sys
 import sqlite3
+from threading import local
 
 # Special SQLite3 configuration
 __import__("pysqlite3")

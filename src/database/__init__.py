@@ -35,10 +35,41 @@ from .table_db import (
     insert_chunks,
     insert_query_response,
     insert_user,
-)
+    insert_assessment_data,
+    get_all_assessments,
+    get_assessment_by_id,
+    get_assessment_count,
+    submit_assessment_table,
+    insert_auth_user,
+    create_auth_user_table,
+    fetch_auth_user)
 
 from .vector_db import (
     get_chroma_client,
     insert_documents,
     search_documents
 )
+
+
+__all__ = [
+    "clear_table",
+    "fetch_all_rows",
+    "get_sqlite_engine",
+    "init_chunks_table",
+    "init_query_response_table",
+    "init_user_info_table",
+    "insert_chunks",
+    "insert_query_response",
+    "insert_user",
+    "insert_assessment_data",
+    "get_all_assessments",
+    "get_assessment_by_id",
+    "get_assessment_count",
+    "submit_assessment_table",
+    "get_chroma_client",
+    "insert_documents",
+    "search_documents",
+    "insert_auth_user",
+    "create_auth_user_table",
+    "fetch_auth_user"
+]

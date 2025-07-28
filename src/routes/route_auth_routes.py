@@ -16,7 +16,7 @@ import sqlite3
 from typing import Optional
 from datetime import datetime, timedelta
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import JSONResponse
 from starlette.status import HTTP_404_NOT_FOUND
 
@@ -32,126 +32,17 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # Local imports
+from src.database.table_db.db_user import insert_auth_user
 from src.helpers import get_settings, Settings, hash_password, verify_password, create_access_token
 from src.infra import setup_logging
-from src.database import get_sqlite_engine
-from src.schema import LoginInput
+from src.database import fetch_auth_user
+from src.schema import LoginInput, RegisterInput
+from src import get_db_conn
 
 # Load settings and logger
 app_settings: Settings = get_settings()
-AUTH_DB = app_settings.AUTH_DB
 logger = setup_logging(name="ROUTE-AUTHENTICATION")
 
-# Database connection
-conn = get_sqlite_engine(db_conn=AUTH_DB)
-
-
-def create_auth_user_table(conn: sqlite3.Connection) -> None:
-    """
-    Creates the user_auth table if it does not already exist.
-
-    Args:
-        conn (sqlite3.Connection): SQLite database connection.
-    """
-    try:
-        cursor = conn.cursor()
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS user_auth (
-                user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_name TEXT UNIQUE NOT NULL,
-                hashed_pass TEXT NOT NULL,
-                full_name TEXT NOT NULL,
-                email TEXT NOT NULL,
-                phone_number TEXT,
-                time_registered TEXT NOT NULL
-            )
-        """)
-        conn.commit()
-        logger.info("user_auth table is ready.")
-    except Exception as e:
-        logger.critical("Failed to create user_auth table.", exc_info=True)
-        raise
-
-
-def fetch_auth_user(user_name: str, conn: sqlite3.Connection) -> Optional[dict]:
-    """
-    Fetches a user by username from the database.
-
-    Args:
-        user_name (str): Username to fetch.
-        conn (sqlite3.Connection): SQLite database connection.
-
-    Returns:
-        Optional[dict]: User data as a dictionary or None.
-    """
-    try:
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM user_auth WHERE user_name = ?", (user_name,))
-        row = cursor.fetchone()
-        if row:
-            return {
-                "user_id": row[0],
-                "user_name": row[1],
-                "hashed_pass": row[2],
-                "full_name": row[3],
-                "email": row[4],
-                "phone_number": row[5],
-                "time_registered": row[6],
-            }
-        return None
-    except Exception as e:
-        logger.error("Failed to fetch user from DB.", exc_info=True)
-        raise HTTPException(status_code=500, detail="Database error")
-
-
-def insert_auth_user(
-    user_name: str,
-    hashed_pass: str,
-    full_name: str,
-    email: str,
-    phone_number: Optional[str],
-    conn: sqlite3.Connection
-) -> None:
-    """
-    Inserts a new user into the user_auth table.
-
-    Args:
-        user_name (str): Username.
-        hashed_pass (str): Hashed password.
-        full_name (str): Full name of the user.
-        email (str): Email address.
-        phone_number (Optional[str]): Phone number.
-        conn (sqlite3.Connection): SQLite connection.
-
-    Raises:
-        HTTPException: If user already exists or database fails.
-    """
-    try:
-        cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO user_auth (
-                user_name, hashed_pass, full_name, email, phone_number, time_registered
-            ) VALUES (?, ?, ?, ?, ?, ?)
-        """, (
-            user_name,
-            hashed_pass,
-            full_name,
-            email,
-            phone_number,
-            datetime.utcnow().isoformat()
-        ))
-        conn.commit()
-        logger.info("New user registered: %s", user_name)
-    except sqlite3.IntegrityError:
-        logger.warning("Attempt to register duplicate username: %s", user_name)
-        raise HTTPException(status_code=409, detail="Username already exists")
-    except Exception as e:
-        logger.error("Failed to insert new user.", exc_info=True)
-        raise HTTPException(status_code=500, detail="Database insert failed")
-
-
-# Ensure the auth table exists
-create_auth_user_table(conn)
 
 # FastAPI route group
 auth_route = APIRouter(
@@ -163,17 +54,14 @@ auth_route = APIRouter(
 
 @auth_route.post("/register", status_code=201)
 async def register(
-    user_name: str,
-    password: str,
-    email: str,
-    phone_number: Optional[str] = None,
-    full_name: Optional[str] = ""
+    payload: RegisterInput,
+    conn: sqlite3.Connection = Depends(get_db_conn)
 ):
     """
     Registers a new user with hashed password and stores them in SQLite.
 
     Args:
-        user_name (str): Username.
+        username (str): Username.
         password (str): Plain-text password.
         email (str): Email address.
         phone_number (Optional[str]): Phone number.
@@ -183,18 +71,26 @@ async def register(
         JSONResponse: Registration status.
     """
     try:
-        if fetch_auth_user(user_name, conn=conn):
-            logger.warning("Username already exists: %s", user_name)
+        is_superuser = (
+            payload.master_key == app_settings.MASTER_KEY.get_secret_value() 
+            if app_settings.MASTER_KEY else False
+        )
+    except Exception as e:
+        logger.critical("Can't Extraction [MASTERKEY]: %s", e)
+    try:
+        if fetch_auth_user(payload.username, conn=conn):
+            logger.warning("Username already exists: %s", payload.username)
             raise HTTPException(status_code=400, detail="Username already taken")
 
-        hashed = hash_password(password)
+        hashed = hash_password(payload.password)
 
         insert_auth_user(
-            user_name=user_name,
+            user_name=payload.username,
             hashed_pass=hashed,
-            full_name=full_name,
-            email=email,
-            phone_number=phone_number,
+            full_name=payload.full_name,
+            email=payload.email,
+            phone_number=payload.phone_number,
+            is_superuser=is_superuser,
             conn=conn
         )
 
@@ -211,7 +107,8 @@ async def register(
 
 
 @auth_route.post("/login", status_code=200)
-async def login(payload: LoginInput):
+async def login(payload: LoginInput,
+                conn: sqlite3.Connection = Depends(get_db_conn)):
     """
     Authenticates a user and returns a JWT access token.
 
@@ -222,13 +119,13 @@ async def login(payload: LoginInput):
         dict: JWT access token and status.
     """
     try:
-        user = fetch_auth_user(payload.user_name, conn)
+        user = fetch_auth_user(payload.username, conn)
         if not user:
-            logger.warning("Login failed: user not found (%s)", payload.user_name)
+            logger.warning("Login failed: user not found (%s)", payload.username)
             raise HTTPException(status_code=404, detail="User not found")
 
         if not verify_password(payload.password, user["hashed_pass"]):
-            logger.warning("Login failed: invalid password for user %s", payload.user_name)
+            logger.warning("Login failed: invalid password for user %s", payload.username)
             raise HTTPException(status_code=401, detail="Invalid credentials")
 
         token = create_access_token(
@@ -238,9 +135,9 @@ async def login(payload: LoginInput):
 
         logger.info("User logged in: %s", user["user_name"])
         return {
-            "status": "success",
             "access_token": token,
-            "token_type": "bearer"
+            "token_type": "bearer",
+            "role": 'admin' if user["is_superuser"] else 'user'
         }
 
     except HTTPException as e:

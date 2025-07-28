@@ -4,9 +4,9 @@ import logging
 import pathlib
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse
 
 # --- Setup project base path ---
 try:
@@ -24,27 +24,15 @@ from src.database import (
     init_user_info_table,
     init_query_response_table,
     get_chroma_client,
+    submit_assessment_table,
+    create_auth_user_table
 )
-from src.routes import (
-    auth_route,
-    upload_route,
-    tables_crawling_route,
-    web_crawling_route,
-    docs_to_chunks_route,
-    embedding_route,
-    live_rag_route,
-    llms_route,
-    llm_generation_route,
-    history_router,
-    graph_ui_route,
-    monitoring_route,
-    logs_router,
-    storage_management_route,
-)
+
+from src.routes import *
 from src.history import ChatHistoryManager
 from src.helpers import get_settings, Settings
 from src.infra import setup_logging
-
+from src.utils import  get_current_user, get_current_superuser
 # --- Constants ---
 BASE_DIR = pathlib.Path(__file__).parent.resolve()
 WEB_DIR = BASE_DIR / "web"
@@ -77,6 +65,8 @@ async def lifespan(app: FastAPI):
         "chunks_table": init_chunks_table,
         "user_info_table": init_user_info_table,
         "query_response_table": init_query_response_table,
+        "submit_assessment_table":submit_assessment_table,
+        "create_auth_user_table":create_auth_user_table
     }.items():
         try:
             func(conn=app.state.conn)
@@ -118,13 +108,6 @@ async def lifespan(app: FastAPI):
     except Exception:
         logger.warning("Error closing SQLite connection.", exc_info=True)
 
-    try:
-        if getattr(app.state, "vdb_client", None):
-            app.state.vdb_client.reset()
-            logger.info("ChromaDB client shut down.")
-    except Exception:
-        logger.warning("Error shutting down ChromaDB client.", exc_info=True)
-
     logger.info("Application shutdown complete.")
 
 # --- Create FastAPI App ---
@@ -136,21 +119,42 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# --- Include API Routes ---
+from fastapi.middleware.cors import CORSMiddleware
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost", "http://127.0.0.1"],  # Add your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+auth_required = [Depends(get_current_user)]
+admin_only = [Depends(get_current_superuser)]
+
+# Public route
 app.include_router(auth_route)
-app.include_router(upload_route)
-app.include_router(tables_crawling_route)
-app.include_router(web_crawling_route)
-app.include_router(docs_to_chunks_route)
-app.include_router(embedding_route)
-app.include_router(live_rag_route)
-app.include_router(llms_route)
-app.include_router(llm_generation_route)
-app.include_router(history_router)
-app.include_router(graph_ui_route)
-app.include_router(monitoring_route)
-app.include_router(logs_router)
-app.include_router(storage_management_route)
+
+# Normal user
+app.include_router(answers_input_user_route, dependencies=auth_required)
+app.include_router(llm_generation_route, dependencies=auth_required)
+
+# Admin-only routes
+app.include_router(upload_route, dependencies=admin_only)
+app.include_router(tables_crawling_route, dependencies=admin_only)
+app.include_router(web_crawling_route, dependencies=admin_only)
+app.include_router(docs_to_chunks_route, dependencies=admin_only)
+app.include_router(embedding_route, dependencies=admin_only)
+app.include_router(live_rag_route, dependencies=admin_only)
+app.include_router(llms_route, dependencies=admin_only)
+app.include_router(llm_generation_route, dependencies=admin_only)
+app.include_router(history_router, dependencies=admin_only)
+app.include_router(graph_ui_route, dependencies=admin_only)
+app.include_router(storage_management_route, dependencies=admin_only)
+app.include_router(monitoring_route, dependencies=admin_only)
+app.include_router(logs_router, dependencies=admin_only)
 
 # --- Serve Static HTML UI ---
 auth_html_path = WEB_DIR / "auth.html"
@@ -172,3 +176,13 @@ else:
 if (WEB_DIR / "static").exists():
     app.mount("/static", StaticFiles(directory=str(WEB_DIR / "static")), name="static")
     logger.info("Static files mounted at '/static'.")
+
+
+@app.get("/{page_name}.html", response_class=HTMLResponse)
+async def serve_html_page(page_name: str):
+    html_path = WEB_DIR / f"{page_name}.html"
+    if html_path.exists():
+        return FileResponse(str(html_path))
+    else:
+        logger.warning(f"Requested HTML page not found: {html_path}")
+        raise HTTPException(status_code=404, detail="Page not found.")

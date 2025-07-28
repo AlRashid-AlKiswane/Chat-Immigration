@@ -1,7 +1,7 @@
 
 
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 class Token(BaseModel):
@@ -20,8 +20,14 @@ class User(BaseModel):
 class UserInDB(User):
     hashed_password: str
 
-from pydantic import BaseModel
-
 class LoginInput(BaseModel):
-    user_name: str
+    username: str
     password: str
+
+class RegisterInput(BaseModel):
+    username: str
+    password: str
+    full_name: str
+    email: EmailStr
+    phone_number: Optional[str] = None
+    master_key: Optional[str] = None

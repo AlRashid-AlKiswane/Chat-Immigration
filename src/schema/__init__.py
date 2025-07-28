@@ -6,4 +6,6 @@ from .schema_rag_configration import RAGConfig
 from .schema_crawling import CrawlRequest
 from .schema_scraping_tables import ScrabingTables
 from .schema_history_management import ProviderChatHistory, ChatMessage, HistoryResponse, ProviderStatsResponse
-from .schema_autho import Token, TokenData, UserInDB, User, LoginInput
+from .schema_autho import Token, TokenData, UserInDB, User, LoginInput, RegisterInput
+from .schema_submit_assessment import (AssessmentAnswers,
+                                       AssessmentResponse)

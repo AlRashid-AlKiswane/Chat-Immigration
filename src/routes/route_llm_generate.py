@@ -52,7 +52,7 @@ from src.llms import BaseLLM
 from src.history import ChatHistoryManager
 from src import get_chat_history
 from src.prompt import PromptBuilder
-
+from src.utils import get_current_user
 
 # Initialize logger
 logger = setup_logging(name="LLM-GENERATION")
@@ -70,7 +70,7 @@ prompt_builder = PromptBuilder()
 async def generation(
     generation_parameters: GenerationParameters,
     rag_config: RAGConfig,
-    user_id: Optional[str] = None,
+    current_user: dict = Depends(get_current_user),  # <-- here
     prompt: Optional[str] = None,
     conn: Connection = Depends(get_db_conn),
     vdb_client: Client = Depends(get_vdb_client),
@@ -99,6 +99,8 @@ async def generation(
         HTTPException: For various error scenarios
     """
     try:
+        user_id = current_user["user_name"]
+
         # Validate required parameters
         if not all([prompt, user_id, generation_parameters]):
             logger.error("Missing required parameters")
