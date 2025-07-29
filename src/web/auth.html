@@ -457,44 +457,31 @@
             </div>
         </div>
     </div>
-
     <script>
         // Global state
         let currentForm = 'login';
         const API_BASE = '/api/v1'; // Adjust this to match your backend URL
 
-        // Form switching
+        // Form switching functions
         function showLogin() {
             if (currentForm === 'login') return;
-            
             currentForm = 'login';
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
             const toggleBtns = document.querySelectorAll('.toggle-btn');
-            
-            loginForm.classList.remove('hidden');
-            registerForm.classList.add('hidden');
-            
             toggleBtns[0].classList.add('active');
             toggleBtns[1].classList.remove('active');
-            
             hideAlert();
         }
 
         function showRegister() {
             if (currentForm === 'register') return;
-            
             currentForm = 'register';
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('loginForm').classList.add('hidden');
             const toggleBtns = document.querySelectorAll('.toggle-btn');
-            
-            registerForm.classList.remove('hidden');
-            loginForm.classList.add('hidden');
-            
             toggleBtns[1].classList.add('active');
             toggleBtns[0].classList.remove('active');
-            
             hideAlert();
         }
 
@@ -516,7 +503,7 @@
             const btn = form.querySelector('.submit-btn');
             const btnText = btn.querySelector('.btn-text');
             const loading = btn.querySelector('.loading');
-            
+
             if (isLoading) {
                 btn.disabled = true;
                 btnText.style.opacity = '0';
@@ -528,99 +515,108 @@
             }
         }
 
-        // Form submission handlers
+        // Login handler
         async function handleLogin(event) {
-        event.preventDefault();
-        hideAlert();
-        setLoading('loginForm', true);
+            event.preventDefault();
+            hideAlert();
+            setLoading('loginForm', true);
 
-        const formData = new FormData(event.target);
-        const loginData = {
-            username: formData.get('username'),
-            password: formData.get('password')
-        };
+            const formData = new FormData(event.target);
+            const loginData = {
+                username: formData.get('username'),
+                password: formData.get('password')
+            };
 
-        try {
-            const response = await fetch(`${API_BASE}/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(loginData)
-            });
-
-            let result;
             try {
-                result = await response.json();
-            } catch (jsonError) {
-                console.error('JSON parse error:', jsonError);
-                result = { detail: 'Server returned an invalid response' };
+                const response = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(loginData)
+                });
+
+                let result;
+                try {
+                    result = await response.json();
+                } catch (jsonError) {
+                    console.error('JSON parse error:', jsonError);
+                    result = { detail: 'Server returned an invalid response' };
+                }
+
+                if (response.ok) {
+                    showAlert('Login successful! Redirecting...', 'success');
+
+                    const token = result.access_token;
+                    const role = result.role; // Get role from backend response
+                    const userName = loginData.username;
+
+                    // Store token, username, and role
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('user_name', userName);
+                    localStorage.setItem('role', role);
+
+                    // Redirect based on role
+                    setTimeout(() => {
+                        if (role === 'admin') {
+                            window.location.href = '/index.html'; // Admin dashboard
+                        } if (role === "user") {
+                            window.location.href = '/question_workflow.html'; // Regular user flow
+                        }
+                    }, 1000);
+                } else {
+                    showAlert(result.detail || 'Login failed. Please check your credentials.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('Network error. Please check your connection and try again.');
+            } finally {
+                setLoading('loginForm', false);
             }
-
-            if (response.ok) {
-                showAlert('Login successful! Redirecting...', 'success');
-
-                const token = result.access_token;
-                const role = result.role;
-                const userName = loginData.username;
-
-                // Store all auth data
-                localStorage.setItem('authToken', token);
-                localStorage.setItem('userName', userName);
-                localStorage.setItem('userRole', role);
-                localStorage.setItem('lastActivity', new Date().getTime());
-
-                // Redirect based on role
-                setTimeout(() => {
-                    if (role === 'admin') {
-                        window.location.href = '/index.html';
-                    } else {
-                        window.location.href = '/question_workflow.html';
-                    }
-                }, 1000);
-            } else {
-                showAlert(result.detail || 'Login failed. Please check your credentials.');
-            }
-        } catch (error) {
-            console.error('Login error:', error);
-            showAlert('Network error. Please check your connection and try again.');
-        } finally {
-            setLoading('loginForm', false);
         }
-    }
+
+        // Register handler
         async function handleRegister(event) {
             event.preventDefault();
             hideAlert();
             setLoading('registerForm', true);
-            
+
             const formData = new FormData(event.target);
-            
-            // Build JSON payload to match your RegisterInput Pydantic model
+
+            // Build JSON payload to match backend Pydantic model
             const registerData = {
-            user_name: formData.get('username'),  // ✅ Fix this key name
-            password: formData.get('password'),
-            email: formData.get('email'),
-            full_name: formData.get('full_name') || null,
-            phone_number: formData.get('phone_number') || null,
-            master_key: formData.get('master_key') || null
+                username: formData.get('username')?.trim() || "",
+                password: formData.get('password') || "",
+                email: formData.get('email')?.trim() || "",
+                full_name: formData.get('full_name')?.trim() || "",
+                phone_number: formData.get('phone_number')?.trim() || null,
+                master_key: formData.get('master_key')?.trim() || null
             };
 
-
-            // Remove null values to clean up the payload
+            // Remove optional fields if null or empty
             Object.keys(registerData).forEach(key => {
-                if (registerData[key] === null || registerData[key] === '') {
+                if (
+                    (registerData[key] === null || registerData[key] === '') &&
+                    !['username', 'password', 'email', 'full_name'].includes(key)
+                ) {
                     delete registerData[key];
                 }
             });
 
+            // Validate required fields
+            const requiredFields = ['username', 'password', 'email', 'full_name'];
+            for (const field of requiredFields) {
+                if (!registerData[field]) {
+                    showAlert(`Missing required field: ${field}`, 'error');
+                    setLoading('registerForm', false);
+                    return;
+                }
+            }
+
             try {
                 console.log('Sending registration request:', registerData);
-                
+
                 const response = await fetch(`${API_BASE}/register`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(registerData)
                 });
 
@@ -637,10 +633,8 @@
 
                 if (response.ok) {
                     showAlert('Registration successful! You can now sign in.', 'success');
-                    
-                    // Clear the form
                     event.target.reset();
-                    
+
                     // Auto-switch to login after 2 seconds
                     setTimeout(() => {
                         showLogin();
@@ -657,37 +651,29 @@
             }
         }
 
-        // Input validation and UX improvements
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add input focus animations
-            const inputs = document.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.parentElement.classList.add('focused');
-                });
-                
-                input.addEventListener('blur', function() {
-                    this.parentElement.classList.remove('focused');
-                });
+        // Input validation and UX enhancements
+        document.addEventListener('DOMContentLoaded', () => {
+            // Input focus animations
+            document.querySelectorAll('input').forEach(input => {
+                input.addEventListener('focus', () => input.parentElement.classList.add('focused'));
+                input.addEventListener('blur', () => input.parentElement.classList.remove('focused'));
             });
 
             // Password strength indicator (basic)
-            const passwordInputs = document.querySelectorAll('input[type="password"]');
-            passwordInputs.forEach(input => {
-                // Skip master key field for password strength validation
-                if (input.name === 'master_key') return;
-                
-                input.addEventListener('input', function() {
-                    const password = this.value;
-                    const isStrong = password.length >= 8 && 
-                                   /[A-Z]/.test(password) && 
-                                   /[a-z]/.test(password) && 
-                                   /[0-9]/.test(password);
-                    
+            document.querySelectorAll('input[type="password"]').forEach(input => {
+                if (input.name === 'master_key') return; // Skip master_key field
+
+                input.addEventListener('input', () => {
+                    const password = input.value;
+                    const isStrong = password.length >= 8 &&
+                                    /[A-Z]/.test(password) &&
+                                    /[a-z]/.test(password) &&
+                                    /[0-9]/.test(password);
+
                     if (password.length > 0) {
-                        this.style.borderColor = isStrong ? '#059669' : '#f59e0b';
+                        input.style.borderColor = isStrong ? '#059669' : '#f59e0b'; // green or orange
                     } else {
-                        this.style.borderColor = '#e5e7eb';
+                        input.style.borderColor = '#e5e7eb'; // default
                     }
                 });
             });
