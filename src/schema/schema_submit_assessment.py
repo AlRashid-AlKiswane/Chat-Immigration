@@ -2,7 +2,7 @@
 
 from dataclasses import Field
 from datetime import datetime
-from typing import Optional
+from typing import Optional,Dict
 from openai import BaseModel
 
 
@@ -46,3 +46,9 @@ class AssessmentResponse(BaseModel):
     message: str
     submission_id: str
     timestamp: datetime
+
+class CRSResponse(BaseModel):
+    total_crs_score: int
+    breakdown: Dict[str, int]
+    user_name: str
+    calculated_at: str

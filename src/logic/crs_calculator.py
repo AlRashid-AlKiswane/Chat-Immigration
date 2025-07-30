@@ -641,19 +641,31 @@ class CRSCalculator:
         )
 
 
+def print_example_header(example_num, description):
+    print(f"\n{'='*50}")
+    print(f"EXAMPLE {example_num}: {description}")
+    print(f"{'='*50}")
+
+def print_score_breakdown(score: CRSScores , total_score):
+    print("\nScore Breakdown:")
+    print(f"- Core Human Capital: {score.core_human_capital}")
+    print(f"- Spouse/Partner Factors: {score.spouse_factors}")
+    print(f"- Skill Transferability: {score.skill_transferability}")
+    print(f"- Additional Points: {score.additional_factors}")
+    print(f"\n{'~'*30}")
+    print(f"TOTAL CRS SCORE: {score.total}")
+    print(f"{'~'*30}")
 
 
-# Example usage
 if __name__ == "__main__":
-    from pprint import pprint
-    # Initialize calculator
+    # Example 1: Married couple with strong language scores
+    print_example_header(1, "Married Couple with Strong Profile")
     calculator = CRSCalculator(
         marital_status=MaritalStatus.MARRIED,
         canadian_citizen_spouse=False,
         spouse_come_with_you=True
     )
     
-    # Calculate core factors
     core_points = calculator.calculate_core_human_capital(
         age=28,
         education_level=EducationLevel.BACHELOR_OR_THREE_YEAR_POST_SECONDARY_OR_MORE,
@@ -662,7 +674,6 @@ if __name__ == "__main__":
         canadian_work_experience_years=3
     )
     
-    # Calculate spouse factors
     spouse_points = calculator.calculate_spouse_partner_factors(
         education_level=EducationLevel.MASTERS_OR_PROFESSIONAL_DEGREE,
         canadian_work_experience_years=2,
@@ -670,13 +681,11 @@ if __name__ == "__main__":
         language_scores={"listening": 7.5, "reading": 6.5, "writing": 6.5, "speaking": 7.0}
     )
     
-    # Calculate transferability
     transfer_points = calculator.calculate_skill_transferability_factors(
         foreign_work_experience_years=2,
         has_certificate_of_qualification=False
     )
     
-    # Calculate additional factors
     additional_points = calculator.calculate_additional_factors(
         has_sibling_in_canada=True,
         has_canadian_education=True,
@@ -684,7 +693,181 @@ if __name__ == "__main__":
         has_provincial_nomination=False
     )
     
-    # Get results
-    total_score = calculator.get_total_crs_score()
-    
-    print(f"Total CRS Score: {total_score}")
+    print_score_breakdown(calculator.scores, calculator.get_total_crs_score())
+
+    # Example 2: Single applicant with perfect language scores
+    print_example_header(2, "Single Applicant with Perfect CELPIP Scores")
+    calculator = CRSCalculator(marital_status=MaritalStatus.SINGLE)
+
+    calculator.calculate_core_human_capital(
+        age=31,
+        education_level=EducationLevel.MASTERS_OR_PROFESSIONAL_DEGREE,
+        first_language_test_name="CELPIP",
+        first_language_scores={"listening": 10, "reading": 10, "writing": 9, "speaking": 9},
+        canadian_work_experience_years=4
+    )
+
+    calculator.calculate_skill_transferability_factors(
+        foreign_work_experience_years=5,
+        has_certificate_of_qualification=True
+    )
+
+    calculator.calculate_additional_factors(
+        has_sibling_in_canada=False,
+        has_canadian_education=False
+    )
+
+    print_score_breakdown(calculator.scores, calculator.get_total_crs_score())
+
+    # Example 3: Married to Canadian citizen (no spouse points)
+    print_example_header(3, "Applicant Married to Canadian Citizen")
+    calculator = CRSCalculator(
+        marital_status=MaritalStatus.MARRIED,
+        canadian_citizen_spouse=True,
+        spouse_come_with_you=False
+    )
+
+    calculator.calculate_core_human_capital(
+        age=29,
+        education_level=EducationLevel.BACHELOR_OR_THREE_YEAR_POST_SECONDARY_OR_MORE,
+        first_language_test_name="IELTS",
+        first_language_scores={"listening": 7.5, "reading": 8.0, "writing": 7.0, "speaking": 7.5},
+        canadian_work_experience_years=2
+    )
+
+    calculator.calculate_skill_transferability_factors(
+        foreign_work_experience_years=3,
+        has_certificate_of_qualification=False
+    )
+
+    calculator.calculate_additional_factors(
+        has_sibling_in_canada=True,
+        has_canadian_education=True,
+        canadian_education_type="Three-year or more diploma or degree"
+    )
+
+    print_score_breakdown(calculator.scores, calculator.get_total_crs_score())
+
+    # Example 4: Provincial Nominee (600 bonus points)
+    print_example_header(4, "Provincial Nominee Applicant")
+    calculator = CRSCalculator(marital_status=MaritalStatus.SINGLE)
+
+    calculator.calculate_core_human_capital(
+        age=35,
+        education_level=EducationLevel.TWO_YEAR_POST_SECONDARY,
+        first_language_test_name="TEF",
+        first_language_scores={"listening": 349, "reading": 297, "writing": 371, "speaking": 349},
+        canadian_work_experience_years=1
+    )
+
+    calculator.calculate_skill_transferability_factors(
+        foreign_work_experience_years=8,
+        has_certificate_of_qualification=True
+    )
+
+    calculator.calculate_additional_factors(
+        has_provincial_nomination=True,
+        has_sibling_in_canada=False
+    )
+
+    print_score_breakdown(calculator.scores, calculator.get_total_crs_score())
+
+    # Example 5: Young student with Canadian education
+    print_example_header(5, "Young Applicant with Canadian Education")
+    calculator = CRSCalculator(marital_status=MaritalStatus.SINGLE)
+
+    calculator.calculate_core_human_capital(
+        age=22,
+        education_level=EducationLevel.BACHELOR_OR_THREE_YEAR_POST_SECONDARY_OR_MORE,
+        first_language_test_name="IELTS",
+        first_language_scores={"listening": 6.5, "reading": 6.5, "writing": 6.0, "speaking": 6.5},
+        canadian_work_experience_years=0
+    )
+
+    calculator.calculate_additional_factors(
+        has_canadian_education=True,
+        canadian_education_type="Three-year or more diploma or degree",
+        has_sibling_in_canada=True
+    )
+
+    print_score_breakdown(calculator.scores, calculator.get_total_crs_score())
+
+    # Example 6: Older married couple with moderate scores
+    print_example_header(6, "Older Married Couple with Moderate Profile")
+    calculator = CRSCalculator(
+        marital_status=MaritalStatus.MARRIED,
+        canadian_citizen_spouse=False,
+        spouse_come_with_you=True
+    )
+
+    calculator.calculate_core_human_capital(
+        age=40,
+        education_level=EducationLevel.BACHELOR_OR_THREE_YEAR_POST_SECONDARY_OR_MORE,
+        first_language_test_name="CELPIP",
+        first_language_scores={"listening": 8, "reading": 8, "writing": 7, "speaking": 8},
+        canadian_work_experience_years=2
+    )
+
+    calculator.calculate_spouse_partner_factors(
+        education_level=EducationLevel.TWO_OR_MORE_CERTIFICATES,
+        canadian_work_experience_years=1,
+        language_test_name="CELPIP",
+        language_scores={"listening": 7, "reading": 7, "writing": 6, "speaking": 7}
+    )
+
+    calculator.calculate_skill_transferability_factors(
+        foreign_work_experience_years=10,
+        has_certificate_of_qualification=False
+    )
+
+    calculator.calculate_additional_factors(
+        has_sibling_in_canada=False,
+        has_canadian_education=False
+    )
+
+    print_score_breakdown(calculator.scores, calculator.get_total_crs_score())
+
+        # Example 7: Bilingual Applicant (French first, English second)
+    print_example_header(7, "Bilingual Applicant with French as First Language and English as Second Language")
+    calculator = CRSCalculator(
+        marital_status=MaritalStatus.SINGLE
+    )
+
+    # Core factors with French as first language (TEF)
+    core_points = calculator.calculate_core_human_capital(
+        age=32,
+        education_level=EducationLevel.MASTERS_OR_PROFESSIONAL_DEGREE,
+        first_language_test_name="TEF",
+        first_language_scores={"listening": 349, "reading": 297, "writing": 371, "speaking": 349},  # CLB 9 equivalent
+        second_language_test_name="IELTS",
+        second_language_scores={"listening": 7.5, "reading": 7.0, "writing": 6.5, "speaking": 7.0},  # CLB 8 equivalent
+        canadian_work_experience_years=3
+    )
+
+
+    # Skill transferability
+    transfer_points = calculator.calculate_skill_transferability_factors(
+        foreign_work_experience_years=4,
+        has_certificate_of_qualification=True
+    )
+
+    # Additional factors
+    additional_points = calculator.calculate_additional_factors(
+        has_canadian_education=True,
+        canadian_education_type="Two-year post-secondary program",
+        has_sibling_in_canada=False,
+        #french_language_skills_above_clb7=True  # Bonus points for French
+    )
+
+    # Print detailed results
+    print("\nLanguage Test Details:")
+    print("- First Language (French/TEF):")
+    print(f"  Listening: 349 (CLB 9) | Reading: 297 (CLB 9) | Writing: 371 (CLB 9) | Speaking: 349 (CLB 9)")
+    print("- Second Language (English/IELTS):")
+    print(f"  Listening: 7.5 (CLB 8) | Reading: 7.0 (CLB 8) | Writing: 6.5 (CLB 8) | Speaking: 7.0 (CLB 8)")
+
+    print("\nBonus Points Awarded:")
+    print("- 50 points for bilingualism (French + English)")
+    print("- 25 additional points for French proficiency above CLB 7")
+
+    print_score_breakdown(calculator.scores, calculator.get_total_crs_score())

@@ -99,8 +99,8 @@ def calculate_foreign_work_language_points(
         raise ValueError("foreign_work_years must be a non-negative integer")
 
     if clb_level < 7:
-        raise ValueError("CLB level must be 7 or higher for this calculation")
-
+        logger.info("No skill transferability points for CLB < 7")
+        return 0
     # Normalize CLB level to either 7 or 9 (or higher treated as 9)
     if clb_level >= 9:
         clb_key = "clb9"
