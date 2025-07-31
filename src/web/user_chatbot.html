@@ -461,10 +461,10 @@
             </div>
         </div>
     </div>
-
-    <script>
+<script>
         let currentUser = null;
         let messageHistory = [];
+        let authToken = null;
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
@@ -483,16 +483,278 @@
                 }
             });
 
-            // Initialize user session
+            // Initialize user session with authentication check
             initializeUser();
         });
 
+        // FIXED: Enhanced user initialization with authentication
         function initializeUser() {
-            // In a real app, this would be handled by authentication
-            currentUser = {
-                user_name: `user_${Date.now()}`,
-                session_id: generateSessionId()
-            };
+            console.log('🔐 Initializing user with authentication...');
+            
+            // Get authentication token from multiple possible sources
+            authToken = getAuthToken();
+            
+            if (!authToken) {
+                console.log('❌ No authentication token found, redirecting to login');
+                redirectToLogin();
+                return;
+            }
+
+            // Verify token and get user info
+            verifyAuthentication()
+                .then(userInfo => {
+                    currentUser = {
+                        user_name: userInfo.user_name || userInfo.username || 'User',
+                        session_id: generateSessionId(),
+                        role: userInfo.role || 'user',
+                        auth_token: authToken
+                    };
+                    
+                    console.log('✅ User authenticated:', currentUser.user_name);
+                    
+                    // Update UI to show authenticated state
+                    updateUIForAuthenticatedUser();
+                })
+                .catch(error => {
+                    console.error('❌ Authentication verification failed:', error);
+                    handleAuthenticationError();
+                });
+        }
+
+        // FIXED: Get authentication token from multiple sources
+        function getAuthToken() {
+            // Try localStorage first (most common)
+            if (typeof localStorage !== 'undefined') {
+                const token = localStorage.getItem('authToken') || 
+                             localStorage.getItem('token') || 
+                             localStorage.getItem('access_token');
+                if (token) return token;
+            }
+
+            // Try sessionStorage
+            if (typeof sessionStorage !== 'undefined') {
+                const token = sessionStorage.getItem('authToken') || 
+                             sessionStorage.getItem('token');
+                if (token) return token;
+            }
+
+            // Try global variables (set by other scripts)
+            if (window.authToken) return window.authToken;
+            if (window.token) return window.token;
+
+            // Try URL parameters (less secure, but sometimes used)
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlToken = urlParams.get('token') || urlParams.get('auth_token');
+            if (urlToken) {
+                // Store it in localStorage for future use
+                if (typeof localStorage !== 'undefined') {
+                    localStorage.setItem('authToken', urlToken);
+                }
+                return urlToken;
+            }
+
+            return null;
+        }
+
+        // FIXED: Verify authentication with backend
+        async function verifyAuthentication() {
+            console.log('🔍 Verifying authentication with backend...');
+            
+            try {
+                const response = await fetch('/api/auth/verify', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.status === 401) {
+                    throw new Error('Token expired or invalid');
+                }
+
+                if (!response.ok) {
+                    throw new Error(`Authentication verification failed: ${response.status}`);
+                }
+
+                const userInfo = await response.json();
+                console.log('✅ Authentication verified:', userInfo);
+                
+                // Update last activity
+                updateLastActivity();
+                
+                return userInfo;
+            } catch (error) {
+                console.error('❌ Auth verification error:', error);
+                throw error;
+            }
+        }
+
+        // FIXED: Handle authentication errors
+        function handleAuthenticationError() {
+            // Clear invalid tokens
+            clearAuthTokens();
+            
+            // Show authentication error message
+            showAuthError();
+            
+            // Redirect to login after a delay
+            setTimeout(() => {
+                redirectToLogin();
+            }, 3000);
+        }
+
+        // FIXED: Clear all stored authentication tokens
+        function clearAuthTokens() {
+            if (typeof localStorage !== 'undefined') {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('token');
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('user_name');
+                localStorage.removeItem('username');
+                localStorage.removeItem('lastActivity');
+            }
+            
+            if (typeof sessionStorage !== 'undefined') {
+                sessionStorage.removeItem('authToken');
+                sessionStorage.removeItem('token');
+            }
+            
+            authToken = null;
+            currentUser = null;
+        }
+
+        // FIXED: Update last activity timestamp
+        function updateLastActivity() {
+            const timestamp = Date.now();
+            if (typeof localStorage !== 'undefined') {
+                localStorage.setItem('lastActivity', timestamp);
+            }
+            window.lastActivity = timestamp;
+        }
+
+        // FIXED: Check if session has expired
+        function checkSessionExpiry() {
+            const lastActivity = localStorage.getItem('lastActivity') || window.lastActivity;
+            const expiryTime = 3600000; // 1 hour in milliseconds
+            
+            if (lastActivity && (Date.now() - parseInt(lastActivity) > expiryTime)) {
+                console.log('⏰ Session expired due to inactivity');
+                logout();
+                return false;
+            }
+            return true;
+        }
+
+        // FIXED: Update UI for authenticated user
+        function updateUIForAuthenticatedUser() {
+            // Update welcome message or user display
+            const userDisplay = document.getElementById('userDisplay');
+            if (userDisplay) {
+                userDisplay.textContent = `Welcome, ${currentUser.user_name}!`;
+            }
+
+            // Add logout button if it doesn't exist
+            addLogoutButton();
+            
+            // Set up session monitoring
+            setupSessionMonitoring();
+        }
+
+        // FIXED: Add logout functionality to the UI
+        function addLogoutButton() {
+            const existingLogout = document.getElementById('logoutButton');
+            if (existingLogout) return; // Already exists
+
+            const logoutButton = document.createElement('button');
+            logoutButton.id = 'logoutButton';
+            logoutButton.textContent = 'Logout';
+            logoutButton.style.cssText = `
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: #dc3545;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+            `;
+            logoutButton.onclick = logout;
+
+            document.body.appendChild(logoutButton);
+        }
+
+        // FIXED: Setup session monitoring for auto-logout
+        function setupSessionMonitoring() {
+            // Check session every 5 minutes
+            setInterval(() => {
+                if (!checkSessionExpiry()) {
+                    return; // Session expired, user logged out
+                }
+            }, 300000); // 5 minutes
+
+            // Update activity on user interactions
+            ['click', 'keydown', 'mousemove', 'scroll'].forEach(event => {
+                document.addEventListener(event, updateLastActivity, { passive: true });
+            });
+        }
+
+        // FIXED: Show authentication error in UI
+        function showAuthError() {
+            const messagesContainer = document.getElementById('messages');
+            if (messagesContainer) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'message ai-message';
+                errorDiv.innerHTML = `
+                    <div class="avatar ai-avatar">⚠️</div>
+                    <div class="message-bubble ai-bubble error">
+                        Authentication failed. Your session has expired or is invalid. 
+                        Redirecting to login page...
+                    </div>
+                `;
+                messagesContainer.appendChild(errorDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+
+        // FIXED: Redirect to login page
+        function redirectToLogin() {
+            const loginUrl = '/auth.html'; // Adjust this to your login page URL
+            console.log('🔄 Redirecting to login:', loginUrl);
+            window.location.href = loginUrl;
+        }
+
+        // FIXED: Logout function
+        function logout() {
+            console.log('🔒 Logging out user...');
+            
+            // Clear authentication data
+            clearAuthTokens();
+            
+            // Optionally notify backend of logout
+            if (authToken) {
+                fetch('/api/auth/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                }).catch(error => {
+                    console.log('Logout notification failed:', error);
+                });
+            }
+            
+            // Clear UI
+            messageHistory = [];
+            const messages = document.getElementById('messages');
+            if (messages) {
+                messages.innerHTML = '';
+            }
+            
+            // Redirect to login
+            redirectToLogin();
         }
 
         function generateSessionId() {
@@ -500,11 +762,30 @@
         }
 
         function askExample(question) {
+            // Check authentication before allowing interaction
+            if (!authToken || !currentUser) {
+                showAuthError();
+                redirectToLogin();
+                return;
+            }
+            
             document.getElementById('messageInput').value = question;
             sendMessage();
         }
 
         async function sendMessage() {
+            // Check authentication before sending message
+            if (!authToken || !currentUser) {
+                showAuthError();
+                redirectToLogin();
+                return;
+            }
+
+            // Check session expiry
+            if (!checkSessionExpiry()) {
+                return;
+            }
+
             const messageInput = document.getElementById('messageInput');
             const message = messageInput.value.trim();
             
@@ -528,9 +809,16 @@
             showTypingIndicator();
 
             try {
+                // Update activity timestamp
+                updateLastActivity();
+
                 // Prepare the request payload
                 const payload = {
                     prompt: message,
+                    user_info: {
+                        user_name: currentUser.user_name,
+                        session_id: currentUser.session_id
+                    },
                     generation_parameters: {
                         temperature: 0.7,
                         max_tokens: 1000,
@@ -553,6 +841,14 @@
 
             } catch (error) {
                 hideTypingIndicator();
+                
+                // Handle authentication errors specifically
+                if (error.status === 401) {
+                    console.log('🔒 Authentication error during API call');
+                    handleAuthenticationError();
+                    return;
+                }
+                
                 const errorMessage = handleAPIError(error);
                 addMessage(errorMessage, 'ai', true);
                 console.error('API Error:', error);
@@ -571,7 +867,7 @@
             if (sender === 'user') {
                 messageDiv.innerHTML = `
                     <div class="message-bubble user-bubble">${escapeHtml(content)}</div>
-                    <div class="avatar user-avatar">U</div>
+                    <div class="avatar user-avatar">${currentUser?.user_name?.charAt(0).toUpperCase() || 'U'}</div>
                 `;
             } else {
                 messageDiv.innerHTML = `
@@ -587,7 +883,8 @@
             messageHistory.push({
                 content: content,
                 sender: sender,
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                user_name: currentUser?.user_name
             });
         }
 
@@ -611,13 +908,26 @@
             return div.innerHTML;
         }
 
-        // Real API call to your backend
-        async function callBackendAPI(payload) {            
+        // FIXED: Enhanced API call with proper authentication
+        async function callBackendAPI(payload) {
+            console.log('🌐 Making authenticated API call...');
+            
             const response = await fetch(`/api/v1/llm_generation`, {
                 method: 'POST',
                 headers: getAuthHeaders(),
                 body: JSON.stringify(payload)
             });
+
+            // Handle authentication errors
+            if (response.status === 401) {
+                console.log('🔒 API returned 401 - authentication failed');
+                clearAuthTokens();
+                throw {
+                    status: 401,
+                    message: 'Authentication required',
+                    data: {}
+                };
+            }
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
@@ -628,33 +938,68 @@
                 };
             }
 
-            return await response.json();
+            const result = await response.json();
+            console.log('✅ API call successful');
+            return result;
         }
 
-        // Additional utility functions for real API integration
+        // FIXED: Enhanced authentication headers
         function getAuthHeaders() {
-            return {
+            const headers = {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
-                // Add authentication headers here when needed
-                // 'Authorization': 'Bearer ' + getAuthToken()
             };
+
+            // Add authentication header if token exists
+            if (authToken) {
+                headers['Authorization'] = `Bearer ${authToken}`;
+            }
+
+            // Add user context headers if available
+            if (currentUser) {
+                headers['X-User-Name'] = currentUser.user_name;
+                headers['X-Session-ID'] = currentUser.session_id;
+            }
+
+            return headers;
         }
 
+        // FIXED: Enhanced error handling with authentication awareness
         function handleAPIError(error) {
             console.error('API Error:', error);
             let errorMessage = 'I apologize, but I encountered an error while processing your request.';
             
             if (error.status === 401) {
-                errorMessage = 'Authentication required. Please log in to continue.';
+                errorMessage = 'Your session has expired. Please log in again to continue.';
+                // Trigger logout after showing message
+                setTimeout(() => {
+                    handleAuthenticationError();
+                }, 2000);
+            } else if (error.status === 403) {
+                errorMessage = 'You do not have permission to perform this action.';
             } else if (error.status === 429) {
                 errorMessage = 'Too many requests. Please wait a moment and try again.';
             } else if (error.status >= 500) {
                 errorMessage = 'Server error. Please try again later.';
+            } else if (error.status === 0 || !error.status) {
+                errorMessage = 'Network error. Please check your connection and try again.';
             }
             
             return errorMessage;
         }
+
+        // FIXED: Add global logout function for buttons
+        window.logout = logout;
+
+        // FIXED: Add session check on page visibility change
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden && authToken) {
+                // Page became visible, check if session is still valid
+                checkSessionExpiry();
+            }
+        });
+
+        console.log('💬 Enhanced Chat Application with Authentication loaded');
     </script>
 </body>
 </html>

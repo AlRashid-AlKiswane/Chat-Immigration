@@ -633,13 +633,15 @@
                 }
 
                 if (response.ok) {
-                    showAlert('Registration successful! You can now sign in.', 'success');
-                    event.target.reset();
-
-                    // Auto-switch to login after 2 seconds
-                    setTimeout(() => {
-                        showLogin();
-                    }, 2000);
+                    // Store email in localStorage for verification page
+                    localStorage.setItem('pendingVerificationEmail', registerData.email);
+                    
+                    // Redirect to verification page
+                    window.location.href = 'verification_email.html';
+                    
+                    // Optional: You can pass the email as a URL parameter instead
+                    // window.location.href = `verification_email.html?email=${encodeURIComponent(registerData.email)}`;
+                    
                 } else {
                     console.error('Registration failed:', result);
                     showAlert(result.detail || `Registration failed: ${response.status} ${response.statusText}`);

@@ -116,6 +116,14 @@
   document.getElementById('uploadForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
+    // Check authentication first
+    const authToken = getAuthToken();
+    if (!authToken) {
+      alert('Please log in to upload files');
+      window.location.href = '/login';
+      return;
+    }
+
     const fileInput = document.getElementById('fileInput');
     const resultBox = document.getElementById('uploadResult');
     resultBox.style.display = 'block';
@@ -128,14 +136,26 @@
 
     const formData = new FormData();
     for (const file of fileInput.files) {
-      formData.append("files", file);  // <-- key must match FastAPI's `files`
+      formData.append("files", file);
     }
 
     try {
-      const response = await fetch("/api/v1/api/upload/", {
+      const response = await fetch("/api/v1/upload", {
         method: "POST",
         body: formData,
+        headers: {
+          'Authorization': `Bearer ${authToken}`
+        }
       });
+
+      // Handle 401 Unauthorized
+      if (response.status === 401) {
+        resultBox.textContent = "❌ Session expired. Please log in again.";
+        resultBox.classList.remove('success');
+        // Optionally redirect to login
+        setTimeout(() => window.location.href = '/login', 2000);
+        return;
+      }
 
       const data = await response.json();
 
@@ -162,6 +182,17 @@
       resultBox.classList.remove('success');
     }
   });
+
+  // Authentication helper function
+  function getAuthToken() {
+    // Check localStorage first
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('authToken') || 
+             localStorage.getItem('token');
+    }
+    // Fallback to window object if localStorage not available
+    return window.authToken || window.token;
+  }
 </script>
 </body>
 </html>

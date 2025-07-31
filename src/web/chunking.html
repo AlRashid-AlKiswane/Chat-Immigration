@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Chunking Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: none;
+        }
+
+        .card-header {
+            background-color: #ff3232;
+            color: white;
+            border-radius: 8px 8px 0 0 !important;
+            padding: 15px 20px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+
+        .table th {
+            background-color: #f1f1f1;
+            font-weight: 600;
+        }
+
+        #loadingIndicator {
+            padding: 30px 0;
+        }
+
+        .alert {
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            background-color: #a90000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff4b4b;
+        }
+
+        .form-control {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .form-control:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .form-check-input:checked {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="my-4">
+            <h1 class="text-center">Document Chunking Service</h1>
+            <p class="text-muted text-center">Process documents into manageable chunks</p>
+        </header>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Process Documents</h2>
+            </div>
+            <div class="card-body">
+                <form id="chunkingForm">
+                    <div class="mb-3">
+                        <label for="filePath" class="form-label">Document Path</label>
+                        <input type="text" class="form-control" id="filePath" 
+                               placeholder="Enter document path or leave blank for all documents">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="doReset">
+                        <label class="form-check-label" for="doReset">Clear existing chunks before processing</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Process Documents</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Results</h2>
+            </div>
+            <div class="card-body">
+                <div id="loadingIndicator" class="text-center d-none">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Processing documents...</p>
+                </div>
+                <div id="resultsContainer" class="d-none">
+                    <div class="alert alert-success" role="alert">
+                        Successfully processed <span id="chunkCount">0</span> chunks!
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Document ID</th>
+                                    <th>Chunk Text</th>
+                                    <th>Metadata</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultsTable">
+                                <!-- Results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="errorContainer" class="alert alert-danger d-none" role="alert">
+                    <!-- Error messages will be shown here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chunkingForm = document.getElementById('chunkingForm');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const errorContainer = document.getElementById('errorContainer');
+            const resultsTable = document.getElementById('resultsTable');
+            const chunkCount = document.getElementById('chunkCount');
+
+            chunkingForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Reset UI
+                loadingIndicator.classList.remove('d-none');
+                resultsContainer.classList.add('d-none');
+                errorContainer.classList.add('d-none');
+                
+                const filePath = document.getElementById('filePath').value;
+                const doReset = document.getElementById('doReset').checked ? 1 : 0;
+                
+                try {
+                    const response = await processDocuments(filePath, doReset);
+                    
+                    if (response.status === 'success') {
+                        displayResults(response);
+                    } else {
+                        showError(response.message || 'An unknown error occurred');
+                    }
+                } catch (error) {
+                    showError(error.message || 'Failed to process documents');
+                } finally {
+                    loadingIndicator.classList.add('d-none');
+                }
+            });
+
+            async function processDocuments(filePath, doReset) {
+                const authToken = getAuthToken();
+                
+                if (!authToken) {
+                    throw new Error('Authentication required. Please log in.');
+                }
+                
+                const response = await fetch('/api/v1/docs_to_chunks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        file_path: filePath || null,
+                        do_rest: doReset
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Request failed');
+                }
+                
+                return await response.json();
+            }
+
+            function displayResults(data) {
+                chunkCount.textContent = data.inserted_chunks;
+                resultsTable.innerHTML = '';
+                
+                // Display up to 10 chunks in the table
+                const chunksToDisplay = data.documents.slice(0, 10);
+                
+                chunksToDisplay.forEach(chunk => {
+                    const row = document.createElement('tr');
+                    
+                    const docIdCell = document.createElement('td');
+                    docIdCell.textContent = chunk.document_id || 'N/A';
+                    row.appendChild(docIdCell);
+                    
+                    const textCell = document.createElement('td');
+                    textCell.textContent = chunk.chunk_text.substring(0, 100) + (chunk.chunk_text.length > 100 ? '...' : '');
+                    row.appendChild(textCell);
+                    
+                    const metaCell = document.createElement('td');
+                    metaCell.textContent = JSON.stringify(chunk.metadata || {});
+                    row.appendChild(metaCell);
+                    
+                    resultsTable.appendChild(row);
+                });
+                
+                resultsContainer.classList.remove('d-none');
+            }
+
+            function showError(message) {
+                errorContainer.textContent = message;
+                errorContainer.classList.remove('d-none');
+            }
+
+            function getAuthToken() {
+                return (typeof localStorage !== 'undefined' ? localStorage.getItem('authToken') : null) || 
+                    (typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null) || 
+                    window.authToken || 
+                    window.token;
+            }
+
+            // Check authentication on page load
+            if (!getAuthToken()) {
+                window.location.href = '/login'; // Redirect to login if not authenticated
+            }
+        });
+    </script>
+</body>
+</html>
