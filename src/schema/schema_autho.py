@@ -31,3 +31,6 @@ class RegisterInput(BaseModel):
     email: EmailStr
     phone_number: Optional[str] = None
     master_key: Optional[str] = None
+
+class ResentVerification(BaseModel):
+    email: EmailStr

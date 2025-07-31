@@ -52,7 +52,7 @@ from src.llms import BaseLLM
 from src.history import ChatHistoryManager
 from src import get_chat_history
 from src.prompt import PromptBuilder
-from src.utils import get_current_user
+from src.auth import get_current_user
 
 # Initialize logger
 logger = setup_logging(name="LLM-GENERATION")

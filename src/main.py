@@ -17,7 +17,7 @@ except (ImportError, OSError) as e:
     sys.exit(1)
 
 # --- Local Imports ---
-from src.embeddings import HuggingFaceModel, OpenAIEmbeddingModel
+from src.embeddings import OpenAIEmbeddingModel # HuggingFaceModel
 from src.database import (
     get_sqlite_engine,
     init_chunks_table,
@@ -25,14 +25,16 @@ from src.database import (
     init_query_response_table,
     get_chroma_client,
     submit_assessment_table,
-    create_auth_user_table
+    create_auth_user_table,
+    email_code_verification_table, 
 )
 
 from src.routes import *
 from src.history import ChatHistoryManager
 from src.helpers import get_settings, Settings
 from src.infra import setup_logging
-from src.utils import  get_current_user, get_current_superuser
+from src.auth import  get_current_user, get_current_superuser
+
 # --- Constants ---
 BASE_DIR = pathlib.Path(__file__).parent.resolve()
 WEB_DIR = BASE_DIR / "web"
@@ -66,7 +68,8 @@ async def lifespan(app: FastAPI):
         "user_info_table": init_user_info_table,
         "query_response_table": init_query_response_table,
         "submit_assessment_table":submit_assessment_table,
-        "create_auth_user_table":create_auth_user_table
+        "create_auth_user_table":create_auth_user_table,
+        "email_code_verification_table":email_code_verification_table
     }.items():
         try:
             func(conn=app.state.conn)
@@ -125,7 +128,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost", "http://127.0.0.1"],  # Add your frontend URL
+    allow_origins=["http://localhost", "http://127.0.0.1"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

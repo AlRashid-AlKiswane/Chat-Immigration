@@ -42,7 +42,7 @@ from src.llms import (
     DeepSeekLLM,
     GeminiLLM,
     OpenAILLM,
-    HuggingFaceLLM
+    # HuggingFaceLLM
 )
 
 llms_route = APIRouter(

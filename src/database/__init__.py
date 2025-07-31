@@ -42,7 +42,11 @@ from .table_db import (
     submit_assessment_table,
     insert_auth_user,
     create_auth_user_table,
-    fetch_auth_user)
+    fetch_auth_user,
+    delete_verification_code,
+    email_code_verification_table,
+    fetch_code_verification,
+    insert_code_verification)
 
 from .vector_db import (
     get_chroma_client,

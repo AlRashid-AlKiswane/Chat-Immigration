@@ -12,5 +12,9 @@ from .db_user import (insert_assessment_data,
                       submit_assessment_table,
                       create_auth_user_table,
                       fetch_auth_user,
-                      insert_auth_user)
+                      insert_auth_user,
+                      delete_verification_code,
+                      email_code_verification_table,
+                      fetch_code_verification,
+                      insert_code_verification)
 

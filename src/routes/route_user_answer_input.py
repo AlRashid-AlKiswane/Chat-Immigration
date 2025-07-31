@@ -27,7 +27,7 @@ from src.schema import AssessmentResponse, AssessmentAnswers
 from src.database import (insert_assessment_data)
 
 from src.helpers import Settings, get_settings
-from src.utils import get_current_user
+from src.auth import get_current_user
 from src import get_db_conn
 
 # Initialize logger and settings

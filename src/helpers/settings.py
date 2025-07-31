@@ -135,6 +135,13 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = Field(..., env="ACCESS_TOKEN_EXPIRE_MINUTES")
     MASTER_KEY: Optional[SecretStr] = Field(..., env="MASTER_KEY")
 
+    EMAIL_FROM: str = Field(..., env="EMAIL_FROM")
+    SMTP_HOST: str = Field(..., env="SMTP_HOST")
+    SMTP_PORT: str = Field(..., env="SMTP_PORT")
+    EMAIL_USER: str = Field(..., env="EMAIL_USER")
+    EMAIL_PASSWORD: str = Field(..., env="EMAIL_PASSWORD")
+
+
 def get_settings() -> Settings:
     """
     Safely initialize application settings with proper error handling.

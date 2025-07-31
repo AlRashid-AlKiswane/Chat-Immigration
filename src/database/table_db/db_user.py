@@ -792,3 +792,108 @@ def insert_auth_user(
     except Exception as e:
         logger.error("Failed to insert new user.", exc_info=True)
         raise HTTPException(status_code=500, detail="Database insert failed")
+    
+
+def email_code_verification_table(conn: sqlite3.Connection) -> None:
+    """
+    Creates the code_verification table if it does not already exist.
+
+    Args:
+        conn (sqlite3.Connection): SQLite database connection.
+    """
+    try:
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS code_verification (
+                email TEXT NOT NULL,
+                code TEXT NOT NULL,
+                expires DATETIME NOT NULL,
+                PRIMARY KEY (email)
+            )
+        """)
+        conn.commit()
+        logger.info("code_verification table is ready.")
+    except Exception as e:
+        logger.critical("Failed to create code_verification table.", exc_info=True)
+        raise
+
+
+def fetch_code_verification(email: str, conn: sqlite3.Connection) -> Optional[dict]:
+    """
+    Fetches verification code data by email from the database.
+
+    Args:
+        email (str): Email to fetch.
+        conn (sqlite3.Connection): SQLite database connection.
+
+    Returns:
+        Optional[dict]: Verification data as a dictionary or None.
+    """
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM code_verification WHERE email = ?", (email,))
+        row = cursor.fetchone()
+        if row:
+            return {
+                "email": row[0],
+                "code": row[1],
+                "expires": row[2]
+            }
+        return None
+    except Exception as e:
+        logger.error("Failed to fetch verification code from DB.", exc_info=True)
+        raise HTTPException(status_code=500, detail="Database error")
+
+
+def insert_code_verification(
+    email: str,
+    code: str,
+    expires: datetime,
+    conn: sqlite3.Connection
+) -> None:
+    """
+    Inserts or updates a verification code in the code_verification table.
+
+    Args:
+        email (str): User's email address.
+        code (str): Verification code.
+        expires (datetime): Expiration datetime.
+        conn (sqlite3.Connection): Database connection.
+
+    Raises:
+        HTTPException: If database operation fails.
+    """
+    try:
+        cursor = conn.cursor()
+        # Use INSERT OR REPLACE to handle existing emails
+        cursor.execute("""
+            INSERT OR REPLACE INTO code_verification (
+                email, code, expires
+            ) VALUES (?, ?, ?)
+        """, (
+            email,
+            code,
+            expires.isoformat()  # Store as ISO format string
+        ))
+        conn.commit()
+        logger.info("Verification code saved for email: %s", email)
+    except Exception as e:
+        logger.error("Failed to insert verification code.", exc_info=True)
+        raise HTTPException(status_code=500, detail="Database insert failed")
+
+
+def delete_verification_code(email: str, conn: sqlite3.Connection) -> None:
+    """
+    Deletes verification code after successful verification.
+    
+    Args:
+        email (str): User's email address.
+        conn (sqlite3.Connection): Database connection.
+    """
+    try:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM code_verification WHERE email = ?", (email,))
+        conn.commit()
+        logger.info("Verification code deleted for email: %s", email)
+    except Exception as e:
+        logger.error("Failed to delete verification code.", exc_info=True)
