@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Canadian Immigration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FF0000 0%, #B71C1C 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="maple" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M25,10 L30,20 L35,15 L40,25 L30,30 L35,40 L25,35 L15,40 L20,30 L10,25 L15,15 L20,20 Z" fill="rgba(255,255,255,0.05)" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23maple)"/></svg>') center/200px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            color: white;
+            padding: 25px 30px;
+            position: relative;
+            border-bottom: 3px solid #FFFFFF;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="25" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="25" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.2;
+        }
+
+        .canada-flag {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            width: 40px;
+            height: 25px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .maple-leaf {
+            width: 20px;
+            height: 20px;
+            fill: #FF0000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .header-actions {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 3;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .user-info {
+            text-align: right;
+            position: relative;
+        }
+
+        .user-avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 10px;
+            margin-left: auto;
+        }
+
+        .user-avatar-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            color: #FF0000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .user-avatar-large:hover {
+            transform: scale(1.05);
+        }
+
+        .user-avatar-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .avatar-edit-overlay {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .avatar-edit-overlay:hover {
+            transform: scale(1.1);
+            box-shadow: 0 3px 10px rgba(255, 0, 0, 0.4);
+        }
+
+        .profile-image-input {
+            display: none;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .dashboard-content {
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .profile-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .profile-section:hover {
+            border-color: #FF0000;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            color: #FF0000;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .edit-btn {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            margin-left: auto;
+        }
+
+        .edit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 10px rgba(255,0,0,0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-input:focus {
+            border-color: #FF0000;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+        }
+
+        .form-input:disabled {
+            background: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            cursor: pointer;
+        }
+
+        .form-select:focus {
+            border-color: #FF0000;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+        }
+
+        .form-select:disabled {
+            background: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .cancel-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .form-actions {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .form-actions.active {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .progress-section {
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-timeline {
+            margin: 20px 0;
+        }
+
+        .timeline-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px 0;
+            position: relative;
+            border-left: 3px solid #e9ecef;
+            padding-left: 40px;
+            margin-left: 25px;
+        }
+
+        .timeline-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: -3px;
+            bottom: 0;
+            width: 3px;
+            height: 20px;
+            background: #e9ecef;
+        }
+
+        .timeline-step.completed {
+            border-left-color: #28a745;
+        }
+
+        .timeline-step.completed::after {
+            background: #28a745;
+        }
+
+        .timeline-step.active {
+            border-left-color: #FF0000;
+        }
+
+        .timeline-step.active::after {
+            background: #FF0000;
+        }
+
+        .step-icon {
+            position: absolute;
+            left: -40px;
+            top: 20px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            background: #e9ecef;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .timeline-step.completed .step-icon {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            animation: completePulse 2s infinite;
+        }
+
+        .timeline-step.active .step-icon {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            animation: activePulse 2s infinite;
+        }
+
+        .timeline-step.pending .step-icon {
+            background: #6c757d;
+        }
+
+        @keyframes completePulse {
+            0%, 100% { box-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 0 0 0 rgba(40, 167, 69, 0.4); }
+            50% { box-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 0 0 8px rgba(40, 167, 69, 0); }
+        }
+
+        @keyframes activePulse {
+            0%, 100% { box-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 0 0 0 rgba(255, 0, 0, 0.4); }
+            50% { box-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 0 0 8px rgba(255, 0, 0, 0); }
+        }
+
+        .step-content h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .step-content p {
+            color: #6c757d;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .step-date {
+            font-size: 0.85em;
+            color: #FF0000;
+            font-weight: 500;
+        }
+
+        .timeline-step.completed .step-date {
+            color: #28a745;
+        }
+
+        .timeline-step.pending .step-date {
+            color: #6c757d;
+        }
+
+        .logout-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logout-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-icon {
+            font-size: 3em;
+            color: #FF0000;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .modal-text {
+            color: #6c757d;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .user-info {
+                text-align: center;
+            }
+
+            .user-avatar-large {
+                margin: 0 auto 10px;
+            }
+
+            .dashboard-content {
+                padding: 20px;
+            }
+
+            .profile-section {
+                padding: 20px;
+            }
+
+            .quick-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="canada-flag">
+                <svg class="maple-leaf" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50,15 L55,30 L70,25 L60,40 L75,50 L60,60 L70,75 L55,70 L50,85 L45,70 L30,75 L40,60 L25,50 L40,40 L30,25 L45,30 Z"/>
+                </svg>
+            </div>
+            
+            <div class="header-content">
+                <div>
+                    <h1>🍁 User Dashboard</h1>
+                    <p>Manage your Canadian immigration profile</p>
+                </div>
+                
+                <div class="user-info">
+                    <div class="user-avatar-container">
+                        <div class="user-avatar-large" id="headerAvatar" onclick="openImageUpload()">
+                            JD
+                        </div>
+                        <div class="avatar-edit-overlay" onclick="openImageUpload()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9,2V7.38L10.32,8.7L15.32,3.7L14.61,3L16.03,1.59L17.44,3L21.41,7L22.82,5.59L21.41,4.17L22.82,2.76L18.85,2.76M12,10.5A3.5,3.5 0 0,0 8.5,14A3.5,3.5 0 0,0 12,17.5A3.5,3.5 0 0,0 15.5,14A3.5,3.5 0 0,0 12,10.5M12,16A2,2 0 0,1 10,14A2,2 0 0,1 12,12A2,2 0 0,1 14,14A2,2 0 0,1 12,16M12,9A5,5 0 0,1 17,14H19A7,7 0 0,0 12,7V9M12,5A9,9 0 0,1 21,14H23A11,11 0 0,0 12,3V5M3,8V12H7L10,16H20V8H3Z" />
+                            </svg>
+                        </div>
+                        <input type="file" id="profileImageInput" class="profile-image-input" accept="image/*" onchange="handleImageUpload(event)">
+                    </div>
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span>Profile Active</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button class="icon-btn" onclick="showProfile()" title="Profile Settings">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.22,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.22,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+                    </svg>
+                </button>
+                <button class="icon-btn" onclick="showLogoutModal()" title="Logout">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="dashboard-grid">
+                <!-- Personal Information Section -->
+                <div class="profile-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                            </svg>
+                            Personal Information
+                        </h3>
+                        <button class="edit-btn" onclick="toggleEdit('personal')">Edit</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-input" id="firstName" value="John" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-input" id="lastName" value="Doe" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Date of Birth</label>
+                        <input type="date" class="form-input" id="dateOfBirth" value="1990-05-15" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nationality</label>
+                        <select class="form-select" id="nationality" disabled>
+                            <option value="US">United States</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="IN">India</option>
+                            <option value="CN">China</option>
+                            <option value="FR">France</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions" id="personalActions">
+                        <button class="save-btn" onclick="saveSection('personal')">Save Changes</button>
+                        <button class="cancel-btn" onclick="cancelEdit('personal')">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Contact Information Section -->
+                <div class="profile-section">
+                    <div class="section-header">
+                        <h3 class="section-title">📧 Contact Information</h3>
+                        <button class="edit-btn" onclick="toggleEdit('contact')">Edit</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="email" value="john.doe@email.com" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-input" id="phone" value="+1 (555) 123-4567" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Current Address</label>
+                        <input type="text" class="form-input" id="address" value="123 Main Street, Anytown, State 12345" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Preferred Language</label>
+                        <select class="form-select" id="language" disabled>
+                            <option value="en">English</option>
+                            <option value="fr">French</option>
+                            <option value="es">Spanish</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions" id="contactActions">
+                        <button class="save-btn" onclick="saveSection('contact')">Save Changes</button>
+                        <button class="cancel-btn" onclick="cancelEdit('contact')">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Application Progress Section -->
+                <div class="progress-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M13,2.05V5.08C16.39,5.57 19,8.47 19,12C19,12.9 18.82,13.75 18.5,14.54L21.12,16.07C21.68,14.83 22,13.45 22,12C22,6.82 18.05,2.55 13,2.05M12,19A7,7 0 0,1 5,12C5,8.47 7.61,5.57 11,5.08V2.05C5.94,2.55 2,6.81 2,12A10,10 0 0,0 12,22C15.3,22 18.23,20.39 20.07,17.93L17.45,16.4C15.9,18.75 14.13,19 12,19Z" />
+                            </svg>
+                            CRS Application Process
+                        </h3>
+                    </div>
+                    
+                    <div class="process-timeline">
+                        <div class="timeline-step completed" data-step="1">
+                            <div class="step-icon">✓</div>
+                            <div class="step-content">
+                                <h4>Send Your CRS Form</h4>
+                                <p>Complete and submit your Comprehensive Ranking System form</p>
+                                <span class="step-date">Completed on March 15, 2024</span>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-step completed" data-step="2">
+                            <div class="step-icon">✓</div>
+                            <div class="step-content">
+                                <h4>Validate by Immigration Consultant</h4>
+                                <p>Your application is being reviewed by our certified immigration consultant</p>
+                                <span class="step-date">Completed on March 18, 2024</span>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-step active" data-step="3">
+                            <div class="step-icon">⏳</div>
+                            <div class="step-content">
+                                <h4>Receiving Email with Your Score</h4>
+                                <p>You will receive an email notification with your calculated CRS score</p>
+                                <span class="step-date">Expected by March 25, 2024</span>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-step pending" data-step="4">
+                            <div class="step-icon">📋</div>
+                            <div class="step-content">
+                                <h4>CRS Result</h4>
+                                <p>Final CRS score and recommendations for your Express Entry profile</p>
+                                <span class="step-date">Pending completion of previous steps</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%" id="processProgress"></div>
+                    </div>
+                    
+                    <div class="progress-text">
+                        <span>Process Completion</span>
+                        <span id="processPercent">65%</span>
+                    </div>
+                    
+                    <div class="quick-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">2/4</div>
+                            <div class="stat-label">Steps Completed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">450</div>
+                            <div class="stat-label">Expected CRS Score</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Days Remaining</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">✉️</div>
+                            <div class="stat-label">Email Notification</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Modal -->
+    <div class="logout-modal" id="logoutModal">
+        <div class="modal-content">
+            <div class="modal-icon">👋</div>
+            <h3 class="modal-title">Logout Confirmation</h3>
+            <p class="modal-text">Are you sure you want to logout? You will need to sign in again to access your dashboard.</p>
+            <div class="modal-actions">
+                <button class="modal-btn btn-logout" onclick="confirmLogout()">Logout</button>
+                <button class="modal-btn btn-cancel" onclick="closeLogoutModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Store original values for cancel functionality
+        let originalValues = {};
+        
+        function toggleEdit(section) {
+            const inputs = document.querySelectorAll(`#${section}Actions`).length > 0 
+                ? getSectionInputs(section) 
+                : [];
+            const actions = document.getElementById(`${section}Actions`);
+            const editBtn = document.querySelector(`#${section}Actions`).parentElement.querySelector('.edit-btn');
+            
+            // Store original values before editing
+            if (!actions.classList.contains('active')) {
+                originalValues[section] = {};
+                inputs.forEach(input => {
+                    originalValues[section][input.id] = input.value;
+                });
+            }
+            
+            // Toggle edit mode
+            inputs.forEach(input => {
+                input.disabled = !input.disabled;
+            });
+            
+            actions.classList.toggle('active');
+            editBtn.textContent = actions.classList.contains('active') ? 'Cancel' : 'Edit';
+            
+            if (actions.classList.contains('active')) {
+                editBtn.onclick = () => cancelEdit(section);
+            } else {
+                editBtn.onclick = () => toggleEdit(section);
+            }
+        }
+        
+        function getSectionInputs(section) {
+            const sectionElement = document.getElementById(`${section}Actions`).parentElement;
+            return Array.from(sectionElement.querySelectorAll('input, select'));
+        }
+        
+        function saveSection(section) {
+            const inputs = getSectionInputs(section);
+            const actions = document.getElementById(`${section}Actions`);
+            const editBtn = actions.parentElement.querySelector('.edit-btn');
+            
+            // Simulate saving (in real app, send to backend)
+            console.log(`Saving ${section} section:`, getCurrentValues(section));
+            
+            // Update header avatar if name changed
+            if (section === 'personal') {
+                updateHeaderAvatar();
+            }
+            
+            // Update progress if needed
+            updateProgress();
+            updateProcessProgress();
+            
+            // Disable inputs and hide actions
+            inputs.forEach(input => {
+                input.disabled = true;
+            });
+            
+            actions.classList.remove('active');
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = () => toggleEdit(section);
+            
+            // Show success feedback
+            showFeedback('Changes saved successfully!', 'success');
+        }
+        
+        function cancelEdit(section) {
+            const inputs = getSectionInputs(section);
+            const actions = document.getElementById(`${section}Actions`);
+            const editBtn = actions.parentElement.querySelector('.edit-btn');
+            
+            // Restore original values
+            if (originalValues[section]) {
+                inputs.forEach(input => {
+                    if (originalValues[section][input.id] !== undefined) {
+                        input.value = originalValues[section][input.id];
+                    }
+                });
+            }
+            
+            // Disable inputs and hide actions
+            inputs.forEach(input => {
+                input.disabled = true;
+            });
+            
+            actions.classList.remove('active');
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = () => toggleEdit(section);
+        }
+        
+        function getCurrentValues(section) {
+            const inputs = getSectionInputs(section);
+            const values = {};
+            inputs.forEach(input => {
+                values[input.id] = input.value;
+            });
+            return values;
+        }
+        
+        function updateHeaderAvatar() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const avatar = document.getElementById('headerAvatar');
+            
+            if (firstName && lastName) {
+                avatar.textContent = firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
+            }
+        }
+        
+        function updateProgress() {
+            // Calculate completion based on filled fields
+            const allInputs = document.querySelectorAll('.form-input, .form-select');
+            let filledInputs = 0;
+            
+            allInputs.forEach(input => {
+                if (input.value && input.value.trim() !== '') {
+                    filledInputs++;
+                }
+            });
+            
+            const percentage = Math.round((filledInputs / allInputs.length) * 100);
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressPercent').textContent = percentage + '%';
+        }
+
+        function updateProcessProgress() {
+            const completedSteps = document.querySelectorAll('.timeline-step.completed').length;
+            const totalSteps = document.querySelectorAll('.timeline-step').length;
+            const percentage = Math.round((completedSteps / totalSteps) * 100);
+            
+            document.getElementById('processProgress').style.width = percentage + '%';
+            document.getElementById('processPercent').textContent = percentage + '%';
+        }
+        
+        function openImageUpload() {
+            document.getElementById('profileImageInput').click();
+        }
+        
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const avatar = document.getElementById('headerAvatar');
+                    avatar.innerHTML = `<img src="${e.target.result}" alt="Profile Picture">`;
+                    showFeedback('Profile picture updated successfully!', 'success');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function showProfile() {
+            showFeedback('Profile settings opened!', 'success');
+            // In real app, open profile settings modal or navigate to settings page
+        }
+        
+        function showLogoutModal() {
+            document.getElementById('logoutModal').classList.add('active');
+        }
+        
+        function closeLogoutModal() {
+            document.getElementById('logoutModal').classList.remove('active');
+        }
+        
+        function confirmLogout() {
+            // In real app, clear session and redirect to login
+            showFeedback('Logging out...', 'success');
+            setTimeout(() => {
+                window.location.href = '/login'; // Replace with actual login page
+            }, 1500);
+        }
+        
+        function showFeedback(message, type) {
+            // Create and show a temporary feedback message
+            const feedback = document.createElement('div');
+            feedback.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : '#dc3545'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideInRight 0.3s ease-out;
+                font-weight: 500;
+            `;
+            
+            feedback.textContent = message;
+            document.body.appendChild(feedback);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                feedback.style.animation = 'slideOutRight 0.3s ease-in';
+                setTimeout(() => {
+                    document.body.removeChild(feedback);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Add CSS animations for feedback
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(100%);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(100%);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            updateProcessProgress();
+            updateHeaderAvatar();
+            
+            // Add smooth scrolling for better UX
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+            // Add focus management for better accessibility
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Cancel any active edit modes
+                    const activeActions = document.querySelectorAll('.form-actions.active');
+                    activeActions.forEach(action => {
+                        const section = action.id.replace('Actions', '');
+                        cancelEdit(section);
+                    });
+                    
+                    // Close logout modal
+                    closeLogoutModal();
+                }
+            });
+            
+            // Close modal when clicking outside
+            document.getElementById('logoutModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeLogoutModal();
+                }
+            });
+        });
+        
+        // Auto-save functionality (optional)
+        function enableAutoSave() {
+            const inputs = document.querySelectorAll('.form-input, .form-select');
+            inputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    if (!this.disabled) {
+                        // Auto-save after 2 seconds of inactivity
+                        clearTimeout(this.autoSaveTimer);
+                        this.autoSaveTimer = setTimeout(() => {
+                            console.log('Auto-saving...', this.id, this.value);
+                            // In real app, send to backend
+                        }, 2000);
+                    }
+                });
+            });
+        }
+        
+        // Call auto-save if needed
+        // enableAutoSave();

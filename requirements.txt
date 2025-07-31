@@ -24,3 +24,6 @@ html5lib
 bs4
 python-jose[cryptography]==3.3.0
 passlib
+pydantic[email]
+aiofiles
+plotly
