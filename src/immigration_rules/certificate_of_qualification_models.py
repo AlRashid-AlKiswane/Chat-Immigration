@@ -76,8 +76,8 @@ def calculate_certificate_of_qualification_points(
         AttributeError: If the corresponding attribute is missing in the factors model.
     """
     if clb_level < 5:
-        raise ValueError("CLB level must be 5 or higher for certificate qualification points")
-
+        logger.info("No Skill transferability: CLB level must be 5 or higher for certificate qualification points")
+        return 0
     if 5 <= clb_level <= 6:
         attr_name = "clb_5_or_6"
     else:  # clb_level 7 or higher
