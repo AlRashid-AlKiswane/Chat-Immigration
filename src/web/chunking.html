@@ -150,112 +150,128 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const chunkingForm = document.getElementById('chunkingForm');
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            const resultsContainer = document.getElementById('resultsContainer');
-            const errorContainer = document.getElementById('errorContainer');
-            const resultsTable = document.getElementById('resultsTable');
-            const chunkCount = document.getElementById('chunkCount');
+    document.addEventListener('DOMContentLoaded', function() {
+        const chunkingForm = document.getElementById('chunkingForm');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const errorContainer = document.getElementById('errorContainer');
+        const resultsTable = document.getElementById('resultsTable');
+        const chunkCount = document.getElementById('chunkCount');
 
-            chunkingForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
+        chunkingForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Reset UI
+            loadingIndicator.classList.remove('d-none');
+            resultsContainer.classList.add('d-none');
+            errorContainer.classList.add('d-none');
+            
+            const filePath = document.getElementById('filePath').value;
+            const doReset = document.getElementById('doReset').checked ? 1 : 0;
+            
+            try {
+                const response = await processDocuments(filePath, doReset);
                 
-                // Reset UI
-                loadingIndicator.classList.remove('d-none');
-                resultsContainer.classList.add('d-none');
-                errorContainer.classList.add('d-none');
-                
-                const filePath = document.getElementById('filePath').value;
-                const doReset = document.getElementById('doReset').checked ? 1 : 0;
-                
-                try {
-                    const response = await processDocuments(filePath, doReset);
-                    
-                    if (response.status === 'success') {
-                        displayResults(response);
-                    } else {
-                        showError(response.message || 'An unknown error occurred');
-                    }
-                } catch (error) {
-                    showError(error.message || 'Failed to process documents');
-                } finally {
-                    loadingIndicator.classList.add('d-none');
+                if (response.status === 'success') {
+                    displayResults(response);
+                } else {
+                    showError(response.message || 'An unknown error occurred');
                 }
-            });
-
-            async function processDocuments(filePath, doReset) {
-                const authToken = getAuthToken();
-                
-                if (!authToken) {
-                    throw new Error('Authentication required. Please log in.');
-                }
-                
-                const response = await fetch('/api/v1/docs_to_chunks', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    },
-                    body: JSON.stringify({
-                        file_path: filePath || null,
-                        do_rest: doReset
-                    })
-                });
-                
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Request failed');
-                }
-                
-                return await response.json();
-            }
-
-            function displayResults(data) {
-                chunkCount.textContent = data.inserted_chunks;
-                resultsTable.innerHTML = '';
-                
-                // Display up to 10 chunks in the table
-                const chunksToDisplay = data.documents.slice(0, 10);
-                
-                chunksToDisplay.forEach(chunk => {
-                    const row = document.createElement('tr');
-                    
-                    const docIdCell = document.createElement('td');
-                    docIdCell.textContent = chunk.document_id || 'N/A';
-                    row.appendChild(docIdCell);
-                    
-                    const textCell = document.createElement('td');
-                    textCell.textContent = chunk.chunk_text.substring(0, 100) + (chunk.chunk_text.length > 100 ? '...' : '');
-                    row.appendChild(textCell);
-                    
-                    const metaCell = document.createElement('td');
-                    metaCell.textContent = JSON.stringify(chunk.metadata || {});
-                    row.appendChild(metaCell);
-                    
-                    resultsTable.appendChild(row);
-                });
-                
-                resultsContainer.classList.remove('d-none');
-            }
-
-            function showError(message) {
-                errorContainer.textContent = message;
-                errorContainer.classList.remove('d-none');
-            }
-
-            function getAuthToken() {
-                return (typeof localStorage !== 'undefined' ? localStorage.getItem('authToken') : null) || 
-                    (typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null) || 
-                    window.authToken || 
-                    window.token;
-            }
-
-            // Check authentication on page load
-            if (!getAuthToken()) {
-                window.location.href = '/login'; // Redirect to login if not authenticated
+            } catch (error) {
+                showError(error.message || 'Failed to process documents');
+            } finally {
+                loadingIndicator.classList.add('d-none');
             }
         });
+
+        async function processDocuments(filePath, doReset) {
+            const authToken = getAuthToken();
+            
+            if (!authToken) {
+                throw new Error('Authentication required. Please log in.');
+            }
+            
+            const response = await fetch('/api/v1/docs_to_chunks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                },
+                body: JSON.stringify({
+                    file_path: filePath || null,
+                    do_rest: doReset
+                })
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Request failed');
+            }
+            
+            return await response.json();
+        }
+
+        function displayResults(data) {
+            // Validate response structure
+            if (!data || !data.documents || !Array.isArray(data.documents)) {
+                showError('Invalid response format from server');
+                return;
+            }
+
+            chunkCount.textContent = data.inserted_chunks || data.documents.length;
+            resultsTable.innerHTML = '';
+            
+            // Display up to 10 chunks in the table
+            const chunksToDisplay = data.documents.slice(0, 10);
+            
+            chunksToDisplay.forEach(chunk => {
+                const row = document.createElement('tr');
+                
+                // Document ID
+                const docIdCell = document.createElement('td');
+                docIdCell.textContent = chunk.document_id || chunk.id || 'N/A';
+                row.appendChild(docIdCell);
+                
+                // Text content with safety checks
+                const textCell = document.createElement('td');
+                const textContent = chunk.chunk_text || chunk.text || chunk.content || '';
+                textCell.textContent = typeof textContent === 'string' 
+                    ? (textContent.substring(0, 100) + (textContent.length > 100 ? '...' : ''))
+                    : '[Non-text content]';
+                row.appendChild(textCell);
+                
+                // Metadata with safety checks
+                const metaCell = document.createElement('td');
+                try {
+                    metaCell.textContent = JSON.stringify(chunk.metadata || chunk.additional_data || {});
+                } catch (e) {
+                    metaCell.textContent = '{}';
+                }
+                row.appendChild(metaCell);
+                
+                resultsTable.appendChild(row);
+            });
+            
+            resultsContainer.classList.remove('d-none');
+        }
+
+        function showError(message) {
+            errorContainer.textContent = message;
+            errorContainer.classList.remove('d-none');
+        }
+
+        function getAuthToken() {
+            return (typeof localStorage !== 'undefined' ? localStorage.getItem('authToken') : null) || 
+                (typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null) || 
+                window.authToken || 
+                window.token;
+        }
+
+        // Check authentication on page load
+        if (!getAuthToken()) {
+            window.location.href = '/login';
+        }
+    });
     </script>
 </body>
 </html>
