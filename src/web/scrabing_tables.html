@@ -87,14 +87,26 @@
 
             <label for="max_pages">Max Pages to Crawl</label>
             <input type="number" id="max_pages" name="max_pages" min="1" max="1" value="1" required>
+            <button onclick="goBackToDashboard()">🔙 Go Back to Dashboard</button>
 
             <button type="submit">Scrape Tables</button>
         </form>
 
         <div id="result" class="hidden"></div>
     </div>
-
     <script>
+        function goBackToDashboard() {
+            window.location.href = "/index.html"
+        }
+        function getAuthToken() {
+            return localStorage.getItem("token");
+        }
+
+        const token = getAuthToken();
+        if (!token) {
+            window.location.href = "auth.html";
+        }
+
         const form = document.getElementById("crawler-form");
         const resultBox = document.getElementById("result");
 
@@ -107,9 +119,10 @@
             const maxPages = parseInt(document.getElementById("max_pages").value);
 
             try {
-                const response = await fetch("/api/v1/api/tables_crawling", {
+                const response = await fetch("/api/v1/tables_crawling", {
                     method: "POST",
                     headers: {
+                        'Authorization': `Bearer ${token}`,  // ✅ fixed here
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({ url: url, max_pages: maxPages }),

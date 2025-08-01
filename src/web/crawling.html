@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Web Crawler | Canada Express Entry</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -67,11 +66,12 @@
     }
 
     .status {
-      margin-top: 1.5rem;
+      margin-top: 20px;
       font-size: 1rem;
       padding: 1rem;
       border-radius: 6px;
       display: none;
+      font-weight: bold;
     }
 
     .status.success {
@@ -86,27 +86,177 @@
       display: block;
     }
 
-    .results {
-      margin-top: 2rem;
+    .results-container {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      line-height: 1.5;
     }
 
-    .results ul {
+    .results-container ul {
       padding-left: 1.5rem;
     }
 
-    .results a {
+    .results-container a {
       color: #d32f2f;
       text-decoration: underline;
     }
 
-    .results a:hover {
+    .results-container a:hover {
       color: #b71c1c;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .result-card {
+      background: linear-gradient(145deg, #ffffff, #f8f9fa);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      animation: slideInUp 0.6s ease-out;
+    }
+
+    .result-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+    }
+
+    .result-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .card-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+      opacity: 0.8;
+    }
+
+    .card-content h4 {
+      color: #495057;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card-content p {
+      margin: 0;
+      color: #212529;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .status-value {
+      font-weight: 600;
+      color: #28a745;
+    }
+
+    .pages-count {
+      font-size: 24px;
+      font-weight: bold;
+      color: #6f42c1;
+    }
+
+    .url-text {
+      font-family: 'Courier New', monospace;
+      word-break: break-all;
+      background: #f8f9fa;
+      padding: 8px;
+      border-radius: 6px;
+      border-left: 4px solid #007bff;
+    }
+
+    .file-path-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .file-path {
+      flex: 1;
+      background: #f8f9fa;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #dee2e6;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      min-width: 200px;
+      word-break: break-all;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(45deg, #007bff, #0056b3);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    }
+
+    .copy-icon {
+      font-size: 16px;
+    }
+
+    .visited-urls ul {
+      max-height: 300px;
+      overflow-y: auto;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .visited-urls li {
+      padding: 8px 0;
+      border-bottom: 1px solid #dee2e6;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      word-break: break-all;
+    }
+
+    .visited-urls li:last-child {
+      border-bottom: none;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
   <header>Web Crawler — Canada Express Entry</header>
-
   <main>
     <form id="crawlForm">
       <div>
@@ -120,14 +270,36 @@
       </div>
 
       <button type="submit">Start Crawling</button>
+      <button type="button" onclick="goBackToDashboard()">🔙 Go Back to Dashboard</button>
     </form>
 
     <div id="statusMessage" class="status"></div>
-
-    <div id="results" class="results"></div>
+    <div id="results" class="results-container"></div>
   </main>
 
   <script>
+    function copyFilePath() {
+      const filePath = document.getElementById("filePath").textContent;
+      navigator.clipboard.writeText(filePath).then(() => {
+        alert("File path copied to clipboard!");
+      }).catch(err => {
+        alert("Failed to copy: " + err);
+      });
+    }
+
+    function goBackToDashboard() {
+      window.location.href = "/index.html";
+    }
+
+    function getAuthToken() {
+      return localStorage.getItem("token");
+    }
+
+    const token = getAuthToken();
+    if (!token) {
+      window.location.href = "/auth.html"; // Redirect to login
+    }
+
     const form = document.getElementById('crawlForm');
     const statusMessage = document.getElementById('statusMessage');
     const resultsContainer = document.getElementById('results');
@@ -135,7 +307,7 @@
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      // Clear previous state
+      // Reset UI
       statusMessage.textContent = '';
       statusMessage.className = 'status';
       resultsContainer.innerHTML = '';
@@ -148,40 +320,94 @@
 
       try {
         const response = await fetch('/api/v1/web_crawling', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          url: url,                 // Make sure these are strings and valid
-          max_pages: maxPages       // Ensure it's a number
-        })
-      });
-        const data = await response.json();
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ url, max_pages: maxPages })
+        });
+
+        const result = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.detail || 'Crawling failed.');
+          throw new Error(result.detail || 'Crawling failed.');
         }
 
-        statusMessage.textContent = data.message;
+        const { status, message, data } = result;
+        const { starting_url, pages_crawled, output_file, visited_urls } = data;
+
+        statusMessage.textContent = `${status.toUpperCase()}: ${message}`;
         statusMessage.classList.add('success');
 
-        const { starting_url, pages_crawled, output_file, visited_urls } = data.data;
-
-        const visitedList = visited_urls.map(link => `<li><a href="${link}" target="_blank">${link}</a></li>`).join('');
+        const visitedList = visited_urls.map(link =>
+          `<li><a href="${link}" target="_blank">${link}</a></li>`).join('');
 
         resultsContainer.innerHTML = `
-          <p><strong>Starting URL:</strong> ${starting_url}</p>
-          <p><strong>Pages Crawled:</strong> ${pages_crawled}</p>
-          <p><strong>Download Results:</strong> <a href="${output_file}" download>Download File</a></p>
-          <p><strong>Visited URLs:</strong></p>
-          <ul>${visitedList}</ul>
+          <div class="results-grid">
+            <div class="result-card status-card">
+              <div class="card-icon">✓</div>
+              <div class="card-content">
+                <h4>Status</h4>
+                <p class="status-value">${status}</p>
+              </div>
+            </div>
+            
+            <div class="result-card message-card">
+              <div class="card-icon">💬</div>
+              <div class="card-content">
+                <h4>Message</h4>
+                <p>${message}</p>
+              </div>
+            </div>
+            
+            <div class="result-card url-card">
+              <div class="card-icon">🌐</div>
+              <div class="card-content">
+                <h4>Starting URL</h4>
+                <p class="url-text">${starting_url}</p>
+              </div>
+            </div>
+            
+            <div class="result-card pages-card">
+              <div class="card-icon">📄</div>
+              <div class="card-content">
+                <h4>Pages Crawled</h4>
+                <p class="pages-count">${pages_crawled}</p>
+              </div>
+            </div>
+            
+            <div class="result-card file-card">
+              <div class="card-icon">📁</div>
+              <div class="card-content">
+                <h4>Output File</h4>
+                <div class="file-path-section">
+                  <code id="filePath" class="file-path">${output_file}</code>
+                  <button class="copy-btn" onclick="copyFilePath()" title="Copy file path">
+                    <span class="copy-icon">📋</span>
+                    Copy
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="result-card visited-card full-width">
+              <div class="card-icon">🔗</div>
+              <div class="card-content">
+                <h4>Visited URLs</h4>
+                <div class="visited-urls">
+                  ${visitedList}
+                </div>
+              </div>
+            </div>
+          </div>
         `;
+
       } catch (err) {
         statusMessage.textContent = `Error: ${err.message}`;
-        statusMessage.classList.remove('success');
-        statusMessage.classList.add('error');
+        statusMessage.className = 'status error';
       }
+      
     });
   </script>
 </body>

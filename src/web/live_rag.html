@@ -266,10 +266,9 @@
         <i class="fas fa-search"></i> Ask Canada Immigration AI
       </button>
     </form>
-
     <div id="response"></div>
   </main>
-
+  <button type="button" onclick="goBackToDashboard()">🔙 Go Back to Dashboard</button>
   <footer>
     &copy; 2025 Canada Express Entry AI Administration • Powered by FastAPI
     <br>
@@ -277,6 +276,12 @@
   </footer>
 
   <script>
+    function getAuthToken() {
+      return localStorage.getItem("token");
+    }
+    function goBackToDashboard() {
+      window.location.href = "/index.html";
+    }
     const form = document.getElementById('rag-form');
     const responseDiv = document.getElementById('response');
 
@@ -302,11 +307,14 @@
       };
 
       try {
-        const response = await fetch(`/api/v1/live_rag?query=${encodeURIComponent(query)}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(ragConfig)
-        });
+      const response = await fetch(`/api/v1/live_rag?query=${encodeURIComponent(query)}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getAuthToken()}`
+        },
+        body: JSON.stringify(ragConfig)
+      });
 
         if (!response.ok) {
           const errorData = await response.json();
