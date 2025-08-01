@@ -141,9 +141,58 @@ def _get_fuzzy_mappings(enum_class) -> Dict[str, Any]:
     return fuzzy_mappings
 
 
+def parse_score_value(score_str: str) -> float:
+    """
+    Parse various score formats including ranges and single values.
+    
+    Handles:
+    - Simple numbers: '8.5' -> 8.5
+    - Ranges: '503-545' -> 524.0 (midpoint)
+    - Single values in some tests: '90' -> 90.0
+    
+    Args:
+        score_str (str): Score string to parse
+        
+    Returns:
+        float: Parsed score value
+        
+    Raises:
+        ValueError: If score format is invalid
+    """
+    if not score_str or score_str.strip() == "":
+        raise ValueError("Score cannot be empty")
+    
+    score_clean = score_str.strip()
+    
+    # Handle range format (e.g., '503-545', '88-90')
+    if '-' in score_clean:
+        try:
+            parts = score_clean.split('-')
+            if len(parts) != 2:
+                raise ValueError(f"Invalid range format: {score_clean}")
+            
+            min_score = float(parts[0].strip())
+            max_score = float(parts[1].strip())
+            
+            # Return midpoint of range
+            midpoint = (min_score + max_score) / 2
+            logger.debug(f"Converted range '{score_clean}' to midpoint: {midpoint}")
+            return midpoint
+            
+        except (ValueError, IndexError) as e:
+            raise ValueError(f"Could not parse score range '{score_clean}': {str(e)}")
+    
+    # Handle single number format
+    try:
+        return float(score_clean)
+    except ValueError as e:
+        raise ValueError(f"Could not parse score '{score_clean}': {str(e)}")
+
+
 def convert_language_scores(scores_dict: Dict[str, str]) -> Dict[str, float]:
     """
     Convert language score strings to floats with validation.
+    Now handles both simple scores and score ranges.
     
     Args:
         scores_dict (Dict[str, str]): Dictionary with string score values
@@ -155,11 +204,20 @@ def convert_language_scores(scores_dict: Dict[str, str]) -> Dict[str, float]:
         ValueError: If conversion fails or scores are invalid
         
     Example:
-        >>> scores = convert_language_scores({
+        >>> # Simple scores (IELTS, CELPIP)
+        >>> scores1 = convert_language_scores({
         ...     "listening": "8.0",
-        ...     "reading": "7.5", 
+        ...     "reading": "11", 
         ...     "writing": "7.0",
         ...     "speaking": "7.5"
+        ... })
+        >>> 
+        >>> # Range scores (TEF, TCF, PTE)
+        >>> scores2 = convert_language_scores({
+        ...     "listening": "503-545",
+        ...     "reading": "434-461", 
+        ...     "writing": "428-471",
+        ...     "speaking": "456-493"
         ... })
     """
     if not scores_dict:
@@ -173,18 +231,24 @@ def convert_language_scores(scores_dict: Dict[str, str]) -> Dict[str, float]:
             continue
             
         try:
-            score_float = float(score_str)
+            score_float = parse_score_value(score_str)
             
-            # Validate score range (typical language test ranges)
-            if score_float < 0 or score_float > 10:
-                logger.warning(f"Unusual score range for {skill}: {score_float}")
+            # More flexible validation - different tests have different ranges
+            if score_float < 0:
+                raise ValueError(f"Score cannot be negative for {skill}: {score_float}")
+            
+            # Log unusual ranges but don't fail (different tests have different scales)
+            if score_float > 100:
+                logger.info(f"High score detected for {skill}: {score_float} (possibly TEF/TCF scale)")
+            elif score_float > 12 and score_float <= 20:
+                logger.info(f"Score for {skill}: {score_float} (possibly TCF speaking/writing scale)")
+            elif score_float > 20:
+                logger.info(f"Score for {skill}: {score_float} (possibly PTE/TEF/TCF scale)")
             
             converted_scores[skill] = score_float
             
-        except (ValueError, TypeError) as e:
-            raise ValueError(
-                f"Invalid score for {skill}: '{score_str}'. Must be a valid number. Error: {str(e)}"
-            )
+        except ValueError as e:
+            raise ValueError(f"Invalid score for {skill}: '{score_str}'. {str(e)}")
     
     # Check if we have all required skills
     missing_skills = required_skills - set(converted_scores.keys())

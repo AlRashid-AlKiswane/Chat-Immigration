@@ -27,3 +27,4 @@ passlib
 pydantic[email]
 aiofiles
 plotly
+aiosmtplib

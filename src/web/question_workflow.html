@@ -711,10 +711,10 @@
                 condition: (answers) => answers.language_test_recent === 'yes',
                 options: [
                     { value: 'IELTS', label: 'IELTS - International English Language Testing System' },
-                    { value: 'CELPIP-G', label: 'CELPIP-G - Canadian English Language Proficiency Index Program' },
-                    { value: 'PTE CORE', label: 'PTE Core - Pearson Test of English Core' },
-                    { value: 'TEF CANADA', label: 'TEF Canada - Test d\'évaluation de français' },
-                    { value: 'TCF CANADA', label: 'TCF Canada - Test de connaissance du français' }
+                    { value: 'CELPIP', label: 'CELPIP-G - Canadian English Language Proficiency Index Program' },
+                    { value: 'PTE', label: 'PTE Core - Pearson Test of English Core' },
+                    { value: 'TEF', label: 'TEF Canada - Test d\'évaluation de français' },
+                    { value: 'TCF', label: 'TCF Canada - Test de connaissance du français' }
                 ]
             },
             {
@@ -733,10 +733,10 @@
                 options: [
                     { value: 'not_applicable', label: 'Not applicable - I did not take a test for my second official language' },
                     { value: 'IELTS', label: 'IELTS - International English Language Testing System' },
-                    { value: 'CELPIP-G', label: 'CELPIP-G - Canadian English Language Proficiency Index Program' },
-                    { value: 'PTE CORE', label: 'PTE Core - Pearson Test of English Core' },
-                    { value: 'TEF CANADA', label: 'TEF Canada - Test d\'évaluation de français' },
-                    { value: 'TCF CANADA', label: 'TCF Canada - Test de connaissance du français' }
+                    { value: 'CELPIP', label: 'CELPIP-G - Canadian English Language Proficiency Index Program' },
+                    { value: 'PTE', label: 'PTE Core - Pearson Test of English Core' },
+                    { value: 'TEF', label: 'TEF Canada - Test d\'évaluation de français' },
+                    { value: 'TCF', label: 'TCF Canada - Test de connaissance du français' }
                 ]
             },
             {
@@ -865,10 +865,10 @@
                 options: [
                     { value: 'not_applicable', label: 'Not applicable - did not take a language test' },
                     { value: 'IELTS', label: 'IELTS - International English Language Testing System' },
-                    { value: 'CELPIP-G', label: 'CELPIP-G - Canadian English Language Proficiency Index Program' },
-                    { value: 'PTE CORE', label: 'PTE Core - Pearson Test of English Core' },
-                    { value: 'TEF CANADA', label: 'TEF Canada - Test d\'évaluation de français' },
-                    { value: 'TCF CANADA', label: 'TCF Canada - Test de connaissance du français' }
+                    { value: 'CELPIP', label: 'CELPIP-G - Canadian English Language Proficiency Index Program' },
+                    { value: 'PTE', label: 'PTE Core - Pearson Test of English Core' },
+                    { value: 'TEF', label: 'TEF Canada - Test d\'évaluation de français' },
+                    { value: 'TCF', label: 'TCF Canada - Test de connaissance du français' }
                 ]
             },
             {
@@ -883,34 +883,34 @@
         // Score presets for language tests
         scorePresets: {
             'IELTS': {
-                listening: [9.0, 8.5, 8.0, 7.5, 7.0, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0],
-                speaking: [9.0, 8.5, 8.0, 7.5, 7.0, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0],
-                reading: [9.0, 8.5, 8.0, 7.5, 7.0, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0],
-                writing: [9.0, 8.5, 8.0, 7.5, 7.0, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0]
+                listening: [8.5, 8.0, 7.5, 6.0, 5.5, 5.0, 4.5, 4.0],
+                speaking: [7.5, 7.0, 6.5, 6.0, 5.5, 5.0, 4.0],
+                reading: [8.0, 7.0, 6.5, 6.0, 5.0, 4.0, 3.5],
+                writing: [7.5, 7.0, 6.5, 6.0, 5.5, 5.0, 4.0]
             },
-            'CELPIP-G': {
-                listening: [12, 11, 10, 9, 8, 7, 6, 5, 4, 3],
-                speaking: [12, 11, 10, 9, 8, 7, 6, 5, 4, 3],
-                reading: [12, 11, 10, 9, 8, 7, 6, 5, 4, 3],
-                writing: [12, 11, 10, 9, 8, 7, 6, 5, 4, 3]
+            'CELPIP': {
+                listening: [10, 9, 8, 7, 6, 5, 4, 3],
+                speaking: [10, 9, 8, 7, 6, 5, 4, 3],
+                reading: [10, 9, 8, 7, 6, 5, 4, 3],
+                writing: [10, 9, 8, 7, 6, 5, 4, 3]
             },
-            'PTE CORE': {
+            'PTE': {
                 reading: ['88-90', '78-87', '69-77', '60-68', '51-59', '42-50', '33-41', '24-32'],
                 writing: ['90', '88-89', '79-87', '69-78', '60-68', '51-59', '41-50', '32-40'],
                 listening: ['89-90', '82-88', '71-81', '60-70', '50-59', '39-49', '28-38', '18-27'],
                 speaking: ['89-90', '84-88', '76-83', '68-75', '59-67', '51-58', '42-50', '34-41']
             },
-            'TEF CANADA': {
+            'TEF': {
                 reading: ['546-699', '503-545', '462-502', '434-461', '393-433', '352-392', '306-351'],
                 writing: ['558-699', '512-557', '472-511', '428-471', '379-427', '330-378', '268-329'],
                 listening: ['546-699', '503-545', '462-502', '434-461', '393-433', '352-392', '306-351'],
                 speaking: ['556-699', '518-555', '494-517', '456-493', '422-455', '387-421', '328-386']
             },
-            'TCF CANADA': {
+            'TCF': {
                 reading: ['549-699', '524-548', '499-523', '453-498', '406-452', '375-405', '342-374'],
-                writing: ['16-20', '14-15', '12-13', '10-11', '7-9', '6', '4-5'],
+                writing: ['16-20', '14-15', '12-13', '10-11', '7-9', '6-6', '4-5'],
                 listening: ['549-699', '523-548', '503-522', '458-502', '398-457', '369-397', '331-368'],
-                speaking: ['16-20', '14-15', '12-13', '10-11', '7-9', '6', '4-5']
+                speaking: ['16-20', '14-15', '12-13', '10-11', '7-9', '6-6', '4-5']
             }
         },
 

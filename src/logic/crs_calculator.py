@@ -403,37 +403,29 @@ class CRSCalculator:
         canadian_education_type: str
         ) -> tuple[CanadianEducationCategory, int]:
         """
-        Determine Canadian education category and corresponding years for CRS calculation.
-        
-        Args:
-            has_canadian_education: Boolean - does the person have Canadian education?
-            canadian_education_type: String matching the dropdown options:
-                - "Secondary (high school) or less"
-                - "One- or two-year diploma or certificate"  
-                - "Degree, diploma or certificate of three years or longer OR a Master's, professional or doctoral degree"
-        
-        Returns:
-            Tuple of (CanadianEducationCategory, years_for_crs_calculation)
+        Determine Canadian education category - cleaner version with exact mapping.
         """
         
         if not has_canadian_education:
             return CanadianEducationCategory.NONE, 0
         
-        # Normalize the input string for matching
-        education_type_lower = canadian_education_type.lower().strip()
+        # Clean the input
+        education_type = canadian_education_type.lower().strip()
         
-        # Map dropdown selections to categories and years
-        if any(term in education_type_lower for term in ["secondary", "high school", "less"]):
+        # Exact mapping based on your form values
+        if education_type == 'secondary_or_less':
             return CanadianEducationCategory.SECONDARY_OR_LESS, 0
-            
-        elif any(term in education_type_lower for term in ["one-", "two-year", "one or two"]):
-            return CanadianEducationCategory.ONE_TWO_YEAR, 2  # Use 2 as representative
-            
-        elif any(term in education_type_lower for term in ["three years", "longer", "master", "professional", "doctoral"]):
-            return CanadianEducationCategory.THREE_PLUS_OR_ADVANCED, 3  # Use 3+ as representative
-            
+        
+        elif education_type == 'one_or_two_diploma':
+            return CanadianEducationCategory.ONE_TWO_YEAR, 2
+        
+        elif education_type == 'degree_three_years_or_more':
+            return CanadianEducationCategory.THREE_PLUS_OR_ADVANCED, 3
+        
         else:
-            # Default fallback
+            # Log unrecognized value for debugging
+            logger.error(f"Unrecognized Canadian education type: '{canadian_education_type}'")
+            logger.warning("Expected one of: 'secondary_or_less', 'one_or_two_diploma', 'degree_three_years_or_more'")
             return CanadianEducationCategory.NONE, 0
 
     # Updated calculate_additional_factors method for your CRS calculator
