@@ -211,9 +211,8 @@
     }
   </style>
 </head>
-
 <body>
-  <header>
+    <header>
     <div class="header-content">
       <h1>
         <span class="canada-flag"></span>
@@ -221,9 +220,9 @@
         <span class="canada-flag"></span>
       </h1>
     </div>
-  </header>
+    </header>
 
-  <main>
+    <main>
     <p class="description">
       Transform document chunks into vector embeddings for AI processing. 
       Specify how many chunks to process in this batch.
@@ -239,62 +238,60 @@
     </button>
 
     <div id="statusBox" class="status-box"></div>
-  </main>
-
-  <footer>
+    </main>
+        <footer>
     &copy; 2025 Canada Express Entry AI Administration • Powered by FastAPI
     <br>
     <small>Official colors inspired by the Canadian flag (#D52B1E)</small>
-  </footer>
-
-  <script>
-    document.getElementById("embedBtn").addEventListener("click", async function () {
-      const statusBox = document.getElementById("statusBox");
-      const limit = document.getElementById("limitInput").value || 100;
-      
-      // Show processing state
-      statusBox.style.display = "block";
-      statusBox.className = "status-box processing";
-      statusBox.innerHTML = `
-        <i class="fas fa-cog fa-spin status-icon"></i>
-        <strong>Embedding in Progress</strong><br><br>
-        Processing ${limit} chunks into vector embeddings...
-      `;
-
-      try {
-        const response = await fetch(`/api/v1/embedding?limit=${limit}`, {
-          method: "POST"
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          statusBox.className = "status-box success";
-          statusBox.innerHTML = `
-            <i class="fas fa-check-circle status-icon"></i>
-            <strong>Embedding Completed Successfully</strong><br><br>
-            <i class="fas fa-database"></i> ${data.message || "Chunks successfully embedded"}<br>
-            <i class="fas fa-clock"></i> Processing time: ${data.processing_time || 'N/A'} seconds
-          `;
-        } else {
-          statusBox.className = "status-box error";
-          statusBox.innerHTML = `
-            <i class="fas fa-exclamation-circle status-icon"></i>
-            <strong>Embedding Error</strong><br><br>
-            ${data.detail || data.message || "Embedding process failed"}
-          `;
+        </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const token = getAuthToken();
+        if (!token) {
+          window.location.href = "auth.html";
         }
-      } catch (err) {
-        statusBox.className = "status-box error";
-        statusBox.innerHTML = `
-          <i class="fas fa-exclamation-triangle status-icon"></i>
-          <strong>Network Error</strong><br><br>
-          Could not connect to the embedding service. Please try again later.
-          ${err.message ? `<br><small>${err.message}</small>` : ''}
-        `;
-        console.error("Embedding error:", err);
+      });
+
+      document.getElementById("embedBtn").addEventListener("click", async function () {
+        const authToken = getAuthToken();
+        if (!authToken) {
+          window.location.href = 'auth.html';
+          return;
+        }
+
+        const limit = document.getElementById("limitInput").value || 100;
+        const statusBox = document.getElementById("statusBox");
+        statusBox.style.display = "block";
+        statusBox.className = "status-box processing";
+        statusBox.innerHTML = `Processing ${limit} chunks...`;
+
+        try {
+          const response = await fetch(`/api/v1/embedding?limit=${limit}`, {
+            method: "POST",
+            headers: {
+              'Authorization': `Bearer ${authToken}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            statusBox.className = "status-box success";
+            statusBox.innerHTML = `✅ Embedding completed: ${data.message}`;
+          } else {
+            statusBox.className = "status-box error";
+            statusBox.innerHTML = `❌ Embedding failed: ${data.detail || data.message}`;
+          }
+        } catch (err) {
+          statusBox.className = "status-box error";
+          statusBox.innerHTML = `❌ Network error: ${err.message}`;
+        }
+      });
+
+      function getAuthToken() {
+        return localStorage.getItem("token");  // 🔧 fixed this line
       }
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
