@@ -16,7 +16,21 @@
       --white: #ffffff;
       --maple-leaf: #d52b1e;
     }
-    
+
+    .back-btn {
+      padding: 10px 20px;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .back-btn:hover {
+      background-color: #1e40af;
+    }
+
     body {
       font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
       background-color: var(--secondary);
@@ -238,6 +252,7 @@
     </button>
 
     <div id="statusBox" class="status-box"></div>
+    <button onclick="goBackToDashboard()">🔙 Go Back to Dashboard</button>
     </main>
         <footer>
     &copy; 2025 Canada Express Entry AI Administration • Powered by FastAPI
@@ -292,6 +307,11 @@
       function getAuthToken() {
         return localStorage.getItem("token");  // 🔧 fixed this line
       }
+
+      function goBackToDashboard() {
+        window.location.href = "/index.html"
+      }
     </script>
   </body>
+</body>
 </html>
