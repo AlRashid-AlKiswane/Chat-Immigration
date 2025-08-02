@@ -1,220 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Semantic Graph Visualization</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .controls {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-        }
-        .control-group {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-        input {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            width: 100px;
-        }
-        button {
-            padding: 10px 15px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-        button:hover {
-            background: #45a049;
-        }
-        #graph {
-            width: 100%;
-            height: 700px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-        }
-        .status {
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 4px;
-            display: none;
-        }
-        .loading {
-            background: #fff3cd;
-            color: #856404;
-        }
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        #debug-toggle {
-            background: #6c757d;
-            margin-top: 10px;
-        }
-        #debug-toggle:hover {
-            background: #5a6268;
-        }
-        #debug-panel {
-            display: none;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>3D Semantic Graph Visualization</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .controls {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-items: center;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+    input {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 100px;
+    }
+    button {
+      padding: 10px 15px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    #graph {
+      width: 100%;
+      height: 700px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+    }
+    .status {
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+      display: none;
+    }
+    .loading {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    #debug-toggle {
+      background: #6c757d;
+      margin-top: 10px;
+    }
+    #debug-toggle:hover {
+      background: #5a6268;
+    }
+    #debug-panel {
+      display: none;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Knowledge Graph Visualization</h1>
-        
-        <div class="controls">
-            <div class="control-group">
-                <label for="maxNodes">Max Nodes</label>
-                <input type="number" id="maxNodes" value="100" min="10" max="500">
-            </div>
-            
-            <div class="control-group">
-                <label for="similarityThreshold">Similarity Threshold</label>
-                <input type="number" id="similarityThreshold" value="0.3" min="0" max="1" step="0.05">
-            </div>
-            
-            <button id="generateBtn">Generate Graph</button>
-            <button id="resetCameraBtn">Reset View</button>
-            <button id="debug-toggle">Show Debug</button>
-        </div>
-        
-        <div id="status" class="status loading">Loading graph data...</div>
-        <div id="graph"></div>
-        <div id="debug-panel">
-            <h3>Debug Information</h3>
-            <pre id="debug-data"></pre>
-        </div>
+  <div class="container">
+    <h1>Knowledge Graph Visualization</h1>
+    
+    <div class="controls">
+      <div class="control-group">
+        <label for="maxNodes">Max Nodes</label>
+        <input type="number" id="maxNodes" value="100" min="10" max="500">
+      </div>
+      
+      <div class="control-group">
+        <label for="similarityThreshold">Similarity Threshold</label>
+        <input type="number" id="similarityThreshold" value="0.3" min="0" max="1" step="0.05">
+      </div>
+      
+      <button id="generateBtn">Generate Graph</button>
+      <button id="resetCameraBtn">Reset View</button>
+      <button id="debug-toggle">Show Debug</button>
+      <button type="button" onclick="goBackToDashboard()">🔙 Go Back to Dashboard</button>
     </div>
+    
+    <div id="status" class="status loading">Loading graph data...</div>
+    <div id="graph"></div>
+    <div id="debug-panel">
+      <h3>Debug Information</h3>
+      <pre id="debug-data"></pre>
+    </div>
+  </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const generateBtn = document.getElementById('generateBtn');
-            const resetCameraBtn = document.getElementById('resetCameraBtn');
-            const debugToggle = document.getElementById('debug-toggle');
-            const statusDiv = document.getElementById('status');
-            const graphDiv = document.getElementById('graph');
-            const debugPanel = document.getElementById('debug-panel');
-            const debugData = document.getElementById('debug-data');
-            
-            let currentPlot = null;
-            
-            // Generate graph
-            async function generateGraph() {
-                const maxNodes = document.getElementById('maxNodes').value;
-                const threshold = document.getElementById('similarityThreshold').value;
-                
-                statusDiv.style.display = 'block';
-                statusDiv.className = 'status loading';
-                statusDiv.textContent = 'Loading graph data...';
-                
-                try {
-                    const response = await fetch(
-                        `/api/v1/graph_ui?max_nodes=${maxNodes}&similarity_threshold=${threshold}`
-                    );
-                    
-                    if (!response.ok) {
-                        throw new Error(`Server returned ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    debugData.textContent = JSON.stringify(data, null, 2);
-                    
-                    // Validate data
-                    if (!data.data || data.data.length === 0) {
-                        throw new Error('No graph data found in response');
-                    }
-                    
-                    // Plot the graph
-                    graphDiv.innerHTML = '';
-                    currentPlot = await Plotly.newPlot(graphDiv, data.data, data.layout);
-                    
-                    statusDiv.style.display = 'none';
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                    statusDiv.className = 'status error';
-                    statusDiv.textContent = `Error: ${error.message}`;
-                    
-                    // Show fallback empty graph
-                    graphDiv.innerHTML = '';
-                    currentPlot = await Plotly.newPlot(graphDiv, [{
-                        type: 'scatter3d',
-                        x: [], y: [], z: [],
-                        mode: 'markers',
-                        marker: { size: 1 }
-                    }], {
-                        title: 'Error: Could not load graph'
-                    });
-                }
+  <script>
+    function getAuthToken() {
+      return localStorage.getItem("token");
+    }
+
+    function redirectIfUnauthenticated() {
+      if (!getAuthToken()) {
+        window.location.href = "/login.html";
+      }
+    }
+
+    function goBackToDashboard() {
+      window.location.href = "/index.html";
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      redirectIfUnauthenticated();
+
+      const generateBtn = document.getElementById('generateBtn');
+      const resetCameraBtn = document.getElementById('resetCameraBtn');
+      const debugToggle = document.getElementById('debug-toggle');
+      const statusDiv = document.getElementById('status');
+      const graphDiv = document.getElementById('graph');
+      const debugPanel = document.getElementById('debug-panel');
+      const debugData = document.getElementById('debug-data');
+
+      let currentPlot = null;
+
+      async function generateGraph() {
+        const maxNodes = document.getElementById('maxNodes').value;
+        const threshold = document.getElementById('similarityThreshold').value;
+
+        statusDiv.style.display = 'block';
+        statusDiv.className = 'status loading';
+        statusDiv.textContent = 'Loading graph data...';
+
+        try {
+          const response = await fetch(
+            `/api/v1/graph_ui?max_nodes=${maxNodes}&similarity_threshold=${threshold}`,
+            {
+              headers: {
+                Authorization: `Bearer ${getAuthToken()}`
+              }
             }
-            
-            // Reset camera view
-            function resetCamera() {
-                if (currentPlot) {
-                    Plotly.relayout(graphDiv, {
-                        'scene.camera': {
-                            eye: {x: 1.25, y: 1.25, z: 1.25},
-                            up: {x: 0, y: 0, z: 1},
-                            center: {x: 0, y: 0, z: 0}
-                        }
-                    });
-                }
+          );
+
+          if (!response.ok) {
+            throw new Error(`Server returned ${response.status}`);
+          }
+
+          const data = await response.json();
+          debugData.textContent = JSON.stringify(data, null, 2);
+
+          if (!data.data || data.data.length === 0) {
+            throw new Error('No graph data found in response');
+          }
+
+          graphDiv.innerHTML = '';
+          currentPlot = await Plotly.newPlot(graphDiv, data.data, data.layout);
+
+          statusDiv.style.display = 'none';
+
+        } catch (error) {
+          console.error('Error:', error);
+          statusDiv.className = 'status error';
+          statusDiv.textContent = `Error: ${error.message}`;
+
+          graphDiv.innerHTML = '';
+          currentPlot = await Plotly.newPlot(graphDiv, [{
+            type: 'scatter3d',
+            x: [], y: [], z: [],
+            mode: 'markers',
+            marker: { size: 1 }
+          }], {
+            title: 'Error: Could not load graph'
+          });
+        }
+      }
+
+      function resetCamera() {
+        if (currentPlot) {
+          Plotly.relayout(graphDiv, {
+            'scene.camera': {
+              eye: { x: 1.25, y: 1.25, z: 1.25 },
+              up: { x: 0, y: 0, z: 1 },
+              center: { x: 0, y: 0, z: 0 }
             }
-            
-            // Event listeners
-            generateBtn.addEventListener('click', generateGraph);
-            resetCameraBtn.addEventListener('click', resetCamera);
-            debugToggle.addEventListener('click', () => {
-                debugPanel.style.display = debugPanel.style.display === 'none' ? 'block' : 'none';
-                debugToggle.textContent = debugPanel.style.display === 'none' ? 'Show Debug' : 'Hide Debug';
-            });
-            
-            // Initial load
-            generateGraph();
-        });
-    </script>
+          });
+        }
+      }
+
+      generateBtn.addEventListener('click', generateGraph);
+      resetCameraBtn.addEventListener('click', resetCamera);
+      debugToggle.addEventListener('click', () => {
+        const isVisible = debugPanel.style.display === 'block';
+        debugPanel.style.display = isVisible ? 'none' : 'block';
+        debugToggle.textContent = isVisible ? 'Show Debug' : 'Hide Debug';
+      });
+
+      generateGraph(); // initial load
+    });
+  </script>
 </body>
 </html>

@@ -225,7 +225,6 @@
     }
   </style>
 </head>
-
 <body>
   <header>
     <div class="header-content">
@@ -260,6 +259,7 @@
       <button type="submit">
         <i class="fas fa-cogs"></i> Configure LLM
       </button>
+      <button type="button" onclick="goBackToDashboard()">🔙 Go Back to Dashboard</button>
     </form>
 
     <div id="llmResult" class="result-box"></div>
@@ -272,6 +272,18 @@
   </footer>
 
   <script>
+    function getAuthToken() {
+      return localStorage.getItem("token");
+    }
+
+    const token = getAuthToken();
+    if (!token) {
+      window.location.href = "/auth.html"; // Redirect to login
+    }
+
+    function goBackToDashboard() {
+      window.location.href = "/index.html";
+    }
     document.getElementById("llmForm").addEventListener("submit", async function (e) {
       e.preventDefault();
   
@@ -300,7 +312,10 @@
 
         const response = await fetch("/api/v1/llms/config", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getAuthToken()}`
+          },
           body: JSON.stringify({
             provider: provider,
             model_name: modelName

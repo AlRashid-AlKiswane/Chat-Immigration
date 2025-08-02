@@ -104,12 +104,25 @@
     <section id="response-section" aria-live="polite">
       Awaiting action...
     </section>
+    <button type="button" onclick="goBackToDashboard()">🔙 Go Back to Dashboard</button>
   </main>
 
   <footer>
     <p>&copy; 2025 Immigration, Refugees and Citizenship Canada</p>
   </footer>
   <script>
+    function getAuthToken() {
+      return localStorage.getItem("token");
+    }
+
+    const token = getAuthToken();
+    if (!token) {
+      window.location.href = "/auth.html"; // Redirect to login
+    }
+  
+  function goBackToDashboard() {
+        window.location.href = "/index.html";
+        }
     const form = document.getElementById("reset-form");
     const responseSection = document.getElementById("response-section");
     const endpoint = "/api/v1/storage"; // Adjust if needed
@@ -173,7 +186,10 @@
       try {
         const query = new URLSearchParams(payload).toString();
         const res = await fetch(`${endpoint}?${query}`, {
-          method: "POST"
+          method: "POST",
+          headers: {
+          'Authorization': `Bearer ${authToken}`
+        }
         });
   
         if (!res.ok) {

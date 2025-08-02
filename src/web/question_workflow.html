@@ -964,8 +964,8 @@
                 // For demo purposes, skip auth check - remove this in production
                 if (!authToken) {
                     console.log('⚠️ No auth token found - continuing for demo');
-                    // window.location.href = '/auth.html';
-                    // return;
+                    window.location.href = '/auth.html';
+                    return;
                 }
 
                 // Ensure questions array exists
@@ -1709,7 +1709,7 @@
                 localStorage.clear();
             }
             console.log('🔒 Logged out');
-            // window.location.href = '/auth.html';
+            window.location.href = '/auth.html';
         }
     };
 
@@ -1740,211 +1740,184 @@
 
     console.log('📋 Assessment App script loaded successfully');
 
-// Chatbot functionality with backend API integration
-document.addEventListener('DOMContentLoaded', function() {
-    const chatbotButton = document.getElementById('chatbotButton');
-    const chatbotPopup = document.getElementById('chatbotPopup');
-    const chatbotClose = document.getElementById('chatbotClose');
-    const chatbotMessages = document.getElementById('chatbotMessages');
-    const chatbotInput = document.getElementById('chatbotInput');
-    const chatbotSend = document.getElementById('chatbotSend');
-    const API_BASE_URL = '/api/v1'; // Adjust if needed
-    
-    // Toggle chatbot popup
-    chatbotButton.addEventListener('click', function() {
-        chatbotPopup.classList.toggle('active');
-    });
-    
-    chatbotClose.addEventListener('click', function() {
-        chatbotPopup.classList.remove('active');
-    });
-    
-    // Send message function with API integration
-    async function sendMessage() {
-        const message = chatbotInput.value.trim();
-        if (message === '') return;
-        
-        // Add user message
-        addMessage(message, 'user');
-        chatbotInput.value = '';
-        
-        // Show typing indicator
-        showTypingIndicator();
-        
-        try {
-            // Get auth token (assuming you have auth setup)
-            const authToken = getAuthToken();
-            
-            // Prepare payload matching your backend requirements
-            const payload = {
-                prompt: message,
-                generation_parameters: {
-                    temperature: 0.7,
-                    max_tokens: 1000,
-                    top_p: 0.9
-                },
-                rag_config: {
-                    n_results: 5,
-                    include_metadata: true
+    document.addEventListener('DOMContentLoaded', function () {
+        const chatbotButton = document.getElementById('chatbotButton');
+        const chatbotPopup = document.getElementById('chatbotPopup');
+        const chatbotClose = document.getElementById('chatbotClose');
+        const chatbotMessages = document.getElementById('chatbotMessages');
+        const chatbotInput = document.getElementById('chatbotInput');
+        const chatbotSend = document.getElementById('chatbotSend');
+        const chatbotHeader = document.getElementById('chatbotHeader'); // Ensure this exists in HTML
+        const API_BASE_URL = '/api/v1';
+
+        // Toggle chatbot popup
+        chatbotButton.addEventListener('click', () => {
+            chatbotPopup.classList.toggle('active');
+        });
+
+        chatbotClose.addEventListener('click', () => {
+            chatbotPopup.classList.remove('active');
+        });
+
+        // Send user message
+        async function sendMessage() {
+            const message = chatbotInput.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            chatbotInput.value = '';
+            showTypingIndicator();
+
+            try {
+                const authToken = getAuthToken();
+
+                const response = await fetch(`${API_BASE_URL}/llm_generation?prompt=${encodeURIComponent(message)}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {})
+                    },
+                    body: JSON.stringify({
+                        generation_parameters: {
+                            temperature: 0.7,
+                            max_tokens: 256,
+                            top_p: 0.95,
+                            top_k: 50,
+                            max_input_tokens: 1024
+                        },
+                        rag_config: {
+                            n_results: 3,
+                            include_metadata: false
+                        }
+                    })
+                });
+
+                removeTypingIndicator();
+
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
                 }
-            };
-            
-            // Call your backend API
-            const response = await fetch(`${API_BASE_URL}/llm_generation`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}`
-                },
-                body: JSON.stringify(payload)
-            });
-            
-            // Handle response
-            if (!response.ok) {
-                throw new Error(`API request failed with status ${response.status}`);
+
+                const data = await response.json();
+                addMessage(data?.response || "I couldn't get a response. Please try again.", 'bot');
+            } catch (error) {
+                console.error('Chatbot API error:', error);
+                removeTypingIndicator();
+                addMessage("Sorry, I encountered an error. Please try again later.", 'bot');
             }
-            
-            const data = await response.json();
-            
-            // Remove typing indicator
-            removeTypingIndicator();
-            
-            // Add bot response
-            if (data.response) {
-                addMessage(data.response, 'bot');
-            } else {
-                addMessage("I couldn't get a response. Please try again.", 'bot');
-            }
-            
-        } catch (error) {
-            console.error('Chatbot API error:', error);
-            removeTypingIndicator();
-            addMessage("Sorry, I encountered an error. Please try again later.", 'bot');
-        }
-    }
-    
-    // Helper function to get auth token
-    function getAuthToken() {
-        // Try localStorage first (most common)
-        if (typeof localStorage !== 'undefined') {
-            const token = localStorage.getItem('authToken') || 
-                         localStorage.getItem('token') || 
-                         localStorage.getItem('access_token');
-            if (token) return token;
         }
 
-        // Try sessionStorage
-        if (typeof sessionStorage !== 'undefined') {
-            const token = sessionStorage.getItem('authToken') || 
-                         sessionStorage.getItem('token');
-            if (token) return token;
-        }
+        // Get token from storage or URL
+        function getAuthToken() {
+            let token = null;
 
-        // Try global variables (set by other scripts)
-        if (window.authToken) return window.authToken;
-        if (window.token) return window.token;
-
-        // Try URL parameters (less secure, but sometimes used)
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlToken = urlParams.get('token') || urlParams.get('auth_token');
-        if (urlToken) {
-            // Store it in localStorage for future use
+            // Check localStorage
             if (typeof localStorage !== 'undefined') {
-                localStorage.setItem('authToken', urlToken);
+                token = localStorage.getItem('authToken') || localStorage.getItem('token') || localStorage.getItem('access_token');
+                if (token) return token;
             }
-            return urlToken;
+
+            // Check sessionStorage
+            if (typeof sessionStorage !== 'undefined') {
+                token = sessionStorage.getItem('authToken') || sessionStorage.getItem('token');
+                if (token) return token;
+            }
+
+            // Check global variable
+            if (window.authToken || window.token) return window.authToken || window.token;
+
+            // Check URL param
+            const urlParams = new URLSearchParams(window.location.search);
+            token = urlParams.get('token') || urlParams.get('auth_token');
+            if (token && typeof localStorage !== 'undefined') {
+                localStorage.setItem('authToken', token);
+            }
+
+            return token;
         }
 
-        return null;
-    }
-    
-    // Add message to chat
-    function addMessage(text, sender) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('chatbot-message');
-        messageDiv.classList.add(sender + '-message');
-        messageDiv.textContent = text;
-        chatbotMessages.appendChild(messageDiv);
-        scrollToBottom();
-    }
-    
-    // Show typing indicator
-    function showTypingIndicator() {
-        const typingDiv = document.createElement('div');
-        typingDiv.classList.add('typing-indicator');
-        typingDiv.id = 'typingIndicator';
-        typingDiv.innerHTML = `
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-        `;
-        chatbotMessages.appendChild(typingDiv);
-        scrollToBottom();
-    }
-    
-    // Remove typing indicator
-    function removeTypingIndicator() {
-        const typing = document.getElementById('typingIndicator');
-        if (typing) typing.remove();
-    }
-    
-    // Scroll to bottom of messages
-    function scrollToBottom() {
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    }
-    
-    // Handle send button click and Enter key
-    chatbotSend.addEventListener('click', sendMessage);
-    chatbotInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            sendMessage();
+        // Add chat message
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('chatbot-message', `${sender}-message`);
+            messageDiv.textContent = text;
+            chatbotMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        // Show typing indicator
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.classList.add('typing-indicator');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatbotMessages.appendChild(typingDiv);
+            scrollToBottom();
+        }
+
+        // Remove typing indicator
+        function removeTypingIndicator() {
+            const typing = document.getElementById('typingIndicator');
+            if (typing) typing.remove();
+        }
+
+        // Scroll to bottom of chat
+        function scrollToBottom() {
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+
+        // Send on button click or Enter key
+        chatbotSend.addEventListener('click', sendMessage);
+        chatbotInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Make chatbot draggable (requires chatbotHeader in HTML)
+        if (chatbotPopup && chatbotHeader) {
+            makeDraggable(chatbotPopup, chatbotHeader);
+        }
+
+        // Draggable handler
+        function makeDraggable(element, handle) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+            handle.onmousedown = dragMouseDown;
+
+            function dragMouseDown(e) {
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                const newTop = Math.min(Math.max(0, element.offsetTop - pos2), window.innerHeight - element.offsetHeight);
+                const newLeft = Math.min(Math.max(0, element.offsetLeft - pos1), window.innerWidth - element.offsetWidth);
+
+                element.style.top = newTop + 'px';
+                element.style.left = newLeft + 'px';
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
         }
     });
-    
-    // Make chatbot draggable
-    makeDraggable(chatbotPopup, chatbotHeader);
-});
-
-// Make element draggable
-function makeDraggable(element, handle) {
-    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    
-    handle.onmousedown = dragMouseDown;
-    
-    function dragMouseDown(e) {
-        e = e || window.event;
-        e.preventDefault();
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
-    }
-    
-    function elementDrag(e) {
-        e = e || window.event;
-        e.preventDefault();
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        
-        // Calculate new position
-        const newTop = (element.offsetTop - pos2);
-        const newLeft = (element.offsetLeft - pos1);
-        
-        // Boundary checks
-        const maxTop = window.innerHeight - element.offsetHeight;
-        const maxLeft = window.innerWidth - element.offsetWidth;
-        
-        element.style.top = Math.min(Math.max(0, newTop), maxTop) + 'px';
-        element.style.left = Math.min(Math.max(0, newLeft), maxLeft) + 'px';
-    }
-    
-    function closeDragElement() {
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
-}
-        </script>
+    </script>
 </body>
 </html>

@@ -224,8 +224,14 @@
   </style>
 </head>
 <body>
+  <!-- Add inside <header> -->
   <header>
     <div class="header-content">
+      <div style="position: absolute; top: 1rem; right: 1.5rem;">
+        <button onclick="logout()" style="background: transparent; border: 2px solid white; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
       <h1>
         <span class="canada-flag"></span>
         Canada Express Entry AI Panel
@@ -327,4 +333,12 @@
     <small>Official colors inspired by the Canadian flag (#D52B1E)</small>
   </div>
 </body>
+<script>
+    function logout() {
+    localStorage.removeItem("token");
+
+    // Redirect to login or logout API
+    window.location.href = "/auth.html";
+  }
+</script>
 </html>

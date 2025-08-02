@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Upload Document | Canada Immigration</title>
-
   <style>
     /* ====== Canada Express Entry Style ====== */
     body {
@@ -104,8 +103,8 @@
       <input type="file" id="fileInput" name="files" multiple required />
 
       <button type="submit">Upload File</button>
+      <button type="button" onclick="goBackToDashboard()">🔙 Go Back to Dashboard</button>
     </form>
-
     <div id="uploadResult" class="result-box" style="display: none;"></div>
   </main>
 
@@ -113,6 +112,10 @@
     &copy; 2025 Canada Express Entry Admin Panel
   </footer>
 <script>
+    function goBackToDashboard() {
+      window.location.href = "/index.html";
+    }
+
   document.getElementById('uploadForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
