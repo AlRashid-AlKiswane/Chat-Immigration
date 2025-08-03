@@ -754,15 +754,11 @@
                 
                 <div class="user-info">
                     <div class="user-avatar-container">
-                        <div class="user-avatar-large" id="headerAvatar" onclick="openImageUpload()">
-                            JD
-                        </div>
-                        <div class="avatar-edit-overlay" onclick="openImageUpload()">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M9,2V7.38L10.32,8.7L15.32,3.7L14.61,3L16.03,1.59L17.44,3L21.41,7L22.82,5.59L21.41,4.17L22.82,2.76L18.85,2.76M12,10.5A3.5,3.5 0 0,0 8.5,14A3.5,3.5 0 0,0 12,17.5A3.5,3.5 0 0,0 15.5,14A3.5,3.5 0 0,0 12,10.5M12,16A2,2 0 0,1 10,14A2,2 0 0,1 12,12A2,2 0 0,1 14,14A2,2 0 0,1 12,16M12,9A5,5 0 0,1 17,14H19A7,7 0 0,0 12,7V9M12,5A9,9 0 0,1 21,14H23A11,11 0 0,0 12,3V5M3,8V12H7L10,16H20V8H3Z" />
-                            </svg>
-                        </div>
-                        <input type="file" id="profileImageInput" class="profile-image-input" accept="image/*" onchange="handleImageUpload(event)">
+                    <div class="user-avatar-large" id="headerAvatar" onclick="openImageUpload()">
+                        <!-- profile image will be inserted here -->
+                    </div>
+                    <div class="avatar-edit-overlay" onclick="openImageUpload()">✎</div>
+                    <input type="file" id="profileImageInput" class="profile-image-input" accept="image/*" onchange="handleImageUpload(event)" />
                     </div>
                     <div class="status-indicator">
                         <div class="status-dot"></div>
@@ -815,13 +811,9 @@
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Nationality</label>
-                        <select class="form-select" id="nationality" disabled>
-                            <option value="US">United States</option>
-                            <option value="UK">United Kingdom</option>
-                            <option value="IN">India</option>
-                            <option value="CN">China</option>
-                            <option value="FR">France</option>
+                        <label for="nationality" class="form-label">Nationality</label>
+                        <select class="form-select" id="nationality">
+                        <option value="">Select your country</option>
                         </select>
                     </div>
                     
@@ -948,7 +940,6 @@
             </div>
         </div>
     </div>
-
     <!-- Logout Modal -->
     <div class="logout-modal" id="logoutModal">
         <div class="modal-content">
@@ -1098,22 +1089,39 @@
             document.getElementById('processProgress').style.width = percentage + '%';
             document.getElementById('processPercent').textContent = percentage + '%';
         }
-        
+
         function openImageUpload() {
-            document.getElementById('profileImageInput').click();
+        document.getElementById("profileImageInput").click();
         }
-        
+
         function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const avatar = document.getElementById('headerAvatar');
-                    avatar.innerHTML = `<img src="${e.target.result}" alt="Profile Picture">`;
-                    showFeedback('Profile picture updated successfully!', 'success');
-                };
-                reader.readAsDataURL(file);
-            }
+        const file = event.target.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            fetch("api/v1/upload-profile-image", {
+            method: "POST",
+            headers: {
+                // 'Content-Type' is automatically set when using FormData
+                "Authorization": `Bearer ${localStorage.getItem("token")}` // Optional: If auth needed
+            },
+            body: formData
+            })
+            .then(response => {
+            if (!response.ok) throw new Error("Upload failed");
+            return response.json();
+            })
+            .then(data => {
+            const avatar = document.getElementById("headerAvatar");
+            avatar.innerHTML = `<img src="${data.image_url}" alt="Profile Picture">`;
+            showFeedback("Profile picture updated successfully!", "success");
+            })
+            .catch(error => {
+            console.error("Upload error:", error);
+            showFeedback("Failed to upload profile picture", "error");
+            });
+        }
         }
         
         function showProfile() {
@@ -1133,7 +1141,7 @@
             // In real app, clear session and redirect to login
             showFeedback('Logging out...', 'success');
             setTimeout(() => {
-                window.location.href = '/login'; // Replace with actual login page
+                window.location.href = '/auth.html'; // Replace with actual login page
             }, 1500);
         }
         
@@ -1241,6 +1249,46 @@
                 });
             });
         }
-        
-        // Call auto-save if needed
-        // enableAutoSave();
+
+        document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('token'); // Get JWT from local storage
+
+        fetch('/api/v1/profile-image-url', {
+            method: 'GET',
+            headers: {
+            'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            if (!res.ok) throw new Error("Unauthorized or failed to fetch profile image");
+            return res.json();
+        })
+        .then(data => {
+            const avatar = document.getElementById('headerAvatar');
+            if (data.image_url) {
+            avatar.innerHTML = `<img src="${data.image_url}" alt="Profile Picture">`;
+            } else {
+            avatar.textContent = data.initials;
+            }
+        })
+        .catch(err => {
+            console.error('Error loading profile image:', err);
+            document.getElementById('headerAvatar').textContent = '??';
+        });
+        });
+
+    fetch("https://restcountries.com/v3.1/all")
+    .then(res => res.json())
+    .then(data => {
+        const select = document.getElementById("nationality");
+        data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+        data.forEach(country => {
+        const option = document.createElement("option");
+        option.value = country.cca2; // Country code like "US"
+        option.textContent = country.name.common;
+        select.appendChild(option);
+        });
+    });
+</script>
+</body>
+</html>

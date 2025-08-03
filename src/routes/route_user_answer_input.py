@@ -119,7 +119,7 @@ async def submit_assessment(
             )
             
             logger.info(f"✓ CRS calculation completed. Total score: {crs_result.total}")
-            
+
             # Return success response with CRS results
             return JSONResponse(
                 status_code=HTTP_200_OK,

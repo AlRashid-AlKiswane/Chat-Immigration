@@ -13,6 +13,7 @@ from .route_graph_ui import graph_ui_route
 from .route_storge_mangamnet import storage_management_route
 from .route_auth_routes import auth_route
 from .route_user_answer_input import answers_input_user_route
+from .route_profile import profile_route
 
 __all__ = [
     "upload_route",
@@ -29,5 +30,6 @@ __all__ = [
     "graph_ui_route",
     "storage_management_route",
     "auth_route",
-    "answers_input_user_route"
+    "answers_input_user_route",
+    "profile_route"
     ]

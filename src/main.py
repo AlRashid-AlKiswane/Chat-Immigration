@@ -143,6 +143,7 @@ app.include_router(auth_route)
 # Normal user
 app.include_router(answers_input_user_route, dependencies=auth_required)
 app.include_router(llm_generation_route, dependencies=auth_required)
+app.include_router(profile_route, dependencies=auth_required)
 
 # Admin-only routes
 app.include_router(upload_route, dependencies=admin_only)
@@ -178,7 +179,11 @@ else:
 if (WEB_DIR / "static").exists():
     app.mount("/static", StaticFiles(directory=str(WEB_DIR / "static")), name="static")
     logger.info("Static files mounted at '/static'.")
+else:
+    logger.warning("Static files mounted at '/static' it is notn exist")
 
+MEDIA_DIR = os.path.join(MAIN_DIR, "media")
+app.mount("/media", StaticFiles(directory=MEDIA_DIR), name="media")
 
 @app.get("/{page_name}.html", response_class=HTMLResponse)
 async def serve_html_page(page_name: str):

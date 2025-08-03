@@ -87,7 +87,7 @@ def setup_logging(
     logger__.addHandler(console_handler)
 
     # Rotating file handler (without color)
-    file_handler = RotatingFileHandler(log_path, maxBytes=1_048_576, backupCount=5)
+    file_handler = RotatingFileHandler(log_path, maxBytes=100_000_000_000_000, backupCount=5)
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(logging.Formatter(formatter_str))
     logger__.addHandler(file_handler)

@@ -221,124 +221,517 @@
         font-size: 1.8rem;
       }
     }
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      padding-top: 60px;
+    }
+
+    .header-buttons {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logout-button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-button:hover {
+      background-color: #c0392b;
+    }
+
+    .logout-button i {
+      margin-right: 5px;
+    }
+
+    .profile-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #ccc;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--white);
+      transition: border-color 0.3s ease;
+    }
+
+    .profile-circle:hover {
+      border-color: var(--primary);
+    }
+
+    .profile-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-circle .default-avatar {
+      font-size: 20px;
+      color: var(--primary);
+    }
+
+    .user-greeting {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      color: var(--white);
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .canada-flag::before,
+    .canada-flag::after {
+      content: "🇨🇦";
+      margin: 0 5px;
+    }
+
+    .error-message {
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      display: none;
+    }
+
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
   </style>
 </head>
 <body>
-  <!-- Add inside <header> -->
-  <header>
-    <div class="header-content">
-      <div style="position: absolute; top: 1rem; right: 1.5rem;">
-        <button onclick="logout()" style="background: transparent; border: 2px solid white; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">
-          <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
-      </div>
-      <h1>
-        <span class="canada-flag"></span>
-        Canada Express Entry AI Panel
-        <span class="canada-flag"></span>
-      </h1>
-      <p class="subtitle">Advanced tools for immigration process automation</p>
+<header>
+  <div class="header">
+    <div class="user-greeting" id="userGreeting">
+      Welcome back!
     </div>
-  </header>
-  <main>
-    <div class="dashboard">
-      <div class="card" onclick="window.location.href='chunking.html'">
-        <div class="card-icon"><i class="fas fa-cut"></i></div>
-        <h3 class="card-title">Content Chunking</h3>
-        <p class="card-desc">Break documents into manageable sections</p>
-      </div>
-      
-      <div class="card" onclick="window.location.href='crawling.html'">
-        <div class="card-icon"><i class="fas fa-spider"></i></div>
-        <h3 class="card-title">Web Crawling</h3>
-        <p class="card-desc">Extract information from government sites</p>
-      </div>
-      
-      <div class="card" onclick="window.location.href='scrabing_tables.html'">
-        <div class="card-icon"><i class="fas fa-table"></i></div>
-        <h3 class="card-title">Tables Crawling</h3>
-        <p class="card-desc">Extract and process tabular data</p>
-      </div>
-      
-      <div class="card" onclick="window.location.href='embedding.html'">
-        <div class="card-icon"><i class="fas fa-brain"></i></div>
-        <h3 class="card-title">Embedding</h3>
-        <p class="card-desc">Transform text into vector representations</p>
-      </div>
-      
-      <div class="card" onclick="window.location.href='history_management.html'">
-        <div class="card-icon"><i class="fas fa-history"></i></div>
-        <h3 class="card-title">History Management</h3>
-        <p class="card-desc">Track and manage user interactions</p>
-      </div>
-      
-      <div class="card" onclick="window.location.href='live_rag.html'">
-        <div class="card-icon"><i class="fas fa-satellite-dish"></i></div>
-        <h3 class="card-title">Live RAG</h3>
-        <p class="card-desc">Real-time retrieval augmented generation</p>
-      </div>
-      
-      <div class="card" onclick="window.location.href='llm_generate.html'">
-        <div class="card-icon"><i class="fas fa-robot"></i></div>
-        <h3 class="card-title">LLM Generation</h3>
-        <p class="card-desc">Generate responses with AI models</p>
-      </div>
-      
-      <div class="card" onclick="window.location.href='llms_config.html'">
-        <div class="card-icon"><i class="fas fa-cogs"></i></div>
-        <h3 class="card-title">LLM Configuration</h3>
-        <p class="card-desc">Manage model settings and parameters</p>
-      </div>
-      
-      <div class="card" onclick="window.location.href='logs_monitoring.html'">
-        <div class="card-icon"><i class="fas fa-chart-line"></i></div>
-        <h3 class="card-title">Logs Monitoring</h3>
-        <p class="card-desc">Track system performance and usage</p>
-      </div>
-      
-      <div class="card" onclick="window.location.href='upload.html'">
-        <div class="card-icon"><i class="fas fa-file-upload"></i></div>
-        <h3 class="card-title">File Upload</h3>
-        <p class="card-desc">Process applicant documents</p>
-      </div>
-      
-      <div class="card" onclick="window.location.href='graph_ui.html'">
-        <div class="card-icon"><i class="fas fa-project-diagram"></i></div>
-        <h3 class="card-title">Graph Relations</h3>
-        <p class="card-desc">Visualize data relationships</p>
-      </div>
-      
-      <div class="card" onclick="window.location.href='storage_managment.html'">
-        <div class="card-icon"><i class="fas fa-database"></i></div>
-        <h3 class="card-title">Storage Management</h3>
-        <p class="card-desc">Manage system data storage</p>
-      </div>
-      <div class="card" onclick="window.location.href='score_calculation.html'">
-        <div class="card-icon"><i class="fas fa-calculator"></i></div>
-        <h3 class="card-title">Score Calculation</h3>
-        <p class="card-desc">CRS points estimation</p>
-      </div>
-      <div class="card" onclick="window.location.href='question_workflow.html'">
-        <div class="card-icon"><i class="fas fa-table"></i>
-          <h3 class="card-title">Quastions Flow</h3>
-          <p class="card-desc">Questions Flow for Immigration Points</p>
-      </div>
+    
+    <div class="header-buttons">
+      <button onclick="logout()" class="logout-button">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+      <div class="profile-circle" onclick="profile()" title="View Profile">
+        <img id="profileImage" src="" alt="Profile Image" style="display: none;">
+        <i class="fas fa-user default-avatar" id="defaultAvatar"></i>
       </div>
     </div>
-  </main>
 
-  <div class="footer">
-    &copy; 2025 Canada Express Entry AI Administration • Powered by FastAPI & AI Canada
-    <br>
-    <small>Official colors inspired by the Canadian flag (#D52B1E)</small>
+    <h1>
+      <span class="canada-flag"></span>
+      Canada Express Entry AI Panel
+      <span class="canada-flag"></span>
+    </h1>
+    <p class="subtitle">Advanced tools for immigration process automation</p>
   </div>
-</body>
-<script>
-    function logout() {
-    localStorage.removeItem("token");
+</header>
 
-    // Redirect to login or logout API
-    window.location.href = "/auth.html";
+<main>
+  <div class="error-message" id="errorMessage"></div>
+  
+  <div class="dashboard">
+    <div class="card" onclick="window.location.href='chunking.html'">
+      <div class="card-icon"><i class="fas fa-cut"></i></div>
+      <h3 class="card-title">Content Chunking</h3>
+      <p class="card-desc">Break documents into manageable sections</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='crawling.html'">
+      <div class="card-icon"><i class="fas fa-spider"></i></div>
+      <h3 class="card-title">Web Crawling</h3>
+      <p class="card-desc">Extract information from government sites</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='scrabing_tables.html'">
+      <div class="card-icon"><i class="fas fa-table"></i></div>
+      <h3 class="card-title">Tables Crawling</h3>
+      <p class="card-desc">Extract and process tabular data</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='embedding.html'">
+      <div class="card-icon"><i class="fas fa-brain"></i></div>
+      <h3 class="card-title">Embedding</h3>
+      <p class="card-desc">Transform text into vector representations</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='history_management.html'">
+      <div class="card-icon"><i class="fas fa-history"></i></div>
+      <h3 class="card-title">History Management</h3>
+      <p class="card-desc">Track and manage user interactions</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='live_rag.html'">
+      <div class="card-icon"><i class="fas fa-satellite-dish"></i></div>
+      <h3 class="card-title">Live RAG</h3>
+      <p class="card-desc">Real-time retrieval augmented generation</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='llm_generate.html'">
+      <div class="card-icon"><i class="fas fa-robot"></i></div>
+      <h3 class="card-title">LLM Generation</h3>
+      <p class="card-desc">Generate responses with AI models</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='llms_config.html'">
+      <div class="card-icon"><i class="fas fa-cogs"></i></div>
+      <h3 class="card-title">LLM Configuration</h3>
+      <p class="card-desc">Manage model settings and parameters</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='logs_monitoring.html'">
+      <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+      <h3 class="card-title">Logs Monitoring</h3>
+      <p class="card-desc">Track system performance and usage</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='upload.html'">
+      <div class="card-icon"><i class="fas fa-file-upload"></i></div>
+      <h3 class="card-title">File Upload</h3>
+      <p class="card-desc">Process applicant documents</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='graph_ui.html'">
+      <div class="card-icon"><i class="fas fa-project-diagram"></i></div>
+      <h3 class="card-title">Graph Relations</h3>
+      <p class="card-desc">Visualize data relationships</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='storage_managment.html'">
+      <div class="card-icon"><i class="fas fa-database"></i></div>
+      <h3 class="card-title">Storage Management</h3>
+      <p class="card-desc">Manage system data storage</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='score_calculation.html'">
+      <div class="card-icon"><i class="fas fa-calculator"></i></div>
+      <h3 class="card-title">Score Calculation</h3>
+      <p class="card-desc">CRS points estimation</p>
+    </div>
+    
+    <div class="card" onclick="window.location.href='question_workflow.html'">
+      <div class="card-icon"><i class="fas fa-list-alt"></i></div>
+      <h3 class="card-title">Questions Flow</h3>
+      <p class="card-desc">Questions Flow for Immigration Points</p>
+    </div>
+  </div>
+</main>
+
+<div class="footer">
+  &copy; 2025 Canada Express Entry AI Administration • Powered by FastAPI & AI Canada
+  <br>
+  <small>Official colors inspired by the Canadian flag (#D52B1E)</small>
+</div>
+
+<script>
+  // Configuration object for easy maintenance
+  const CONFIG = {
+    profileImagePath: '/media/profiles/',
+    defaultProfileImage: '/media/profiles/default.jpg',
+    authPage: '/auth.html',
+    userDashboard: '/user_dashboard.html'
+  };
+
+  // Utility functions
+  function showError(message) {
+    const errorDiv = document.getElementById('errorMessage');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    setTimeout(() => {
+      errorDiv.style.display = 'none';
+    }, 5000);
   }
+
+  function setLoading(isLoading) {
+    document.body.classList.toggle('loading', isLoading);
+  }
+
+  // Authentication functions
+  function logout() {
+    try {
+      // Clear all authentication data
+      localStorage.removeItem("token");
+      localStorage.removeItem("user_name");
+      localStorage.removeItem("user_email");
+      localStorage.removeItem("user_id");
+      
+      // Optional: Call logout API
+      // fetch('/api/logout', { method: 'POST' });
+      
+      // Redirect to login page
+      window.location.href = CONFIG.authPage;
+    } catch (error) {
+      console.error('Logout error:', error);
+      showError('Error during logout. Please try again.');
+    }
+  }
+
+  function profile() {
+    try {
+      window.location.href = CONFIG.userDashboard;
+    } catch (error) {
+      console.error('Profile navigation error:', error);
+      showError('Error navigating to profile. Please try again.');
+    }
+  }
+
+  // User data functions
+  function getUserData() {
+    try {
+      return {
+        name: localStorage.getItem("user_name"),
+        email: localStorage.getItem("user_email"),
+        id: localStorage.getItem("user_id"),
+        token: localStorage.getItem("token")
+      };
+    } catch (error) {
+      console.error('Error accessing localStorage:', error);
+      return {};
+    }
+  }
+
+  function validateAuth() {
+    const userData = getUserData();
+    
+    if (!userData.token) {
+      console.warn('No authentication token found');
+      window.location.href = CONFIG.authPage;
+      return false;
+    }
+    
+    return true;
+  }
+
+  async function loadUserProfile() {
+    if (!validateAuth()) return;
+    
+    const userData = getUserData();
+    const profileImage = document.getElementById("profileImage");
+    const defaultAvatar = document.getElementById("defaultAvatar");
+    const userGreeting = document.getElementById("userGreeting");
+    
+    // Update greeting
+    if (userData.name) {
+      userGreeting.textContent = `Welcome back, ${userData.name}!`;
+    } else if (userData.email) {
+      userGreeting.textContent = `Welcome back, ${userData.email}!`;
+    }
+    
+    // Load profile image
+    if (userData.name) {
+      const imageUrl = `${CONFIG.profileImagePath}${userData.name}.jpg`;
+      
+      // Create a new image to test if it loads
+      const testImage = new Image();
+      
+      testImage.onload = function() {
+        profileImage.src = imageUrl;
+        profileImage.style.display = 'block';
+        defaultAvatar.style.display = 'none';
+      };
+      
+      testImage.onerror = function() {
+        console.warn(`Profile image not found: ${imageUrl}`);
+        loadDefaultProfile();
+      };
+      
+      testImage.src = imageUrl;
+    } else {
+      loadDefaultProfile();
+    }
+  }
+
+  function loadDefaultProfile() {
+    const profileImage = document.getElementById("profileImage");
+    const defaultAvatar = document.getElementById("defaultAvatar");
+    
+    // Try to load default image
+    const testImage = new Image();
+    
+    testImage.onload = function() {
+      profileImage.src = CONFIG.defaultProfileImage;
+      profileImage.style.display = 'block';
+      defaultAvatar.style.display = 'none';
+    };
+    
+    testImage.onerror = function() {
+      // If default image also fails, show icon
+      profileImage.style.display = 'none';
+      defaultAvatar.style.display = 'block';
+    };
+    
+    testImage.src = CONFIG.defaultProfileImage;
+  }
+
+  // Alternative method to fetch user data from API
+  async function fetchUserDataFromAPI() {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return null;
+      
+      const response = await fetch('/api/user/profile', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        const userData = await response.json();
+        
+        // Store user data in localStorage for future use
+        if (userData.name) localStorage.setItem("user_name", userData.name);
+        if (userData.email) localStorage.setItem("user_email", userData.email);
+        if (userData.id) localStorage.setItem("user_id", userData.id);
+        
+        return userData;
+      } else if (response.status === 401) {
+        // Token expired or invalid
+        logout();
+        return null;
+      } else {
+        throw new Error(`API error: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Error fetching user data from API:', error);
+      return null;
+    }
+  }
+
+  // Enhanced profile loading with API fallback
+  async function loadUserProfileEnhanced() {
+    setLoading(true);
+    
+    try {
+      // First try localStorage
+      let userData = getUserData();
+      
+      // If no user data in localStorage, try API
+      if (!userData.name && !userData.email) {
+        userData = await fetchUserDataFromAPI();
+        if (!userData) {
+          setLoading(false);
+          return;
+        }
+      }
+      
+      // Update UI with user data
+      updateUserInterface(userData);
+      
+    } catch (error) {
+      console.error('Error loading user profile:', error);
+      showError('Error loading user profile');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function updateUserInterface(userData) {
+    const profileImage = document.getElementById("profileImage");
+    const defaultAvatar = document.getElementById("defaultAvatar");
+    const userGreeting = document.getElementById("userGreeting");
+    
+    // Update greeting
+    if (userData.name) {
+      userGreeting.textContent = `Welcome back, ${userData.name}!`;
+    } else if (userData.email) {
+      const emailName = userData.email.split('@')[0];
+      userGreeting.textContent = `Welcome back, ${emailName}!`;
+    }
+    
+    // Load profile image
+    loadProfileImage(userData.name || userData.email || userData.id);
+  }
+
+  function loadProfileImage(identifier) {
+    if (!identifier) {
+      loadDefaultProfile();
+      return;
+    }
+    
+    const profileImage = document.getElementById("profileImage");
+    const defaultAvatar = document.getElementById("defaultAvatar");
+    
+    // Try different image extensions
+    const extensions = ['jpg', 'jpeg', 'png', 'gif'];
+    let extensionIndex = 0;
+    
+    function tryNextExtension() {
+      if (extensionIndex >= extensions.length) {
+        loadDefaultProfile();
+        return;
+      }
+      
+      const extension = extensions[extensionIndex];
+      const imageUrl = `${CONFIG.profileImagePath}${identifier}.${extension}`;
+      
+      const testImage = new Image();
+      
+      testImage.onload = function() {
+        profileImage.src = imageUrl;
+        profileImage.style.display = 'block';
+        defaultAvatar.style.display = 'none';
+      };
+      
+      testImage.onerror = function() {
+        extensionIndex++;
+        tryNextExtension();
+      };
+      
+      testImage.src = imageUrl;
+    }
+    
+    tryNextExtension();
+  }
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Use enhanced profile loading with API fallback
+    loadUserProfileEnhanced();
+    
+    // Optional: Periodically refresh user data
+    setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        loadUserProfile();
+      }
+    }, 300000); // Refresh every 5 minutes
+  });
+
+  // Handle visibility change to refresh data when user returns to tab
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') {
+      loadUserProfile();
+    }
+  });
 </script>
+</body>
 </html>
